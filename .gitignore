@@ -1,0 +1,10 @@
+data/
+*.csv
+*.csv.gz
+*.parquet
+*.duckdb
+*.duckdb.wal
+.Rhistory
+.RData
+.DS_Store
+renv/library/
