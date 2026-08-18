@@ -1,0 +1,70 @@
+"unidad","clase","n"
+"Cardiac Vascular Intensive Care Unit (CVICU)","sin_crecimiento",4495
+"Cardiac Vascular Intensive Care Unit (CVICU)","otro_sitio",105
+"Cardiac Vascular Intensive Care Unit (CVICU)","urinario",52
+"Cardiac Vascular Intensive Care Unit (CVICU)","herida",33
+"Cardiac Vascular Intensive Care Unit (CVICU)","sangre",26
+"Cardiac Vascular Intensive Care Unit (CVICU)","respiratorio",13
+"Coronary Care Unit (CCU)","sin_crecimiento",1608
+"Coronary Care Unit (CCU)","urinario",93
+"Coronary Care Unit (CCU)","sangre",83
+"Coronary Care Unit (CCU)","otro_sitio",81
+"Coronary Care Unit (CCU)","respiratorio",51
+"Coronary Care Unit (CCU)","herida",5
+"Intensive Care Unit (ICU)","sin_crecimiento",5
+"Med/Surg","sin_crecimiento",1
+"Medical Intensive Care Unit (MICU)","sin_crecimiento",4686
+"Medical Intensive Care Unit (MICU)","otro_sitio",374
+"Medical Intensive Care Unit (MICU)","respiratorio",314
+"Medical Intensive Care Unit (MICU)","urinario",309
+"Medical Intensive Care Unit (MICU)","sangre",215
+"Medical Intensive Care Unit (MICU)","herida",53
+"Medical Intensive Care Unit (MICU)","intraabdominal",17
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","sin_crecimiento",3800
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","otro_sitio",253
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","urinario",162
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","respiratorio",160
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","sangre",154
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","herida",37
+"Medical/Surgical Intensive Care Unit (MICU/SICU)","intraabdominal",23
+"Medicine","sin_crecimiento",5
+"Medicine/Cardiology Intermediate","sin_crecimiento",1
+"Neuro Intermediate","sin_crecimiento",130
+"Neuro Intermediate","urinario",16
+"Neuro Intermediate","herida",8
+"Neuro Intermediate","sangre",6
+"Neuro Intermediate","respiratorio",5
+"Neuro Intermediate","otro_sitio",3
+"Neuro Stepdown","sin_crecimiento",49
+"Neuro Stepdown","urinario",8
+"Neuro Stepdown","respiratorio",2
+"Neuro Stepdown","otro_sitio",2
+"Neuro Stepdown","herida",2
+"Neuro Stepdown","sangre",1
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","sin_crecimiento",109
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","urinario",13
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","respiratorio",11
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","sangre",10
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","herida",5
+"Neuro Surgical Intensive Care Unit (Neuro SICU)","otro_sitio",2
+"PACU","sin_crecimiento",2
+"PACU","otro_sitio",1
+"Surgery/Trauma","urinario",1
+"Surgery/Trauma","sin_crecimiento",1
+"Surgery/Vascular/Intermediate","sin_crecimiento",33
+"Surgery/Vascular/Intermediate","respiratorio",2
+"Surgery/Vascular/Intermediate","urinario",1
+"Surgical Intensive Care Unit (SICU)","sin_crecimiento",2600
+"Surgical Intensive Care Unit (SICU)","otro_sitio",139
+"Surgical Intensive Care Unit (SICU)","urinario",88
+"Surgical Intensive Care Unit (SICU)","herida",88
+"Surgical Intensive Care Unit (SICU)","respiratorio",58
+"Surgical Intensive Care Unit (SICU)","sangre",41
+"Surgical Intensive Care Unit (SICU)","intraabdominal",13
+"Trauma SICU (TSICU)","sin_crecimiento",2163
+"Trauma SICU (TSICU)","otro_sitio",110
+"Trauma SICU (TSICU)","herida",109
+"Trauma SICU (TSICU)","urinario",62
+"Trauma SICU (TSICU)","respiratorio",55
+"Trauma SICU (TSICU)","sangre",37
+"Trauma SICU (TSICU)","intraabdominal",13

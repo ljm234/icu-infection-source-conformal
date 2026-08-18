@@ -1,0 +1,21 @@
+{
+  "fase": "2",
+  "ejecutado_en": "2026-08-17T22:58:29-0600",
+  "semilla": 20260817,
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "duckdb_version": "1.5.5",
+  "decisiones": {
+    "unidad_analisis": "primera estancia en UCI por paciente",
+    "t0": "icustays.intime",
+    "ventana": "6 horas",
+    "sospecha": "cultivo con antibiotico sistemico, 72h despues o 24h antes",
+    "desempate": "sangre, respiratorio, intraabdominal, urinario, herida",
+    "lcr": "otro_sitio, reservado para evaluacion de abstencion"
+  },
+  "sha256": {
+    "microbiologyevents": "bfb17d9c67a5f7d7036e7acb0b8e35969fa491aceb1a710adac9645fcfc34a16",
+    "prescriptions": "0d8481c7d5d7c9ec2fea3fc543ddaaadb5a933cd22c7b9dda4289361e4d77199",
+    "patients": "4c7507de7ecad8c5ba7647ea4d26018e88ff6672c5fc22ab59c2a5697d687cdd",
+    "icustays": "3c590ed37f1fb7a77a128f2f6961f836001512ba81adcd0dfeced2702f96bc5f"
+  }
+}
