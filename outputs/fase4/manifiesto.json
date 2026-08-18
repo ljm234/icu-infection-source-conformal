@@ -1,0 +1,37 @@
+{
+  "fase": "4",
+  "ejecutado_en": "2026-08-18T14:14:59-0600",
+  "semilla": 20260818,
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "duckdb_version": "1.5.5",
+  "n_filas": 23213,
+  "n_completos": 8467,
+  "agregacion": "primera medicion registrada dentro de la ventana",
+  "filtro_tiempo": "storetime, para excluir resultados no disponibles a las seis horas",
+  "itemids": {
+    "leucocitos": "51301",
+    "hemoglobina": "51222",
+    "plaquetas": "51265",
+    "rdw": "51277",
+    "creatinina": "50912",
+    "urea": "51006",
+    "brecha_anion": "50868",
+    "sodio": "50983",
+    "potasio": "50971",
+    "cloro": "50902",
+    "bicarbonato": "50882",
+    "inr": "51237",
+    "ttpa": "51275",
+    "ph": "50820",
+    "pco2": "50818",
+    "lactato": "50813",
+    "exceso_base": "50802"
+  },
+  "sha256": {
+    "microbiologyevents": "bfb17d9c67a5f7d7036e7acb0b8e35969fa491aceb1a710adac9645fcfc34a16",
+    "prescriptions": "0d8481c7d5d7c9ec2fea3fc543ddaaadb5a933cd22c7b9dda4289361e4d77199",
+    "patients": "4c7507de7ecad8c5ba7647ea4d26018e88ff6672c5fc22ab59c2a5697d687cdd",
+    "labevents": "2cd5e09b7e48c0189828854221f97e2e8568268eda82157c6933bf8e674d08d5",
+    "icustays": "3c590ed37f1fb7a77a128f2f6961f836001512ba81adcd0dfeced2702f96bc5f"
+  }
+}
