@@ -1,0 +1,74 @@
+"itemid","label","fluid","category","estancias","pct"
+"51221","Hematocrit","Blood","Hematology",44775,68.5
+"51265","Platelet Count","Blood","Hematology",43762,66.9
+"51222","Hemoglobin","Blood","Hematology",43679,66.8
+"51279","Red Blood Cells","Blood","Hematology",43591,66.7
+"51250","MCV","Blood","Hematology",43590,66.7
+"51301","White Blood Cells","Blood","Hematology",43588,66.7
+"51249","MCHC","Blood","Hematology",43580,66.7
+"51248","MCH","Blood","Hematology",43579,66.7
+"51277","RDW","Blood","Hematology",43567,66.7
+"50902","Chloride","Blood","Chemistry",42641,65.2
+"50912","Creatinine","Blood","Chemistry",42500,65
+"51006","Urea Nitrogen","Blood","Chemistry",42467,65
+"50882","Bicarbonate","Blood","Chemistry",42360,64.8
+"50868","Anion Gap","Blood","Chemistry",41512,63.5
+"50971","Potassium","Blood","Chemistry",39254,60.1
+"50983","Sodium","Blood","Chemistry",39208,60
+"51274","PT","Blood","Hematology",36821,56.3
+"51237","INR(PT)","Blood","Hematology",36806,56.3
+"51275","PTT","Blood","Hematology",36670,56.1
+"50931","Glucose","Blood","Chemistry",35967,55
+"50960","Magnesium","Blood","Chemistry",34987,53.5
+"50893","Calcium, Total","Blood","Chemistry",34542,52.8
+"50970","Phosphate","Blood","Chemistry",34538,52.8
+"50820","pH","Blood","Blood Gas",30864,47.2
+"50821","pO2","Blood","Blood Gas",30072,46
+"50802","Base Excess","Blood","Blood Gas",30065,46
+"50818","pCO2","Blood","Blood Gas",30063,46
+"50804","Calculated Total CO2","Blood","Blood Gas",30062,46
+"50813","Lactate","Blood","Blood Gas",29559,45.2
+"52172","RDW-SD","Blood","Hematology",23436,35.9
+"51678","L","Blood","Chemistry",19986,30.6
+"50934","H","Blood","Chemistry",19985,30.6
+"50947","I","Blood","Chemistry",19984,30.6
+"50808","Free Calcium","Blood","Blood Gas",19267,29.5
+"51256","Neutrophils","Blood","Hematology",17307,26.5
+"51146","Basophils","Blood","Hematology",17307,26.5
+"51244","Lymphocytes","Blood","Hematology",17307,26.5
+"51254","Monocytes","Blood","Hematology",17307,26.5
+"51200","Eosinophils","Blood","Hematology",17306,26.5
+"50878","Asparate Aminotransferase (AST)","Blood","Chemistry",17027,26
+"50861","Alanine Aminotransferase (ALT)","Blood","Chemistry",16909,25.9
+"50863","Alkaline Phosphatase","Blood","Chemistry",16802,25.7
+"50885","Bilirubin, Total","Blood","Chemistry",16655,25.5
+"50822","Potassium, Whole Blood","Blood","Blood Gas",14564,22.3
+"50809","Glucose","Blood","Blood Gas",14280,21.8
+"50824","Sodium, Whole Blood","Blood","Blood Gas",12565,19.2
+"51214","Fibrinogen, Functional","Blood","Hematology",11946,18.3
+"50810","Hematocrit, Calculated","Blood","Blood Gas",11826,18.1
+"50811","Hemoglobin","Blood","Blood Gas",11825,18.1
+"50806","Chloride, Whole Blood","Blood","Blood Gas",11259,17.2
+"50817","Oxygen Saturation","Blood","Blood Gas",10563,16.2
+"52069","Absolute Basophil Count","Blood","Hematology",10270,15.7
+"52073","Absolute Eosinophil Count","Blood","Hematology",10270,15.7
+"52075","Absolute Neutrophil Count","Blood","Hematology",10270,15.7
+"51133","Absolute Lymphocyte Count","Blood","Hematology",10270,15.7
+"52074","Absolute Monocyte Count","Blood","Hematology",10270,15.7
+"50862","Albumin","Blood","Chemistry",10136,15.5
+"50954","Lactate Dehydrogenase (LD)","Blood","Chemistry",9900,15.1
+"50911","Creatine Kinase, MB Isoenzyme","Blood","Chemistry",9861,15.1
+"50910","Creatine Kinase (CK)","Blood","Chemistry",9410,14.4
+"52135","Immature Granulocytes","Blood","Hematology",8404,12.9
+"51003","Troponin T","Blood","Chemistry",7721,11.8
+"51491","pH","Urine","Hematology",6445,9.9
+"51498","Specific Gravity","Urine","Hematology",5898,9
+"50825","Temperature","Blood","Blood Gas",5512,8.4
+"50816","Oxygen","Blood","Blood Gas",4207,6.4
+"51516","WBC","Urine","Hematology",3937,6
+"51493","RBC","Urine","Hematology",3877,5.9
+"51476","Epithelial Cells","Urine","Hematology",3656,5.6
+"50819","PEEP","Blood","Blood Gas",3511,5.4
+"51492","Protein","Urine","Hematology",3482,5.3
+"51144","Bands","Blood","Hematology",3197,4.9
+"50826","Tidal Volume","Blood","Blood Gas",3177,4.9
