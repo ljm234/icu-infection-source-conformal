@@ -1,9 +1,7 @@
 data/
-*.csv
-*.csv.gz
-*.parquet
 *.duckdb
 *.duckdb.wal
+*.parquet
 .Rhistory
 .RData
 .DS_Store
