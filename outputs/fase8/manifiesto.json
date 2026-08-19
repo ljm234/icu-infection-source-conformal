@@ -1,0 +1,20 @@
+{
+  "fase": "8",
+  "ejecutado_en": "2026-08-19T10:36:43-0600",
+  "semilla": 20260818,
+  "alfa": 0.1,
+  "cobertura_nominal": 0.9,
+  "lambda": 0.0002,
+  "regla_lambda": "min",
+  "justificacion_lambda": "comparacion preespecificada frente a 1se",
+  "puntuacion": "1 - probabilidad predicha",
+  "calibracion": "condicional por clase",
+  "umbrales": {
+    "sin_crecimiento": 0.1875,
+    "urinario": 0.9738,
+    "respiratorio": 0.9823,
+    "sangre": 0.9829
+  },
+  "cobertura_marginal": 0.9024,
+  "proporcion_con_conclusion": 0.0961
+}

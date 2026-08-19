@@ -1,0 +1,5 @@
+"clase","n_calibracion","umbral","prob_minima_para_entrar","sd_cobertura"
+"sin_crecimiento",4457,0.1875,0.8125,0.0045
+"urinario",214,0.9739,0.0261,0.0205
+"respiratorio",191,0.9823,0.0177,0.0217
+"sangre",159,0.9829,0.0171,0.0238

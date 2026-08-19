@@ -1,0 +1,5 @@
+"clase","n","cobertura","ic_inferior","ic_superior","nominal","tamano_medio"
+"sin_crecimiento",2972,0.9044,0.8933,0.9148,0.9,3.002
+"urinario",143,0.8881,0.8247,0.9347,0.9,3.28
+"respiratorio",128,0.8984,0.8326,0.9448,0.9,3.305
+"sangre",106,0.8679,0.7883,0.9259,0.9,3.311
