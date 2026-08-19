@@ -1,0 +1,16 @@
+{
+  "fase": "7",
+  "ejecutado_en": "2026-08-19T09:44:32-0600",
+  "semilla": 20260818,
+  "glmnet_version": "5.0",
+  "alpha": 1,
+  "lambda": 0.0104,
+  "regla_lambda": "1se",
+  "con_spline": ["urea", "creatinina", "cloro", "bicarbonato", "leucocitos", "sodio", "exceso_base", "rdw"],
+  "lineales": ["hemoglobina", "plaquetas", "inr", "ttpa", "ph", "pco2", "lactato", "potasio", "brecha_anion"],
+  "percentiles_nudos": [0.05, 0.35, 0.65, 0.95],
+  "columnas_diseno": 40,
+  "columnas_retenidas": 11,
+  "imputaciones_apiladas": 20,
+  "pliegues_por_paciente": true
+}
