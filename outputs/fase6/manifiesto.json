@@ -1,0 +1,13 @@
+{
+  "fase": "6",
+  "ejecutado_en": "2026-08-19T00:39:08-0600",
+  "semilla": 20260818,
+  "m": 20,
+  "maxit": 10,
+  "metodo": "pmm",
+  "mice_version": "3.19.0",
+  "niveles_unidad": ["Coronary Care Unit (CCU)", "Medical Intensive Care Unit (MICU)", "Medical/Surgical Intensive Care Unit (MICU/SICU)", "Surgical Intensive Care Unit (SICU)", "Trauma SICU (TSICU)"],
+  "unidad_sellada_al_nivel_referencia": true,
+  "unidad_en_todos_los_modelos": true,
+  "n_entrenamiento": 9026
+}
