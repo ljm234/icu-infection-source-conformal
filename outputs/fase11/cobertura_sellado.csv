@@ -1,0 +1,5 @@
+"clase","n","cobertura","ic_inf","ic_sup","nominal"
+"sin_crecimiento",4495,0.9911,0.9879,0.9936,0.9
+"urinario",52,0.8654,0.7421,0.9441,0.9
+"respiratorio",13,0.8462,0.5455,0.9808,0.9
+"sangre",26,0.9615,0.8036,0.999,0.9
