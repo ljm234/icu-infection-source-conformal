@@ -6,3 +6,17 @@ data/
 .RData
 .DS_Store
 renv/library/
+
+# Patient level derived data, excluded under the PhysioNet data use agreement
+outputs/fase4/matriz.csv
+outputs/fase4/matriz_limpia.csv
+outputs/fase5/matriz_particionada.csv
+outputs/fase5/SELLADO_NO_ABRIR.csv
+outputs/fase6/imputaciones.rds
+outputs/fase6/objeto_mice.rds
+outputs/fase7/prob_calibracion.csv
+outputs/fase7/prob_prueba.csv
+outputs/fase8/prob_calibracion.csv
+outputs/fase8/prueba_con_conjuntos.csv
+outputs/fase11/sellado_evaluado.csv
+outputs/fase15/matriz_peor_valor.csv
