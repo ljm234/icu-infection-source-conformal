@@ -1,0 +1,52 @@
+"metodo","variable","error_absoluto_mediano","error_relativo_pct","correlacion"
+"mice con unidad","leucocitos",6.5,50,0.132
+"mice con unidad","hemoglobina",2.2,18.8,0.194
+"mice con unidad","plaquetas",89,53.23,0.034
+"mice con unidad","rdw",1.6,10.59,0.149
+"mice con unidad","creatinina",0.5,40,0.567
+"mice con unidad","urea",12,45.71,0.514
+"mice con unidad","brecha_anion",2,12.5,0.886
+"mice con unidad","sodio",2,1.43,0.833
+"mice con unidad","potasio",0.6,13.51,0.251
+"mice con unidad","cloro",2,1.9,0.869
+"mice con unidad","bicarbonato",2,8.33,0.873
+"mice con unidad","inr",0.3,20,0.164
+"mice con unidad","ttpa",7.5,24.13,0.178
+"mice con unidad","ph",0.02,0.27,0.893
+"mice con unidad","pco2",3,6.25,0.841
+"mice con unidad","lactato",1,43.9,0.649
+"mice con unidad","exceso_base",1,20,0.957
+"mediana","leucocitos",5.3,39.81,NA
+"mediana","hemoglobina",1.8,16.48,NA
+"mediana","plaquetas",70,33.92,NA
+"mediana","rdw",1.3,8.59,NA
+"mediana","creatinina",0.5,50,NA
+"mediana","urea",11,48.94,NA
+"mediana","brecha_anion",3,21.05,NA
+"mediana","sodio",3,2.22,NA
+"mediana","potasio",0.5,13.51,NA
+"mediana","cloro",5,5.05,NA
+"mediana","bicarbonato",3,16.67,NA
+"mediana","inr",0.2,18.18,NA
+"mediana","ttpa",4.9,16.09,NA
+"mediana","ph",0.07,0.96,NA
+"mediana","pco2",7,17.14,NA
+"mediana","lactato",0.8,42.86,NA
+"mediana","exceso_base",3,76.92,NA
+"mice sin unidad","leucocitos",6.9,54.72,0.123
+"mice sin unidad","hemoglobina",2.3,21.52,-0.024
+"mice sin unidad","plaquetas",102,55.06,0.02
+"mice sin unidad","rdw",1.8,11.9,0.134
+"mice sin unidad","creatinina",0.5,37.5,0.643
+"mice sin unidad","urea",8,39.29,0.537
+"mice sin unidad","brecha_anion",2,9.09,0.877
+"mice sin unidad","sodio",2,1.43,0.777
+"mice sin unidad","potasio",0.7,16.67,0.233
+"mice sin unidad","cloro",2,1.98,0.871
+"mice sin unidad","bicarbonato",2,8.33,0.879
+"mice sin unidad","inr",0.3,23.08,0.011
+"mice sin unidad","ttpa",7.2,22.17,0.13
+"mice sin unidad","ph",0.02,0.27,0.913
+"mice sin unidad","pco2",3,6.45,0.828
+"mice sin unidad","lactato",1,48,0.575
+"mice sin unidad","exceso_base",1,20,0.955
