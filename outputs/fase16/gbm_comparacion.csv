@@ -1,0 +1,5 @@
+"clase","auc_lineal","auc_gbm","diferencia"
+"sin_crecimiento",0.6521,0.6476,-0.0045
+"urinario",0.6518,0.6422,-0.0096
+"respiratorio",0.6597,0.675,0.0153
+"sangre",0.709,0.704,-0.005
