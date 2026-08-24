@@ -1,0 +1,13 @@
+"estrato","variable","n","sin_crecimiento","urinario","respiratorio","sangre"
+"cohorte completa","temperatura",12886,0.4549,0.4839,0.569,0.5874
+"cohorte completa","frec_cardiaca",12886,0.4521,0.511,0.5201,0.6179
+"cohorte completa","frec_respiratoria",12886,0.4522,0.4956,0.5548,0.5971
+"cohorte completa","saturacion",12886,0.5338,0.4774,0.4813,0.442
+"con tubo","temperatura",4059,0.4209,0.5239,0.578,0.6024
+"con tubo","frec_cardiaca",4059,0.441,0.5224,0.5249,0.6508
+"con tubo","frec_respiratoria",4059,0.4231,0.4894,0.5791,0.6226
+"con tubo","saturacion",4059,0.6014,0.4389,0.3836,0.4387
+"sin tubo","temperatura",8827,0.4863,0.4701,0.517,0.5773
+"sin tubo","frec_cardiaca",8827,0.4492,0.5023,0.5774,0.6032
+"sin tubo","frec_respiratoria",8827,0.4537,0.4892,0.6181,0.5892
+"sin tubo","saturacion",8827,0.5274,0.5144,0.4172,0.4414

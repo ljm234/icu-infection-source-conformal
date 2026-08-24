@@ -1,0 +1,7 @@
+"variable","limite_inferior","limite_superior","marcados"
+"temperatura",32,42,67
+"frec_cardiaca",20,250,5
+"frec_respiratoria",4,60,106
+"presion_sistolica",40,250,5
+"presion_media",25,180,23
+"saturacion",50,100,10

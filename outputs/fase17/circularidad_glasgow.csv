@@ -1,0 +1,13 @@
+"estrato","clase","n","casos","auc_gcs_total","auc_gcs_em"
+"cohorte completa","sin_crecimiento",14442,11885,0.4448,0.4549
+"cohorte completa","urinario",14442,571,0.4905,0.484
+"cohorte completa","respiratorio",14442,510,0.7313,0.7086
+"cohorte completa","sangre",14442,424,0.5325,0.5273
+"con tubo endotraqueal","sin_crecimiento",4347,3435,0.488,0.488
+"con tubo endotraqueal","urinario",4347,132,0.4648,0.4648
+"con tubo endotraqueal","respiratorio",4347,353,0.4865,0.4865
+"con tubo endotraqueal","sangre",4347,139,0.557,0.557
+"sin tubo endotraqueal","sin_crecimiento",9537,8002,0.4631,0.4778
+"sin tubo endotraqueal","urinario",9537,422,0.5546,0.5444
+"sin tubo endotraqueal","respiratorio",9537,137,0.6262,0.6023
+"sin tubo endotraqueal","sangre",9537,266,0.5236,0.5115
