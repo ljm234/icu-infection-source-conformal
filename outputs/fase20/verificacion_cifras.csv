@@ -1,0 +1,34 @@
+"afirmacion","valor","esperado","tolerancia","concuerda"
+"Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
+"Cobertura conforme, sin crecimiento",0.9044,0.9044,5e-05,TRUE
+"Cobertura conforme, sangre",0.8679,0.8679,5e-05,TRUE
+"Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE
+"Proporcion resuelta al noventa por ciento",9.6,9.6,0.05,TRUE
+"Error entre resueltos al noventa por ciento",0.028,0.028,5e-05,TRUE
+"Precision maxima en conclusiones minoritarias",0.4,0.4,0.001,TRUE
+"Transportabilidad, cobertura minima",0.8036,0.8036,5e-05,TRUE
+"Transportabilidad, desviacion",0.0744021706672595,0.0744,5e-05,TRUE
+"Transportabilidad, cobertura media",0.89444,0.8944,5e-05,TRUE
+"Unidad reservada, cobertura sin crecimiento",0.9911,0.9911,5e-05,TRUE
+"Unidad reservada, casos respiratorios",13,13,0.5,TRUE
+"Categorias calibrables con cincuenta casos",1,1,0.05,TRUE
+"Tamano medio del conjunto con cincuenta casos",0.888,0.888,5e-04,TRUE
+"Referencia demografica, minoritarias",0.5421,0.5421,5e-05,TRUE
+"Modelo completo, minoritarias",0.6735,0.6735,5e-05,TRUE
+"Ganancia del modelo completo sobre tres marcadores",0.0825,0.0825,1e-04,TRUE
+"Aporte del indicador de solicitud",0.0134,0.0134,1e-04,TRUE
+"Aporte del valor de lactato",0.00380000000000003,0.0038,1e-04,TRUE
+"Concordancia minima entre reglas de agregacion",0.8722,0.8722,5e-05,TRUE
+"Beneficio neto maximo sobre politicas triviales",0.0222,0.0222,1e-05,TRUE
+"Arboles potenciados, ganancia en minoritarias",0.000233333333333308,2e-04,1e-04,TRUE
+"Cobertura de la frecuencia cardiaca",99.2,99.2,0.05,TRUE
+"Cobertura de la presion sistolica no invasiva",74.9,74.9,0.05,TRUE
+"Total de valores implausibles marcados",216,216,0.5,TRUE
+"Intubacion en la unidad cardiovascular",72,72,0.05,TRUE
+"Escala de conciencia dentro del estrato con tubo",0.4865,0.4865,5e-05,TRUE
+"Escala de conciencia en la cohorte completa",0.7086,0.7086,5e-05,TRUE
+"Ganancia de la temperatura con spline",283,283,0.005,TRUE
+"Ganancia de la saturacion con spline",-47.85,-47.85,0.005,TRUE
+"Modelo ampliado, ganancia en minoritarias",0.0145666666666666,0.0146,1e-04,TRUE
+"Modelo ampliado, desviacion de cobertura",0.0736339459760239,0.0736,5e-05,TRUE
+"Modelo ampliado, cobertura minima",0.7757,0.7757,5e-05,TRUE
