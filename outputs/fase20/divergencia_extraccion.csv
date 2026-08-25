@@ -1,0 +1,7 @@
+"variable","comparables","distintos_numericamente","distintos_materialmente","pct_material","dif_mediana","dif_p90"
+"temperatura",21515,10,7,0.033,0.4,0.53
+"frec_cardiaca",23023,24,24,0.104,6,11.7
+"frec_respiratoria",22805,25,25,0.11,4,8.2
+"presion_sistolica",17390,17,17,0.098,19,64.4
+"presion_media",17364,16,16,0.092,13,53.5
+"saturacion",22940,21,21,0.092,2,8
