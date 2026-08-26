@@ -111,6 +111,21 @@ cat("Primera frente a tercera:", if (ig13) "identicas" else "DIFIEREN", "\n")
 if (!ig12) print(all.equal(a, b, tolerance = 0))
 if (!ig13) print(all.equal(a, d3, tolerance = 0))
 
+# El resultado de esta comparacion solo constaba por pantalla, de modo que la
+# afirmacion que la documentacion hace sobre ella no era verificable por un
+# lector. Se deposita. Se calcula aqui, antes de que la tabla se modifique con
+# la recuperacion de la escala Fahrenheit y el marcado de implausibles, para
+# que compare lo que la consulta devolvio y no una version ya tratada.
+ejecuciones <- list(a, b, d3)
+determinismo <- data.frame(
+  ejecuciones            = length(ejecuciones),
+  identicas_a_la_primera = sum(vapply(ejecuciones,
+                                      function(x) identical(a, x), logical(1))),
+  estancias              = nrow(a),
+  columnas               = ncol(a),
+  grupos_ambiguos        = amb$grupos_ambiguos,
+  row.names = NULL)
+
 VITALES <- c("temperatura","frec_cardiaca","frec_respiratoria",
              "presion_sistolica","presion_media","saturacion")
 
@@ -178,15 +193,28 @@ cat("\n=== COBERTURA, ANTERIOR FRENTE A DETERMINISTA ===\n")
 part <- read.csv("outputs/fase5/matriz_particionada.csv", stringsAsFactors = FALSE)
 mn <- merge(part[, c("stay_id","clase","grupo","unidad")], a,
             by = "stay_id", all.x = TRUE)
-print(do.call(rbind, lapply(VITALES, function(v)
+
+# Se consignan los denominadores junto a los porcentajes. Las dos columnas no
+# proceden de la misma tabla, y sin el recuento un lector no puede establecer
+# si la comparacion se realiza sobre el mismo conjunto de estancias.
+cobertura <- do.call(rbind, lapply(VITALES, function(v)
   data.frame(variable = v,
+             n_anterior = nrow(viejo),
              pct_anterior = round(100 * mean(!is.na(viejo[[v]])), 1),
+             n_determinista = nrow(mn),
              pct_determinista = round(100 * mean(!is.na(mn[[v]])), 1),
-             row.names = NULL))), row.names = FALSE)
+             row.names = NULL)))
+cobertura$diferencia <- round(cobertura$pct_determinista -
+                              cobertura$pct_anterior, 1)
+print(cobertura, row.names = FALSE)
 
 write.csv(mn, "data/derivados/vitales_deterministas.csv", row.names = FALSE)
 dir.create("outputs/fase20", recursive = TRUE, showWarnings = FALSE)
 write.csv(div, "outputs/fase20/divergencia_extraccion.csv", row.names = FALSE)
+write.csv(determinismo, "outputs/fase20/determinismo_extraccion.csv",
+          row.names = FALSE)
+write.csv(cobertura, "outputs/fase20/cobertura_extraccion.csv",
+          row.names = FALSE)
 
 cat("\n=== VALORACION ===\n")
 if (!ig12 || !ig13) {

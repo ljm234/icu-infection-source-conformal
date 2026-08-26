@@ -125,55 +125,146 @@ print(dv[, c("variable","distintos_numericamente",
 cat("\nMaxima divergencia material por constante:",
     round(max(dv$pct_material), 3), "por ciento\n")
 
-lineas <- c(
-  "# Reproducibility of the extraction step",
-  "",
-  paste("Generated on", format(Sys.Date(), "%Y-%m-%d"),
-        "by R/64_auditoria_publicacion.R"),
-  "",
-  "## Finding",
-  "",
-  "Nursing observations in MIMIC-IV are validated in batches, so several",
-  "measurements of the same variable share an identical storetime. Selecting",
-  "the first measurement by ordering on storetime alone leaves ties",
-  "unresolved, and the row retained can differ between runs of the same",
-  "query.",
-  "",
-  sprintf("Ties affect between %.2f and %.2f percent of stays depending on the",
-          min(ec$pct), max(ec$pct)),
-  sprintf("variable, with up to %d simultaneous measurements of a single",
-          max(ec$maximo_coincidentes)),
-  "variable in one stay.",
-  "",
-  sprintf("Laboratory results are largely unaffected at %.2f percent, since",
-          el$pct),
-  "analysers timestamp each result individually.",
-  "",
-  "## Correction",
-  "",
-  "Ordering now uses four keys: storetime, then charttime, then the value",
-  "after unit conversion, then itemid. Ordering on the converted value",
-  "matters because temperature is recorded under two itemids in different",
-  "scales, so the raw figure places readings of very different temperatures",
-  "side by side.",
-  "",
-  "Ties on the earlier keys carry equal converted values, so which row is",
-  "retained does not change the result.",
-  "",
-  "## Impact",
-  "",
-  sprintf("Material divergence from the earlier extraction reaches %.3f percent",
-          max(dv$pct_material)),
-  "of stays per variable.",
-  "The published figures come from the earlier extraction; the deterministic",
-  "version is provided alongside and the divergence is quantified above.",
-  "",
-  "Phases 0 to 15, including the sealed model, draw only on laboratory",
-  "results and are therefore unaffected. They are not re-extracted, since",
-  "rebuilding the cohort after the sealed set has been opened would void the",
-  "external validation.")
+# ---------------------------------------------------------------------------
+# Guardias de composicion. Este procedimiento escribe un documento publicado y
+# era el unico de los tres generadores que componia sus lineas sin comprobacion
+# alguna. Se traslada el mecanismo ya probado en los otros dos: una puerta
+# admite unicamente prosa y se detiene ante cualquier digito; la otra admite un
+# patron de formato acompanado de valores leidos de archivo, y se detiene si el
+# patron carece de codigo de sustitucion, si contiene digitos ajenos a el, o si
+# el resultado no constituye exactamente una linea.
+# ---------------------------------------------------------------------------
 
-writeLines(lineas, "outputs/fase20/REPRODUCIBILITY.md")
+EXENTAS <- c("R/64_auditoria_publicacion.R")
+
+despojar <- function(s) {
+  for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
+  s
+}
+
+tiene_digito <- function(s) grepl("[0-9]", despojar(s))
+
+patron_con_digito <- function(fmt)
+  grepl("[0-9]", despojar(gsub("%[-+0-9.]*[sdfe]", "", fmt)))
+
+compone_una_linea <- function(fmt, ...) length(sprintf(fmt, ...)) == 1
+
+cat("\n=== PRUEBAS DE LAS GUARDIAS ===\n")
+
+p1 <- tiene_digito("texto con el numero 7 escrito a mano")
+cat("Detecta cifra en la prosa:", if (p1) "si" else "NO", "\n")
+
+p2 <- !tiene_digito("texto sin cifra alguna")
+cat("Admite prosa limpia:", if (p2) "si" else "NO", "\n")
+
+p3 <- patron_con_digito("valor fijo de 86 unidades")
+cat("Detecta cifra en un patron:", if (p3) "si" else "NO", "\n")
+
+p4 <- !patron_con_digito("valor de %.4f unidades")
+cat("Admite patron con codigo de sustitucion:", if (p4) "si" else "NO", "\n")
+
+p5 <- !compone_una_linea("texto sin sustitucion", NULL)
+cat("Detecta composicion con argumento nulo:", if (p5) "si" else "NO", "\n")
+
+p6 <- !compone_una_linea("valor %d", c(1, 2, 3))
+cat("Detecta composicion multiple:", if (p6) "si" else "NO", "\n")
+
+p7 <- compone_una_linea("valor %.2f", 3.14)
+cat("Admite composicion valida:", if (p7) "si" else "NO", "\n")
+
+if (!all(c(p1, p2, p3, p4, p5, p6, p7))) {
+  cat("\nLas guardias no superan sus pruebas. No procede componer.\n")
+  quit(status = 1)
+}
+cat("Las siete pruebas se superan.\n")
+
+prosa <- function(...) {
+  x <- c(...)
+  for (s in x)
+    if (tiene_digito(s)) {
+      cat("Cifra literal en la prosa:\n  ", s, "\n"); quit(status = 1)
+    }
+  x
+}
+
+cifra <- function(fmt, ...) {
+  if (!grepl("%[-+0-9.]*[sdfe]", fmt)) {
+    cat("Patron sin codigo de sustitucion. Corresponde a prosa:\n  ", fmt, "\n")
+    quit(status = 1)
+  }
+  if (patron_con_digito(fmt)) {
+    cat("Cifra literal en un patron:\n  ", fmt, "\n"); quit(status = 1)
+  }
+  if (!compone_una_linea(fmt, ...)) {
+    cat("La composicion no produjo una linea:\n  ", fmt, "\n"); quit(status = 1)
+  }
+  sprintf(fmt, ...)
+}
+
+L <- character(0)
+add <- function(...) L <<- c(L, ...)
+
+add(prosa(
+"# Reproducibility of the extraction step",
+""))
+
+add(cifra("Generated on %s by R/64_auditoria_publicacion.R",
+          format(Sys.Date(), "%Y-%m-%d")))
+
+add(prosa(
+"",
+"## Finding",
+"",
+"Nursing observations in MIMIC-IV are validated in batches, so several",
+"measurements of the same variable share an identical storetime. Selecting",
+"the first measurement by ordering on storetime alone leaves ties",
+"unresolved, and the row retained can differ between runs of the same",
+"query.",
+""))
+
+add(cifra("Ties affect between %.2f and %.2f percent of stays depending on the",
+          min(ec$pct), max(ec$pct)))
+add(cifra("variable, with up to %d simultaneous measurements of a single",
+          as.integer(max(ec$maximo_coincidentes))))
+
+add(prosa(
+"variable in one stay.",
+""))
+
+add(cifra("Laboratory results are largely unaffected at %.2f percent, since",
+          el$pct))
+
+add(prosa(
+"analysers timestamp each result individually.",
+"",
+"## Correction",
+"",
+"Ordering now uses four keys: storetime, then charttime, then the value",
+"after unit conversion, then itemid. Ordering on the converted value",
+"matters because temperature is recorded under two itemids in different",
+"scales, so the raw figure places readings of very different temperatures",
+"side by side.",
+"",
+"Ties on the earlier keys carry equal converted values, so which row is",
+"retained does not change the result.",
+"",
+"## Impact",
+""))
+
+add(cifra("Material divergence from the earlier extraction reaches %.3f percent",
+          max(dv$pct_material)))
+
+add(prosa(
+"of stays per variable.",
+"The published figures come from the earlier extraction; the deterministic",
+"version is provided alongside and the divergence is quantified above.",
+"",
+"The core phases, up to and including the sealed model, draw only on",
+"laboratory results and are therefore unaffected. They are not re-extracted,",
+"since rebuilding the cohort after the sealed set has been opened would void",
+"the external validation."))
+
+writeLines(L, "outputs/fase20/REPRODUCIBILITY.md")
 cat("\nRegistro escrito en outputs/fase20/REPRODUCIBILITY.md\n")
 
 cat("\n=== RESULTADO DE LA AUDITORIA ===\n")

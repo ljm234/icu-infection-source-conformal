@@ -35,7 +35,7 @@ of stays per variable.
 The published figures come from the earlier extraction; the deterministic
 version is provided alongside and the divergence is quantified above.
 
-Phases 0 to 15, including the sealed model, draw only on laboratory
-results and are therefore unaffected. They are not re-extracted, since
-rebuilding the cohort after the sealed set has been opened would void the
-external validation.
+The core phases, up to and including the sealed model, draw only on
+laboratory results and are therefore unaffected. They are not re-extracted,
+since rebuilding the cohort after the sealed set has been opened would void
+the external validation.
