@@ -92,7 +92,9 @@ AFIRMACIONES <- list(
   c("Validacion de la imputacion", "outputs/fase20/fraccion_informacion_faltante.csv"),
   c("Dispersion entre imputaciones", "outputs/fase20/dispersion_imputaciones.csv"),
   c("Coincidencias en la hora de registro", "outputs/fase20/empates_constantes.csv"),
-  c("Divergencia de la extraccion", "outputs/fase20/divergencia_extraccion.csv"))
+  c("Divergencia de la extraccion", "outputs/fase20/divergencia_extraccion.csv"),
+  c("Determinismo de la extraccion", "outputs/fase20/determinismo_extraccion.csv"),
+  c("Cobertura antes y despues", "outputs/fase20/cobertura_extraccion.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {
@@ -112,6 +114,8 @@ cat("\n=== HALLAZGOS SOBRE LA REPRODUCIBILIDAD DE LA EXTRACCION ===\n")
 ec <- read.csv("outputs/fase20/empates_constantes.csv", stringsAsFactors = FALSE)
 el <- read.csv("outputs/fase20/empates_laboratorio.csv", stringsAsFactors = FALSE)
 dv <- read.csv("outputs/fase20/divergencia_extraccion.csv", stringsAsFactors = FALSE)
+det <- read.csv("outputs/fase20/determinismo_extraccion.csv", stringsAsFactors = FALSE)
+cb <- read.csv("outputs/fase20/cobertura_extraccion.csv", stringsAsFactors = FALSE)
 
 cat("Coincidencias en la hora de registro, constantes vitales\n")
 cat("  minimo:", round(min(ec$pct), 2), "por ciento\n")
@@ -124,6 +128,15 @@ print(dv[, c("variable","distintos_numericamente",
              "distintos_materialmente","pct_material")], row.names = FALSE)
 cat("\nMaxima divergencia material por constante:",
     round(max(dv$pct_material), 3), "por ciento\n")
+cat("\nDeterminismo de la consulta corregida\n")
+cat("  ejecuciones identicas a la primera:", det$identicas_a_la_primera,
+    "de", det$ejecuciones, "\n")
+cat("  grupos que empatan en las dos primeras claves con valor distinto:",
+    det$grupos_ambiguos, "\n")
+cat("  denominadores de cobertura coincidentes:",
+    all(cb$n_anterior == cb$n_determinista), "\n")
+cat("  desplazamiento maximo de cobertura:",
+    max(abs(cb$diferencia)), "puntos\n")
 
 # ---------------------------------------------------------------------------
 # Guardias de composicion. Este procedimiento escribe un documento publicado y
@@ -245,17 +258,30 @@ add(prosa(
 "scales, so the raw figure places readings of very different temperatures",
 "side by side.",
 "",
-"Ties on the earlier keys carry equal converted values, so which row is",
-"retained does not change the result.",
+"Ties on the first two keys are real:"))
+
+add(cifra("%d groups of measurements agree on stay_id, storetime and charttime while",
+          as.integer(det$grupos_ambiguos)))
+
+add(prosa(
+"disagreeing on the converted value, which is why that value enters the",
+"ordering rather than closing it."))
+
+add(cifra("The query was run %d times and all %d results are identical.",
+          as.integer(det$ejecuciones), as.integer(det$identicas_a_la_primera)))
+
+add(prosa(
 "",
 "## Impact",
 ""))
 
 add(cifra("Material divergence from the earlier extraction reaches %.3f percent",
           max(dv$pct_material)))
+add(cifra("of stays per variable, and no coverage figure moves by more than %.1f",
+          max(abs(cb$diferencia))))
 
 add(prosa(
-"of stays per variable.",
+"points. Coverage before and after is measured on the same stays.",
 "The published figures come from the earlier extraction; the deterministic",
 "version is provided alongside and the divergence is quantified above.",
 "",

@@ -116,6 +116,11 @@ margin never exceeds the largest possible rounding error.
 | Determinaciones simultaneas, maximo | 38.0000 | 38.0000 | 0.50000 | yes |
 | Coincidencias en laboratorio, proporcion | 0.1000 | 0.1000 | 0.05000 | yes |
 | Divergencia material maxima por variable | 0.1100 | 0.1100 | 0.00050 | yes |
+| Ejecuciones de la consulta corregida | 3.0000 | 3.0000 | 0.50000 | yes |
+| Ejecuciones identicas a la primera | 3.0000 | 3.0000 | 0.50000 | yes |
+| Grupos que empatan en las dos primeras claves | 82.0000 | 82.0000 | 0.50000 | yes |
+| Cobertura, denominadores que no coinciden | 0.0000 | 0.0000 | 0.50000 | yes |
+| Desplazamiento maximo de cobertura | 0.1000 | 0.1000 | 0.05000 | yes |
 
 ## Source files
 
@@ -156,4 +161,6 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase20/empates_constantes.csv`
 - `outputs/fase20/empates_laboratorio.csv`
 - `outputs/fase20/divergencia_extraccion.csv`
+- `outputs/fase20/determinismo_extraccion.csv`
+- `outputs/fase20/cobertura_extraccion.csv`
 - `outputs/fase20/fraccion_informacion_faltante.csv`

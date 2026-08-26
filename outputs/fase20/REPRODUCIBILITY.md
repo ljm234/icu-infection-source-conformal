@@ -25,13 +25,17 @@ matters because temperature is recorded under two itemids in different
 scales, so the raw figure places readings of very different temperatures
 side by side.
 
-Ties on the earlier keys carry equal converted values, so which row is
-retained does not change the result.
+Ties on the first two keys are real:
+82 groups of measurements agree on stay_id, storetime and charttime while
+disagreeing on the converted value, which is why that value enters the
+ordering rather than closing it.
+The query was run 3 times and all 3 results are identical.
 
 ## Impact
 
 Material divergence from the earlier extraction reaches 0.110 percent
-of stays per variable.
+of stays per variable, and no coverage figure moves by more than 0.1
+points. Coverage before and after is measured on the same stays.
 The published figures come from the earlier extraction; the deterministic
 version is provided alongside and the divergence is quantified above.
 

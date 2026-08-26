@@ -268,9 +268,14 @@ Laboratory results are unaffected at 0.10 percent, since analysers
 timestamp each result individually.
 
 Ordering now uses four keys: storetime, charttime, the value after unit
-conversion, and itemid. Three consecutive runs return identical results.
-Material divergence from the earlier extraction reaches 0.110 percent
-of stays per variable, and coverage is unchanged.
+conversion, and itemid. The converted value earns its place:
+82 groups of measurements agree on stay_id, storetime and charttime
+while disagreeing on the converted value, so the first two keys alone leave
+the retained row undetermined.
+The query was run 3 times and all 3 results are identical.
+
+Material divergence from the earlier extraction reaches 0.110 percent of
+stays per variable, and no coverage figure moves by more than 0.1 points.
 
 ## Requirements
 

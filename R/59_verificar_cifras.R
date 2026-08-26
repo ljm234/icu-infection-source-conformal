@@ -54,6 +54,8 @@ FUENTES <- list(
   "Coincidencias en la hora de registro"     = "outputs/fase20/empates_constantes.csv",
   "Coincidencias en bioquimica"              = "outputs/fase20/empates_laboratorio.csv",
   "Divergencia de la extraccion"             = "outputs/fase20/divergencia_extraccion.csv",
+  "Determinismo de la extraccion"             = "outputs/fase20/determinismo_extraccion.csv",
+  "Cobertura antes y despues del desempate"   = "outputs/fase20/cobertura_extraccion.csv",
   "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
@@ -468,6 +470,28 @@ x <- leer(FUENTES[["Divergencia de la extraccion"]])
 if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Divergencia material maxima por variable",
     max(x$pct_material), 0.11, tolerancia(3))
+}
+
+x <- leer(FUENTES[["Determinismo de la extraccion"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Ejecuciones de la consulta corregida",
+    x$ejecuciones, 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Ejecuciones identicas a la primera",
+    x$identicas_a_la_primera, 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Grupos que empatan en las dos primeras claves",
+    x$grupos_ambiguos, 82, 0.5)
+}
+
+# La cobertura antes y despues procede de dos tablas distintas. Se comprueba
+# que el recuento de estancias coincida: sin esa igualdad los dos porcentajes
+# no serian comparables y la afirmacion sobre el desplazamiento no se
+# sostendria.
+x <- leer(FUENTES[["Cobertura antes y despues del desempate"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Cobertura, denominadores que no coinciden",
+    sum(x$n_anterior != x$n_determinista), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Desplazamiento maximo de cobertura",
+    max(abs(x$diferencia)), 0.1, t1)
 }
 
 tab <- do.call(rbind, reg)

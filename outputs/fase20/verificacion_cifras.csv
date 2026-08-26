@@ -106,3 +106,8 @@
 "Determinaciones simultaneas, maximo",38,38,0.5,TRUE
 "Coincidencias en laboratorio, proporcion",0.1,0.1,0.05,TRUE
 "Divergencia material maxima por variable",0.11,0.11,5e-04,TRUE
+"Ejecuciones de la consulta corregida",3,3,0.5,TRUE
+"Ejecuciones identicas a la primera",3,3,0.5,TRUE
+"Grupos que empatan en las dos primeras claves",82,82,0.5,TRUE
+"Cobertura, denominadores que no coinciden",0,0,0.5,TRUE
+"Desplazamiento maximo de cobertura",0.1,0.1,0.05,TRUE

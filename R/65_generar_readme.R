@@ -95,6 +95,8 @@ fmi   <- leer("outputs/fase20/fraccion_informacion_faltante.csv")
 empc  <- leer("outputs/fase20/empates_constantes.csv")
 empl  <- leer("outputs/fase20/empates_laboratorio.csv")
 divg  <- leer("outputs/fase20/divergencia_extraccion.csv")
+det   <- leer("outputs/fase20/determinismo_extraccion.csv")
+cobx  <- leer("outputs/fase20/cobertura_extraccion.csv")
 
 MIN <- c("urinario","respiratorio","sangre")
 CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
@@ -531,13 +533,26 @@ add(prosa(
 "timestamp each result individually.",
 "",
 "Ordering now uses four keys: storetime, charttime, the value after unit",
-"conversion, and itemid. Three consecutive runs return identical results."))
+"conversion, and itemid. The converted value earns its place:"))
 
-add(cifra("Material divergence from the earlier extraction reaches %.3f percent",
-          max(divg$pct_material)))
+add(cifra("%d groups of measurements agree on stay_id, storetime and charttime",
+          as.integer(det$grupos_ambiguos)))
 
 add(prosa(
-"of stays per variable, and coverage is unchanged.",
+"while disagreeing on the converted value, so the first two keys alone leave",
+"the retained row undetermined."))
+
+add(cifra("The query was run %d times and all %d results are identical.",
+          as.integer(det$ejecuciones), as.integer(det$identicas_a_la_primera)))
+
+add(prosa(""))
+
+add(cifra("Material divergence from the earlier extraction reaches %.3f percent of",
+          max(divg$pct_material)))
+add(cifra("stays per variable, and no coverage figure moves by more than %.1f points.",
+          max(abs(cobx$diferencia))))
+
+add(prosa(
 "",
 "## Requirements",
 "",

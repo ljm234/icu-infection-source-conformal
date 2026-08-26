@@ -1,0 +1,7 @@
+"variable","n_anterior","pct_anterior","n_determinista","pct_determinista","diferencia"
+"temperatura",23213,92.7,23213,92.7,0
+"frec_cardiaca",23213,99.2,23213,99.2,0
+"frec_respiratoria",23213,98.3,23213,98.2,-0.1
+"presion_sistolica",23213,74.9,23213,74.9,0
+"presion_media",23213,74.8,23213,74.8,0
+"saturacion",23213,98.8,23213,98.8,0
