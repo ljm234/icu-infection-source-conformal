@@ -265,7 +265,7 @@ from the same information.
 
     R procedures        63
     Lines of code       6,882
-    Versioned files     146
+    Versioned files     149
 
     R/59_verificar_cifras.R      checks reported figures against sources
     R/64_auditoria_publicacion.R checks the repository is safe to publish
