@@ -1,0 +1,7 @@
+"unidad","temperatura","frec_cardiaca","frec_respiratoria","saturacion","n"
+"Cardiac Vascular Intensive Care Unit (CVICU)",36.3888888888889,80,14,100,4724
+"Coronary Care Unit (CCU)",36.6666666666667,87,20,97,1921
+"Medical Intensive Care Unit (MICU)",36.8333333333333,93,20,97,5968
+"Medical/Surgical Intensive Care Unit (MICU/SICU)",36.8333333333333,96,21,97,4589
+"Surgical Intensive Care Unit (SICU)",36.7777777777778,88,18,98,3027
+"Trauma SICU (TSICU)",36.7777777777778,91,18,99,2549

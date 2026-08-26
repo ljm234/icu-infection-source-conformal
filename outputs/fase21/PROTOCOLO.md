@@ -18,16 +18,21 @@ mecanismo de abstencion y validacion en una sede no observada durante el
 desarrollo. El proposito era detectar los modos de fallo antes de aplicarlos
 a datos peruanos.
 
-Se detectaron siete. Cinco afectan a decisiones del protocolo.
+Se detectaron 7 modos de fallo, y cada uno deriva en una decision concreta.
 
 ## Primer hallazgo. La evaluacion exige cuatro dominios
 
 La capacidad de ordenar casos y la garantia de cobertura no se comportan
 igual al cambiar de sede. Bajo validacion dejando una sede fuera, la primera
 se conserva mientras la segunda se degrada de forma desigual.
-La cobertura oscila entre 0.8036 y 0.9612, con desviacion de 0.0744
-frente a una media de 0.8944: se cumple en promedio y en ninguna
-sede tomada de forma individual.
+La cobertura marginal oscila entre 0.8036 y 0.9612 con media de 0.8944,
+por debajo del nivel nominal. 2 de 5 sedes quedan por debajo
+en esa medida.
+
+La garantia condicional por categoria, que es la que el trabajo
+declara, falla en 5 de 5 sedes: ninguna alcanza el nivel nominal en
+las cuatro categorias. La categoria que falla difiere entre sedes, razon por
+la cual un resumen marginal lo oculta.
 
 **Decision.** El informe de resultados no puede limitarse a la
 discriminacion. Debe presentar por separado, y desagregados por sede, la
@@ -54,10 +59,10 @@ sin fundamento para ello.
 
 La garantia condicional exige un numero minimo de casos por categoria en la
 sede donde se recalibra. Por debajo de ese minimo el cuantil no existe.
-Con 50 casos locales solo 1.0 categoria alcanzaba el minimo, y el
-tamano medio del conjunto descendia a 0.888: los conjuntos quedaban
-a menudo vacios y el sistema se reducia a un clasificador binario
-degenerado, con cobertura aparente proxima a la nominal.
+Con 50 casos locales, una media de 1.0 de las 4 categorias
+alcanzaba el minimo, y el tamano medio del conjunto descendia a 0.888:
+los conjuntos quedaban a menudo vacios y el sistema se reducia a un
+clasificador binario degenerado, con cobertura aparente proxima a la nominal.
 
 **Decision.** Antes de recalibrar en cada sede se verificara el recuento
 disponible por etiologia. Las etiologias infrecuentes pueden requerir anos
@@ -84,11 +89,17 @@ de solicitud no transportara a una sede con otro protocolo de peticion.
 ## Quinto hallazgo. La escala de conciencia puede medir el procedimiento
 
 Un indicador binario de intubacion, desprovisto de contenido fisiologico,
-discrimino la categoria respiratoria mejor que la escala completa.
-El indicador alcanza 0.7111 frente a 0.7086 de la escala. Dentro del
-estrato intubado la escala desciende a 0.4865, esto es, deja de
-discriminar. La escala actuaba como indicador indirecto del tubo, y el tubo
-determinaba que el sitio respiratorio se cultivase.
+discrimino la categoria respiratoria tan bien como la escala de conciencia.
+El indicador alcanza 0.7111. La escala obtiene 0.7313 en su forma completa
+de tres componentes y 0.7086 en la reducida a apertura ocular y respuesta
+motora. Se reporta la reducida porque el componente verbal asigna la
+puntuacion minima al paciente intubado y confunde la ausencia de respuesta
+con la imposibilidad de hablar. Dentro del estrato intubado la escala
+reducida desciende a 0.4865, y la completa obtiene ese mismo 0.4865. Ambas
+formas coinciden alli porque el componente verbal es constante, de modo que
+la completa es la reducida mas un desplazamiento fijo, que deja inalterado
+el orden y por tanto el area. La escala actuaba como indicador indirecto
+del tubo, y el tubo determinaba que el sitio respiratorio se cultivase.
 
 **Decision.** La escala figura entre las variables obligatorias del
 protocolo, y con fundamento: la meningitis altera la conciencia de forma
@@ -108,9 +119,8 @@ previa alcanzo el mismo techo que la regresion penalizada.
 La diferencia es de 0.0002 sobre las categorias poco frecuentes.
 
 La incorporacion de un dominio nuevo de medicion si produjo mejora, aunque
-modesta:
-0.0146 al anadir constantes vitales, dos ordenes de magnitud por
-encima de lo que aporto refinar el algoritmo.
+modesta: 0.0146 al anadir constantes vitales, muy por encima de lo que
+aporto refinar el algoritmo.
 
 **Decision.** No cabe esperar que un metodo mas flexible compense una
 informacion insuficiente. La discusion sobre que variables recoger precede
@@ -166,11 +176,14 @@ algo sobre el juicio que ya existe. El protocolo si puede establecerla, dado
 que el medico tratante forma parte del circuito.
 
 No informa sobre la magnitud del desplazamiento de prevalencia entre sedes
-peruanas. El banco de pruebas mostro que ese desplazamiento, y no la
-contaminacion de los predictores, explica el fallo de transportabilidad de
-la garantia.
-La desviacion de la cobertura permanecio en 0.0736 frente a 0.0744 al
-incorporar la unica familia de variables exenta de sesgo de sede.
+peruanas. Ese desplazamiento es compatible con el fallo de transportabilidad
+observado, pero el banco de pruebas no lo acredita: la incorporacion de las
+constantes vitales no reemplaza a las determinaciones bioquimicas sino que
+se suma a ellas, de modo que los predictores presuntamente contaminados
+permanecen en el modelo y la comparacion no distingue entre ambas
+hipotesis. El modelo ampliado, ademas, no transporta mejor:
+la desviacion de la cobertura pasa de 0.0744 a 0.0736, la media
+desciende de 0.8944 a 0.8838 y el minimo de 0.8036 a 0.7757.
 
 No permite anticipar cuantos casos reunira cada sede ni con que distribucion
 etiologica. Esa informacion condiciona la viabilidad de la recalibracion
@@ -179,6 +192,8 @@ local y debe estimarse con datos propios antes de comprometer el diseno.
 ## Origen de las cifras
 
 Toda cifra de este documento se lee de un archivo de resultados versionado
-del banco de pruebas. El procedimiento que lo compone se detiene ante
-cualquier cifra escrita a mano, ante cualquier fuente ausente y ante
-cualquier linea que no componga.
+del banco de pruebas, con una excepcion: el recuento de hallazgos, que es
+autorreferencial y se contrasta contra el numero de encabezados y de bloques
+de decision del propio documento. El procedimiento que lo compone se detiene
+ante cualquier cifra escrita a mano, ante cualquier fuente ausente, ante
+cualquier linea que no componga y ante una discrepancia en ese recuento.

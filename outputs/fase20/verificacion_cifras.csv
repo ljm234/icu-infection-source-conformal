@@ -1,11 +1,10 @@
 "afirmacion","valor","esperado","tolerancia","concuerda"
 "Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
-"Cobertura conforme, sin crecimiento",0.9044,0.9044,5e-05,TRUE
-"Cobertura conforme, sangre",0.8679,0.8679,5e-05,TRUE
 "Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE
+"Cobertura conforme, maximo entre categorias",0.9044,0.9044,5e-05,TRUE
 "Proporcion resuelta al noventa por ciento",9.6,9.6,0.05,TRUE
 "Error entre resueltos al noventa por ciento",0.028,0.028,5e-05,TRUE
-"Precision maxima en conclusiones minoritarias",0.4,0.4,0.001,TRUE
+"Precision maxima en conclusiones minoritarias",0.4,0.4,5e-05,TRUE
 "Transportabilidad, cobertura minima",0.8036,0.8036,5e-05,TRUE
 "Transportabilidad, desviacion",0.0744021706672595,0.0744,5e-05,TRUE
 "Transportabilidad, cobertura media",0.89444,0.8944,5e-05,TRUE
@@ -13,8 +12,6 @@
 "Unidad reservada, casos respiratorios",13,13,0.5,TRUE
 "Categorias calibrables con cincuenta casos",1,1,0.05,TRUE
 "Tamano medio del conjunto con cincuenta casos",0.888,0.888,5e-04,TRUE
-"Referencia demografica, minoritarias",0.5421,0.5421,5e-05,TRUE
-"Modelo completo, minoritarias",0.6735,0.6735,5e-05,TRUE
 "Ganancia del modelo completo sobre tres marcadores",0.0825,0.0825,1e-04,TRUE
 "Aporte del indicador de solicitud",0.0134,0.0134,1e-04,TRUE
 "Aporte del valor de lactato",0.00380000000000003,0.0038,1e-04,TRUE
@@ -32,3 +29,80 @@
 "Modelo ampliado, ganancia en minoritarias",0.0145666666666666,0.0146,1e-04,TRUE
 "Modelo ampliado, desviacion de cobertura",0.0736339459760239,0.0736,5e-05,TRUE
 "Modelo ampliado, cobertura minima",0.7757,0.7757,5e-05,TRUE
+"Cobertura de temperatura",93,93,0.05,TRUE
+"Cobertura de frec_respiratoria",98.7,98.7,0.05,TRUE
+"Cobertura de saturacion",98.9,98.9,0.05,TRUE
+"Conclusiones minoritarias, total",1390,1390,0.5,TRUE
+"Resolucion al nivel mas laxo",69.1,69.1,0.05,TRUE
+"Error al nivel mas laxo",0.3753,0.3753,5e-05,TRUE
+"Modelo ampliado, cobertura media",0.88384,0.8838,5e-05,TRUE
+"Embudo, p1_estancias_unicas",65366,65366,0.5,TRUE
+"Embudo, p2_adultos",65366,65366,0.5,TRUE
+"Embudo, p3_con_cultivo",33045,33045,0.5,TRUE
+"Embudo, p4_sospecha_infeccion",23213,23213,0.5,TRUE
+"Embudo, p5_cohorte_final",23213,23213,0.5,TRUE
+"Categoria, sin_crecimiento casos",19688,19688,0.5,TRUE
+"Categoria, sin_crecimiento porcentaje",84.81,84.81,0.005,TRUE
+"Categoria, otro_sitio casos",1070,1070,0.5,TRUE
+"Categoria, otro_sitio porcentaje",4.61,4.61,0.005,TRUE
+"Categoria, urinario casos",805,805,0.5,TRUE
+"Categoria, urinario porcentaje",3.47,3.47,0.005,TRUE
+"Categoria, respiratorio casos",671,671,0.5,TRUE
+"Categoria, respiratorio porcentaje",2.89,2.89,0.005,TRUE
+"Categoria, sangre casos",573,573,0.5,TRUE
+"Categoria, sangre porcentaje",2.47,2.47,0.005,TRUE
+"Categoria, herida casos",340,340,0.5,TRUE
+"Categoria, herida porcentaje",1.46,1.46,0.005,TRUE
+"Categoria, intraabdominal casos",66,66,0.5,TRUE
+"Categoria, intraabdominal porcentaje",0.28,0.28,0.005,TRUE
+"Cobertura conforme por clase, sin_crecimiento",0.9044,0.9044,5e-05,TRUE
+"Cobertura conforme por clase, urinario",0.8881,0.8881,5e-05,TRUE
+"Cobertura conforme por clase, respiratorio",0.8984,0.8984,5e-05,TRUE
+"Cobertura conforme por clase, sangre",0.8679,0.8679,5e-05,TRUE
+"Nivel nominal declarado en la fuente",0.9,0.9,0.05,TRUE
+"Clases modeladas en la cobertura conforme",4,4,0.5,TRUE
+"Discriminacion del modelo original, sin_crecimiento",0.6521,0.6521,5e-05,TRUE
+"Discriminacion del modelo original, urinario",0.6518,0.6518,5e-05,TRUE
+"Discriminacion del modelo original, respiratorio",0.6597,0.6597,5e-05,TRUE
+"Discriminacion del modelo original, sangre",0.709,0.709,5e-05,TRUE
+"Conclusiones en el nivel de precision maxima",5,5,0.5,TRUE
+"Transportabilidad, cobertura maxima",0.9612,0.9612,5e-05,TRUE
+"Sedes bajo el nominal en cobertura marginal",2,2,0.5,TRUE
+"Sedes evaluadas dejando una fuera",5,5,0.5,TRUE
+"Sedes que fallan la garantia condicional",5,5,0.5,TRUE
+"Unidad reservada, cobertura de sin_crecimiento",0.9911,0.9911,5e-05,TRUE
+"Unidad reservada, cobertura de urinario",0.8654,0.8654,5e-05,TRUE
+"Unidad reservada, cobertura de respiratorio",0.8462,0.8462,5e-05,TRUE
+"Unidad reservada, cobertura de sangre",0.9615,0.9615,5e-05,TRUE
+"Unidad reservada, clases bajo el nominal",2,2,0.5,TRUE
+"Unidad reservada, clases evaluadas",4,4,0.5,TRUE
+"Recalibracion, recuento local minimo",50,50,0.5,TRUE
+"Referencia, demografia parametros",8,8,0.5,TRUE
+"Referencia, demografia minoritarias",0.5421,0.5421,5e-05,TRUE
+"Referencia, tres marcadores parametros",16,16,0.5,TRUE
+"Referencia, tres marcadores minoritarias",0.591,0.591,5e-05,TRUE
+"Referencia, lineal sin unidad parametros",62,62,0.5,TRUE
+"Referencia, lineal sin unidad minoritarias",0.6343,0.6343,5e-05,TRUE
+"Referencia, modelo completo parametros",148,148,0.5,TRUE
+"Referencia, modelo completo minoritarias",0.6735,0.6735,5e-05,TRUE
+"Concordancia de presion a menos de quince minutos",0.4969,0.4969,5e-05,TRUE
+"Discrepancia absoluta mediana de presion",12,12,0.5,TRUE
+"Presion por cateter, proporcion minima",2.5,2.5,0.05,TRUE
+"Presion por cateter, proporcion maxima",80.4,80.4,0.05,TRUE
+"Indicador de tubo, categoria respiratoria",0.7111,0.7111,5e-05,TRUE
+"Escala completa en la cohorte, tres componentes",0.7313,0.7313,5e-05,TRUE
+"Escala completa dentro del estrato con tubo",0.4865,0.4865,5e-05,TRUE
+"Recorrido de la mediana, frecuencia cardiaca",16,16,0.005,TRUE
+"Recorrido de la mediana, frecuencia respiratoria",7,7,0.005,TRUE
+"Temperatura, disponibilidad minima por unidad",76.5,76.5,0.05,TRUE
+"Temperatura, disponibilidad maxima por unidad",97.9,97.9,0.05,TRUE
+"Temperatura, recorrido de la disponibilidad",21.4,21.4,0.05,TRUE
+"Informacion faltante, maximo en laboratorio",0.6214,0.6214,5e-05,TRUE
+"Informacion faltante, maximo en constantes",0.0648,0.0648,5e-05,TRUE
+"Variables donde la mediana obtiene menor error",9,9,0.5,TRUE
+"Variables donde la imputacion obtiene menor error",7,7,0.5,TRUE
+"Coincidencias de registro, proporcion minima",25.46,25.46,0.005,TRUE
+"Coincidencias de registro, proporcion maxima",40.05,40.05,0.005,TRUE
+"Determinaciones simultaneas, maximo",38,38,0.5,TRUE
+"Coincidencias en laboratorio, proporcion",0.1,0.1,0.05,TRUE
+"Divergencia material maxima por variable",0.11,0.11,5e-04,TRUE

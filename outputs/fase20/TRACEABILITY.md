@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-08-25 by R/59_verificar_cifras.R
+Generated on 2026-08-26 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -10,12 +10,11 @@ margin never exceeds the largest possible rounding error.
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
-| Cobertura conforme, sin crecimiento | 0.9044 | 0.9044 | 0.00005 | yes |
-| Cobertura conforme, sangre | 0.8679 | 0.8679 | 0.00005 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
+| Cobertura conforme, maximo entre categorias | 0.9044 | 0.9044 | 0.00005 | yes |
 | Proporcion resuelta al noventa por ciento | 9.6000 | 9.6000 | 0.05000 | yes |
 | Error entre resueltos al noventa por ciento | 0.0280 | 0.0280 | 0.00005 | yes |
-| Precision maxima en conclusiones minoritarias | 0.4000 | 0.4000 | 0.00100 | yes |
+| Precision maxima en conclusiones minoritarias | 0.4000 | 0.4000 | 0.00005 | yes |
 | Transportabilidad, cobertura minima | 0.8036 | 0.8036 | 0.00005 | yes |
 | Transportabilidad, desviacion | 0.0744 | 0.0744 | 0.00005 | yes |
 | Transportabilidad, cobertura media | 0.8944 | 0.8944 | 0.00005 | yes |
@@ -23,8 +22,6 @@ margin never exceeds the largest possible rounding error.
 | Unidad reservada, casos respiratorios | 13.0000 | 13.0000 | 0.50000 | yes |
 | Categorias calibrables con cincuenta casos | 1.0000 | 1.0000 | 0.05000 | yes |
 | Tamano medio del conjunto con cincuenta casos | 0.8880 | 0.8880 | 0.00050 | yes |
-| Referencia demografica, minoritarias | 0.5421 | 0.5421 | 0.00005 | yes |
-| Modelo completo, minoritarias | 0.6735 | 0.6735 | 0.00005 | yes |
 | Ganancia del modelo completo sobre tres marcadores | 0.0825 | 0.0825 | 0.00010 | yes |
 | Aporte del indicador de solicitud | 0.0134 | 0.0134 | 0.00010 | yes |
 | Aporte del valor de lactato | 0.0038 | 0.0038 | 0.00010 | yes |
@@ -42,9 +39,89 @@ margin never exceeds the largest possible rounding error.
 | Modelo ampliado, ganancia en minoritarias | 0.0146 | 0.0146 | 0.00010 | yes |
 | Modelo ampliado, desviacion de cobertura | 0.0736 | 0.0736 | 0.00005 | yes |
 | Modelo ampliado, cobertura minima | 0.7757 | 0.7757 | 0.00005 | yes |
+| Cobertura de temperatura | 93.0000 | 93.0000 | 0.05000 | yes |
+| Cobertura de frec_respiratoria | 98.7000 | 98.7000 | 0.05000 | yes |
+| Cobertura de saturacion | 98.9000 | 98.9000 | 0.05000 | yes |
+| Conclusiones minoritarias, total | 1390.0000 | 1390.0000 | 0.50000 | yes |
+| Resolucion al nivel mas laxo | 69.1000 | 69.1000 | 0.05000 | yes |
+| Error al nivel mas laxo | 0.3753 | 0.3753 | 0.00005 | yes |
+| Modelo ampliado, cobertura media | 0.8838 | 0.8838 | 0.00005 | yes |
+| Embudo, p1_estancias_unicas | 65366.0000 | 65366.0000 | 0.50000 | yes |
+| Embudo, p2_adultos | 65366.0000 | 65366.0000 | 0.50000 | yes |
+| Embudo, p3_con_cultivo | 33045.0000 | 33045.0000 | 0.50000 | yes |
+| Embudo, p4_sospecha_infeccion | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Embudo, p5_cohorte_final | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Categoria, sin_crecimiento casos | 19688.0000 | 19688.0000 | 0.50000 | yes |
+| Categoria, sin_crecimiento porcentaje | 84.8100 | 84.8100 | 0.00500 | yes |
+| Categoria, otro_sitio casos | 1070.0000 | 1070.0000 | 0.50000 | yes |
+| Categoria, otro_sitio porcentaje | 4.6100 | 4.6100 | 0.00500 | yes |
+| Categoria, urinario casos | 805.0000 | 805.0000 | 0.50000 | yes |
+| Categoria, urinario porcentaje | 3.4700 | 3.4700 | 0.00500 | yes |
+| Categoria, respiratorio casos | 671.0000 | 671.0000 | 0.50000 | yes |
+| Categoria, respiratorio porcentaje | 2.8900 | 2.8900 | 0.00500 | yes |
+| Categoria, sangre casos | 573.0000 | 573.0000 | 0.50000 | yes |
+| Categoria, sangre porcentaje | 2.4700 | 2.4700 | 0.00500 | yes |
+| Categoria, herida casos | 340.0000 | 340.0000 | 0.50000 | yes |
+| Categoria, herida porcentaje | 1.4600 | 1.4600 | 0.00500 | yes |
+| Categoria, intraabdominal casos | 66.0000 | 66.0000 | 0.50000 | yes |
+| Categoria, intraabdominal porcentaje | 0.2800 | 0.2800 | 0.00500 | yes |
+| Cobertura conforme por clase, sin_crecimiento | 0.9044 | 0.9044 | 0.00005 | yes |
+| Cobertura conforme por clase, urinario | 0.8881 | 0.8881 | 0.00005 | yes |
+| Cobertura conforme por clase, respiratorio | 0.8984 | 0.8984 | 0.00005 | yes |
+| Cobertura conforme por clase, sangre | 0.8679 | 0.8679 | 0.00005 | yes |
+| Nivel nominal declarado en la fuente | 0.9000 | 0.9000 | 0.05000 | yes |
+| Clases modeladas en la cobertura conforme | 4.0000 | 4.0000 | 0.50000 | yes |
+| Discriminacion del modelo original, sin_crecimiento | 0.6521 | 0.6521 | 0.00005 | yes |
+| Discriminacion del modelo original, urinario | 0.6518 | 0.6518 | 0.00005 | yes |
+| Discriminacion del modelo original, respiratorio | 0.6597 | 0.6597 | 0.00005 | yes |
+| Discriminacion del modelo original, sangre | 0.7090 | 0.7090 | 0.00005 | yes |
+| Conclusiones en el nivel de precision maxima | 5.0000 | 5.0000 | 0.50000 | yes |
+| Transportabilidad, cobertura maxima | 0.9612 | 0.9612 | 0.00005 | yes |
+| Sedes bajo el nominal en cobertura marginal | 2.0000 | 2.0000 | 0.50000 | yes |
+| Sedes evaluadas dejando una fuera | 5.0000 | 5.0000 | 0.50000 | yes |
+| Sedes que fallan la garantia condicional | 5.0000 | 5.0000 | 0.50000 | yes |
+| Unidad reservada, cobertura de sin_crecimiento | 0.9911 | 0.9911 | 0.00005 | yes |
+| Unidad reservada, cobertura de urinario | 0.8654 | 0.8654 | 0.00005 | yes |
+| Unidad reservada, cobertura de respiratorio | 0.8462 | 0.8462 | 0.00005 | yes |
+| Unidad reservada, cobertura de sangre | 0.9615 | 0.9615 | 0.00005 | yes |
+| Unidad reservada, clases bajo el nominal | 2.0000 | 2.0000 | 0.50000 | yes |
+| Unidad reservada, clases evaluadas | 4.0000 | 4.0000 | 0.50000 | yes |
+| Recalibracion, recuento local minimo | 50.0000 | 50.0000 | 0.50000 | yes |
+| Referencia, demografia parametros | 8.0000 | 8.0000 | 0.50000 | yes |
+| Referencia, demografia minoritarias | 0.5421 | 0.5421 | 0.00005 | yes |
+| Referencia, tres marcadores parametros | 16.0000 | 16.0000 | 0.50000 | yes |
+| Referencia, tres marcadores minoritarias | 0.5910 | 0.5910 | 0.00005 | yes |
+| Referencia, lineal sin unidad parametros | 62.0000 | 62.0000 | 0.50000 | yes |
+| Referencia, lineal sin unidad minoritarias | 0.6343 | 0.6343 | 0.00005 | yes |
+| Referencia, modelo completo parametros | 148.0000 | 148.0000 | 0.50000 | yes |
+| Referencia, modelo completo minoritarias | 0.6735 | 0.6735 | 0.00005 | yes |
+| Concordancia de presion a menos de quince minutos | 0.4969 | 0.4969 | 0.00005 | yes |
+| Discrepancia absoluta mediana de presion | 12.0000 | 12.0000 | 0.50000 | yes |
+| Presion por cateter, proporcion minima | 2.5000 | 2.5000 | 0.05000 | yes |
+| Presion por cateter, proporcion maxima | 80.4000 | 80.4000 | 0.05000 | yes |
+| Indicador de tubo, categoria respiratoria | 0.7111 | 0.7111 | 0.00005 | yes |
+| Escala completa en la cohorte, tres componentes | 0.7313 | 0.7313 | 0.00005 | yes |
+| Escala completa dentro del estrato con tubo | 0.4865 | 0.4865 | 0.00005 | yes |
+| Recorrido de la mediana, frecuencia cardiaca | 16.0000 | 16.0000 | 0.00500 | yes |
+| Recorrido de la mediana, frecuencia respiratoria | 7.0000 | 7.0000 | 0.00500 | yes |
+| Temperatura, disponibilidad minima por unidad | 76.5000 | 76.5000 | 0.05000 | yes |
+| Temperatura, disponibilidad maxima por unidad | 97.9000 | 97.9000 | 0.05000 | yes |
+| Temperatura, recorrido de la disponibilidad | 21.4000 | 21.4000 | 0.05000 | yes |
+| Informacion faltante, maximo en laboratorio | 0.6214 | 0.6214 | 0.00005 | yes |
+| Informacion faltante, maximo en constantes | 0.0648 | 0.0648 | 0.00005 | yes |
+| Variables donde la mediana obtiene menor error | 9.0000 | 9.0000 | 0.50000 | yes |
+| Variables donde la imputacion obtiene menor error | 7.0000 | 7.0000 | 0.50000 | yes |
+| Coincidencias de registro, proporcion minima | 25.4600 | 25.4600 | 0.00500 | yes |
+| Coincidencias de registro, proporcion maxima | 40.0500 | 40.0500 | 0.00500 | yes |
+| Determinaciones simultaneas, maximo | 38.0000 | 38.0000 | 0.50000 | yes |
+| Coincidencias en laboratorio, proporcion | 0.1000 | 0.1000 | 0.05000 | yes |
+| Divergencia material maxima por variable | 0.1100 | 0.1100 | 0.00050 | yes |
 
 ## Source files
 
+- `outputs/fase2/flujo.csv`
+- `outputs/fase2/clases.csv`
+- `outputs/fase6/validacion_enmascaramiento.csv`
 - `outputs/fase7/comparacion_lambda.csv`
 - `outputs/fase8/cobertura.csv`
 - `outputs/fase8/umbrales.csv`
@@ -62,9 +139,13 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase16/curvas_decision.csv`
 - `outputs/fase16/gbm_comparacion.csv`
 - `outputs/fase17/cobertura_vitales.csv`
+- `outputs/fase17/cobertura_presion.csv`
+- `outputs/fase17/concordancia_presion.csv`
 - `outputs/fase17/implausibles.csv`
+- `outputs/fase17/indicador_tubo.csv`
 - `outputs/fase17/intubacion_por_unidad.csv`
 - `outputs/fase17/circularidad_glasgow.csv`
+- `outputs/fase17/recorrido_por_unidad.csv`
 - `outputs/fase17/vitales_por_estrato.csv`
 - `outputs/fase18/comparacion_ampliado.csv`
 - `outputs/fase18/ganancia_splines.csv`
@@ -72,3 +153,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase19/cobertura_louo_ampliado.csv`
 - `outputs/fase19/cobertura_clase_louo_ampliado.csv`
 - `outputs/fase19/auc_louo_ampliado.csv`
+- `outputs/fase20/empates_constantes.csv`
+- `outputs/fase20/empates_laboratorio.csv`
+- `outputs/fase20/divergencia_extraccion.csv`
+- `outputs/fase20/fraccion_informacion_faltante.csv`

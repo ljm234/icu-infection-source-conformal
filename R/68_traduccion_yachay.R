@@ -93,9 +93,11 @@ val <- function(tabla, columna, condicion) {
 
 alfa  <- leer("outputs/fase9/curva_alfa.csv")
 louo  <- leer("outputs/fase10/cobertura_louo.csv")
+louoc <- leer("outputs/fase10/cobertura_clase_louo.csv")
 recal <- leer("outputs/fase12/recalibracion.csv")
 lac   <- leer("outputs/fase15/sensibilidad_lactato.csv")
 gbm   <- leer("outputs/fase16/gbm_comparacion.csv")
+cob8  <- leer("outputs/fase8/cobertura.csv")
 gcs   <- leer("outputs/fase17/circularidad_glasgow.csv")
 tubo  <- leer("outputs/fase17/indicador_tubo.csv")
 amp   <- leer("outputs/fase18/comparacion_ampliado.csv")
@@ -104,11 +106,27 @@ empc  <- leer("outputs/fase20/empates_constantes.csv")
 empl  <- leer("outputs/fase20/empates_laboratorio.csv")
 
 MIN <- c("urinario","respiratorio","sangre")
+
+# Numero de hallazgos que el documento expone. Se declara aqui, se inserta
+# mediante codigo de sustitucion y se contrasta al final contra el numero de
+# bloques de decision efectivamente compuestos. El guardian de prosa no
+# alcanza a detectar un recuento erroneo escrito con letras, de modo que la
+# comprobacion se establece sobre la estructura del documento.
+N_HALLAZGOS <- 7L
 d10 <- alfa$alfa == 0.10
 cm  <- alfa$conclusiones_minoritarias > 0
 pmin_alfa <- max(alfa$aciertos_minoritarios[cm] /
                  alfa$conclusiones_minoritarias[cm])
 nmin <- min(recal$n_local)
+
+# La garantia que el trabajo declara es la condicional por clase. Se cuenta
+# por separado de la marginal: una sede puede alcanzar el nivel nominal en el
+# promedio de sus casos y no alcanzarlo en alguna categoria.
+NOMINAL <- cob8$nominal[1]
+CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
+bajo_marg <- sum(louo$cobertura < NOMINAL)
+falla_cond <- sum(apply(louoc[, CLC], 1, function(r) any(r < NOMINAL, na.rm = TRUE)))
+n_sedes <- nrow(louo)
 
 L <- character(0)
 add <- function(...) L <<- c(L, ...)
@@ -137,8 +155,13 @@ add(prosa(
 "mecanismo de abstencion y validacion en una sede no observada durante el",
 "desarrollo. El proposito era detectar los modos de fallo antes de aplicarlos",
 "a datos peruanos.",
-"",
-"Se detectaron siete. Cinco afectan a decisiones del protocolo.",
+""))
+
+add(cifra(
+  "Se detectaron %d modos de fallo, y cada uno deriva en una decision concreta.",
+  N_HALLAZGOS))
+
+add(prosa(
 "",
 "## Primer hallazgo. La evaluacion exige cuatro dominios",
 "",
@@ -146,13 +169,20 @@ add(prosa(
 "igual al cambiar de sede. Bajo validacion dejando una sede fuera, la primera",
 "se conserva mientras la segunda se degrada de forma desigual."))
 
-add(cifra("La cobertura oscila entre %.4f y %.4f, con desviacion de %.4f",
-          min(louo$cobertura), max(louo$cobertura), sd(louo$cobertura)))
-add(cifra("frente a una media de %.4f: se cumple en promedio y en ninguna",
-          mean(louo$cobertura)))
+add(cifra("La cobertura marginal oscila entre %.4f y %.4f con media de %.4f,",
+          min(louo$cobertura), max(louo$cobertura), mean(louo$cobertura)))
+add(cifra("por debajo del nivel nominal. %d de %d sedes quedan por debajo",
+          as.integer(bajo_marg), as.integer(n_sedes)))
+
+add(prosa("en esa medida.", ""))
+
+add(cifra("La garantia condicional por categoria, que es la que el trabajo"))
+add(cifra("declara, falla en %d de %d sedes: ninguna alcanza el nivel nominal en",
+          as.integer(falla_cond), as.integer(n_sedes)))
 
 add(prosa(
-"sede tomada de forma individual.",
+"las cuatro categorias. La categoria que falla difiere entre sedes, razon por",
+"la cual un resumen marginal lo oculta.",
 "",
 "**Decision.** El informe de resultados no puede limitarse a la",
 "discriminacion. Debe presentar por separado, y desagregados por sede, la",
@@ -180,15 +210,16 @@ add(prosa(
 "La garantia condicional exige un numero minimo de casos por categoria en la",
 "sede donde se recalibra. Por debajo de ese minimo el cuantil no existe."))
 
-add(cifra("Con %d casos locales solo %.1f categoria alcanzaba el minimo, y el",
+add(cifra("Con %d casos locales, una media de %.1f de las %d categorias",
           as.integer(nmin),
-          val(recal, "clases_calibrables", recal$n_local == nmin)))
-add(cifra("tamano medio del conjunto descendia a %.3f: los conjuntos quedaban",
+          val(recal, "clases_calibrables", recal$n_local == nmin),
+          nrow(cob8)))
+add(cifra("alcanzaba el minimo, y el tamano medio del conjunto descendia a %.3f:",
           val(recal, "tamano_medio", recal$n_local == nmin)))
 
 add(prosa(
-"a menudo vacios y el sistema se reducia a un clasificador binario",
-"degenerado, con cobertura aparente proxima a la nominal.",
+"los conjuntos quedaban a menudo vacios y el sistema se reducia a un",
+"clasificador binario degenerado, con cobertura aparente proxima a la nominal.",
 "",
 "**Decision.** Antes de recalibrar en cada sede se verificara el recuento",
 "disponible por etiologia. Las etiologias infrecuentes pueden requerir anos",
@@ -225,19 +256,32 @@ add(prosa(
 "## Quinto hallazgo. La escala de conciencia puede medir el procedimiento",
 "",
 "Un indicador binario de intubacion, desprovisto de contenido fisiologico,",
-"discrimino la categoria respiratoria mejor que la escala completa."))
+"discrimino la categoria respiratoria tan bien como la escala de conciencia."))
 
-add(cifra("El indicador alcanza %.4f frente a %.4f de la escala. Dentro del",
+add(cifra("El indicador alcanza %.4f. La escala obtiene %.4f en su forma completa",
           val(tubo, "auc_solo_tubo", tubo$clase == "respiratorio"),
+          val(gcs, "auc_gcs_total", gcs$estrato == "cohorte completa" &
+                                    gcs$clase == "respiratorio")))
+add(cifra("de tres componentes y %.4f en la reducida a apertura ocular y respuesta",
           val(gcs, "auc_gcs_em", gcs$estrato == "cohorte completa" &
-                                 gcs$clase == "respiratorio")))
-add(cifra("estrato intubado la escala desciende a %.4f, esto es, deja de",
-          val(gcs, "auc_gcs_em", gcs$estrato == "con tubo endotraqueal" &
                                  gcs$clase == "respiratorio")))
 
 add(prosa(
-"discriminar. La escala actuaba como indicador indirecto del tubo, y el tubo",
-"determinaba que el sitio respiratorio se cultivase.",
+"motora. Se reporta la reducida porque el componente verbal asigna la",
+"puntuacion minima al paciente intubado y confunde la ausencia de respuesta",
+"con la imposibilidad de hablar. Dentro del estrato intubado la escala"))
+
+add(cifra("reducida desciende a %.4f, y la completa obtiene ese mismo %.4f. Ambas",
+          val(gcs, "auc_gcs_em", gcs$estrato == "con tubo endotraqueal" &
+                                 gcs$clase == "respiratorio"),
+          val(gcs, "auc_gcs_total", gcs$estrato == "con tubo endotraqueal" &
+                                    gcs$clase == "respiratorio")))
+
+add(prosa(
+"formas coinciden alli porque el componente verbal es constante, de modo que",
+"la completa es la reducida mas un desplazamiento fijo, que deja inalterado",
+"el orden y por tanto el area. La escala actuaba como indicador indirecto",
+"del tubo, y el tubo determinaba que el sitio respiratorio se cultivase.",
 "",
 "**Decision.** La escala figura entre las variables obligatorias del",
 "protocolo, y con fundamento: la meningitis altera la conciencia de forma",
@@ -261,15 +305,14 @@ add(cifra("La diferencia es de %.4f sobre las categorias poco frecuentes.",
 
 add(prosa(
 "",
-"La incorporacion de un dominio nuevo de medicion si produjo mejora, aunque",
-"modesta:"))
+"La incorporacion de un dominio nuevo de medicion si produjo mejora, aunque"))
 
-add(cifra("%.4f al anadir constantes vitales, dos ordenes de magnitud por",
+add(cifra("modesta: %.4f al anadir constantes vitales, muy por encima de lo que",
           mean(amp$auc_ampliado[amp$clase %in% MIN]) -
           mean(amp$auc_original[amp$clase %in% MIN])))
 
 add(prosa(
-"encima de lo que aporto refinar el algoritmo.",
+"aporto refinar el algoritmo.",
 "",
 "**Decision.** No cabe esperar que un metodo mas flexible compense una",
 "informacion insuficiente. La discusion sobre que variables recoger precede",
@@ -337,15 +380,20 @@ add(prosa(
 "que el medico tratante forma parte del circuito.",
 "",
 "No informa sobre la magnitud del desplazamiento de prevalencia entre sedes",
-"peruanas. El banco de pruebas mostro que ese desplazamiento, y no la",
-"contaminacion de los predictores, explica el fallo de transportabilidad de",
-"la garantia."))
+"peruanas. Ese desplazamiento es compatible con el fallo de transportabilidad",
+"observado, pero el banco de pruebas no lo acredita: la incorporacion de las",
+"constantes vitales no reemplaza a las determinaciones bioquimicas sino que",
+"se suma a ellas, de modo que los predictores presuntamente contaminados",
+"permanecen en el modelo y la comparacion no distingue entre ambas",
+"hipotesis. El modelo ampliado, ademas, no transporta mejor:"))
 
-add(cifra("La desviacion de la cobertura permanecio en %.4f frente a %.4f al",
-          sd(louoa$cobertura), sd(louo$cobertura)))
+add(cifra("la desviacion de la cobertura pasa de %.4f a %.4f, la media",
+          sd(louo$cobertura), sd(louoa$cobertura)))
+add(cifra("desciende de %.4f a %.4f y el minimo de %.4f a %.4f.",
+          mean(louo$cobertura), mean(louoa$cobertura),
+          min(louo$cobertura), min(louoa$cobertura)))
 
 add(prosa(
-"incorporar la unica familia de variables exenta de sesgo de sede.",
 "",
 "No permite anticipar cuantos casos reunira cada sede ni con que distribucion",
 "etiologica. Esa informacion condiciona la viabilidad de la recalibracion",
@@ -354,9 +402,26 @@ add(prosa(
 "## Origen de las cifras",
 "",
 "Toda cifra de este documento se lee de un archivo de resultados versionado",
-"del banco de pruebas. El procedimiento que lo compone se detiene ante",
-"cualquier cifra escrita a mano, ante cualquier fuente ausente y ante",
-"cualquier linea que no componga."))
+"del banco de pruebas, con una excepcion: el recuento de hallazgos, que es",
+"autorreferencial y se contrasta contra el numero de encabezados y de bloques",
+"de decision del propio documento. El procedimiento que lo compone se detiene",
+"ante cualquier cifra escrita a mano, ante cualquier fuente ausente, ante",
+"cualquier linea que no componga y ante una discrepancia en ese recuento."))
+
+# Comprobacion estructural. El recuento declarado debe coincidir con el numero
+# de bloques de decision compuestos. De no hacerlo, el documento afirmaria
+# sobre si mismo algo que su propia estructura desmiente.
+decisiones <- sum(grepl("^\\*\\*Decision\\.\\*\\*", L))
+encabezados <- sum(grepl("^## .*hallazgo", L))
+cat("=== COMPROBACION ESTRUCTURAL ===\n")
+cat("Hallazgos declarados:", N_HALLAZGOS, "\n")
+cat("Encabezados de hallazgo:", encabezados, "\n")
+cat("Bloques de decision compuestos:", decisiones, "\n")
+if (decisiones != N_HALLAZGOS || encabezados != N_HALLAZGOS) {
+  cat("El recuento declarado no coincide con la estructura del documento.\n")
+  quit(status = 1)
+}
+cat("Coinciden.\n\n")
 
 dir.create("outputs/fase21", recursive = TRUE, showWarnings = FALSE)
 writeLines(L, "outputs/fase21/PROTOCOLO.md")

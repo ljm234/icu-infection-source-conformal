@@ -1,0 +1,5 @@
+"variable","mediana_minima","mediana_maxima","recorrido_mediana","cobertura_minima","cobertura_maxima","recorrido_cobertura"
+"temperatura",36.3888888888889,36.8333333333333,0.44,76.5,97.9,21.4
+"frec_cardiaca",80,96,16,98.2,99.6,1.4
+"frec_respiratoria",14,21,7,94.9,99.4,4.5
+"saturacion",97,100,3,97.4,99.4,2

@@ -17,33 +17,44 @@ leer <- function(ruta) {
 }
 
 FUENTES <- list(
-  "Comparacion de reglas de penalizacion"   = "outputs/fase7/comparacion_lambda.csv",
-  "Cobertura conforme en prueba"            = "outputs/fase8/cobertura.csv",
-  "Umbrales de calibracion"                 = "outputs/fase8/umbrales.csv",
-  "Curva de riesgo y cobertura"             = "outputs/fase8/riesgo_cobertura.csv",
-  "Compromiso segun nivel de confianza"     = "outputs/fase9/curva_alfa.csv",
-  "Cobertura por nivel y categoria"         = "outputs/fase9/cobertura_por_alfa.csv",
-  "Transportabilidad, cobertura"            = "outputs/fase10/cobertura_louo.csv",
-  "Transportabilidad, cobertura por clase"  = "outputs/fase10/cobertura_clase_louo.csv",
-  "Transportabilidad, discriminacion"       = "outputs/fase10/auc_louo.csv",
-  "Validacion en la unidad reservada"       = "outputs/fase11/cobertura_sellado.csv",
-  "Limites de la recalibracion local"       = "outputs/fase12/recalibracion.csv",
-  "Comparacion con referencias simples"     = "outputs/fase13/referencias.csv",
-  "Sensibilidad al lactato"                 = "outputs/fase15/sensibilidad_lactato.csv",
-  "Comparacion de reglas de agregacion"     = "outputs/fase15/comparacion_agregacion.csv",
-  "Curvas de decision"                      = "outputs/fase16/curvas_decision.csv",
-  "Comparador con arboles potenciados"      = "outputs/fase16/gbm_comparacion.csv",
-  "Cobertura de constantes vitales"         = "outputs/fase17/cobertura_vitales.csv",
-  "Valores implausibles marcados"           = "outputs/fase17/implausibles.csv",
-  "Intubacion por unidad"                   = "outputs/fase17/intubacion_por_unidad.csv",
-  "Circularidad de la escala de conciencia" = "outputs/fase17/circularidad_glasgow.csv",
-  "Constantes por estrato de intubacion"    = "outputs/fase17/vitales_por_estrato.csv",
-  "Modelo ampliado, discriminacion"         = "outputs/fase18/comparacion_ampliado.csv",
-  "Ganancia de la forma flexible"           = "outputs/fase18/ganancia_splines.csv",
-  "Modelo ampliado, umbrales"               = "outputs/fase18/umbrales_ampliado.csv",
-  "Modelo ampliado, transportabilidad"      = "outputs/fase19/cobertura_louo_ampliado.csv",
-  "Modelo ampliado, cobertura por clase"    = "outputs/fase19/cobertura_clase_louo_ampliado.csv",
-  "Modelo ampliado, discriminacion por sede"= "outputs/fase19/auc_louo_ampliado.csv")
+  "Embudo de seleccion"                      = "outputs/fase2/flujo.csv",
+  "Distribucion de categorias"               = "outputs/fase2/clases.csv",
+  "Imputacion frente a la mediana"           = "outputs/fase6/validacion_enmascaramiento.csv",
+  "Comparacion de reglas de penalizacion"    = "outputs/fase7/comparacion_lambda.csv",
+  "Cobertura conforme en prueba"             = "outputs/fase8/cobertura.csv",
+  "Umbrales de calibracion"                  = "outputs/fase8/umbrales.csv",
+  "Curva de riesgo y cobertura"              = "outputs/fase8/riesgo_cobertura.csv",
+  "Compromiso segun nivel de confianza"      = "outputs/fase9/curva_alfa.csv",
+  "Cobertura por nivel y categoria"          = "outputs/fase9/cobertura_por_alfa.csv",
+  "Transportabilidad, cobertura"             = "outputs/fase10/cobertura_louo.csv",
+  "Transportabilidad, cobertura por clase"   = "outputs/fase10/cobertura_clase_louo.csv",
+  "Transportabilidad, discriminacion"        = "outputs/fase10/auc_louo.csv",
+  "Validacion en la unidad reservada"        = "outputs/fase11/cobertura_sellado.csv",
+  "Limites de la recalibracion local"        = "outputs/fase12/recalibracion.csv",
+  "Comparacion con referencias simples"      = "outputs/fase13/referencias.csv",
+  "Sensibilidad al lactato"                  = "outputs/fase15/sensibilidad_lactato.csv",
+  "Comparacion de reglas de agregacion"      = "outputs/fase15/comparacion_agregacion.csv",
+  "Curvas de decision"                       = "outputs/fase16/curvas_decision.csv",
+  "Comparador con arboles potenciados"       = "outputs/fase16/gbm_comparacion.csv",
+  "Cobertura de constantes vitales"          = "outputs/fase17/cobertura_vitales.csv",
+  "Presion por cateter segun unidad"         = "outputs/fase17/cobertura_presion.csv",
+  "Concordancia entre metodos de presion"    = "outputs/fase17/concordancia_presion.csv",
+  "Valores implausibles marcados"            = "outputs/fase17/implausibles.csv",
+  "Indicador de tubo endotraqueal"           = "outputs/fase17/indicador_tubo.csv",
+  "Intubacion por unidad"                    = "outputs/fase17/intubacion_por_unidad.csv",
+  "Circularidad de la escala de conciencia"  = "outputs/fase17/circularidad_glasgow.csv",
+  "Recorrido de constantes entre unidades"   = "outputs/fase17/recorrido_por_unidad.csv",
+  "Constantes por estrato de intubacion"     = "outputs/fase17/vitales_por_estrato.csv",
+  "Modelo ampliado, discriminacion"          = "outputs/fase18/comparacion_ampliado.csv",
+  "Ganancia de la forma flexible"            = "outputs/fase18/ganancia_splines.csv",
+  "Modelo ampliado, umbrales"                = "outputs/fase18/umbrales_ampliado.csv",
+  "Modelo ampliado, transportabilidad"       = "outputs/fase19/cobertura_louo_ampliado.csv",
+  "Modelo ampliado, cobertura por clase"     = "outputs/fase19/cobertura_clase_louo_ampliado.csv",
+  "Modelo ampliado, discriminacion por sede" = "outputs/fase19/auc_louo_ampliado.csv",
+  "Coincidencias en la hora de registro"     = "outputs/fase20/empates_constantes.csv",
+  "Coincidencias en bioquimica"              = "outputs/fase20/empates_laboratorio.csv",
+  "Divergencia de la extraccion"             = "outputs/fase20/divergencia_extraccion.csv",
+  "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -80,6 +91,13 @@ reg <- list()
 t4 <- tolerancia(4); t4d <- tolerancia(4, 2)
 t2 <- tolerancia(2); t1 <- tolerancia(1)
 
+# El nivel nominal y la relacion de clases modeladas se leen de la fuente. Los
+# recuentos que dependen de ellos quedan asi anclados al archivo y no a un
+# valor escrito en este procedimiento.
+CLASES  <- c("sin_crecimiento", "urinario", "respiratorio", "sangre")
+cob_ref <- leer(FUENTES[["Cobertura conforme en prueba"]])
+NOMINAL <- if (is.null(cob_ref)) NA_real_ else cob_ref$nominal[1]
+
 x <- leer(FUENTES[["Comparacion de reglas de penalizacion"]])
 if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Ganancia de lambda minimo en minoritarias",
@@ -89,12 +107,10 @@ if (!is.null(x)) {
 
 x <- leer(FUENTES[["Cobertura conforme en prueba"]])
 if (!is.null(x)) {
-  reg[[length(reg)+1]] <- comprobar("Cobertura conforme, sin crecimiento",
-    x$cobertura[x$clase == "sin_crecimiento"], 0.9044, t4)
-  reg[[length(reg)+1]] <- comprobar("Cobertura conforme, sangre",
-    x$cobertura[x$clase == "sangre"], 0.8679, t4)
   reg[[length(reg)+1]] <- comprobar("Cobertura conforme, minimo entre categorias",
     min(x$cobertura), 0.8679, t4)
+  reg[[length(reg)+1]] <- comprobar("Cobertura conforme, maximo entre categorias",
+    max(x$cobertura), 0.9044, t4)
 }
 
 x <- leer(FUENTES[["Compromiso segun nivel de confianza"]])
@@ -106,7 +122,7 @@ if (!is.null(x)) {
   pmax_min <- max(x$aciertos_minoritarios[x$conclusiones_minoritarias > 0] /
                   x$conclusiones_minoritarias[x$conclusiones_minoritarias > 0])
   reg[[length(reg)+1]] <- comprobar("Precision maxima en conclusiones minoritarias",
-    pmax_min, 0.4000, 0.001)
+    pmax_min, 0.4000, tolerancia(4))
 }
 
 x <- leer(FUENTES[["Transportabilidad, cobertura"]])
@@ -137,10 +153,6 @@ if (!is.null(x)) {
 
 x <- leer(FUENTES[["Comparacion con referencias simples"]])
 if (!is.null(x)) {
-  reg[[length(reg)+1]] <- comprobar("Referencia demografica, minoritarias",
-    x$promedio_minoritarias[x$modelo == "demografia"], 0.5421, t4)
-  reg[[length(reg)+1]] <- comprobar("Modelo completo, minoritarias",
-    x$promedio_minoritarias[x$modelo == "modelo completo"], 0.6735, t4)
   reg[[length(reg)+1]] <- comprobar("Ganancia del modelo completo sobre tres marcadores",
     x$promedio_minoritarias[x$modelo == "modelo completo"] -
     x$promedio_minoritarias[x$modelo == "tres marcadores"], 0.0825, t4d)
@@ -233,6 +245,229 @@ if (!is.null(x)) {
     sd(x$cobertura), 0.0736, t4)
   reg[[length(reg)+1]] <- comprobar("Modelo ampliado, cobertura minima",
     min(x$cobertura), 0.7757, t4)
+}
+
+x <- leer(FUENTES[["Cobertura de constantes vitales"]])
+if (!is.null(x)) {
+  esp <- setNames(c(93.0, 98.7, 98.9),
+                  c("temperatura","frec_respiratoria","saturacion"))
+  for (v in names(esp))
+    reg[[length(reg)+1]] <- comprobar(paste("Cobertura de", v),
+      x$pct[x$variable == v], esp[[v]], t1)
+}
+
+x <- leer(FUENTES[["Compromiso segun nivel de confianza"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Conclusiones minoritarias, total",
+    sum(x$conclusiones_minoritarias), 1390, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Resolucion al nivel mas laxo",
+    max(x$pct_resuelve), 69.1, t1)
+  reg[[length(reg)+1]] <- comprobar("Error al nivel mas laxo",
+    max(x$error_entre_resueltos), 0.3753, t4)
+}
+
+x <- leer(FUENTES[["Modelo ampliado, transportabilidad"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Modelo ampliado, cobertura media",
+    mean(x$cobertura), 0.8838, t4)
+}
+
+# ---------------------------------------------------------------------------
+# Cobertura de la documentacion. Las comprobaciones anteriores dejaban sin
+# contrastar la mayor parte de las cifras que los documentos publican: el
+# embudo, la tabla de categorias, las coberturas por clase de la unidad
+# reservada y los recuentos derivados, entre otras. Cada valor esperado que
+# sigue se leyo de su archivo en el momento de escribirlo.
+# ---------------------------------------------------------------------------
+
+x <- leer(FUENTES[["Embudo de seleccion"]])
+if (!is.null(x)) {
+  esp <- setNames(c(65366, 65366, 33045, 23213, 23213),
+                  c("p1_estancias_unicas", "p2_adultos", "p3_con_cultivo",
+                    "p4_sospecha_infeccion", "p5_cohorte_final"))
+  for (p in names(esp))
+    reg[[length(reg)+1]] <- comprobar(paste("Embudo,", p),
+      x$n[x$paso == p], esp[[p]], 0.5)
+}
+
+x <- leer(FUENTES[["Distribucion de categorias"]])
+if (!is.null(x)) {
+  cl  <- c("sin_crecimiento", "otro_sitio", "urinario", "respiratorio",
+           "sangre", "herida", "intraabdominal")
+  esn <- c(19688, 1070, 805, 671, 573, 340, 66)
+  esp <- c(84.81, 4.61, 3.47, 2.89, 2.47, 1.46, 0.28)
+  for (i in seq_along(cl)) {
+    reg[[length(reg)+1]] <- comprobar(paste("Categoria,", cl[i], "casos"),
+      x$n[x$clase == cl[i]], esn[i], 0.5)
+    reg[[length(reg)+1]] <- comprobar(paste("Categoria,", cl[i], "porcentaje"),
+      x$pct[x$clase == cl[i]], esp[i], tolerancia(2))
+  }
+}
+
+x <- leer(FUENTES[["Cobertura conforme en prueba"]])
+if (!is.null(x)) {
+  esp <- setNames(c(0.9044, 0.8881, 0.8984, 0.8679), CLASES)
+  for (k in CLASES)
+    reg[[length(reg)+1]] <- comprobar(paste("Cobertura conforme por clase,", k),
+      x$cobertura[x$clase == k], esp[[k]], t4)
+  reg[[length(reg)+1]] <- comprobar("Nivel nominal declarado en la fuente",
+    x$nominal[1], 0.9, t1)
+  reg[[length(reg)+1]] <- comprobar("Clases modeladas en la cobertura conforme",
+    nrow(x), 4, 0.5)
+}
+
+x <- leer(FUENTES[["Modelo ampliado, discriminacion"]])
+if (!is.null(x)) {
+  esp <- setNames(c(0.6521, 0.6518, 0.6597, 0.709), CLASES)
+  for (k in CLASES)
+    reg[[length(reg)+1]] <- comprobar(paste("Discriminacion del modelo original,", k),
+      x$auc_original[x$clase == k], esp[[k]], t4)
+}
+
+x <- leer(FUENTES[["Compromiso segun nivel de confianza"]])
+if (!is.null(x)) {
+  s <- x[x$conclusiones_minoritarias > 0, ]
+  i <- which.max(s$aciertos_minoritarios / s$conclusiones_minoritarias)
+  reg[[length(reg)+1]] <- comprobar("Conclusiones en el nivel de precision maxima",
+    s$conclusiones_minoritarias[i], 5, 0.5)
+}
+
+x <- leer(FUENTES[["Transportabilidad, cobertura"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Transportabilidad, cobertura maxima",
+    max(x$cobertura), 0.9612, t4)
+  reg[[length(reg)+1]] <- comprobar("Sedes bajo el nominal en cobertura marginal",
+    sum(x$cobertura < NOMINAL), 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Sedes evaluadas dejando una fuera",
+    nrow(x), 5, 0.5)
+}
+
+x <- leer(FUENTES[["Transportabilidad, cobertura por clase"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Sedes que fallan la garantia condicional",
+    sum(apply(x[, CLASES], 1, function(r) any(r < NOMINAL, na.rm = TRUE))),
+    5, 0.5)
+}
+
+x <- leer(FUENTES[["Validacion en la unidad reservada"]])
+if (!is.null(x)) {
+  esp <- setNames(c(0.9911, 0.8654, 0.8462, 0.9615), CLASES)
+  for (k in CLASES)
+    reg[[length(reg)+1]] <- comprobar(paste("Unidad reservada, cobertura de", k),
+      x$cobertura[x$clase == k], esp[[k]], t4)
+  reg[[length(reg)+1]] <- comprobar("Unidad reservada, clases bajo el nominal",
+    sum(x$cobertura < NOMINAL), 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Unidad reservada, clases evaluadas",
+    nrow(x), 4, 0.5)
+}
+
+x <- leer(FUENTES[["Limites de la recalibracion local"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Recalibracion, recuento local minimo",
+    min(x$n_local), 50, 0.5)
+}
+
+x <- leer(FUENTES[["Comparacion con referencias simples"]])
+if (!is.null(x)) {
+  mo  <- c("demografia", "tres marcadores", "lineal sin unidad",
+           "modelo completo")
+  esn <- c(8, 16, 62, 148)
+  esa <- c(0.5421, 0.591, 0.6343, 0.6735)
+  for (i in seq_along(mo)) {
+    reg[[length(reg)+1]] <- comprobar(paste("Referencia,", mo[i], "parametros"),
+      x$parametros[x$modelo == mo[i]], esn[i], 0.5)
+    reg[[length(reg)+1]] <- comprobar(paste("Referencia,", mo[i], "minoritarias"),
+      x$promedio_minoritarias[x$modelo == mo[i]], esa[i], t4)
+  }
+}
+
+x <- leer(FUENTES[["Concordancia entre metodos de presion"]])
+if (!is.null(x)) {
+  s <- x[x$tramo == "menos de 15 min", ]
+  reg[[length(reg)+1]] <- comprobar("Concordancia de presion a menos de quince minutos",
+    s$correlacion, 0.4969, t4)
+  reg[[length(reg)+1]] <- comprobar("Discrepancia absoluta mediana de presion",
+    s$dif_absoluta_mediana, 12, 0.5)
+}
+
+x <- leer(FUENTES[["Presion por cateter segun unidad"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Presion por cateter, proporcion minima",
+    min(x$pct_por_cateter), 2.5, t1)
+  reg[[length(reg)+1]] <- comprobar("Presion por cateter, proporcion maxima",
+    max(x$pct_por_cateter), 80.4, t1)
+}
+
+x <- leer(FUENTES[["Indicador de tubo endotraqueal"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Indicador de tubo, categoria respiratoria",
+    x$auc_solo_tubo[x$clase == "respiratorio"], 0.7111, t4)
+}
+
+x <- leer(FUENTES[["Circularidad de la escala de conciencia"]])
+if (!is.null(x)) {
+  s <- x[x$estrato == "cohorte completa" & x$clase == "respiratorio", ]
+  reg[[length(reg)+1]] <- comprobar("Escala completa en la cohorte, tres componentes",
+    s$auc_gcs_total, 0.7313, t4)
+  s2 <- x[x$estrato == "con tubo endotraqueal" & x$clase == "respiratorio", ]
+  reg[[length(reg)+1]] <- comprobar("Escala completa dentro del estrato con tubo",
+    s2$auc_gcs_total, 0.4865, t4)
+}
+
+x <- leer(FUENTES[["Recorrido de constantes entre unidades"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Recorrido de la mediana, frecuencia cardiaca",
+    x$recorrido_mediana[x$variable == "frec_cardiaca"], 16, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Recorrido de la mediana, frecuencia respiratoria",
+    x$recorrido_mediana[x$variable == "frec_respiratoria"], 7, tolerancia(2))
+  s <- x[x$variable == "temperatura", ]
+  reg[[length(reg)+1]] <- comprobar("Temperatura, disponibilidad minima por unidad",
+    s$cobertura_minima, 76.5, t1)
+  reg[[length(reg)+1]] <- comprobar("Temperatura, disponibilidad maxima por unidad",
+    s$cobertura_maxima, 97.9, t1)
+  reg[[length(reg)+1]] <- comprobar("Temperatura, recorrido de la disponibilidad",
+    s$recorrido_cobertura, 21.4, t1)
+}
+
+x <- leer(FUENTES[["Fraccion de informacion faltante"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Informacion faltante, maximo en laboratorio",
+    max(x$fmi[x$pct_ausente > 20]), 0.6214, t4)
+  reg[[length(reg)+1]] <- comprobar("Informacion faltante, maximo en constantes",
+    max(x$fmi[x$pct_ausente < 10]), 0.0648, t4)
+}
+
+x <- leer(FUENTES[["Imputacion frente a la mediana"]])
+if (!is.null(x)) {
+  mi <- x[x$metodo == "mice con unidad", ]
+  md <- x[x$metodo == "mediana", ]
+  o  <- match(mi$variable, md$variable)
+  reg[[length(reg)+1]] <- comprobar("Variables donde la mediana obtiene menor error",
+    sum(mi$error_absoluto_mediano > md$error_absoluto_mediano[o]), 9, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Variables donde la imputacion obtiene menor error",
+    sum(mi$error_absoluto_mediano < md$error_absoluto_mediano[o]), 7, 0.5)
+}
+
+x <- leer(FUENTES[["Coincidencias en la hora de registro"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Coincidencias de registro, proporcion minima",
+    min(x$pct), 25.46, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Coincidencias de registro, proporcion maxima",
+    max(x$pct), 40.05, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Determinaciones simultaneas, maximo",
+    max(x$maximo_coincidentes), 38, 0.5)
+}
+
+x <- leer(FUENTES[["Coincidencias en bioquimica"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Coincidencias en laboratorio, proporcion",
+    x$pct, 0.1, t1)
+}
+
+x <- leer(FUENTES[["Divergencia de la extraccion"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Divergencia material maxima por variable",
+    max(x$pct_material), 0.11, tolerancia(3))
 }
 
 tab <- do.call(rbind, reg)

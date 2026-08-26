@@ -1,6 +1,6 @@
 # Reproducibility of the extraction step
 
-Generated on 2026-08-25 by R/64_auditoria_publicacion.R
+Generated on 2026-08-26 by R/64_auditoria_publicacion.R
 
 ## Finding
 
@@ -25,12 +25,13 @@ matters because temperature is recorded under two itemids in different
 scales, so the raw figure places readings of very different temperatures
 side by side.
 
-Three consecutive runs of the corrected query return identical results.
+Ties on the earlier keys carry equal converted values, so which row is
+retained does not change the result.
 
 ## Impact
 
 Material divergence from the earlier extraction reaches 0.110 percent
-of stays per variable. Coverage is unchanged across all six variables.
+of stays per variable.
 The published figures come from the earlier extraction; the deterministic
 version is provided alongside and the divergence is quantified above.
 

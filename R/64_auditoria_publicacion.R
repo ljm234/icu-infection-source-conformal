@@ -42,10 +42,17 @@ cat("\nContenido del directorio de derivados bajo control de versiones:",
     length(derivados), "\n")
 if (length(derivados) > 0) for (f in derivados) cat("  ", f, "\n")
 
+PROTEGIDAS <- c("data",
+  "outputs/fase4/matriz.csv", "outputs/fase4/matriz_limpia.csv",
+  "outputs/fase5/matriz_particionada.csv", "outputs/fase5/SELLADO_NO_ABRIR.csv",
+  "outputs/fase6/imputaciones.rds", "outputs/fase6/objeto_mice.rds",
+  "outputs/fase6/objeto_mice_ampliado.rds",
+  "outputs/fase7/prob_calibracion.csv", "outputs/fase7/prob_prueba.csv",
+  "outputs/fase8/prob_calibracion.csv", "outputs/fase8/prueba_con_conjuntos.csv",
+  "outputs/fase11/sellado_evaluado.csv", "outputs/fase15/matriz_peor_valor.csv")
+
 historial <- system(paste("git log --all --oneline --",
-  "outputs/fase4/matriz.csv outputs/fase5/matriz_particionada.csv",
-  "outputs/fase11/sellado_evaluado.csv data/derivados 2>/dev/null"),
-  intern = TRUE)
+  paste(PROTEGIDAS, collapse = " "), "2>/dev/null"), intern = TRUE)
 cat("\nRegistros del historial que alcanzan datos por paciente:",
     length(historial), "\n")
 if (length(historial) > 0) for (l in historial) cat("  ", l, "\n")
@@ -150,13 +157,14 @@ lineas <- c(
   "scales, so the raw figure places readings of very different temperatures",
   "side by side.",
   "",
-  "Three consecutive runs of the corrected query return identical results.",
+  "Ties on the earlier keys carry equal converted values, so which row is",
+  "retained does not change the result.",
   "",
   "## Impact",
   "",
   sprintf("Material divergence from the earlier extraction reaches %.3f percent",
           max(dv$pct_material)),
-  "of stays per variable. Coverage is unchanged across all six variables.",
+  "of stays per variable.",
   "The published figures come from the earlier extraction; the deterministic",
   "version is provided alongside and the divergence is quantified above.",
   "",
