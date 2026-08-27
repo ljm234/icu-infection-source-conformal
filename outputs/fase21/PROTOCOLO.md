@@ -31,8 +31,9 @@ en esa medida.
 
 La garantia condicional por categoria, que es la que el trabajo
 declara, falla en 5 de 5 sedes: ninguna alcanza el nivel nominal en
-las cuatro categorias. La categoria que falla difiere entre sedes, razon por
-la cual un resumen marginal lo oculta.
+las cuatro categorias. Las categorias que fallan no son las mismas en todas
+las sedes: forman 3 conjuntos distintos entre las 5, de modo que un resumen
+marginal oculta cuales quedan descubiertas en cada una.
 
 **Decision.** El informe de resultados no puede limitarse a la
 discriminacion. Debe presentar por separado, y desagregados por sede, la
@@ -135,8 +136,13 @@ El registro de observaciones de enfermeria se valida por lotes, de modo que
 varias determinaciones comparten instante de registro.
 La coincidencia afecta a entre 25.46 y 40.05 por ciento de las
 estancias segun la variable, con hasta 38 determinaciones
-simultaneas. Las de laboratorio quedan exentas, con 0.10 por
-ciento, dado que los equipos consignan cada resultado por separado.
+simultaneas. Las de laboratorio se afectan en 0.10 por ciento de
+las estancias. Los equipos consignan cada resultado por separado, de modo
+que la coincidencia resulta alli mucho menos frecuente, pero no nula, y la
+consulta que las extrae ordena tambien por el solo instante de registro. La
+reextraccion corregida alcanzo unicamente a las constantes vitales, de modo
+que la divergencia que esa ordenacion pueda inducir sobre las bioquimicas no
+esta acotada.
 
 Seleccionar la primera determinacion ordenando unicamente por el instante de
 registro deja las coincidencias sin resolver, y la fila retenida puede

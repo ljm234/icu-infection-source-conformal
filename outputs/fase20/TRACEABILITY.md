@@ -80,6 +80,7 @@ margin never exceeds the largest possible rounding error.
 | Sedes bajo el nominal en cobertura marginal | 2.0000 | 2.0000 | 0.50000 | yes |
 | Sedes evaluadas dejando una fuera | 5.0000 | 5.0000 | 0.50000 | yes |
 | Sedes que fallan la garantia condicional | 5.0000 | 5.0000 | 0.50000 | yes |
+| Patrones distintos de fallo condicional | 3.0000 | 3.0000 | 0.50000 | yes |
 | Unidad reservada, cobertura de sin_crecimiento | 0.9911 | 0.9911 | 0.00005 | yes |
 | Unidad reservada, cobertura de urinario | 0.8654 | 0.8654 | 0.00005 | yes |
 | Unidad reservada, cobertura de respiratorio | 0.8462 | 0.8462 | 0.00005 | yes |
@@ -89,7 +90,7 @@ margin never exceeds the largest possible rounding error.
 | Recalibracion, recuento local minimo | 50.0000 | 50.0000 | 0.50000 | yes |
 | Referencia, demografia parametros | 8.0000 | 8.0000 | 0.50000 | yes |
 | Referencia, demografia minoritarias | 0.5421 | 0.5421 | 0.00005 | yes |
-| Referencia, tres marcadores parametros | 16.0000 | 16.0000 | 0.50000 | yes |
+| Referencia, tres marcadores parametros | 12.0000 | 12.0000 | 0.50000 | yes |
 | Referencia, tres marcadores minoritarias | 0.5910 | 0.5910 | 0.00005 | yes |
 | Referencia, lineal sin unidad parametros | 62.0000 | 62.0000 | 0.50000 | yes |
 | Referencia, lineal sin unidad minoritarias | 0.6343 | 0.6343 | 0.00005 | yes |

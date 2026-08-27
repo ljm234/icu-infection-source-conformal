@@ -28,7 +28,29 @@ for (v in list(c("micro", MICRO), c("rx", RX), c("patients", PAT),
 }
 
 # ---------------------------------------------------------------------------
-# Cohorte. Replica las definiciones selladas en la fase anterior.
+# Cohorte. Las definiciones de cohorte replican sin variacion las selladas en
+# la fase anterior: el antibiotico sistemico, la primera estancia por
+# paciente, la ventana de seis horas y el criterio de sospecha.
+#
+# La etiqueta no las replica, y conviene consignar en que. La fase anterior
+# clasifica en seis sitios y desempata sangre, respiratorio, intraabdominal,
+# urinario, herida. Aqui se conservan los tres sitios que el modelo trata
+# como categoria propia y el resto pasa a la categoria de abstencion, que es
+# el proposito de esta fase. Pero al desaparecer intraabdominal de la escala
+# de desempate, urinario asciende por encima de el. Una estancia sin cultivo
+# positivo en sangre ni en via respiratoria, y positiva a la vez en el sitio
+# intraabdominal y en el urinario, recibiria alli una etiqueta que no se
+# modela y aqui una que si. Es el unico par que puede divergir.
+#
+# R/73_divergencia_etiquetado.R reconstruye ambas etiquetas desde las tablas
+# de origen y deposita el cruce completo. Ninguna estancia de la cohorte cae
+# en ese par, de modo que la discrepancia existe en el codigo y no llega a
+# producirse en los datos. El deposito conserva la comprobacion; no se
+# reproduce aqui una cifra que envejeceria sin aviso.
+#
+# La cohorte no se reconstruye. Rehacerla despues de abrir el conjunto
+# sellado invalidaria la validacion externa, y la discrepancia no altera
+# ninguna etiqueta.
 # ---------------------------------------------------------------------------
 
 dbExecute(con, "

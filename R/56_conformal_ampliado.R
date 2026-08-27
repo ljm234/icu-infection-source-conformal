@@ -163,11 +163,28 @@ if (sum(decide) > 0) {
   print(table(emitida = unica, real = pp$clase[decide]))
 }
 
+# Los cuatro indicadores del modelo original se leen de la curva por nivel de
+# confianza, que es donde se calcularon, y en la fila del nivel que esta fase
+# emplea. Transcritos a mano quedarian sin seguimiento de su fuente aunque
+# solo se impriman.
+RUTA_ALFA <- "outputs/fase9/curva_alfa.csv"
+if (!file.exists(RUTA_ALFA)) {
+  cat("\nFuente ausente:", RUTA_ALFA, "\n")
+  cat("El procedimiento se detiene.\n"); quit(status = 1)
+}
+ca <- read.csv(RUTA_ALFA, stringsAsFactors = FALSE)
+fa <- which(abs(ca$alfa - ALFA) < 1e-9)
+if (length(fa) != 1) {
+  cat("\nLa curva por nivel no contiene una fila para el nivel empleado.\n")
+  cat("El procedimiento se detiene.\n"); quit(status = 1)
+}
+
 cat("\n=== COMPARACION CON EL MODELO ORIGINAL ===\n")
 print(data.frame(
   indicador = c("proporcion resuelta", "error entre resueltos",
                 "cobertura marginal", "tamano medio del conjunto"),
-  original = c(0.096, 0.028, 0.9024, 3.035),
+  original = c(ca$pct_resuelve[fa] / 100, ca$error_entre_resueltos[fa],
+               ca$cobertura_marginal[fa], ca$tamano_medio[fa]),
   ampliado = c(round(mean(decide), 4),
                if (sum(decide) > 0)
                  round(1 - mean(sapply(which(decide), function(i)

@@ -51,11 +51,14 @@ cat("Detecta composicion multiple:", if (p6) "si" else "NO", "\n")
 p7 <- compone_una_linea("valor %.2f", 3.14)
 cat("Admite composicion valida:", if (p7) "si" else "NO", "\n")
 
-if (!all(c(p1, p2, p3, p4, p5, p6, p7))) {
+p8 <- !grepl("%[-+0-9.]*[sdfe]", "texto sin codigo de sustitucion")
+cat("Detecta patron sin codigo de sustitucion:", if (p8) "si" else "NO", "\n")
+
+if (!all(c(p1, p2, p3, p4, p5, p6, p7, p8))) {
   cat("\nLas guardias no superan sus pruebas. No procede componer.\n")
   quit(status = 1)
 }
-cat("Las siete pruebas se superan.\n\n")
+cat("Las ocho pruebas se superan.\n\n")
 
 prosa <- function(...) {
   x <- c(...)
@@ -67,6 +70,10 @@ prosa <- function(...) {
 }
 
 cifra <- function(fmt, ...) {
+  if (!grepl("%[-+0-9.]*[sdfe]", fmt)) {
+    cat("Patron sin codigo de sustitucion. Corresponde a prosa:\n  ", fmt, "\n")
+    quit(status = 1)
+  }
   if (patron_con_digito(fmt)) {
     cat("Cifra literal en un patron:\n  ", fmt, "\n"); quit(status = 1)
   }
@@ -128,6 +135,13 @@ bajo_marg <- sum(louo$cobertura < NOMINAL)
 falla_cond <- sum(apply(louoc[, CLC], 1, function(r) any(r < NOMINAL, na.rm = TRUE)))
 n_sedes <- nrow(louo)
 
+# Las categorias que fallan no son las mismas en todas las sedes, pero tampoco
+# difieren una a una: dos pares de sedes comparten conjunto. Se cuentan los
+# conjuntos distintos en lugar de calificar el patron con una palabra.
+patron_falla <- apply(louoc[, CLC], 1, function(r)
+  paste(CLC[!is.na(r) & r < NOMINAL], collapse = "|"))
+n_patrones <- length(unique(patron_falla))
+
 L <- character(0)
 add <- function(...) L <<- c(L, ...)
 
@@ -176,13 +190,18 @@ add(cifra("por debajo del nivel nominal. %d de %d sedes quedan por debajo",
 
 add(prosa("en esa medida.", ""))
 
-add(cifra("La garantia condicional por categoria, que es la que el trabajo"))
+add(prosa("La garantia condicional por categoria, que es la que el trabajo"))
 add(cifra("declara, falla en %d de %d sedes: ninguna alcanza el nivel nominal en",
           as.integer(falla_cond), as.integer(n_sedes)))
 
 add(prosa(
-"las cuatro categorias. La categoria que falla difiere entre sedes, razon por",
-"la cual un resumen marginal lo oculta.",
+"las cuatro categorias. Las categorias que fallan no son las mismas en todas"))
+add(cifra(
+  "las sedes: forman %d conjuntos distintos entre las %d, de modo que un resumen",
+  as.integer(n_patrones), as.integer(n_sedes)))
+
+add(prosa(
+"marginal oculta cuales quedan descubiertas en cada una.",
 "",
 "**Decision.** El informe de resultados no puede limitarse a la",
 "discriminacion. Debe presentar por separado, y desagregados por sede, la",
@@ -330,11 +349,16 @@ add(cifra("La coincidencia afecta a entre %.2f y %.2f por ciento de las",
           min(empc$pct), max(empc$pct)))
 add(cifra("estancias segun la variable, con hasta %d determinaciones",
           as.integer(max(empc$maximo_coincidentes))))
-add(cifra("simultaneas. Las de laboratorio quedan exentas, con %.2f por",
+add(cifra("simultaneas. Las de laboratorio se afectan en %.2f por ciento de",
           empl$pct))
 
 add(prosa(
-"ciento, dado que los equipos consignan cada resultado por separado.",
+"las estancias. Los equipos consignan cada resultado por separado, de modo",
+"que la coincidencia resulta alli mucho menos frecuente, pero no nula, y la",
+"consulta que las extrae ordena tambien por el solo instante de registro. La",
+"reextraccion corregida alcanzo unicamente a las constantes vitales, de modo",
+"que la divergencia que esa ordenacion pueda inducir sobre las bioquimicas no",
+"esta acotada.",
 "",
 "Seleccionar la primera determinacion ordenando unicamente por el instante de",
 "registro deja las coincidencias sin resolver, y la fila retenida puede",

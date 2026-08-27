@@ -1,0 +1,13 @@
+{
+  "fase": "24",
+  "ejecutado_en": "2026-08-26T20:18:46-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "glmnet_version": "5.0",
+  "proposito": "deposito de la regla del maximo en las cuatro configuraciones evaluadas",
+  "conjunto": "prueba",
+  "definicion_conclusion": "estancia cuya categoria de probabilidad maxima no es la mayoritaria del conjunto",
+  "definicion_exactitud": "proporcion de estancias cuya categoria de probabilidad maxima coincide con la observada",
+  "procedencia": "cada fila se contrasta contra la discriminacion publicada de su metodo antes de admitirse",
+  "tolerancia_contraste": 0,
+  "imputaciones_ampliadas": 20
+}

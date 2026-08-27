@@ -1,9 +1,20 @@
 m <- read.csv("data/derivados/glasgow.csv", stringsAsFactors = FALSE)
 
-# El diagnostico se realiza sobre los conjuntos de desarrollo. La decision
-# sobre que variables integran el modelo constituye una eleccion de diseno y
-# no una evaluacion de resultados, de modo que no procede examinar el
-# conjunto de prueba ni la unidad reservada para adoptarla.
+# El diagnostico de discriminacion se realiza sobre los conjuntos de
+# desarrollo. La decision sobre que variables integran el modelo constituye
+# una eleccion de diseno y no una evaluacion de resultados, de modo que no
+# procede examinar el conjunto de prueba para adoptarla.
+#
+# La unidad reservada si se examina, al final de este procedimiento, y
+# conviene declararlo en lugar de enunciar una regla que el propio
+# procedimiento incumple. Alli se describe la distribucion de la escala de
+# conciencia en esa unidad, porque una variable carente de variacion en la
+# sede de validacion externa no puede sostener prediccion alguna y esa
+# comprobacion precede a admitirla. Es un descriptivo de una variable
+# candidata y no una medida de desempeno, ocurre con el modelo primario ya
+# congelado y evaluado, y el modelo ampliado no llega a evaluarse en esa
+# unidad. Aun asi, la unidad deja de estar intacta para la extension y el
+# documento publico lo declara.
 d <- m[m$grupo %in% c("entrenamiento","calibracion"), ]
 CL <- c("sin_crecimiento","urinario","respiratorio","sangre")
 

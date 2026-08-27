@@ -84,9 +84,18 @@ lasso limit, so the penalty actually fitted is lasso rather than a mixture.
 Folds assigned by patient. Restricted cubic splines where the cross-validated
 gain exceeded a threshold derived from a permutation null.
 
-**Partition.** The cardiovascular unit was sealed in full and left
-unexamined until development concluded, selected on four measures of
-dissimilarity, two of which are versioned.
+**Partition.** The cardiovascular unit was sealed in full. The choice was a
+judgement informed by the unit profiles that `R/21_perfil_unidades.R`
+computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`
+and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a
+rule. `R/22_particion.R` names the unit as a constant and computes no
+selection criterion.
+
+The primary model was frozen before that unit was opened, and it was
+evaluated there once. The extension proceeded differently: it examined
+descriptive summaries of the sealed unit, among them the distribution of the
+consciousness scale, in order to decide which variables to admit. The
+extended model was never evaluated there.
 
 ## Principal results
 
@@ -135,8 +144,9 @@ Under leave-one-unit-out validation, marginal coverage ranges from
 
 The conditional guarantee, which is the one this work claims, fails
 in 5 of 5 units: none reaches nominal coverage across all four
-classes. The failing class differs by unit, which is why a marginal summary
-conceals it.
+classes. The classes that fail are not the same everywhere: they form
+3 distinct patterns across the 5 units, so a marginal summary conceals
+which classes are left uncovered where.
 
 ### The sealed unit
 
@@ -163,10 +173,13 @@ conceals this.
 
 ### Model complexity is justified and insufficient
 
+Parameters are the non-zero coefficients, intercepts excluded, summed over
+the class blocks.
+
     specification         parameters   AUC on minority classes
 
     demografia                    8    0.5421
-    tres marcadores              16    0.5910
+    tres marcadores              12    0.5910
     lineal sin unidad            62    0.6343
     modelo completo             148    0.6735
 
@@ -264,8 +277,12 @@ variable with an identical storetime, up to 38 at once. Selecting
 the first measurement by ordering on storetime alone leaves ties unresolved,
 and the row retained can differ between runs of the same query.
 
-Laboratory results are unaffected at 0.10 percent, since analysers
-timestamp each result individually.
+Laboratory results are affected in 0.10 percent of stays. Analysers
+timestamp each result individually, which makes ties far rarer there but not
+absent. The laboratory extraction in `R/19_matriz.R` orders by storetime
+alone, the same pattern corrected here, and the re-extraction covered the
+vital signs only. No versioned file bounds the divergence that leaves in the
+core phases.
 
 Ordering now uses four keys: storetime, charttime, the value after unit
 conversion, and itemid. The converted value earns its place:
@@ -302,13 +319,15 @@ All units belong to a single tertiary academic centre, so the observed
 heterogeneity is a lower bound on what separate institutions would show.
 
 The sealed unit contributes 13 respiratory cases, too few to
-estimate conditional coverage with useful precision. This was declared
-before the set was examined.
+estimate conditional coverage with useful precision.
 
 The core phases were extracted before the tie-breaking correction. They draw
-only on laboratory results, which are unaffected. The cohort was not rebuilt
+only on laboratory results, where ties are far rarer than in nursing
+observations but not absent, and where the ordering carries the same defect.
+The correction re-extracted the vital signs only, so the divergence the core
+phases could carry is not bounded by any file. The cohort was not rebuilt
 because doing so after the sealed set had been opened would void the
-external validation.
+external validation, and the limitation therefore stands unquantified.
 
 The study does not compare system performance against a clinician working
 from the same information.

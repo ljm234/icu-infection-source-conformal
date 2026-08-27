@@ -70,6 +70,7 @@
 "Sedes bajo el nominal en cobertura marginal",2,2,0.5,TRUE
 "Sedes evaluadas dejando una fuera",5,5,0.5,TRUE
 "Sedes que fallan la garantia condicional",5,5,0.5,TRUE
+"Patrones distintos de fallo condicional",3,3,0.5,TRUE
 "Unidad reservada, cobertura de sin_crecimiento",0.9911,0.9911,5e-05,TRUE
 "Unidad reservada, cobertura de urinario",0.8654,0.8654,5e-05,TRUE
 "Unidad reservada, cobertura de respiratorio",0.8462,0.8462,5e-05,TRUE
@@ -79,7 +80,7 @@
 "Recalibracion, recuento local minimo",50,50,0.5,TRUE
 "Referencia, demografia parametros",8,8,0.5,TRUE
 "Referencia, demografia minoritarias",0.5421,0.5421,5e-05,TRUE
-"Referencia, tres marcadores parametros",16,16,0.5,TRUE
+"Referencia, tres marcadores parametros",12,12,0.5,TRUE
 "Referencia, tres marcadores minoritarias",0.591,0.591,5e-05,TRUE
 "Referencia, lineal sin unidad parametros",62,62,0.5,TRUE
 "Referencia, lineal sin unidad minoritarias",0.6343,0.6343,5e-05,TRUE

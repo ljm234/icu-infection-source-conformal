@@ -1,8 +1,24 @@
 library(xgboost)
 set.seed(20260818)
 
-esp  <- readRDS("outputs/fase7/especificacion.rds")
-imps <- readRDS("outputs/fase6/imputaciones.rds")
+detener <- function(...) {
+  cat("\n", ..., "\n", sep = "")
+  cat("El procedimiento se detiene. No procede sobrescribir el archivo.\n")
+  quit(status = 1)
+}
+
+RUTA_ESP <- "outputs/fase7/especificacion.rds"
+RUTA_IMP <- "outputs/fase6/imputaciones.rds"
+RUTA_CMP <- "outputs/fase7/comparacion_lambda.csv"
+RUTA_REF <- "outputs/fase13/referencias.csv"
+RUTA_OUT <- "outputs/fase16/gbm_comparacion.csv"
+RUTA_MAX <- "outputs/fase16/gbm_regla_maximo.csv"
+
+for (r in c(RUTA_ESP, RUTA_IMP, RUTA_CMP))
+  if (!file.exists(r)) detener("Fuente ausente: ", r)
+
+esp  <- readRDS(RUTA_ESP)
+imps <- readRDS(RUTA_IMP)
 M <- length(imps)
 CLASES <- esp$clases
 
@@ -117,10 +133,32 @@ auc <- function(p, yb) {
 }
 a_gbm <- sapply(CLASES, function(k) auc(mm[[k]], as.integer(mm$clase == k)))
 
-# Valores del modelo lineal penalizado en el mismo conjunto de prueba,
-# procedentes de la fase ocho.
-a_lin <- c(sin_crecimiento = 0.6521, urinario = 0.6518,
-           respiratorio = 0.6597, sangre = 0.7090)
+# Valores del modelo lineal penalizado en el mismo conjunto de prueba. Se
+# leen del archivo que los produjo, no se transcriben: escritos a mano
+# dejarian de seguir a su fuente y llegarian sin aviso al archivo que esta
+# fase deposita, que es uno de los que la verificacion de cifras contrasta.
+#
+# La lectura se contrasta ademas contra la fila del modelo completo de la
+# tabla de referencias, que ha de consignar la misma discriminacion. Dos
+# archivos que discrepasen sobre el mismo modelo indicarian que uno de los
+# dos quedo sin regenerar.
+cmp <- read.csv(RUTA_CMP, stringsAsFactors = FALSE)
+if (!all(CLASES %in% cmp$clase))
+  detener("La comparacion de penalizaciones no cubre las categorias.")
+a_lin <- setNames(cmp$auc_min, cmp$clase)[CLASES]
+if (any(is.na(a_lin)))
+  detener("La comparacion de penalizaciones no declara alguna categoria.")
+
+if (file.exists(RUTA_REF)) {
+  ref <- read.csv(RUTA_REF, stringsAsFactors = FALSE)
+  fc <- ref[ref$modelo == "modelo completo", ]
+  if (nrow(fc) == 1 && all(CLASES %in% names(fc))) {
+    d <- max(abs(as.numeric(fc[1, CLASES]) - a_lin))
+    cat("\nDiscrepancia con la tabla de referencias:", signif(d, 3), "\n")
+    if (d >= 5e-05)
+      detener("Los dos archivos discrepan sobre el modelo completo.")
+  }
+}
 
 comp <- data.frame(clase = CLASES,
                    auc_lineal = as.numeric(a_lin[CLASES]),
@@ -134,9 +172,51 @@ cat("\nPromedio minoritarias lineal:", round(mean(a_lin[-1]), 4), "\n")
 cat("Promedio minoritarias arboles:", round(mean(a_gbm[-1]), 4), "\n")
 cat("Diferencia:", round(mean(a_gbm[-1]) - mean(a_lin[-1]), 4), "\n")
 
+# La regla del maximo. El recuento solo constaba por pantalla, de modo que la
+# afirmacion que la documentacion hace sobre el no era comprobable por un
+# lector. Se deposita. La categoria mayoritaria se determina sobre el propio
+# conjunto evaluado y no se escribe aqui.
+mayor <- CLASES[which.max(table(factor(mm$clase, levels = CLASES)))]
 argm <- CLASES[apply(mm[, CLASES], 1, which.max)]
-cat("\nPacientes con clase minoritaria como argmax:",
-    sum(argm != "sin_crecimiento"), "de", nrow(mm), "\n")
+maxima <- data.frame(
+  metodo = "arboles potenciados",
+  n = nrow(mm),
+  mayoritaria = mayor,
+  conclusiones_minoritarias = sum(argm != mayor),
+  exactitud_aparente = round(mean(argm == as.character(mm$clase)), 4),
+  max_depth = mejor$max_depth,
+  rondas = mejor$rondas,
+  row.names = NULL)
+
+cat("\n=== REGLA DEL MAXIMO ===\n")
+print(maxima, row.names = FALSE)
 
 dir.create("outputs/fase16", recursive = TRUE, showWarnings = FALSE)
-write.csv(comp, "outputs/fase16/gbm_comparacion.csv", row.names = FALSE)
+write.csv(maxima, RUTA_MAX, row.names = FALSE)
+
+# Contraste de reproduccion antes de sobrescribir la discriminacion ya
+# publicada. Los arboles potenciados son el unico metodo del proyecto que no
+# dejo modelo guardado, de modo que esta fase debe reajustarse entera y su
+# resultado podria no coincidir con el anterior. Si no coincide, el archivo
+# publicado se deja intacto y procede resolver esa cuestion antes que
+# ninguna otra: la fila que se acaba de depositar describiria entonces un
+# ajuste distinto del que el trabajo reporta.
+if (file.exists(RUTA_OUT)) {
+  ant <- read.csv(RUTA_OUT, stringsAsFactors = FALSE)
+  o <- match(CLASES, ant$clase)
+  if (any(is.na(o)))
+    detener("El archivo publicado no cubre las categorias modeladas.")
+  d <- max(abs(as.numeric(a_gbm[CLASES]) - ant$auc_gbm[o]))
+  cat("\n=== CONTRASTE DE REPRODUCCION ===\n")
+  cat("Discrepancia maxima con la discriminacion publicada:",
+      signif(d, 3), "\n")
+  if (d >= 5e-05) {
+    cat("El reajuste no reproduce el resultado publicado. El archivo\n")
+    cat("publicado queda intacto. La fila de la regla del maximo si se ha\n")
+    cat("depositado, y describe este reajuste y no el anterior.\n")
+    detener("Los arboles potenciados no se reproducen.")
+  }
+  cat("El reajuste reproduce el resultado publicado.\n")
+}
+
+write.csv(comp, RUTA_OUT, row.names = FALSE)

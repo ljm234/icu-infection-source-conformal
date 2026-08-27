@@ -8,6 +8,7 @@ CL <- c("sin_crecimiento","urinario","respiratorio","sangre")
 VITALES <- c("temperatura","frec_cardiaca","frec_respiratoria","saturacion")
 
 esp <- readRDS("outputs/fase7/especificacion.rds")
+RUTA_CMP <- "outputs/fase7/comparacion_lambda.csv"
 
 apilar <- function(g) {
   p <- do.call(rbind, lapply(imps, function(x) x[x$grupo == g, ]))
@@ -143,8 +144,21 @@ et <- unique(pru[, c("stay_id","clase")])
 mm <- merge(ag, et, by = "stay_id")
 
 a_amp <- sapply(CL, function(k) auc(mm[[k]], as.integer(mm$clase == k)))
-a_ori <- c(sin_crecimiento = 0.6521, urinario = 0.6518,
-           respiratorio = 0.6597, sangre = 0.7090)
+
+# Discriminacion del modelo original sobre el mismo conjunto de prueba. Se lee
+# del archivo que la produjo. Escrita a mano llegaria sin aviso a la columna
+# que esta fase deposita, y esa columna es una de las que la verificacion de
+# cifras contrasta: la comprobacion pasaria por sostener una transcripcion.
+if (!file.exists(RUTA_CMP)) {
+  cat("\nFuente ausente:", RUTA_CMP, "\n")
+  cat("El procedimiento se detiene.\n"); quit(status = 1)
+}
+cmp_ori <- read.csv(RUTA_CMP, stringsAsFactors = FALSE)
+a_ori <- setNames(cmp_ori$auc_min, cmp_ori$clase)[CL]
+if (any(is.na(a_ori))) {
+  cat("\nLa comparacion de penalizaciones no declara alguna categoria.\n")
+  cat("El procedimiento se detiene.\n"); quit(status = 1)
+}
 
 comp <- data.frame(clase = CL,
                    auc_original = as.numeric(a_ori[CL]),

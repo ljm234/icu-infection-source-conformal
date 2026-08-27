@@ -349,6 +349,13 @@ if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Sedes que fallan la garantia condicional",
     sum(apply(x[, CLASES], 1, function(r) any(r < NOMINAL, na.rm = TRUE))),
     5, 0.5)
+  # Los documentos publican el numero de conjuntos distintos de categorias por
+  # debajo del nominal. Antes calificaban el patron con una palabra, que
+  # ninguna comprobacion podia contrastar; ahora es un recuento, y se deriva
+  # aqui igual que en los generadores.
+  reg[[length(reg)+1]] <- comprobar("Patrones distintos de fallo condicional",
+    length(unique(apply(x[, CLASES], 1, function(r)
+      paste(CLASES[!is.na(r) & r < NOMINAL], collapse = "|")))), 3, 0.5)
 }
 
 x <- leer(FUENTES[["Validacion en la unidad reservada"]])
@@ -373,7 +380,11 @@ x <- leer(FUENTES[["Comparacion con referencias simples"]])
 if (!is.null(x)) {
   mo  <- c("demografia", "tres marcadores", "lineal sin unidad",
            "modelo completo")
-  esn <- c(8, 16, 62, 148)
+  # El recuento de la segunda referencia se esperaba en dieciseis. Esa cifra
+  # contaba los interceptos y las otras tres no, de modo que la columna
+  # mezclaba dos definiciones. R/39 las unifico en la que ya empleaban las dos
+  # ultimas, coeficientes no nulos sin interceptos, y el recuento paso a doce.
+  esn <- c(8, 12, 62, 148)
   esa <- c(0.5421, 0.591, 0.6343, 0.6735)
   for (i in seq_along(mo)) {
     reg[[length(reg)+1]] <- comprobar(paste("Referencia,", mo[i], "parametros"),

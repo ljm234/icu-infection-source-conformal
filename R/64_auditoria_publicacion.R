@@ -94,7 +94,14 @@ AFIRMACIONES <- list(
   c("Coincidencias en la hora de registro", "outputs/fase20/empates_constantes.csv"),
   c("Divergencia de la extraccion", "outputs/fase20/divergencia_extraccion.csv"),
   c("Determinismo de la extraccion", "outputs/fase20/determinismo_extraccion.csv"),
-  c("Cobertura antes y despues", "outputs/fase20/cobertura_extraccion.csv"))
+  c("Cobertura antes y despues", "outputs/fase20/cobertura_extraccion.csv"),
+  c("Validacion interna de lambda", "outputs/fase22/decision_lambda.csv"),
+  c("Comparacion interna por categoria", "outputs/fase22/comparacion_lambda_interna.csv"),
+  c("Particion de la validacion interna", "outputs/fase22/particion_interna.csv"),
+  c("Calibracion en la unidad reservada", "outputs/fase23/calibracion_sellado.csv"),
+  c("Regla del maximo por metodo", "outputs/fase24/regla_maximo.csv"),
+  c("Divergencia de etiquetado", "outputs/fase25/divergencia_etiquetado.csv"),
+  c("Sitios positivos en la cohorte", "outputs/fase25/multisitio_cohorte.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {
@@ -148,7 +155,7 @@ cat("  desplazamiento maximo de cobertura:",
 # el resultado no constituye exactamente una linea.
 # ---------------------------------------------------------------------------
 
-EXENTAS <- c("R/64_auditoria_publicacion.R")
+EXENTAS <- c("R/64_auditoria_publicacion.R", "R/19_matriz.R")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -244,11 +251,13 @@ add(prosa(
 "variable in one stay.",
 ""))
 
-add(cifra("Laboratory results are largely unaffected at %.2f percent, since",
-          el$pct))
+add(cifra(
+  "Laboratory results are affected in %.2f percent of stays. Analysers",
+  el$pct))
 
 add(prosa(
-"analysers timestamp each result individually.",
+"timestamp each result individually, which makes ties far rarer there, but",
+"not absent.",
 "",
 "## Correction",
 "",
@@ -286,9 +295,12 @@ add(prosa(
 "version is provided alongside and the divergence is quantified above.",
 "",
 "The core phases, up to and including the sealed model, draw only on",
-"laboratory results and are therefore unaffected. They are not re-extracted,",
-"since rebuilding the cohort after the sealed set has been opened would void",
-"the external validation."))
+"laboratory results. Their extraction in `R/19_matriz.R` orders by storetime",
+"alone, which is the pattern corrected here, and this correction re-extracted",
+"the vital signs only. No versioned file bounds the divergence the core",
+"phases could carry, so that limitation stands unquantified. They are not",
+"re-extracted, since rebuilding the cohort after the sealed set has been",
+"opened would void the external validation."))
 
 writeLines(L, "outputs/fase20/REPRODUCIBILITY.md")
 cat("\nRegistro escrito en outputs/fase20/REPRODUCIBILITY.md\n")

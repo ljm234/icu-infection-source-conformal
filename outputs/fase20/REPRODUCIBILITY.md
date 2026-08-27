@@ -14,8 +14,9 @@ Ties affect between 25.46 and 40.05 percent of stays depending on the
 variable, with up to 38 simultaneous measurements of a single
 variable in one stay.
 
-Laboratory results are largely unaffected at 0.10 percent, since
-analysers timestamp each result individually.
+Laboratory results are affected in 0.10 percent of stays. Analysers
+timestamp each result individually, which makes ties far rarer there, but
+not absent.
 
 ## Correction
 
@@ -40,6 +41,9 @@ The published figures come from the earlier extraction; the deterministic
 version is provided alongside and the divergence is quantified above.
 
 The core phases, up to and including the sealed model, draw only on
-laboratory results and are therefore unaffected. They are not re-extracted,
-since rebuilding the cohort after the sealed set has been opened would void
-the external validation.
+laboratory results. Their extraction in `R/19_matriz.R` orders by storetime
+alone, which is the pattern corrected here, and this correction re-extracted
+the vital signs only. No versioned file bounds the divergence the core
+phases could carry, so that limitation stands unquantified. They are not
+re-extracted, since rebuilding the cohort after the sealed set has been
+opened would void the external validation.

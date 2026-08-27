@@ -1,0 +1,13 @@
+{
+  "fase": "25",
+  "ejecutado_en": "2026-08-26T20:20:06-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "duckdb_version": "1.5.5",
+  "proposito": "cuantificar la divergencia de etiquetado entre la fase segunda y la cuarta",
+  "definiciones_de_cohorte": "comunes a ambas fases, calculadas una sola vez",
+  "categoria_residual": "abstencion",
+  "criterio_esperada": "se conserva la etiqueta cuando la fase cuarta la reconoce; pasa a la residual cuando no",
+  "definicion_multisitio": "sitios distintos con cultivo positivo segun la clasificacion de la fase segunda",
+  "estancias": 23213,
+  "la_cohorte_no_se_reconstruye": true
+}

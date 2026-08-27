@@ -13,10 +13,16 @@
 # interpretativas se hayan suprimido en lugar de reescribirse: un documento no
 # las necesita, y cada una constituye un pasivo.
 
+# La relacion admite unicamente identificadores literales: rutas y versiones
+# que el texto nombra. Se retira cada uno antes de buscar digitos, de modo que
+# una cifra escrita junto a ellos se sigue detectando.
 EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "SHA-256", "R/59_verificar_cifras.R",
              "R/64_auditoria_publicacion.R", "R/65_generar_readme.R",
-             "R/67_diagnostico_dependencias.R")
+             "R/67_diagnostico_dependencias.R",
+             "R/19_matriz.R", "R/21_perfil_unidades.R", "R/22_particion.R",
+             "outputs/fase5/distancia_unidades.csv",
+             "outputs/fase5/clases_por_unidad.csv")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -109,6 +115,14 @@ NOMINAL <- cob8$nominal[1]
 bajo_marg  <- sum(louo$cobertura < NOMINAL)
 falla_cond <- sum(apply(louoc[, CLC], 1, function(r) any(r < NOMINAL, na.rm = TRUE)))
 n_sedes    <- nrow(louo)
+
+# Las clases que fallan no son las mismas en todas las sedes, pero tampoco
+# difieren una a una: dos pares de sedes comparten el mismo conjunto. Se
+# cuentan los conjuntos distintos en lugar de calificar el patron con una
+# palabra que el archivo no sostiene.
+patron_falla <- apply(louoc[, CLC], 1, function(r)
+  paste(CLC[!is.na(r) & r < NOMINAL], collapse = "|"))
+n_patrones <- length(unique(patron_falla))
 bajo_sell  <- sum(sell$cobertura < NOMINAL)
 
 # Comparacion de imputacion. Los recuentos se derivan del archivo en lugar de
@@ -231,9 +245,18 @@ add(prosa(
 "Folds assigned by patient. Restricted cubic splines where the cross-validated",
 "gain exceeded a threshold derived from a permutation null.",
 "",
-"**Partition.** The cardiovascular unit was sealed in full and left",
-"unexamined until development concluded, selected on four measures of",
-"dissimilarity, two of which are versioned.",
+"**Partition.** The cardiovascular unit was sealed in full. The choice was a",
+"judgement informed by the unit profiles that `R/21_perfil_unidades.R`",
+"computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`",
+"and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a",
+"rule. `R/22_particion.R` names the unit as a constant and computes no",
+"selection criterion.",
+"",
+"The primary model was frozen before that unit was opened, and it was",
+"evaluated there once. The extension proceeded differently: it examined",
+"descriptive summaries of the sealed unit, among them the distribution of the",
+"consciousness scale, in order to decide which variables to admit. The",
+"extended model was never evaluated there.",
 "",
 "## Principal results",
 "",
@@ -306,8 +329,13 @@ add(cifra("in %d of %d units: none reaches nominal coverage across all four",
           as.integer(falla_cond), as.integer(n_sedes)))
 
 add(prosa(
-"classes. The failing class differs by unit, which is why a marginal summary",
-"conceals it.",
+  "classes. The classes that fail are not the same everywhere: they form"))
+add(cifra(
+  "%d distinct patterns across the %d units, so a marginal summary conceals",
+  as.integer(n_patrones), as.integer(n_sedes)))
+
+add(prosa(
+"which classes are left uncovered where.",
 "",
 "### The sealed unit",
 "",
@@ -343,6 +371,9 @@ add(prosa(
 "conceals this.",
 "",
 "### Model complexity is justified and insufficient",
+"",
+"Parameters are the non-zero coefficients, intercepts excluded, summed over",
+"the class blocks.",
 "",
 "    specification         parameters   AUC on minority classes",
 ""))
@@ -526,11 +557,16 @@ add(prosa(
 "and the row retained can differ between runs of the same query.",
 ""))
 
-add(cifra("Laboratory results are unaffected at %.2f percent, since analysers",
-          empl$pct))
+add(cifra(
+  "Laboratory results are affected in %.2f percent of stays. Analysers",
+  empl$pct))
 
 add(prosa(
-"timestamp each result individually.",
+"timestamp each result individually, which makes ties far rarer there but not",
+"absent. The laboratory extraction in `R/19_matriz.R` orders by storetime",
+"alone, the same pattern corrected here, and the re-extraction covered the",
+"vital signs only. No versioned file bounds the divergence that leaves in the",
+"core phases.",
 "",
 "Ordering now uses four keys: storetime, charttime, the value after unit",
 "conversion, and itemid. The converted value earns its place:"))
@@ -583,13 +619,15 @@ add(cifra("The sealed unit contributes %d respiratory cases, too few to",
           as.integer(val(sell, "n", sell$clase == "respiratorio"))))
 
 add(prosa(
-"estimate conditional coverage with useful precision. This was declared",
-"before the set was examined.",
+"estimate conditional coverage with useful precision.",
 "",
 "The core phases were extracted before the tie-breaking correction. They draw",
-"only on laboratory results, which are unaffected. The cohort was not rebuilt",
+"only on laboratory results, where ties are far rarer than in nursing",
+"observations but not absent, and where the ordering carries the same defect.",
+"The correction re-extracted the vital signs only, so the divergence the core",
+"phases could carry is not bounded by any file. The cohort was not rebuilt",
 "because doing so after the sealed set had been opened would void the",
-"external validation.",
+"external validation, and the limitation therefore stands unquantified.",
 "",
 "The study does not compare system performance against a clinician working",
 "from the same information.",

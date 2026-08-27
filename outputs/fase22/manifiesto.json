@@ -1,0 +1,19 @@
+{
+  "fase": "22",
+  "ejecutado_en": "2026-08-26T19:02:47-0600",
+  "semilla": 20260818,
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "glmnet_version": "5.0",
+  "proposito": "contraste de la eleccion de lambda sin emplear el conjunto de prueba",
+  "conjunto_empleado": "entrenamiento",
+  "particion": "por estancia, estratificada por categoria",
+  "proporcion_ajuste": 0.6667,
+  "pliegues_validacion_cruzada": 10,
+  "alpha": 1,
+  "imputaciones_apiladas": 20,
+  "criterio": "area bajo la curva promediada sobre las categorias poco frecuentes",
+  "umbral_mejora": 0.02,
+  "umbral_perdida": 0.02,
+  "nudos": "heredados de outputs/fase7/especificacion.rds, sin recalcular",
+  "columnas_diseno": 40
+}
