@@ -61,7 +61,8 @@ FUENTES <- list(
   "Calibracion en la unidad reservada"       = "outputs/fase23/calibracion_sellado.csv",
   "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
   "Recuentos bajo cada correccion"           = "outputs/fase26/recuentos_multiplicidad.csv",
-  "Causa del fallo por sede"                 = "outputs/fase26/causas_fallo.csv")
+  "Causa del fallo por sede"                 = "outputs/fase26/causas_fallo.csv",
+  "Cobertura de constantes por etapa"        = "outputs/fase28/cobertura_vitales_por_etapa.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -201,12 +202,27 @@ if (!is.null(x)) {
     mean(x$auc_lineal[x$clase != "sin_crecimiento"]), 0.0002, t4d)
 }
 
+# La cobertura publicada es la de la tabla limpia, que es la que el modelo
+# ajusta. La cruda se contrasta tambien: el documento publica ambas columnas y
+# la diferencia entre ellas es lo que los limites de plausibilidad descartan.
+x <- leer(FUENTES[["Cobertura de constantes por etapa"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Cobertura limpia de la frecuencia cardiaca",
+    x$pct_limpio[x$variable == "frec_cardiaca"], 99.2, t1)
+  reg[[length(reg)+1]] <- comprobar("Cobertura limpia de la presion sistolica",
+    x$pct_limpio[x$variable == "presion_sistolica"], 74.9, t1)
+  reg[[length(reg)+1]] <- comprobar("Valores anulados por los limites",
+    sum(x$marcados), 216, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Denominador de la cobertura",
+    x$estancias[1], 23213, 0.5)
+}
+
 x <- leer(FUENTES[["Cobertura de constantes vitales"]])
 if (!is.null(x)) {
-  reg[[length(reg)+1]] <- comprobar("Cobertura de la frecuencia cardiaca",
+  reg[[length(reg)+1]] <- comprobar("Cobertura cruda de la frecuencia cardiaca",
     x$pct[x$variable == "frec_cardiaca"], 99.2, t1)
-  reg[[length(reg)+1]] <- comprobar("Cobertura de la presion sistolica no invasiva",
-    x$pct[x$variable == "presion_sistolica"], 74.9, t1)
+  reg[[length(reg)+1]] <- comprobar("Disponible crudo de temperatura",
+    x$disponible[x$variable == "temperatura"], 21587, 0.5)
 }
 
 x <- leer(FUENTES[["Valores implausibles marcados"]])
@@ -254,13 +270,18 @@ if (!is.null(x)) {
     min(x$cobertura), 0.7757, t4)
 }
 
-x <- leer(FUENTES[["Cobertura de constantes vitales"]])
+x <- leer(FUENTES[["Cobertura de constantes por etapa"]])
 if (!is.null(x)) {
-  esp <- setNames(c(93.0, 98.7, 98.9),
+  lim <- setNames(c(92.7, 98.3, 98.8),
                   c("temperatura","frec_respiratoria","saturacion"))
-  for (v in names(esp))
-    reg[[length(reg)+1]] <- comprobar(paste("Cobertura de", v),
-      x$pct[x$variable == v], esp[[v]], t1)
+  cru <- setNames(c(93.0, 98.7, 98.9),
+                  c("temperatura","frec_respiratoria","saturacion"))
+  for (v in names(lim)) {
+    reg[[length(reg)+1]] <- comprobar(paste("Cobertura limpia de", v),
+      x$pct_limpio[x$variable == v], lim[[v]], t1)
+    reg[[length(reg)+1]] <- comprobar(paste("Cobertura cruda de", v),
+      x$pct_crudo[x$variable == v], cru[[v]], t1)
+  }
 }
 
 x <- leer(FUENTES[["Compromiso segun nivel de confianza"]])

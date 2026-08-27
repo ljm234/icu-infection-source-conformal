@@ -1,0 +1,11 @@
+{
+  "fase": "28",
+  "ejecutado_en": "2026-08-27T10:00:55-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "proposito": "separar la cobertura de la extraccion cruda de la que presenta la tabla sobre la que se ajusta el modelo",
+  "denominador": "cohorte final del embudo de seleccion",
+  "etapa_cruda": "recuento disponible tras la extraccion, antes de anular los valores implausibles",
+  "etapa_limpia": "el mismo recuento menos los valores que los limites de plausibilidad anulan; es la tabla que alimenta la imputacion y el modelo",
+  "testigo": "la columna anterior de outputs/fase20/cobertura_extraccion.csv, calculada por R/63 sobre la tabla limpia por un camino distinto",
+  "se_reejecuta": false
+}

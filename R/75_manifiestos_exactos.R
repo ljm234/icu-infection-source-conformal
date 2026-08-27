@@ -122,7 +122,9 @@ man7 <- list(
   columnas_diseno = ncol7,
   columnas_retenidas = nret,
   imputaciones_apiladas = nimp,
-  pliegues_por_paciente = a7$pliegues_por_paciente)
+  pliegues_por_paciente = a7$pliegues_por_paciente,
+  reparado_por = "R/75_manifiestos_exactos.R",
+  procedencia = "outputs/fase27/procedencia_manifiestos.csv")
 
 # ---------------------------------------------------------------------------
 # Fase octava
@@ -157,7 +159,9 @@ man8 <- list(
   calibracion = a8$calibracion,
   umbrales = um,
   cobertura_marginal = a8$cobertura_marginal,
-  proporcion_con_conclusion = a8$proporcion_con_conclusion)
+  proporcion_con_conclusion = a8$proporcion_con_conclusion,
+  reparado_por = "R/75_manifiestos_exactos.R",
+  procedencia = "outputs/fase27/procedencia_manifiestos.csv")
 
 # ---------------------------------------------------------------------------
 # Guardias
@@ -174,6 +178,12 @@ CONSERVADOS <- list(
           "justificacion_lambda","puntuacion","calibracion",
           "cobertura_marginal","proporcion_con_conclusion"))
 
+# La marca de reparacion no procede del manifiesto anterior ni de fuente
+# alguna: la anade este procedimiento, y por eso se declara aparte. Un
+# registro de ejecucion reescrito despues sin decirlo es lo que un lector
+# atento señala, aunque cada valor que contenga sea rastreable.
+ANADIDOS <- c("reparado_por", "procedencia")
+
 derivados <- lapply(derivados, unique)
 
 cat("\n=== PROCEDENCIA DE CADA CAMPO ===\n")
@@ -182,6 +192,7 @@ for (f in c("7","8")) {
   for (campo in names(nuevo)) {
     origen <- if (campo %in% derivados[[f]]) "leido de su fuente"
               else if (campo %in% CONSERVADOS[[f]]) "conservado"
+              else if (campo %in% ANADIDOS) "anadido por la reparacion"
               else NA_character_
     if (is.na(origen))
       detener("El campo ", campo, " de la fase ", f,
@@ -194,6 +205,7 @@ for (f in c("7","8")) {
 cat("\n=== CONTRASTE CON EL MANIFIESTO ANTERIOR ===\n")
 comparar <- function(f, nuevo, viejo) {
   for (campo in names(nuevo)) {
+    if (campo %in% ANADIDOS) next
     a <- nuevo[[campo]]; b <- viejo[[campo]]
     if (is.null(b)) detener("El campo ", campo, " no figuraba en el ",
                             "manifiesto de la fase ", f, ".")

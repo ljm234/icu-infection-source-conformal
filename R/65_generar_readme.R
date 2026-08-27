@@ -26,7 +26,9 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase5/distancia_unidades.csv",
              "outputs/fase5/clases_por_unidad.csv",
              "outputs/fase22/decision_lambda.csv",
-             "outputs/fase26/intervalos_cobertura.csv")
+             "outputs/fase25/divergencia_etiquetado.csv",
+             "outputs/fase26/intervalos_cobertura.csv",
+             "outputs/fase28/cobertura_vitales_por_etapa.csv")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -92,7 +94,7 @@ lac   <- leer("outputs/fase15/sensibilidad_lactato.csv")
 agr   <- leer("outputs/fase15/comparacion_agregacion.csv")
 dec   <- leer("outputs/fase16/curvas_decision.csv")
 gbm   <- leer("outputs/fase16/gbm_comparacion.csv")
-cobv  <- leer("outputs/fase17/cobertura_vitales.csv")
+cove  <- leer("outputs/fase28/cobertura_vitales_por_etapa.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -434,30 +436,25 @@ add(cifra("%d units fall below nominal on that measure.", as.integer(n_sedes)))
 
 add(prosa(""))
 add(prosa(
-"The conditional guarantee, which is the one this work claims, is assessed"))
-add(cifra("class by class within each unit: %d cells. Two things shape how",
-          as.integer(n_celdas)))
+"The conditional guarantee, which is the one this work claims, does not"))
+add(cifra("hold: it fails in %d of the %d units. The classes that fail are not",
+          as.integer(sedes_dem), as.integer(sedes_iv)))
+add(cifra("the same everywhere. Of the units that fail, %d fail on %s and %d",
+          as.integer(causa$sedes[1]), causa$clases[1],
+          as.integer(causa$sedes[2])))
+add(cifra("on %s. The remaining %d show point coverage of %.4f and %.4f on",
+          causa$clases[2], as.integer(n_sin_dem),
+          sin_dem$cobertura[1], sin_dem$cobertura[2]))
+add(cifra("%d and %d cases, too few to establish the shortfall. Absence of",
+          as.integer(sin_dem$n[1]), as.integer(sin_dem$n[2])))
+
 add(prosa(
-"they are read. The cells are corrected jointly for multiplicity, since at"))
-add(cifra("the conventional level of %.2f the expected number of false",
-          nivel_conv))
-add(cifra("positives is %.1f under the hypothesis that every cell meets",
-          falsas))
-add(prosa(
-"nominal.",
-"And the conformal threshold is not a known quantity: it is re-estimated",
-"inside each fold from a finite calibration set, which makes the covered",
-"count beta-binomial rather than binomial. Treating it as binomial credits",
-"the evidence with a precision it does not have.",
+"demonstration is not evidence of compliance.",
 ""))
-
-add(cifra("Under Holm's correction %d of the %d units fail. Of the %d cells,",
-          as.integer(sedes_dem), as.integer(sedes_iv), as.integer(n_celdas)))
-add(cifra("%d have their whole interval below nominal and %d survive the",
-          as.integer(n_bajo), as.integer(n_resiste)))
-
+add(cifra("The cells whose interval falls entirely below nominal, the %d that",
+          as.integer(n_resiste)))
 add(prosa(
-"correction:",
+"survive correction among them:",
 "",
 "    unit         class                 n   cover   interval",
 ""))
@@ -469,19 +466,27 @@ for (i in which(bajo_iv))
 
 add(prosa(
 "",
-"The classes that fail are not the same everywhere. Of the units that do"))
-add(cifra("fail, %d fail on %s and %d on %s. The",
-          as.integer(causa$sedes[1]), causa$clases[1],
-          as.integer(causa$sedes[2]), causa$clases[2]))
-add(cifra("remaining %d show point coverage of %.4f and %.4f on %d and %d",
-          as.integer(n_sin_dem), sin_dem$cobertura[1], sin_dem$cobertura[2],
-          as.integer(sin_dem$n[1]), as.integer(sin_dem$n[2])))
-
+"How that count was reached. The guarantee is assessed class by class"))
+add(cifra("within each unit, which gives %d cells, and two things shape how",
+          as.integer(n_celdas)))
 add(prosa(
-"cases, too few to establish the shortfall. Absence of demonstration is not",
-"evidence of compliance.",
-"",
-"The count does not depend on the choice of correction or level:",
+"they are read. The cells are corrected jointly for multiplicity, since at"))
+add(cifra("the conventional level of %.2f the expected number of false",
+          nivel_conv))
+add(cifra("positives is %.1f under the hypothesis that every cell meets",
+          falsas))
+add(prosa(
+"nominal. And the conformal threshold is not a known quantity: it is",
+"re-estimated inside each fold from a finite calibration set, which makes",
+"the covered count beta-binomial rather than binomial. Treating it as",
+"binomial credits the evidence with a precision it does not have.",
+""))
+add(cifra("Of the %d cells, %d have their whole interval below nominal and",
+          as.integer(n_celdas), as.integer(n_bajo)))
+add(cifra("%d survive the correction. The count does not depend on the",
+          as.integer(n_resiste)))
+add(prosa(
+"choice of correction or level:",
 "",
 "    correction     level   cells",
 ""))
@@ -500,6 +505,12 @@ add(cifra("them by between %.0f and %.0f percent. All the cells of both",
           estrecha_min, estrecha_max))
 add(prosa(
 "sections are in `outputs/fase26/intervalos_cobertura.csv`.",
+"",
+"The interval and the test are anchored slightly differently. The interval",
+"is inverted against the nominal level exactly; the test is taken against",
+"the mean coverage the procedure targets, which the ceiling in the conformal",
+"quantile places marginally above nominal. Both are reported, and here they",
+"agree on every cell.",
 "",
 "### The sealed unit",
 "",
@@ -635,12 +646,19 @@ add(prosa(
 "",
 "### Four vital signs were retained",
 "",
-"    variable              coverage",
+"Coverage of the table the model is fitted on, which is the one left after",
+"implausible values are blanked. The raw extraction is given beside it, and",
+"the difference between the columns is what the plausibility limits discard.",
+"The figures used everywhere below are the cleaned ones. Both stages are in",
+"`outputs/fase28/cobertura_vitales_por_etapa.csv`.",
+"",
+"    variable                 raw   cleaned",
 ""))
 
-for (i in seq_len(nrow(cobv)))
-  if (cobv$variable[i] %in% VIT)
-    add(cifra("    %-20s %6.1f percent", cobv$variable[i], cobv$pct[i]))
+for (i in seq_len(nrow(cove)))
+  if (cove$variable[i] %in% VIT)
+    add(cifra("    %-20s %7.1f %9.1f", cove$variable[i],
+              cove$pct_crudo[i], cove$pct_limpio[i]))
 
 add(prosa(
 "",
@@ -781,6 +799,12 @@ add(prosa(
 "SHA-256 hashes of the source files in their manifests; later phases record",
 "the seed and the analytical choices but not hashes.",
 "",
+"The manifest of the eighth phase records the penalty to full precision,",
+"while the procedures that reuse it read the four significant figures the",
+"hyperparameter table publishes. The replica of the transportability",
+"validation used the shorter value and reproduced the published result, so",
+"the difference reaches no figure reported here.",
+"",
 "## Limitations",
 "",
 "Etiological classification depends on which tests were ordered. Culture",
@@ -792,6 +816,13 @@ add(prosa(
 "",
 "All units belong to a single tertiary academic centre, so the observed",
 "heterogeneity is a lower bound on what separate institutions would show.",
+"",
+"The phase that built the analysis matrix rewrote the outcome label with a",
+"shorter tie-break ladder than the phase that sealed the definitions, which",
+"promotes the urinary site above the intra-abdominal one. The two can differ",
+"only for a stay positive at both those sites and at neither blood nor",
+"respiratory. No stay in the cohort is, so no label changes; the full",
+"crosswalk is in `outputs/fase25/divergencia_etiquetado.csv`.",
 ""))
 
 add(cifra("The sealed unit contributes %d respiratory cases, too few to",

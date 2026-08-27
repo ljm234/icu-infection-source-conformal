@@ -172,20 +172,15 @@ Under leave-one-unit-out validation, marginal coverage ranges from
 0.8036 to 0.9612 with a mean of 0.8944, below the nominal level. 2 of the
 5 units fall below nominal on that measure.
 
-The conditional guarantee, which is the one this work claims, is assessed
-class by class within each unit: 20 cells. Two things shape how
-they are read. The cells are corrected jointly for multiplicity, since at
-the conventional level of 0.05 the expected number of false
-positives is 1.0 under the hypothesis that every cell meets
-nominal.
-And the conformal threshold is not a known quantity: it is re-estimated
-inside each fold from a finite calibration set, which makes the covered
-count beta-binomial rather than binomial. Treating it as binomial credits
-the evidence with a precision it does not have.
+The conditional guarantee, which is the one this work claims, does not
+hold: it fails in 3 of the 5 units. The classes that fail are not
+the same everywhere. Of the units that fail, 2 fail on sin_crecimiento and 1
+on respiratorio. The remaining 2 show point coverage of 0.7818 and 0.7586 on
+55 and 58 cases, too few to establish the shortfall. Absence of
+demonstration is not evidence of compliance.
 
-Under Holm's correction 3 of the 5 units fail. Of the 20 cells,
-5 have their whole interval below nominal and 3 survive the
-correction:
+The cells whose interval falls entirely below nominal, the 3 that
+survive correction among them:
 
     unit         class                 n   cover   interval
 
@@ -195,13 +190,19 @@ correction:
     SICU         respiratorio        58  0.7586  0.6119 to 0.8726
     TSICU        respiratorio        55  0.7818  0.6348 to 0.8917
 
-The classes that fail are not the same everywhere. Of the units that do
-fail, 2 fail on sin_crecimiento and 1 on respiratorio. The
-remaining 2 show point coverage of 0.7818 and 0.7586 on 55 and 58
-cases, too few to establish the shortfall. Absence of demonstration is not
-evidence of compliance.
+How that count was reached. The guarantee is assessed class by class
+within each unit, which gives 20 cells, and two things shape how
+they are read. The cells are corrected jointly for multiplicity, since at
+the conventional level of 0.05 the expected number of false
+positives is 1.0 under the hypothesis that every cell meets
+nominal. And the conformal threshold is not a known quantity: it is
+re-estimated inside each fold from a finite calibration set, which makes
+the covered count beta-binomial rather than binomial. Treating it as
+binomial credits the evidence with a precision it does not have.
 
-The count does not depend on the choice of correction or level:
+Of the 20 cells, 5 have their whole interval below nominal and
+3 survive the correction. The count does not depend on the
+choice of correction or level:
 
     correction     level   cells
 
@@ -215,6 +216,12 @@ survive at that level. The intervals above incorporate the calibration
 uncertainty; conditioning on the threshold instead narrows
 them by between 10 and 34 percent. All the cells of both
 sections are in `outputs/fase26/intervalos_cobertura.csv`.
+
+The interval and the test are anchored slightly differently. The interval
+is inverted against the nominal level exactly; the test is taken against
+the mean coverage the procedure targets, which the ceiling in the conformal
+quantile places marginally above nominal. Both are reported, and here they
+agree on every cell.
 
 ### The sealed unit
 
@@ -295,12 +302,18 @@ establish that the one determines the other.
 
 ### Four vital signs were retained
 
-    variable              coverage
+Coverage of the table the model is fitted on, which is the one left after
+implausible values are blanked. The raw extraction is given beside it, and
+the difference between the columns is what the plausibility limits discard.
+The figures used everywhere below are the cleaned ones. Both stages are in
+`outputs/fase28/cobertura_vitales_por_etapa.csv`.
 
-    temperatura            93.0 percent
-    frec_cardiaca          99.2 percent
-    frec_respiratoria      98.7 percent
-    saturacion             98.9 percent
+    variable                 raw   cleaned
+
+    temperatura             93.0      92.7
+    frec_cardiaca           99.2      99.2
+    frec_respiratoria       98.7      98.3
+    saturacion              98.9      98.8
 
 Their medians are not constant across units. Heart rate ranges by
 16 beats per minute and respiratory rate by 7 breaths across
@@ -381,6 +394,12 @@ draws no random numbers. The extraction phases record software versions and
 SHA-256 hashes of the source files in their manifests; later phases record
 the seed and the analytical choices but not hashes.
 
+The manifest of the eighth phase records the penalty to full precision,
+while the procedures that reuse it read the four significant figures the
+hyperparameter table publishes. The replica of the transportability
+validation used the shorter value and reproduced the published result, so
+the difference reaches no figure reported here.
+
 ## Limitations
 
 Etiological classification depends on which tests were ordered. Culture
@@ -392,6 +411,13 @@ patients, which the available fields cannot distinguish from infection.
 
 All units belong to a single tertiary academic centre, so the observed
 heterogeneity is a lower bound on what separate institutions would show.
+
+The phase that built the analysis matrix rewrote the outcome label with a
+shorter tie-break ladder than the phase that sealed the definitions, which
+promotes the urinary site above the intra-abdominal one. The two can differ
+only for a stay positive at both those sites and at neither blood nor
+respiratory. No stay in the cohort is, so no label changes; the full
+crosswalk is in `outputs/fase25/divergencia_etiquetado.csv`.
 
 The sealed unit contributes 13 respiratory cases, too few to
 estimate conditional coverage with useful precision.

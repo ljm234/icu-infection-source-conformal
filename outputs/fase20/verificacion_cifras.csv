@@ -18,8 +18,12 @@
 "Concordancia minima entre reglas de agregacion",0.8722,0.8722,5e-05,TRUE
 "Beneficio neto maximo sobre politicas triviales",0.0222,0.0222,1e-05,TRUE
 "Arboles potenciados, ganancia en minoritarias",0.000233333333333308,2e-04,1e-04,TRUE
-"Cobertura de la frecuencia cardiaca",99.2,99.2,0.05,TRUE
-"Cobertura de la presion sistolica no invasiva",74.9,74.9,0.05,TRUE
+"Cobertura limpia de la frecuencia cardiaca",99.2,99.2,0.05,TRUE
+"Cobertura limpia de la presion sistolica",74.9,74.9,0.05,TRUE
+"Valores anulados por los limites",216,216,0.5,TRUE
+"Denominador de la cobertura",23213,23213,0.5,TRUE
+"Cobertura cruda de la frecuencia cardiaca",99.2,99.2,0.05,TRUE
+"Disponible crudo de temperatura",21587,21587,0.5,TRUE
 "Total de valores implausibles marcados",216,216,0.5,TRUE
 "Intubacion en la unidad cardiovascular",72,72,0.05,TRUE
 "Escala de conciencia dentro del estrato con tubo",0.4865,0.4865,5e-05,TRUE
@@ -29,9 +33,12 @@
 "Modelo ampliado, ganancia en minoritarias",0.0145666666666666,0.0146,1e-04,TRUE
 "Modelo ampliado, desviacion de cobertura",0.0736339459760239,0.0736,5e-05,TRUE
 "Modelo ampliado, cobertura minima",0.7757,0.7757,5e-05,TRUE
-"Cobertura de temperatura",93,93,0.05,TRUE
-"Cobertura de frec_respiratoria",98.7,98.7,0.05,TRUE
-"Cobertura de saturacion",98.9,98.9,0.05,TRUE
+"Cobertura limpia de temperatura",92.7,92.7,0.05,TRUE
+"Cobertura cruda de temperatura",93,93,0.05,TRUE
+"Cobertura limpia de frec_respiratoria",98.3,98.3,0.05,TRUE
+"Cobertura cruda de frec_respiratoria",98.7,98.7,0.05,TRUE
+"Cobertura limpia de saturacion",98.8,98.8,0.05,TRUE
+"Cobertura cruda de saturacion",98.9,98.9,0.05,TRUE
 "Conclusiones minoritarias, total",1390,1390,0.5,TRUE
 "Resolucion al nivel mas laxo",69.1,69.1,0.05,TRUE
 "Error al nivel mas laxo",0.3753,0.3753,5e-05,TRUE

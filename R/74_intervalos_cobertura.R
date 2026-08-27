@@ -589,12 +589,16 @@ por_sede <- function(s) {
       any(x$beta_por_debajo[x$sede == u]))),
     clases_beta_intervalo_debajo = sum(x$beta_por_debajo),
     clases_beta_intervalo_excluye = sum(x$beta_excluye_nominal),
-    sedes_bonferroni = sum(sapply(sedes, function(u)
-      any(x$resiste_bonferroni[x$sede == u], na.rm = TRUE))),
-    sedes_holm = sum(sapply(sedes, function(u)
+    # Estas cuatro columnas proceden del contraste binomial, que trata el
+    # umbral como conocido, y no del que el documento adopta. El nombre lo
+    # dice: sin el, un lector hallaria aqui un recuento distinto del que el
+    # documento publica y sin nada que explicara la diferencia.
+    sedes_holm_binomial = sum(sapply(sedes, function(u)
       any(x$resiste_holm[x$sede == u], na.rm = TRUE))),
-    clases_bonferroni = sum(x$resiste_bonferroni, na.rm = TRUE),
-    clases_holm = sum(x$resiste_holm, na.rm = TRUE),
+    sedes_bonferroni_binomial = sum(sapply(sedes, function(u)
+      any(x$resiste_bonferroni[x$sede == u], na.rm = TRUE))),
+    clases_holm_binomial = sum(x$resiste_holm, na.rm = TRUE),
+    clases_bonferroni_binomial = sum(x$resiste_bonferroni, na.rm = TRUE),
     row.names = NULL)
 }
 resumen <- rbind(por_sede("dejando una sede fuera"),

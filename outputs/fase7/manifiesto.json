@@ -12,5 +12,7 @@
   "columnas_diseno": 40,
   "columnas_retenidas": 11,
   "imputaciones_apiladas": 20,
-  "pliegues_por_paciente": true
+  "pliegues_por_paciente": true,
+  "reparado_por": "R/75_manifiestos_exactos.R",
+  "procedencia": "outputs/fase27/procedencia_manifiestos.csv"
 }

@@ -1,0 +1,7 @@
+"variable","estancias","disponible_crudo","pct_crudo","marcados","disponible_limpio","pct_limpio"
+"temperatura",23213,21587,93,67,21520,92.7
+"frec_cardiaca",23213,23028,99.2,5,23023,99.2
+"frec_respiratoria",23213,22913,98.7,106,22807,98.3
+"presion_sistolica",23213,17395,74.9,5,17390,74.9
+"presion_media",23213,17387,74.9,23,17364,74.8
+"saturacion",23213,22950,98.9,10,22940,98.8

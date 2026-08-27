@@ -106,7 +106,8 @@ AFIRMACIONES <- list(
   c("Recuentos bajo cada correccion", "outputs/fase26/recuentos_multiplicidad.csv"),
   c("Causa del fallo por sede", "outputs/fase26/causas_fallo.csv"),
   c("Criterios de cobertura", "outputs/fase26/criterios_cobertura.csv"),
-  c("Procedencia de los manifiestos", "outputs/fase27/procedencia_manifiestos.csv"))
+  c("Procedencia de los manifiestos", "outputs/fase27/procedencia_manifiestos.csv"),
+  c("Cobertura de constantes por etapa", "outputs/fase28/cobertura_vitales_por_etapa.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

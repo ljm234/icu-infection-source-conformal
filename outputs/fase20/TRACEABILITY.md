@@ -28,8 +28,12 @@ margin never exceeds the largest possible rounding error.
 | Concordancia minima entre reglas de agregacion | 0.8722 | 0.8722 | 0.00005 | yes |
 | Beneficio neto maximo sobre politicas triviales | 0.0222 | 0.0222 | 0.00001 | yes |
 | Arboles potenciados, ganancia en minoritarias | 0.0002 | 0.0002 | 0.00010 | yes |
-| Cobertura de la frecuencia cardiaca | 99.2000 | 99.2000 | 0.05000 | yes |
-| Cobertura de la presion sistolica no invasiva | 74.9000 | 74.9000 | 0.05000 | yes |
+| Cobertura limpia de la frecuencia cardiaca | 99.2000 | 99.2000 | 0.05000 | yes |
+| Cobertura limpia de la presion sistolica | 74.9000 | 74.9000 | 0.05000 | yes |
+| Valores anulados por los limites | 216.0000 | 216.0000 | 0.50000 | yes |
+| Denominador de la cobertura | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Cobertura cruda de la frecuencia cardiaca | 99.2000 | 99.2000 | 0.05000 | yes |
+| Disponible crudo de temperatura | 21587.0000 | 21587.0000 | 0.50000 | yes |
 | Total de valores implausibles marcados | 216.0000 | 216.0000 | 0.50000 | yes |
 | Intubacion en la unidad cardiovascular | 72.0000 | 72.0000 | 0.05000 | yes |
 | Escala de conciencia dentro del estrato con tubo | 0.4865 | 0.4865 | 0.00005 | yes |
@@ -39,9 +43,12 @@ margin never exceeds the largest possible rounding error.
 | Modelo ampliado, ganancia en minoritarias | 0.0146 | 0.0146 | 0.00010 | yes |
 | Modelo ampliado, desviacion de cobertura | 0.0736 | 0.0736 | 0.00005 | yes |
 | Modelo ampliado, cobertura minima | 0.7757 | 0.7757 | 0.00005 | yes |
-| Cobertura de temperatura | 93.0000 | 93.0000 | 0.05000 | yes |
-| Cobertura de frec_respiratoria | 98.7000 | 98.7000 | 0.05000 | yes |
-| Cobertura de saturacion | 98.9000 | 98.9000 | 0.05000 | yes |
+| Cobertura limpia de temperatura | 92.7000 | 92.7000 | 0.05000 | yes |
+| Cobertura cruda de temperatura | 93.0000 | 93.0000 | 0.05000 | yes |
+| Cobertura limpia de frec_respiratoria | 98.3000 | 98.3000 | 0.05000 | yes |
+| Cobertura cruda de frec_respiratoria | 98.7000 | 98.7000 | 0.05000 | yes |
+| Cobertura limpia de saturacion | 98.8000 | 98.8000 | 0.05000 | yes |
+| Cobertura cruda de saturacion | 98.9000 | 98.9000 | 0.05000 | yes |
 | Conclusiones minoritarias, total | 1390.0000 | 1390.0000 | 0.50000 | yes |
 | Resolucion al nivel mas laxo | 69.1000 | 69.1000 | 0.05000 | yes |
 | Error al nivel mas laxo | 0.3753 | 0.3753 | 0.00005 | yes |
@@ -197,3 +204,4 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase26/intervalos_cobertura.csv`
 - `outputs/fase26/recuentos_multiplicidad.csv`
 - `outputs/fase26/causas_fallo.csv`
+- `outputs/fase28/cobertura_vitales_por_etapa.csv`

@@ -16,5 +16,7 @@
     "sangre": 0.9829
   },
   "cobertura_marginal": 0.9024,
-  "proporcion_con_conclusion": 0.0961
+  "proporcion_con_conclusion": 0.0961,
+  "reparado_por": "R/75_manifiestos_exactos.R",
+  "procedencia": "outputs/fase27/procedencia_manifiestos.csv"
 }
