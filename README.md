@@ -135,6 +135,13 @@ Coverage ranges from 0.8679 to 0.9044 against a nominal level of 0.90,
 with confidence intervals containing the nominal value in all four
 categories.
 
+Those intervals are conditional on the conformal threshold, which is itself
+estimated from a finite calibration set. Incorporating that uncertainty
+would widen them, as it does in the transportability section below, where
+the thresholds are re-estimated within each fold. It cannot change the
+conclusion here: an interval that already contains a point still contains
+it once widened.
+
 ### The argmax rule never names a source
 
 At minority prevalences of a few percent, no minority class probability
