@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-08-26 by `R/65_generar_readme.R`.
+Generated on 2026-08-27 by `R/65_generar_readme.R`.
 Every numeric figure below is read from a versioned results file. The
 generator rejects prose lines containing a digit, format patterns carrying
 digits outside their substitution codes, and any line that fails to compose.
@@ -84,6 +84,23 @@ lasso limit, so the penalty actually fitted is lasso rather than a mixture.
 Folds assigned by patient. Restricted cubic splines where the cross-validated
 gain exceeded a threshold derived from a permutation null.
 
+The penalty is the cross-validated minimum and not the one-standard-error
+rule. The two were compared under a criterion fixed in advance: adopt the
+minimum if the mean area across minority classes improves by more than a
+declared margin and no class loses more than that same margin. The minimum
+won, gaining 0.0395 against a margin of 0.02.
+
+That comparison was made on the test set, which is the set that later
+reports discrimination and coverage. It is therefore a design decision
+taken on the evaluation data, and it was checked again without it: the
+training set alone was split by patient, the whole comparison repeated
+inside it, and the same criterion applied.
+On 2791 stays held out from 5578 used for fitting the answer is the
+same, with a gain of 0.0375. The reduced fit favours the
+one-standard-error rule, since a smaller sample calls for a heavier
+penalty, so the minimum wins there against the odds. The check is in
+`outputs/fase22/decision_lambda.csv`.
+
 **Partition.** The cardiovascular unit was sealed in full. The choice was a
 judgement informed by the unit profiles that `R/21_perfil_unidades.R`
 computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`
@@ -91,11 +108,17 @@ and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a
 rule. `R/22_particion.R` names the unit as a constant and computes no
 selection criterion.
 
-The primary model was frozen before that unit was opened, and it was
-evaluated there once. The extension proceeded differently: it examined
-descriptive summaries of the sealed unit, among them the distribution of the
-consciousness scale, in order to decide which variables to admit. The
-extended model was never evaluated there.
+The sealed unit is touched three times, and it is worth listing them.
+`R/36_sellado.R` evaluates the primary model there once, with the thresholds
+of the original calibration set and with that model already frozen.
+`R/38_recalibracion.R` then reuses those same predictions for a
+recalibration exercise, resampling the unit at each of 7 local
+sizes; it recomputes thresholds only and never refits the model. And
+`R/51_circularidad_glasgow.R` describes the distribution of the
+consciousness scale in that unit, to decide whether the variable could
+enter the extension at all. The first is an evaluation, the second an
+exercise on the same predictions, the third a descriptive check on a
+candidate variable. The extended model was never evaluated there.
 
 ## Principal results
 
@@ -142,26 +165,67 @@ Under leave-one-unit-out validation, marginal coverage ranges from
 0.8036 to 0.9612 with a mean of 0.8944, below the nominal level. 2 of the
 5 units fall below nominal on that measure.
 
-The conditional guarantee, which is the one this work claims, fails
-in 5 of 5 units: none reaches nominal coverage across all four
-classes. The classes that fail are not the same everywhere: they form
-3 distinct patterns across the 5 units, so a marginal summary conceals
-which classes are left uncovered where.
+The conditional guarantee, which is the one this work claims, is assessed
+class by class within each unit: 20 cells. Two things shape how
+they are read. The cells are corrected jointly for multiplicity, since at
+the conventional level of 0.05 the expected number of false
+positives is 1.0 under the hypothesis that every cell meets
+nominal.
+And the conformal threshold is not a known quantity: it is re-estimated
+inside each fold from a finite calibration set, which makes the covered
+count beta-binomial rather than binomial. Treating it as binomial credits
+the evidence with a precision it does not have.
+
+Under Holm's correction 3 of the 5 units fail. Of the 20 cells,
+5 have their whole interval below nominal and 3 survive the
+correction:
+
+    unit         class                 n   cover   interval
+
+    CCU          sin_crecimiento   1608  0.8004  0.7767 to 0.8227
+    MICU         sin_crecimiento   4686  0.7757  0.7570 to 0.7937
+    MICU/SICU    respiratorio       160  0.7500  0.6442 to 0.8398
+    SICU         respiratorio        58  0.7586  0.6119 to 0.8726
+    TSICU        respiratorio        55  0.7818  0.6348 to 0.8917
+
+The classes that fail are not the same everywhere. Of the units that do
+fail, 2 fail on sin_crecimiento and 1 on respiratorio. The
+remaining 2 show point coverage of 0.7818 and 0.7586 on 55 and 58
+cases, too few to establish the shortfall. Absence of demonstration is not
+evidence of compliance.
+
+The count does not depend on the choice of correction or level:
+
+    correction     level   cells
+
+    bonferroni     0.050       3
+    holm           0.050       3
+    bonferroni     0.025       3
+    holm           0.025       3
+
+Under the test that treats the threshold as known, 4 cells would
+survive at that level. The intervals above incorporate the calibration
+uncertainty; conditioning on the threshold instead narrows
+them by between 10 and 34 percent. All the cells of both
+sections are in `outputs/fase26/intervalos_cobertura.csv`.
 
 ### The sealed unit
 
-Evaluated once, without recalibration. Coverage by class:
+Evaluated once, without recalibration, and read by the same criterion:
 
-    sin_crecimiento   0.9911
-    urinario          0.8654
-    respiratorio      0.8462
-    sangre            0.9615
+    class                 n   cover   interval
 
-The majority class is over-covered while 2 of the 4 classes fall
-below nominal, so by the criterion applied above the sealed unit also fails
-the conditional guarantee. The over-coverage of the majority class follows
-from a prevalence shift: its mean predicted probability falls below its
-observed frequency.
+    sin_crecimiento   4495  0.9911  0.9865 to 0.9946
+    urinario            52  0.8654  0.7285 to 0.9508
+    respiratorio        13  0.8462  0.5367 to 0.9826
+    sangre              26  0.9615  0.7918 to 0.9990
+
+The majority class is covered above nominal. No minority class has an
+interval falling below it, so this section reports no conclusion about the
+conditional guarantee here: the cases are too few to establish a shortfall
+in either direction. The over-coverage of the majority class follows from a
+prevalence shift: its mean predicted probability is
+0.9054 against an observed frequency of 0.9802.
 
 ### The limit of local recalibration
 
@@ -215,8 +279,12 @@ inability to speak. Within the intubated stratum the reduced scale falls to
 coincide within that stratum because the verbal component is constant there,
 so the full scale is the reduced one plus a fixed offset, which leaves the
 ranking and therefore the area unchanged. The scale acts as a proxy for the
-procedure, and the procedure determines whether the respiratory site is
-cultured at all.
+procedure, and the procedure is strongly associated with whether the
+respiratory site is cultured at all:
+72.2 percent of the respiratory cases are intubated, against
+39.3 percent of those without growth. It runs in the direction
+the argument needs, but it remains an association: the data do not
+establish that the one determines the other.
 
 ### Four vital signs were retained
 

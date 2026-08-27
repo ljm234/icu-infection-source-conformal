@@ -101,7 +101,12 @@ AFIRMACIONES <- list(
   c("Calibracion en la unidad reservada", "outputs/fase23/calibracion_sellado.csv"),
   c("Regla del maximo por metodo", "outputs/fase24/regla_maximo.csv"),
   c("Divergencia de etiquetado", "outputs/fase25/divergencia_etiquetado.csv"),
-  c("Sitios positivos en la cohorte", "outputs/fase25/multisitio_cohorte.csv"))
+  c("Sitios positivos en la cohorte", "outputs/fase25/multisitio_cohorte.csv"),
+  c("Intervalos de cobertura por celda", "outputs/fase26/intervalos_cobertura.csv"),
+  c("Recuentos bajo cada correccion", "outputs/fase26/recuentos_multiplicidad.csv"),
+  c("Causa del fallo por sede", "outputs/fase26/causas_fallo.csv"),
+  c("Criterios de cobertura", "outputs/fase26/criterios_cobertura.csv"),
+  c("Procedencia de los manifiestos", "outputs/fase27/procedencia_manifiestos.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

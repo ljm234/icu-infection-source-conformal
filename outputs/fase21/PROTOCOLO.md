@@ -2,7 +2,7 @@
 
 Documento de trabajo dirigido al equipo investigador.
 
-Generado el 2026-08-26 por `R/68_traduccion_yachay.R`.
+Generado el 2026-08-27 por `R/68_traduccion_yachay.R`.
 
 Las cifras que siguen proceden en su totalidad del banco de pruebas sobre
 MIMIC-IV y se leen de archivos versionados. Cuanto se afirma sobre el
@@ -29,11 +29,18 @@ La cobertura marginal oscila entre 0.8036 y 0.9612 con media de 0.8944,
 por debajo del nivel nominal. 2 de 5 sedes quedan por debajo
 en esa medida.
 
-La garantia condicional por categoria, que es la que el trabajo
-declara, falla en 5 de 5 sedes: ninguna alcanza el nivel nominal en
-las cuatro categorias. Las categorias que fallan no son las mismas en todas
-las sedes: forman 3 conjuntos distintos entre las 5, de modo que un resumen
-marginal oculta cuales quedan descubiertas en cada una.
+La garantia condicional por categoria, que es la que el trabajo declara, se
+evalua celda a celda: cada categoria dentro de cada sede, con el mismo
+criterio de intervalo que emplea el conjunto de prueba. Las celdas se
+corrigen conjuntamente por multiplicidad, y el contraste reconoce que el
+umbral conforme se reestima en cada pliegue y no es una probabilidad
+conocida.
+Bajo esa correccion fallan 3 de 5 sedes: 2 en la categoria
+sin_crecimiento y 1 en la respiratoria. Las 2 restantes presentan
+cobertura puntual de 0.7818 y 0.7586 sobre 55 y 58 casos, demasiado
+pocos para establecerlo. La ausencia de demostracion no acredita
+cumplimiento, y un resumen marginal oculta cual categoria queda descubierta
+en cada sede.
 
 **Decision.** El informe de resultados no puede limitarse a la
 discriminacion. Debe presentar por separado, y desagregados por sede, la
@@ -100,7 +107,10 @@ reducida desciende a 0.4865, y la completa obtiene ese mismo 0.4865. Ambas
 formas coinciden alli porque el componente verbal es constante, de modo que
 la completa es la reducida mas un desplazamiento fijo, que deja inalterado
 el orden y por tanto el area. La escala actuaba como indicador indirecto
-del tubo, y el tubo determinaba que el sitio respiratorio se cultivase.
+del tubo, y el tubo se asocia con fuerza a que el sitio respiratorio se
+cultivase. Es asociacion, no determinacion: los datos no acreditan que lo
+uno cause lo otro, pero la magnitud basta para invalidar la escala como
+predictor fisiologico en esta cohorte.
 
 **Decision.** La escala figura entre las variables obligatorias del
 protocolo, y con fundamento: la meningitis altera la conciencia de forma
@@ -167,6 +177,16 @@ categoria poco frecuente no supero en ningun nivel el valor de 0.4000.
 **La glucosa del liquido debe analizarse como indice.** El valor absoluto
 depende de la glucemia simultanea. El protocolo recoge ambas
 determinaciones; el analisis debe emplear el cociente y no la cifra aislada.
+
+**La eleccion de hiperparametros no puede hacerse sobre el conjunto de
+evaluacion.** El banco de pruebas fijo la penalizacion comparando dos reglas
+sobre el mismo conjunto en el que despues reporto discriminacion y
+cobertura. Al repetir la comparacion dentro del entrenamiento, apartando una
+porcion que no intervino en el ajuste, la decision resulto ser la misma; pero
+eso se comprobo despues y pudo haber salido de otro modo. El protocolo
+establecera de antemano que toda eleccion de esta clase se resuelva con
+datos apartados del entrenamiento y no con los que sostienen el resultado
+publicado.
 
 **El sesgo de verificacion es cuantificable y debe cuantificarse.** La
 probabilidad de confirmar una etiologia depende de que alguien la sospechara

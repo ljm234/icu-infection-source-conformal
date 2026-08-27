@@ -238,7 +238,7 @@ writeLines(toJSON(list(
   procedencia = paste("cada fila se contrasta contra la discriminacion",
                       "publicada de su metodo antes de admitirse"),
   tolerancia_contraste = TOL,
-  imputaciones_ampliadas = Ma), auto_unbox = TRUE, pretty = TRUE),
+  imputaciones_ampliadas = Ma), auto_unbox = TRUE, pretty = TRUE, digits = 15),
   file.path(OUT, "manifiesto.json"))
 
 cat("\nDepositado en", OUT, "\n")

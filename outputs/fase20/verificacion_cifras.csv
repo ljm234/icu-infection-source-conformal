@@ -112,3 +112,30 @@
 "Grupos que empatan en las dos primeras claves",82,82,0.5,TRUE
 "Cobertura, denominadores que no coinciden",0,0,0.5,TRUE
 "Desplazamiento maximo de cobertura",0.1,0.1,0.05,TRUE
+"Celdas contrastadas en la familia",20,20,0.5,TRUE
+"Celdas con intervalo bajo el nominal",5,5,0.5,TRUE
+"Celdas que resisten la correccion",3,3,0.5,TRUE
+"Sedes que fallan bajo la correccion",3,3,0.5,TRUE
+"Sedes evaluadas por celda",5,5,0.5,TRUE
+"Cobertura sin demostracion, la mayor",0.7818,0.7818,5e-05,TRUE
+"Cobertura sin demostracion, la menor",0.7586,0.7586,5e-05,TRUE
+"Casos de la celda sin demostracion mayor",55,55,0.5,TRUE
+"Casos de la celda sin demostracion menor",58,58,0.5,TRUE
+"Unidad reservada, celdas bajo el nominal",0,0,0.5,TRUE
+"Estrechamiento minimo al fijar el umbral",9.69248734916311,10,0.5,TRUE
+"Estrechamiento maximo al fijar el umbral",34.3324250681198,34,0.5,TRUE
+"Recuentos distintos bajo la correccion",1,1,0.5,TRUE
+"Celdas que resistirian sin calibracion",4,4,0.5,TRUE
+"Falsas positivas esperadas por azar",1,1,0.05,TRUE
+"Sedes que fallan en la mayoritaria",2,2,0.5,TRUE
+"Sedes que fallan en respiratorio",1,1,0.5,TRUE
+"Sedes sin fallo demostrable",2,2,0.5,TRUE
+"Sellada, probabilidad media mayoritaria",0.9054,0.9054,5e-05,TRUE
+"Sellada, frecuencia observada mayoritaria",0.9802,0.9802,5e-05,TRUE
+"Validacion interna, mejora",0.0375,0.0375,5e-05,TRUE
+"Validacion interna, mejora original",0.0395,0.0395,5e-05,TRUE
+"Validacion interna, estancias de ajuste",5578,5578,0.5,TRUE
+"Validacion interna, estancias apartadas",2791,2791,0.5,TRUE
+"Intubacion entre los respiratorios",72.2,72.2,0.05,TRUE
+"Intubacion entre los sin crecimiento",39.3,39.3,0.05,TRUE
+"Tamanos locales del ejercicio",7,7,0.5,TRUE

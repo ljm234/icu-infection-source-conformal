@@ -111,6 +111,8 @@ amp   <- leer("outputs/fase18/comparacion_ampliado.csv")
 louoa <- leer("outputs/fase19/cobertura_louo_ampliado.csv")
 empc  <- leer("outputs/fase20/empates_constantes.csv")
 empl  <- leer("outputs/fase20/empates_laboratorio.csv")
+iv    <- leer("outputs/fase26/intervalos_cobertura.csv")
+causa <- leer("outputs/fase26/causas_fallo.csv")
 
 MIN <- c("urinario","respiratorio","sangre")
 
@@ -138,9 +140,19 @@ n_sedes <- nrow(louo)
 # Las categorias que fallan no son las mismas en todas las sedes, pero tampoco
 # difieren una a una: dos pares de sedes comparten conjunto. Se cuentan los
 # conjuntos distintos en lugar de calificar el patron con una palabra.
-patron_falla <- apply(louoc[, CLC], 1, function(r)
-  paste(CLC[!is.na(r) & r < NOMINAL], collapse = "|"))
-n_patrones <- length(unique(patron_falla))
+# La garantia condicional se lee ahora por intervalo y con correccion por
+# multiplicidad, el mismo criterio en las dos secciones del informe.
+fam <- iv$seccion == "dejando una sede fuera"
+ADOPT <- "resiste_beta_holm_0025"
+sedes_iv  <- length(unique(iv$sede[fam]))
+sedes_dem <- length(unique(iv$sede[fam & iv[[ADOPT]]]))
+sin_dem <- iv[fam & iv$beta_por_debajo & !iv[[ADOPT]], ]
+sin_dem <- sin_dem[order(-sin_dem$cobertura), ]
+if (nrow(causa) != 2 || nrow(sin_dem) != causa$sin_fallo_demostrable[1] ||
+    causa$clases[2] != "respiratorio") {
+  cat("La estructura de las causas no admite la redaccion prevista.\n")
+  quit(status = 1)
+}
 
 L <- character(0)
 add <- function(...) L <<- c(L, ...)
@@ -190,18 +202,28 @@ add(cifra("por debajo del nivel nominal. %d de %d sedes quedan por debajo",
 
 add(prosa("en esa medida.", ""))
 
-add(prosa("La garantia condicional por categoria, que es la que el trabajo"))
-add(cifra("declara, falla en %d de %d sedes: ninguna alcanza el nivel nominal en",
-          as.integer(falla_cond), as.integer(n_sedes)))
+add(prosa(
+"La garantia condicional por categoria, que es la que el trabajo declara, se",
+"evalua celda a celda: cada categoria dentro de cada sede, con el mismo",
+"criterio de intervalo que emplea el conjunto de prueba. Las celdas se",
+"corrigen conjuntamente por multiplicidad, y el contraste reconoce que el",
+"umbral conforme se reestima en cada pliegue y no es una probabilidad",
+"conocida."))
+
+add(cifra("Bajo esa correccion fallan %d de %d sedes: %d en la categoria",
+          as.integer(sedes_dem), as.integer(sedes_iv),
+          as.integer(causa$sedes[1])))
+add(cifra("%s y %d en la respiratoria. Las %d restantes presentan",
+          causa$clases[1], as.integer(causa$sedes[2]),
+          as.integer(causa$sin_fallo_demostrable[1])))
+add(cifra("cobertura puntual de %.4f y %.4f sobre %d y %d casos, demasiado",
+          sin_dem$cobertura[1], sin_dem$cobertura[2],
+          as.integer(sin_dem$n[1]), as.integer(sin_dem$n[2])))
 
 add(prosa(
-"las cuatro categorias. Las categorias que fallan no son las mismas en todas"))
-add(cifra(
-  "las sedes: forman %d conjuntos distintos entre las %d, de modo que un resumen",
-  as.integer(n_patrones), as.integer(n_sedes)))
-
-add(prosa(
-"marginal oculta cuales quedan descubiertas en cada una.",
+"pocos para establecerlo. La ausencia de demostracion no acredita",
+"cumplimiento, y un resumen marginal oculta cual categoria queda descubierta",
+"en cada sede.",
 "",
 "**Decision.** El informe de resultados no puede limitarse a la",
 "discriminacion. Debe presentar por separado, y desagregados por sede, la",
@@ -300,7 +322,10 @@ add(prosa(
 "formas coinciden alli porque el componente verbal es constante, de modo que",
 "la completa es la reducida mas un desplazamiento fijo, que deja inalterado",
 "el orden y por tanto el area. La escala actuaba como indicador indirecto",
-"del tubo, y el tubo determinaba que el sitio respiratorio se cultivase.",
+"del tubo, y el tubo se asocia con fuerza a que el sitio respiratorio se",
+"cultivase. Es asociacion, no determinacion: los datos no acreditan que lo",
+"uno cause lo otro, pero la magnitud basta para invalidar la escala como",
+"predictor fisiologico en esta cohorte.",
 "",
 "**Decision.** La escala figura entre las variables obligatorias del",
 "protocolo, y con fundamento: la meningitis altera la conciencia de forma",
@@ -389,6 +414,16 @@ add(prosa(
 "**La glucosa del liquido debe analizarse como indice.** El valor absoluto",
 "depende de la glucemia simultanea. El protocolo recoge ambas",
 "determinaciones; el analisis debe emplear el cociente y no la cifra aislada.",
+"",
+"**La eleccion de hiperparametros no puede hacerse sobre el conjunto de",
+"evaluacion.** El banco de pruebas fijo la penalizacion comparando dos reglas",
+"sobre el mismo conjunto en el que despues reporto discriminacion y",
+"cobertura. Al repetir la comparacion dentro del entrenamiento, apartando una",
+"porcion que no intervino en el ajuste, la decision resulto ser la misma; pero",
+"eso se comprobo despues y pudo haber salido de otro modo. El protocolo",
+"establecera de antemano que toda eleccion de esta clase se resuelva con",
+"datos apartados del entrenamiento y no con los que sostienen el resultado",
+"publicado.",
 "",
 "**El sesgo de verificacion es cuantificable y debe cuantificarse.** La",
 "probabilidad de confirmar una etiologia depende de que alguien la sospechara",

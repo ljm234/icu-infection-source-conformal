@@ -1,0 +1,9 @@
+"nivel","correccion","umbral_bonferroni","celdas_resisten","sedes_fallan"
+0.05,"bonferroni",0.0025,4,4
+0.05,"holm",0.0025,4,4
+0.05,"beta_bonferroni",0.0025,3,3
+0.05,"beta_holm",0.0025,3,3
+0.025,"bonferroni",0.00125,3,3
+0.025,"holm",0.00125,4,4
+0.025,"beta_bonferroni",0.00125,3,3
+0.025,"beta_holm",0.00125,3,3

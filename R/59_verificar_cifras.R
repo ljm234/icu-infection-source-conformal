@@ -56,7 +56,12 @@ FUENTES <- list(
   "Divergencia de la extraccion"             = "outputs/fase20/divergencia_extraccion.csv",
   "Determinismo de la extraccion"             = "outputs/fase20/determinismo_extraccion.csv",
   "Cobertura antes y despues del desempate"   = "outputs/fase20/cobertura_extraccion.csv",
-  "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv")
+  "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv",
+  "Validacion interna de la penalizacion"    = "outputs/fase22/decision_lambda.csv",
+  "Calibracion en la unidad reservada"       = "outputs/fase23/calibracion_sellado.csv",
+  "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
+  "Recuentos bajo cada correccion"           = "outputs/fase26/recuentos_multiplicidad.csv",
+  "Causa del fallo por sede"                 = "outputs/fase26/causas_fallo.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -503,6 +508,108 @@ if (!is.null(x)) {
     sum(x$n_anterior != x$n_determinista), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Desplazamiento maximo de cobertura",
     max(abs(x$diferencia)), 0.1, t1)
+}
+
+# ---------------------------------------------------------------------------
+# Cobertura condicional bajo el criterio unico
+#
+# Se contrastan los recuentos y las comparaciones, que es donde un error de
+# codigo produciria una cifra equivocada. Las celdas de la tabla de intervalos
+# que el documento reproduce no se contrastan una a una: se componen leyendo
+# directamente de este mismo archivo, de modo que compararlas contra el seria
+# compararlo consigo mismo.
+# ---------------------------------------------------------------------------
+
+x <- leer(FUENTES[["Intervalos de cobertura por celda"]])
+if (!is.null(x)) {
+  fam <- x$seccion == "dejando una sede fuera"
+  sel <- x$seccion == "unidad reservada"
+  reg[[length(reg)+1]] <- comprobar("Celdas contrastadas en la familia",
+    sum(fam), 20, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas con intervalo bajo el nominal",
+    sum(fam & x$beta_por_debajo), 5, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas que resisten la correccion",
+    sum(fam & x$resiste_beta_holm_0025), 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Sedes que fallan bajo la correccion",
+    length(unique(x$sede[fam & x$resiste_beta_holm_0025])), 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Sedes evaluadas por celda",
+    length(unique(x$sede[fam])), 5, 0.5)
+  sd_ <- x[fam & x$beta_por_debajo & !x$resiste_beta_holm_0025, ]
+  sd_ <- sd_[order(-sd_$cobertura), ]
+  reg[[length(reg)+1]] <- comprobar("Cobertura sin demostracion, la mayor",
+    sd_$cobertura[1], 0.7818, t4)
+  reg[[length(reg)+1]] <- comprobar("Cobertura sin demostracion, la menor",
+    sd_$cobertura[2], 0.7586, t4)
+  reg[[length(reg)+1]] <- comprobar("Casos de la celda sin demostracion mayor",
+    sd_$n[1], 55, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Casos de la celda sin demostracion menor",
+    sd_$n[2], 58, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Unidad reservada, celdas bajo el nominal",
+    sum(sel & x$beta_por_debajo), 0, 0.5)
+  an <- (x$ic_superior[fam & x$beta_por_debajo] -
+         x$ic_inferior[fam & x$beta_por_debajo]) /
+        (x$ic_beta_superior[fam & x$beta_por_debajo] -
+         x$ic_beta_inferior[fam & x$beta_por_debajo])
+  reg[[length(reg)+1]] <- comprobar("Estrechamiento minimo al fijar el umbral",
+    100 * (1 - max(an)), 10, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estrechamiento maximo al fijar el umbral",
+    100 * (1 - min(an)), 34, 0.5)
+}
+
+x <- leer(FUENTES[["Recuentos bajo cada correccion"]])
+if (!is.null(x)) {
+  b <- x[grepl("^beta_", x$correccion), ]
+  reg[[length(reg)+1]] <- comprobar("Recuentos distintos bajo la correccion",
+    length(unique(b$celdas_resisten)), 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas que resistirian sin calibracion",
+    x$celdas_resisten[x$correccion == "holm" & x$nivel == 0.05], 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Falsas positivas esperadas por azar",
+    20 * max(x$nivel), 1, 0.05)
+}
+
+x <- leer(FUENTES[["Causa del fallo por sede"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Sedes que fallan en la mayoritaria",
+    x$sedes[x$clases == "sin_crecimiento"], 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Sedes que fallan en respiratorio",
+    x$sedes[x$clases == "respiratorio"], 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Sedes sin fallo demostrable",
+    x$sin_fallo_demostrable[1], 2, 0.5)
+}
+
+x <- leer(FUENTES[["Calibracion en la unidad reservada"]])
+if (!is.null(x)) {
+  s <- x[which.max(x$n), ]
+  reg[[length(reg)+1]] <- comprobar("Sellada, probabilidad media mayoritaria",
+    s$probabilidad_media, 0.9054, t4)
+  reg[[length(reg)+1]] <- comprobar("Sellada, frecuencia observada mayoritaria",
+    s$frecuencia_observada, 0.9802, t4)
+}
+
+x <- leer(FUENTES[["Validacion interna de la penalizacion"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Validacion interna, mejora",
+    x$mejora_interna, 0.0375, t4)
+  reg[[length(reg)+1]] <- comprobar("Validacion interna, mejora original",
+    x$mejora_original, 0.0395, t4)
+  reg[[length(reg)+1]] <- comprobar("Validacion interna, estancias de ajuste",
+    x$pacientes_ajuste, 5578, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Validacion interna, estancias apartadas",
+    x$pacientes_validacion, 2791, 0.5)
+}
+
+x <- leer(FUENTES[["Indicador de tubo endotraqueal"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Intubacion entre los respiratorios",
+    x$pct_intubado[x$clase == "respiratorio"], 72.2, t1)
+  reg[[length(reg)+1]] <- comprobar("Intubacion entre los sin crecimiento",
+    x$pct_intubado[x$clase == "sin_crecimiento"], 39.3, t1)
+}
+
+x <- leer(FUENTES[["Limites de la recalibracion local"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Tamanos locales del ejercicio",
+    nrow(x), 7, 0.5)
 }
 
 tab <- do.call(rbind, reg)

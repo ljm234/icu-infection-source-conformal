@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-08-26 by R/59_verificar_cifras.R
+Generated on 2026-08-27 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -122,6 +122,33 @@ margin never exceeds the largest possible rounding error.
 | Grupos que empatan en las dos primeras claves | 82.0000 | 82.0000 | 0.50000 | yes |
 | Cobertura, denominadores que no coinciden | 0.0000 | 0.0000 | 0.50000 | yes |
 | Desplazamiento maximo de cobertura | 0.1000 | 0.1000 | 0.05000 | yes |
+| Celdas contrastadas en la familia | 20.0000 | 20.0000 | 0.50000 | yes |
+| Celdas con intervalo bajo el nominal | 5.0000 | 5.0000 | 0.50000 | yes |
+| Celdas que resisten la correccion | 3.0000 | 3.0000 | 0.50000 | yes |
+| Sedes que fallan bajo la correccion | 3.0000 | 3.0000 | 0.50000 | yes |
+| Sedes evaluadas por celda | 5.0000 | 5.0000 | 0.50000 | yes |
+| Cobertura sin demostracion, la mayor | 0.7818 | 0.7818 | 0.00005 | yes |
+| Cobertura sin demostracion, la menor | 0.7586 | 0.7586 | 0.00005 | yes |
+| Casos de la celda sin demostracion mayor | 55.0000 | 55.0000 | 0.50000 | yes |
+| Casos de la celda sin demostracion menor | 58.0000 | 58.0000 | 0.50000 | yes |
+| Unidad reservada, celdas bajo el nominal | 0.0000 | 0.0000 | 0.50000 | yes |
+| Estrechamiento minimo al fijar el umbral | 9.6925 | 10.0000 | 0.50000 | yes |
+| Estrechamiento maximo al fijar el umbral | 34.3324 | 34.0000 | 0.50000 | yes |
+| Recuentos distintos bajo la correccion | 1.0000 | 1.0000 | 0.50000 | yes |
+| Celdas que resistirian sin calibracion | 4.0000 | 4.0000 | 0.50000 | yes |
+| Falsas positivas esperadas por azar | 1.0000 | 1.0000 | 0.05000 | yes |
+| Sedes que fallan en la mayoritaria | 2.0000 | 2.0000 | 0.50000 | yes |
+| Sedes que fallan en respiratorio | 1.0000 | 1.0000 | 0.50000 | yes |
+| Sedes sin fallo demostrable | 2.0000 | 2.0000 | 0.50000 | yes |
+| Sellada, probabilidad media mayoritaria | 0.9054 | 0.9054 | 0.00005 | yes |
+| Sellada, frecuencia observada mayoritaria | 0.9802 | 0.9802 | 0.00005 | yes |
+| Validacion interna, mejora | 0.0375 | 0.0375 | 0.00005 | yes |
+| Validacion interna, mejora original | 0.0395 | 0.0395 | 0.00005 | yes |
+| Validacion interna, estancias de ajuste | 5578.0000 | 5578.0000 | 0.50000 | yes |
+| Validacion interna, estancias apartadas | 2791.0000 | 2791.0000 | 0.50000 | yes |
+| Intubacion entre los respiratorios | 72.2000 | 72.2000 | 0.05000 | yes |
+| Intubacion entre los sin crecimiento | 39.3000 | 39.3000 | 0.05000 | yes |
+| Tamanos locales del ejercicio | 7.0000 | 7.0000 | 0.50000 | yes |
 
 ## Source files
 
@@ -165,3 +192,8 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase20/determinismo_extraccion.csv`
 - `outputs/fase20/cobertura_extraccion.csv`
 - `outputs/fase20/fraccion_informacion_faltante.csv`
+- `outputs/fase22/decision_lambda.csv`
+- `outputs/fase23/calibracion_sellado.csv`
+- `outputs/fase26/intervalos_cobertura.csv`
+- `outputs/fase26/recuentos_multiplicidad.csv`
+- `outputs/fase26/causas_fallo.csv`

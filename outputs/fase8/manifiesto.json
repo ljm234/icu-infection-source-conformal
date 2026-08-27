@@ -4,14 +4,14 @@
   "semilla": 20260818,
   "alfa": 0.1,
   "cobertura_nominal": 0.9,
-  "lambda": 0.0002,
+  "lambda": 0.0001910380708197862,
   "regla_lambda": "min",
   "justificacion_lambda": "comparacion preespecificada frente a 1se",
   "puntuacion": "1 - probabilidad predicha",
   "calibracion": "condicional por clase",
   "umbrales": {
     "sin_crecimiento": 0.1875,
-    "urinario": 0.9738,
+    "urinario": 0.9739,
     "respiratorio": 0.9823,
     "sangre": 0.9829
   },

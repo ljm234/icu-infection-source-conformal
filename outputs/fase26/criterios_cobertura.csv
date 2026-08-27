@@ -1,0 +1,3 @@
+"seccion","sedes","sedes_punto","sedes_intervalo_debajo","sedes_intervalo_excluye","clases","clases_punto","clases_intervalo_debajo","clases_intervalo_excluye","sedes_beta_intervalo_debajo","clases_beta_intervalo_debajo","clases_beta_intervalo_excluye","sedes_bonferroni","sedes_holm","clases_bonferroni","clases_holm"
+"dejando una sede fuera",5,5,5,5,20,7,5,15,5,5,14,4,4,4,4
+"unidad reservada",1,1,0,1,4,2,0,1,0,0,1,0,0,0,0

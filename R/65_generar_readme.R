@@ -21,8 +21,12 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "R/64_auditoria_publicacion.R", "R/65_generar_readme.R",
              "R/67_diagnostico_dependencias.R",
              "R/19_matriz.R", "R/21_perfil_unidades.R", "R/22_particion.R",
+             "R/36_sellado.R", "R/38_recalibracion.R",
+             "R/51_circularidad_glasgow.R",
              "outputs/fase5/distancia_unidades.csv",
-             "outputs/fase5/clases_por_unidad.csv")
+             "outputs/fase5/clases_por_unidad.csv",
+             "outputs/fase22/decision_lambda.csv",
+             "outputs/fase26/intervalos_cobertura.csv")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -103,6 +107,11 @@ empl  <- leer("outputs/fase20/empates_laboratorio.csv")
 divg  <- leer("outputs/fase20/divergencia_extraccion.csv")
 det   <- leer("outputs/fase20/determinismo_extraccion.csv")
 cobx  <- leer("outputs/fase20/cobertura_extraccion.csv")
+lamb  <- leer("outputs/fase22/decision_lambda.csv")
+calsl <- leer("outputs/fase23/calibracion_sellado.csv")
+iv    <- leer("outputs/fase26/intervalos_cobertura.csv")
+mult  <- leer("outputs/fase26/recuentos_multiplicidad.csv")
+causa <- leer("outputs/fase26/causas_fallo.csv")
 
 MIN <- c("urinario","respiratorio","sangre")
 CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
@@ -120,9 +129,64 @@ n_sedes    <- nrow(louo)
 # difieren una a una: dos pares de sedes comparten el mismo conjunto. Se
 # cuentan los conjuntos distintos en lugar de calificar el patron con una
 # palabra que el archivo no sostiene.
-patron_falla <- apply(louoc[, CLC], 1, function(r)
-  paste(CLC[!is.na(r) & r < NOMINAL], collapse = "|"))
-n_patrones <- length(unique(patron_falla))
+# Evaluacion de la garantia condicional. Se abandona la comparacion de la
+# estimacion puntual contra el nominal, que el conjunto de prueba nunca uso, y
+# se adopta en las dos secciones el criterio del intervalo. Las celdas se
+# corrigen ademas por multiplicidad, y el contraste reconoce que el umbral
+# conforme se reestima en cada pliegue.
+fam <- iv$seccion == "dejando una sede fuera"
+sel <- iv$seccion == "unidad reservada"
+ADOPT <- "resiste_beta_holm_0025"
+
+n_celdas  <- sum(fam)
+sedes_iv  <- length(unique(iv$sede[fam]))
+bajo_iv   <- fam & iv$beta_por_debajo
+resiste   <- fam & iv[[ADOPT]]
+n_bajo    <- sum(bajo_iv)
+n_resiste <- sum(resiste)
+sedes_dem <- length(unique(iv$sede[resiste]))
+
+nivel_conv <- max(mult$nivel)
+nivel_adop <- min(mult$nivel)
+falsas <- n_celdas * nivel_conv
+
+# Las dos sedes sin fallo demostrable. Se ordenan por cobertura para que la
+# frase no dependa del orden en que el archivo las deposito.
+sin_dem <- iv[bajo_iv & !iv[[ADOPT]], ]
+sin_dem <- sin_dem[order(-sin_dem$cobertura), ]
+
+# Recuento bajo el contraste que trata el umbral como conocido, para declarar
+# cuanto se debe a esa suposicion.
+n_binom <- mult$celdas_resisten[mult$correccion == "holm" &
+                                mult$nivel == nivel_conv]
+
+# Cuanto se estrechan los intervalos condicionados al umbral, frente a los que
+# reconocen la calibracion.
+anch <- function(f) (iv$ic_superior[f] - iv$ic_inferior[f]) /
+                    (iv$ic_beta_superior[f] - iv$ic_beta_inferior[f])
+estrecha_min <- 100 * (1 - max(anch(bajo_iv)))
+estrecha_max <- 100 * (1 - min(anch(bajo_iv)))
+
+# Las sedes se nombran por su sigla. El nombre completo no cabe en la tabla y
+# truncarlo parte palabras por la mitad.
+iv$sigla <- sub(".*\\(([^)]+)\\).*", "\\1", iv$sede)
+
+sll <- iv[sel, ]
+sll <- sll[match(CLC, sll$clase), ]
+mayor_sll <- sll$clase[which.max(sll$n)]
+cal_may <- val(calsl, "probabilidad_media", calsl$clase == mayor_sll)
+frec_may <- val(calsl, "frecuencia_observada", calsl$clase == mayor_sll)
+
+# Causas del fallo. La frase que sigue supone dos causas distintas y una sola
+# sede sin fallo demostrable por cada una; si el archivo dejara de tener esa
+# forma, la frase describiria algo que ya no ocurre y procede detenerse.
+if (nrow(causa) != 2 || nrow(sin_dem) != causa$sin_fallo_demostrable[1]) {
+  cat("La estructura de las causas no admite la redaccion prevista.\n")
+  quit(status = 1)
+}
+n_sin_dem <- causa$sin_fallo_demostrable[1]
+mb <- mult[grepl("^beta_", mult$correccion), ]
+mb$correccion <- sub("^beta_", "", mb$correccion)
 bajo_sell  <- sum(sell$cobertura < NOMINAL)
 
 # Comparacion de imputacion. Los recuentos se derivan del archivo en lugar de
@@ -245,6 +309,34 @@ add(prosa(
 "Folds assigned by patient. Restricted cubic splines where the cross-validated",
 "gain exceeded a threshold derived from a permutation null.",
 "",
+"The penalty is the cross-validated minimum and not the one-standard-error",
+"rule. The two were compared under a criterion fixed in advance: adopt the",
+"minimum if the mean area across minority classes improves by more than a",
+"declared margin and no class loses more than that same margin. The minimum"))
+
+add(cifra("won, gaining %.4f against a margin of %.2f.",
+          val(lamb, "mejora_original", TRUE),
+          val(lamb, "umbral_mejora", TRUE)))
+
+add(prosa(
+"",
+"That comparison was made on the test set, which is the set that later",
+"reports discrimination and coverage. It is therefore a design decision",
+"taken on the evaluation data, and it was checked again without it: the",
+"training set alone was split by patient, the whole comparison repeated",
+"inside it, and the same criterion applied."))
+
+add(cifra("On %d stays held out from %d used for fitting the answer is the",
+          as.integer(val(lamb, "pacientes_validacion", TRUE)),
+          as.integer(val(lamb, "pacientes_ajuste", TRUE))))
+add(cifra("same, with a gain of %.4f. The reduced fit favours the",
+          val(lamb, "mejora_interna", TRUE)))
+
+add(prosa(
+"one-standard-error rule, since a smaller sample calls for a heavier",
+"penalty, so the minimum wins there against the odds. The check is in",
+"`outputs/fase22/decision_lambda.csv`.",
+"",
 "**Partition.** The cardiovascular unit was sealed in full. The choice was a",
 "judgement informed by the unit profiles that `R/21_perfil_unidades.R`",
 "computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`",
@@ -252,11 +344,21 @@ add(prosa(
 "rule. `R/22_particion.R` names the unit as a constant and computes no",
 "selection criterion.",
 "",
-"The primary model was frozen before that unit was opened, and it was",
-"evaluated there once. The extension proceeded differently: it examined",
-"descriptive summaries of the sealed unit, among them the distribution of the",
-"consciousness scale, in order to decide which variables to admit. The",
-"extended model was never evaluated there.",
+"The sealed unit is touched three times, and it is worth listing them.",
+"`R/36_sellado.R` evaluates the primary model there once, with the thresholds",
+"of the original calibration set and with that model already frozen.",
+"`R/38_recalibracion.R` then reuses those same predictions for a"))
+
+add(cifra("recalibration exercise, resampling the unit at each of %d local",
+          as.integer(nrow(recal))))
+
+add(prosa(
+"sizes; it recomputes thresholds only and never refits the model. And",
+"`R/51_circularidad_glasgow.R` describes the distribution of the",
+"consciousness scale in that unit, to decide whether the variable could",
+"enter the extension at all. The first is an evaluation, the second an",
+"exercise on the same predictions, the third a descriptive check on a",
+"candidate variable. The extended model was never evaluated there.",
 "",
 "## Principal results",
 "",
@@ -324,36 +426,97 @@ add(cifra("%.4f to %.4f with a mean of %.4f, below the nominal level. %d of the"
 add(cifra("%d units fall below nominal on that measure.", as.integer(n_sedes)))
 
 add(prosa(""))
-add(prosa("The conditional guarantee, which is the one this work claims, fails"))
-add(cifra("in %d of %d units: none reaches nominal coverage across all four",
-          as.integer(falla_cond), as.integer(n_sedes)))
+add(prosa(
+"The conditional guarantee, which is the one this work claims, is assessed"))
+add(cifra("class by class within each unit: %d cells. Two things shape how",
+          as.integer(n_celdas)))
+add(prosa(
+"they are read. The cells are corrected jointly for multiplicity, since at"))
+add(cifra("the conventional level of %.2f the expected number of false",
+          nivel_conv))
+add(cifra("positives is %.1f under the hypothesis that every cell meets",
+          falsas))
+add(prosa(
+"nominal.",
+"And the conformal threshold is not a known quantity: it is re-estimated",
+"inside each fold from a finite calibration set, which makes the covered",
+"count beta-binomial rather than binomial. Treating it as binomial credits",
+"the evidence with a precision it does not have.",
+""))
+
+add(cifra("Under Holm's correction %d of the %d units fail. Of the %d cells,",
+          as.integer(sedes_dem), as.integer(sedes_iv), as.integer(n_celdas)))
+add(cifra("%d have their whole interval below nominal and %d survive the",
+          as.integer(n_bajo), as.integer(n_resiste)))
 
 add(prosa(
-  "classes. The classes that fail are not the same everywhere: they form"))
-add(cifra(
-  "%d distinct patterns across the %d units, so a marginal summary conceals",
-  as.integer(n_patrones), as.integer(n_sedes)))
+"correction:",
+"",
+"    unit         class                 n   cover   interval",
+""))
+
+for (i in which(bajo_iv))
+  add(cifra("    %-12s %-16s %5d  %.4f  %.4f to %.4f",
+            iv$sigla[i], iv$clase[i], as.integer(iv$n[i]),
+            iv$cobertura[i], iv$ic_beta_inferior[i], iv$ic_beta_superior[i]))
 
 add(prosa(
-"which classes are left uncovered where.",
+"",
+"The classes that fail are not the same everywhere. Of the units that do"))
+add(cifra("fail, %d fail on %s and %d on %s. The",
+          as.integer(causa$sedes[1]), causa$clases[1],
+          as.integer(causa$sedes[2]), causa$clases[2]))
+add(cifra("remaining %d show point coverage of %.4f and %.4f on %d and %d",
+          as.integer(n_sin_dem), sin_dem$cobertura[1], sin_dem$cobertura[2],
+          as.integer(sin_dem$n[1]), as.integer(sin_dem$n[2])))
+
+add(prosa(
+"cases, too few to establish the shortfall. Absence of demonstration is not",
+"evidence of compliance.",
+"",
+"The count does not depend on the choice of correction or level:",
+"",
+"    correction     level   cells",
+""))
+
+for (i in seq_len(nrow(mb)))
+  add(cifra("    %-14s %5.3f  %6d", mb$correccion[i], mb$nivel[i],
+            as.integer(mb$celdas_resisten[i])))
+
+add(prosa(""))
+add(cifra("Under the test that treats the threshold as known, %d cells would",
+          as.integer(n_binom)))
+add(prosa(
+"survive at that level. The intervals above incorporate the calibration",
+"uncertainty; conditioning on the threshold instead narrows"))
+add(cifra("them by between %.0f and %.0f percent. All the cells of both",
+          estrecha_min, estrecha_max))
+add(prosa(
+"sections are in `outputs/fase26/intervalos_cobertura.csv`.",
 "",
 "### The sealed unit",
 "",
-"Evaluated once, without recalibration. Coverage by class:",
+"Evaluated once, without recalibration, and read by the same criterion:",
+"",
+"    class                 n   cover   interval",
 ""))
 
-for (k in CLC)
-  add(cifra("    %-16s %7.4f", k, val(sell, "cobertura", sell$clase == k)))
-
-add(prosa(""))
-add(cifra("The majority class is over-covered while %d of the %d classes fall",
-          as.integer(bajo_sell), nrow(sell)))
+for (i in seq_len(nrow(sll)))
+  add(cifra("    %-16s %5d  %.4f  %.4f to %.4f", sll$clase[i],
+            as.integer(sll$n[i]), sll$cobertura[i],
+            sll$ic_beta_inferior[i], sll$ic_beta_superior[i]))
 
 add(prosa(
-"below nominal, so by the criterion applied above the sealed unit also fails",
-"the conditional guarantee. The over-coverage of the majority class follows",
-"from a prevalence shift: its mean predicted probability falls below its",
-"observed frequency.",
+"",
+"The majority class is covered above nominal. No minority class has an",
+"interval falling below it, so this section reports no conclusion about the",
+"conditional guarantee here: the cases are too few to establish a shortfall",
+"in either direction. The over-coverage of the majority class follows from a",
+"prevalence shift: its mean predicted probability is"))
+
+add(cifra("%.4f against an observed frequency of %.4f.", cal_may, frec_may))
+
+add(prosa(
 "",
 "### The limit of local recalibration",
 ""))
@@ -451,8 +614,17 @@ add(prosa(
 "coincide within that stratum because the verbal component is constant there,",
 "so the full scale is the reduced one plus a fixed offset, which leaves the",
 "ranking and therefore the area unchanged. The scale acts as a proxy for the",
-"procedure, and the procedure determines whether the respiratory site is",
-"cultured at all.",
+"procedure, and the procedure is strongly associated with whether the",
+"respiratory site is cultured at all:"))
+
+add(cifra("%.1f percent of the respiratory cases are intubated, against",
+          val(tubo, "pct_intubado", tubo$clase == "respiratorio")))
+add(cifra("%.1f percent of those without growth. It runs in the direction",
+          val(tubo, "pct_intubado", tubo$clase == "sin_crecimiento")))
+
+add(prosa(
+"the argument needs, but it remains an association: the data do not",
+"establish that the one determines the other.",
 "",
 "### Four vital signs were retained",
 "",

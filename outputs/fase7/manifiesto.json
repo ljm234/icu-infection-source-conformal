@@ -4,7 +4,7 @@
   "semilla": 20260818,
   "glmnet_version": "5.0",
   "alpha": 1,
-  "lambda": 0.0104,
+  "lambda": 0.01043502901949285,
   "regla_lambda": "1se",
   "con_spline": ["urea", "creatinina", "cloro", "bicarbonato", "leucocitos", "sodio", "exceso_base", "rdw"],
   "lineales": ["hemoglobina", "plaquetas", "inr", "ttpa", "ph", "pco2", "lactato", "potasio", "brecha_anion"],
