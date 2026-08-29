@@ -15,9 +15,9 @@ library(jsonlite)
 #
 # No se reejecuta nada. Las dos etapas se derivan de agregados ya versionados:
 # el recuento disponible de la extraccion y el numero de valores que los
-# limites anulan. La derivacion se contrasta contra un testigo independiente,
-# la columna anterior de outputs/fase20/cobertura_extraccion.csv, que R/63
-# calculo sobre la tabla limpia por un camino distinto. Si ambos no
+# limites anulan. La derivacion se contrasta contra un testigo calculado por
+# otro camino, la columna anterior de outputs/fase20/cobertura_extraccion.csv,
+# que R/63 obtuvo contando directamente sobre la tabla limpia. Si ambos no
 # coincidieran, la resta no describiria la limpieza y el procedimiento se
 # detiene.
 
@@ -74,9 +74,11 @@ if (max(abs(etapa$pct_crudo - cob$pct)) > 1e-9)
 
 # Segunda comprobacion, la que importa. La proporcion limpia ha de coincidir
 # con la que R/63 calculo directamente sobre la tabla limpia. Son dos caminos
-# independientes hacia la misma cantidad.
+# de computo distintos hacia la misma cantidad, con un origen comun: la
+# anulacion de R/47. El contraste acredita la coherencia de la resta y de los
+# archivos, no la limpieza misma.
 d <- max(abs(etapa$pct_limpio - ext$pct_anterior[oe]))
-cat("=== CONTRASTE CON EL TESTIGO INDEPENDIENTE ===\n")
+cat("=== CONTRASTE CON EL TESTIGO POR OTRO CAMINO ===\n")
 cat("Discrepancia maxima con la cobertura calculada sobre la tabla limpia:",
     signif(d, 3), "\n")
 if (d > 1e-9)

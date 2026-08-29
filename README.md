@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-08-27 by `R/65_generar_readme.R`.
+Generated on 2026-08-29 by `R/65_generar_readme.R`.
 Every numeric figure below is read from a versioned results file. The
 generator rejects prose lines containing a digit, format patterns carrying
 digits outside their substitution codes, and any line that fails to compose.
@@ -54,7 +54,7 @@ partition step, so the analysed cohort is smaller than the final funnel row.
 
 The abstention category groups wound, intra-abdominal, cerebrospinal fluid
 and other sites whose frequency does not support conditional calibration. It
-is not modelled and serves to evaluate the referral mechanism.
+is not modelled.
 
 ## Design decisions
 
@@ -66,12 +66,11 @@ was recorded rather than the time the specimen was drawn, since a result
 recorded afterwards was not available at the moment of decision.
 
 **Aggregation.** First recorded value per variable. The first value is the
-only estimator whose distribution does not depend on how many measurements
-were taken, which matters because monitoring intensity differs across units.
+only one computable without knowing how many measurements follow, which
+matters because monitoring intensity differs across units.
 Correlation with worst-value aggregation never falls below 0.8722
 across the seventeen laboratory variables; the comparison does not cover
-vital signs. The shift the worst value induces tracks monitoring intensity
-rather than physiology.
+vital signs.
 
 **Imputation.** Chained equations with predictive mean matching, twenty
 datasets, ten iterations, estimated on the training set alone. The outcome
@@ -212,8 +211,9 @@ choice of correction or level:
     holm           0.025       3
 
 Under the test that treats the threshold as known, 4 cells would
-survive at that level. The intervals above incorporate the calibration
-uncertainty; conditioning on the threshold instead narrows
+survive under Holm's correction at either level. The intervals above
+incorporate the calibration uncertainty; conditioning on the threshold
+instead narrows
 them by between 10 and 34 percent. All the cells of both
 sections are in `outputs/fase26/intervalos_cobertura.csv`.
 
@@ -302,9 +302,10 @@ establish that the one determines the other.
 
 ### Four vital signs were retained
 
-Coverage of the table the model is fitted on, which is the one left after
-implausible values are blanked. The raw extraction is given beside it, and
-the difference between the columns is what the plausibility limits discard.
+Coverage of the table left after implausible values are blanked, which is
+the one the model is fitted on, counted over the final funnel cohort. The
+raw extraction is given beside it, and the difference between the columns
+is what the plausibility limits discard.
 The figures used everywhere below are the cleaned ones. Both stages are in
 `outputs/fase28/cobertura_vitales_por_etapa.csv`.
 
@@ -320,8 +321,8 @@ Their medians are not constant across units. Heart rate ranges by
 the six units. That variation confounds case mix with measurement practice
 and this analysis cannot separate them: a cardiac surgical unit has genuinely
 slower, sedated patients. It differs from lactate, where whether the test is
-ordered cannot depend on its own result, so the variation across units is
-unambiguously practice.
+ordered cannot depend on its own result, so the variation in how often it is
+ordered across units is practice.
 
 Availability also varies: temperature is recorded in 76.5 percent of
 stays in one unit and 97.9 percent in another, a range of 21.4
@@ -330,12 +331,10 @@ it reads, so its missingness carries site information more clearly than its
 value does.
 
 Only temperature required a flexible functional form, with a gain of
-283.00 against a permutation-derived noise threshold. Its relationship
-with infection is U-shaped: both fever and hypothermia mark severity.
+283.00 against a permutation-derived noise threshold.
 
-The extended model gains 0.0146 in mean AUC across minority classes
-and resolves a larger share of cases than the original. It does not change
-the clinical verdict.
+The extended model gains 0.0146 over the original in mean AUC across
+minority classes. It does not change the clinical verdict.
 
 Adding the vital signs does not improve transportability:
 coverage dispersion is 0.0736 against 0.0744, the mean falls from 0.8944
@@ -447,6 +446,8 @@ The self-checking procedures are:
         generates this document
     R/67_diagnostico_dependencias.R
         checks the lockfile covers every library the procedures load
+    R/68_traduccion_yachay.R
+        generates the protocol document
 
 ## License
 

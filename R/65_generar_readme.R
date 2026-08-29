@@ -19,7 +19,7 @@
 EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "SHA-256", "R/59_verificar_cifras.R",
              "R/64_auditoria_publicacion.R", "R/65_generar_readme.R",
-             "R/67_diagnostico_dependencias.R",
+             "R/67_diagnostico_dependencias.R", "R/68_traduccion_yachay.R",
              "R/19_matriz.R", "R/21_perfil_unidades.R", "R/22_particion.R",
              "R/36_sellado.R", "R/38_recalibracion.R",
              "R/51_circularidad_glasgow.R",
@@ -158,9 +158,15 @@ sin_dem <- iv[bajo_iv & !iv[[ADOPT]], ]
 sin_dem <- sin_dem[order(-sin_dem$cobertura), ]
 
 # Recuento bajo el contraste que trata el umbral como conocido, para declarar
-# cuanto se debe a esa suposicion.
-n_binom <- mult$celdas_resisten[mult$correccion == "holm" &
-                                mult$nivel == nivel_conv]
+# cuanto se debe a esa suposicion. Bajo Holm el recuento es el mismo en los
+# dos niveles; bajo Bonferroni no lo es, y la frase que sigue solo afirma lo
+# que ambos niveles sostienen.
+n_binom_niveles <- mult$celdas_resisten[mult$correccion == "holm"]
+if (length(unique(n_binom_niveles)) != 1) {
+  cat("El recuento bajo Holm varia entre los dos niveles.\n")
+  quit(status = 1)
+}
+n_binom <- n_binom_niveles[1]
 
 # Cuanto se estrechan los intervalos condicionados al umbral, frente a los que
 # reconocen la calibracion.
@@ -277,7 +283,7 @@ add(prosa(
 "",
 "The abstention category groups wound, intra-abdominal, cerebrospinal fluid",
 "and other sites whose frequency does not support conditional calibration. It",
-"is not modelled and serves to evaluate the referral mechanism.",
+"is not modelled.",
 "",
 "## Design decisions",
 "",
@@ -289,16 +295,15 @@ add(prosa(
 "recorded afterwards was not available at the moment of decision.",
 "",
 "**Aggregation.** First recorded value per variable. The first value is the",
-"only estimator whose distribution does not depend on how many measurements",
-"were taken, which matters because monitoring intensity differs across units."))
+"only one computable without knowing how many measurements follow, which",
+"matters because monitoring intensity differs across units."))
 
 add(cifra("Correlation with worst-value aggregation never falls below %.4f",
           min(agr$correlacion)))
 
 add(prosa(
 "across the seventeen laboratory variables; the comparison does not cover",
-"vital signs. The shift the worst value induces tracks monitoring intensity",
-"rather than physiology.",
+"vital signs.",
 "",
 "**Imputation.** Chained equations with predictive mean matching, twenty",
 "datasets, ten iterations, estimated on the training set alone. The outcome",
@@ -499,8 +504,9 @@ add(prosa(""))
 add(cifra("Under the test that treats the threshold as known, %d cells would",
           as.integer(n_binom)))
 add(prosa(
-"survive at that level. The intervals above incorporate the calibration",
-"uncertainty; conditioning on the threshold instead narrows"))
+"survive under Holm's correction at either level. The intervals above",
+"incorporate the calibration uncertainty; conditioning on the threshold",
+"instead narrows"))
 add(cifra("them by between %.0f and %.0f percent. All the cells of both",
           estrecha_min, estrecha_max))
 add(prosa(
@@ -646,9 +652,10 @@ add(prosa(
 "",
 "### Four vital signs were retained",
 "",
-"Coverage of the table the model is fitted on, which is the one left after",
-"implausible values are blanked. The raw extraction is given beside it, and",
-"the difference between the columns is what the plausibility limits discard.",
+"Coverage of the table left after implausible values are blanked, which is",
+"the one the model is fitted on, counted over the final funnel cohort. The",
+"raw extraction is given beside it, and the difference between the columns",
+"is what the plausibility limits discard.",
 "The figures used everywhere below are the cleaned ones. Both stages are in",
 "`outputs/fase28/cobertura_vitales_por_etapa.csv`.",
 "",
@@ -672,8 +679,8 @@ add(prosa(
 "the six units. That variation confounds case mix with measurement practice",
 "and this analysis cannot separate them: a cardiac surgical unit has genuinely",
 "slower, sedated patients. It differs from lactate, where whether the test is",
-"ordered cannot depend on its own result, so the variation across units is",
-"unambiguously practice.",
+"ordered cannot depend on its own result, so the variation in how often it is",
+"ordered across units is practice.",
 ""))
 
 add(cifra("Availability also varies: temperature is recorded in %.1f percent of",
@@ -689,20 +696,17 @@ add(prosa(
 "",
 "Only temperature required a flexible functional form, with a gain of"))
 
-add(cifra("%.2f against a permutation-derived noise threshold. Its relationship",
+add(cifra("%.2f against a permutation-derived noise threshold.",
           val(spl, "ganancia", spl$variable == "temperatura")))
 
-add(prosa(
-"with infection is U-shaped: both fever and hypothermia mark severity.",
-""))
+add(prosa(""))
 
-add(cifra("The extended model gains %.4f in mean AUC across minority classes",
+add(cifra("The extended model gains %.4f over the original in mean AUC across",
           mean(amp$auc_ampliado[amp$clase %in% MIN]) -
           mean(amp$auc_original[amp$clase %in% MIN])))
 
 add(prosa(
-"and resolves a larger share of cases than the original. It does not change",
-"the clinical verdict.",
+"minority classes. It does not change the clinical verdict.",
 "",
 "Adding the vital signs does not improve transportability:"))
 
@@ -856,6 +860,8 @@ add(prosa(
 "        generates this document",
 "    R/67_diagnostico_dependencias.R",
 "        checks the lockfile covers every library the procedures load",
+"    R/68_traduccion_yachay.R",
+"        generates the protocol document",
 "",
 "## License",
 "",
@@ -868,6 +874,6 @@ cat("=== DOCUMENTACION GENERADA ===\n")
 cat("Lineas escritas:", length(L), "\n")
 cat("\nComprobaciones derivadas de archivo\n")
 cat("  Sedes bajo el nominal en cobertura marginal:", bajo_marg, "\n")
-cat("  Sedes que fallan la garantia condicional:", falla_cond, "\n")
+cat("  Sedes con alguna clase puntualmente bajo el nominal:", falla_cond, "\n")
 cat("  Clases bajo el nominal en la unidad sellada:", bajo_sell, "\n")
 cat("  Imputacion, gana mediana:", gana_med, " gana mice:", gana_mice, "\n")

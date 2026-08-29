@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-08-27 by R/59_verificar_cifras.R
+Generated on 2026-08-29 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -86,8 +86,8 @@ margin never exceeds the largest possible rounding error.
 | Transportabilidad, cobertura maxima | 0.9612 | 0.9612 | 0.00005 | yes |
 | Sedes bajo el nominal en cobertura marginal | 2.0000 | 2.0000 | 0.50000 | yes |
 | Sedes evaluadas dejando una fuera | 5.0000 | 5.0000 | 0.50000 | yes |
-| Sedes que fallan la garantia condicional | 5.0000 | 5.0000 | 0.50000 | yes |
-| Patrones distintos de fallo condicional | 3.0000 | 3.0000 | 0.50000 | yes |
+| Sedes con alguna clase puntualmente bajo el nominal | 5.0000 | 5.0000 | 0.50000 | yes |
+| Conjuntos distintos de clases puntualmente bajo el nominal | 3.0000 | 3.0000 | 0.50000 | yes |
 | Unidad reservada, cobertura de sin_crecimiento | 0.9911 | 0.9911 | 0.00005 | yes |
 | Unidad reservada, cobertura de urinario | 0.8654 | 0.8654 | 0.00005 | yes |
 | Unidad reservada, cobertura de respiratorio | 0.8462 | 0.8462 | 0.00005 | yes |
@@ -142,7 +142,8 @@ margin never exceeds the largest possible rounding error.
 | Estrechamiento minimo al fijar el umbral | 9.6925 | 10.0000 | 0.50000 | yes |
 | Estrechamiento maximo al fijar el umbral | 34.3324 | 34.0000 | 0.50000 | yes |
 | Recuentos distintos bajo la correccion | 1.0000 | 1.0000 | 0.50000 | yes |
-| Celdas que resistirian sin calibracion | 4.0000 | 4.0000 | 0.50000 | yes |
+| Celdas que resistirian sin calibracion, Holm al nivel convencional | 4.0000 | 4.0000 | 0.50000 | yes |
+| Celdas que resistirian sin calibracion, Holm al nivel adoptado | 4.0000 | 4.0000 | 0.50000 | yes |
 | Falsas positivas esperadas por azar | 1.0000 | 1.0000 | 0.05000 | yes |
 | Sedes que fallan en la mayoritaria | 2.0000 | 2.0000 | 0.50000 | yes |
 | Sedes que fallan en respiratorio | 1.0000 | 1.0000 | 0.50000 | yes |

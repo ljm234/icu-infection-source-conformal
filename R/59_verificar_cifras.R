@@ -372,14 +372,17 @@ if (!is.null(x)) {
 
 x <- leer(FUENTES[["Transportabilidad, cobertura por clase"]])
 if (!is.null(x)) {
-  reg[[length(reg)+1]] <- comprobar("Sedes que fallan la garantia condicional",
+  # Criterio puntual sobre la fuente original, sin intervalo ni correccion:
+  # no es el criterio que el documento adopta, que vive en las celdas de la
+  # fase veintiseis, comprobadas mas abajo. El nombre lo dice.
+  reg[[length(reg)+1]] <- comprobar("Sedes con alguna clase puntualmente bajo el nominal",
     sum(apply(x[, CLASES], 1, function(r) any(r < NOMINAL, na.rm = TRUE))),
     5, 0.5)
-  # Los documentos publican el numero de conjuntos distintos de categorias por
-  # debajo del nominal. Antes calificaban el patron con una palabra, que
-  # ninguna comprobacion podia contrastar; ahora es un recuento, y se deriva
-  # aqui igual que en los generadores.
-  reg[[length(reg)+1]] <- comprobar("Patrones distintos de fallo condicional",
+  # Diagnostico del mismo criterio puntual: conjuntos distintos de categorias
+  # por debajo del nominal. Ningun documento publica ya este recuento; se
+  # conserva como vigilancia de la fuente, con el criterio explicito en el
+  # nombre.
+  reg[[length(reg)+1]] <- comprobar("Conjuntos distintos de clases puntualmente bajo el nominal",
     length(unique(apply(x[, CLASES], 1, function(r)
       paste(CLASES[!is.na(r) & r < NOMINAL], collapse = "|")))), 3, 0.5)
 }
@@ -582,8 +585,10 @@ if (!is.null(x)) {
   b <- x[grepl("^beta_", x$correccion), ]
   reg[[length(reg)+1]] <- comprobar("Recuentos distintos bajo la correccion",
     length(unique(b$celdas_resisten)), 1, 0.5)
-  reg[[length(reg)+1]] <- comprobar("Celdas que resistirian sin calibracion",
+  reg[[length(reg)+1]] <- comprobar("Celdas que resistirian sin calibracion, Holm al nivel convencional",
     x$celdas_resisten[x$correccion == "holm" & x$nivel == 0.05], 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas que resistirian sin calibracion, Holm al nivel adoptado",
+    x$celdas_resisten[x$correccion == "holm" & x$nivel == 0.025], 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Falsas positivas esperadas por azar",
     20 * max(x$nivel), 1, 0.05)
 }

@@ -9,6 +9,21 @@ imps <- readRDS("outputs/fase6/imputaciones.rds")
 M <- length(imps)
 CLASES <- esp$clases
 
+# La penalizacion se lee de la tabla que la fija, no de un literal. El literal
+# con el que se ejecuto esta fase se conserva como guardia: si lo leido no lo
+# reproduce con exactitud, los artefactos depositados no serian los que este
+# codigo produce y procede detenerse.
+hip <- read.csv("outputs/fase7/busqueda_hiperparametros.csv",
+                stringsAsFactors = FALSE)
+fila_lambda <- which(abs(hip$alpha - 1) < 1e-9)
+if (length(fila_lambda) != 1)
+  stop("La busqueda de hiperparametros no contiene una fila unica para la ",
+       "mezcla empleada.")
+LAMBDA_FINAL <- hip$lambda_min[fila_lambda]
+if (abs(LAMBDA_FINAL - 0.000191) > 0)
+  stop("La penalizacion leida no reproduce el literal con el que se ejecuto ",
+       "esta fase.")
+
 base_ent <- imps[[1]][imps[[1]]$grupo == "entrenamiento", ]
 niveles <- sort(unique(base_ent$unidad))
 imps <- lapply(imps, function(x) {
@@ -57,7 +72,7 @@ ajustar_evaluar <- function(cs, li, cu, ci, etiqueta) {
   Xe <- construir(ent, cs, li, cu, ci)
   Xp <- construir(pru, cs, li, cu, ci)
   m <- glmnet(Xe, ent$clase, family = "multinomial", alpha = 1,
-              lambda = 0.000191, weights = w, standardize = TRUE)
+              lambda = LAMBDA_FINAL, weights = w, standardize = TRUE)
   p <- predict(m, newx = Xp, type = "response")[, , 1]
   ag <- aggregate(p, by = list(stay_id = pru$stay_id), FUN = mean)
   et <- unique(pru[, c("stay_id","clase")])

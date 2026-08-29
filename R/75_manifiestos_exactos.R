@@ -135,7 +135,7 @@ nom <- anotar("8", "cobertura_nominal", cob$nominal[1],
               "outputs/fase8/cobertura.csv")
 
 # El nivel alfa es un parametro de diseno y no un resultado, y el
-# serializador no lo daño. Se conserva en lugar de recalcularlo: obtenerlo por
+# serializador no lo dano. Se conserva en lugar de recalcularlo: obtenerlo por
 # diferencia introduce en el registro una cifra que ninguna fuente contiene,
 # porque el complemento de nueve decimos no es exacto en base dos. Se
 # comprueba en cambio que ambos sigan siendo complementarios.
@@ -181,7 +181,7 @@ CONSERVADOS <- list(
 # La marca de reparacion no procede del manifiesto anterior ni de fuente
 # alguna: la anade este procedimiento, y por eso se declara aparte. Un
 # registro de ejecucion reescrito despues sin decirlo es lo que un lector
-# atento señala, aunque cada valor que contenga sea rastreable.
+# atento senala, aunque cada valor que contenga sea rastreable.
 ANADIDOS <- c("reparado_por", "procedencia")
 
 derivados <- lapply(derivados, unique)

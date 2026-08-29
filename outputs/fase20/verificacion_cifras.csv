@@ -76,8 +76,8 @@
 "Transportabilidad, cobertura maxima",0.9612,0.9612,5e-05,TRUE
 "Sedes bajo el nominal en cobertura marginal",2,2,0.5,TRUE
 "Sedes evaluadas dejando una fuera",5,5,0.5,TRUE
-"Sedes que fallan la garantia condicional",5,5,0.5,TRUE
-"Patrones distintos de fallo condicional",3,3,0.5,TRUE
+"Sedes con alguna clase puntualmente bajo el nominal",5,5,0.5,TRUE
+"Conjuntos distintos de clases puntualmente bajo el nominal",3,3,0.5,TRUE
 "Unidad reservada, cobertura de sin_crecimiento",0.9911,0.9911,5e-05,TRUE
 "Unidad reservada, cobertura de urinario",0.8654,0.8654,5e-05,TRUE
 "Unidad reservada, cobertura de respiratorio",0.8462,0.8462,5e-05,TRUE
@@ -132,7 +132,8 @@
 "Estrechamiento minimo al fijar el umbral",9.69248734916311,10,0.5,TRUE
 "Estrechamiento maximo al fijar el umbral",34.3324250681198,34,0.5,TRUE
 "Recuentos distintos bajo la correccion",1,1,0.5,TRUE
-"Celdas que resistirian sin calibracion",4,4,0.5,TRUE
+"Celdas que resistirian sin calibracion, Holm al nivel convencional",4,4,0.5,TRUE
+"Celdas que resistirian sin calibracion, Holm al nivel adoptado",4,4,0.5,TRUE
 "Falsas positivas esperadas por azar",1,1,0.05,TRUE
 "Sedes que fallan en la mayoritaria",2,2,0.5,TRUE
 "Sedes que fallan en respiratorio",1,1,0.5,TRUE
