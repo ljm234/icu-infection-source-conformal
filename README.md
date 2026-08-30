@@ -449,6 +449,16 @@ The self-checking procedures are:
     R/68_traduccion_yachay.R
         generates the protocol document
 
+## Language-model assistance
+
+Language models assisted in drafting the code and the documentation. No
+patient-level data were transmitted to those tools: the PhysioNet data use
+agreement prohibits it. Every procedure was executed in the project
+environment under the author's direction. The published figures are
+checked automatically against their source files by
+`R/59_verificar_cifras.R`, and the deposit is audited by
+`R/64_auditoria_publicacion.R`.
+
 ## License
 
 Code under the MIT license. Data are governed by the PhysioNet data use
