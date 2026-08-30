@@ -20,9 +20,9 @@ not absent.
 
 ## Correction
 
-Ordering now uses four keys: storetime, then charttime, the time the
-measurement was made, then the value after unit conversion, then itemid,
-the identifier of the measured item. Ordering on the converted value
+Ordering now uses four keys: storetime, then charttime (the time the
+measurement was made), then the value after unit conversion, then itemid
+(the identifier of the measured item). Ordering on the converted value
 matters because temperature is recorded under two itemids in different
 scales, so the raw figure places readings of very different temperatures
 side by side.

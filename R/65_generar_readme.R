@@ -28,7 +28,11 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase22/decision_lambda.csv",
              "outputs/fase25/divergencia_etiquetado.csv",
              "outputs/fase26/intervalos_cobertura.csv",
-             "outputs/fase28/cobertura_vitales_por_etapa.csv")
+             "outputs/fase28/cobertura_vitales_por_etapa.csv",
+             "~/mimic-data/physionet.org/files/mimiciv/3.1",
+             "outputs/fase20/TRACEABILITY.md",
+             "outputs/fase20/REPRODUCIBILITY.md",
+             "outputs/fase21/PROTOCOLO.md")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -789,9 +793,9 @@ add(prosa(
 "vital signs only. No versioned file bounds the divergence this leaves in the",
 "core phases.",
 "",
-"Ordering now uses four keys: storetime, charttime, the time the measurement",
-"was made, the value after unit conversion, and itemid, the identifier of the",
-"measured item. The converted value earns its place:"))
+"Ordering now uses four keys: storetime, charttime (the time the",
+"measurement was made), the value after unit conversion, and itemid (the",
+"identifier of the measured item). The converted value earns its place:"))
 
 add(cifra("%d groups of measurements agree on stay_id, storetime and charttime",
           as.integer(det$grupos_ambiguos)))
@@ -817,6 +821,14 @@ add(prosa(
 "R 4.6.1. Exact library versions are recorded in `renv.lock`:",
 "",
 "    R -e 'renv::restore()'",
+"",
+"Running any of this requires credentialed access to MIMIC-IV through",
+"PhysioNet and a local copy of the release, which the procedures expect",
+"under `~/mimic-data/physionet.org/files/mimiciv/3.1`. They are numbered in",
+"the order they run: schema exploration and cohort first, then the analysis",
+"matrix and the partition, the imputation, the model and its conformal",
+"calibration, the validations, the extension with vital signs, and last the",
+"verification and the documents.",
 "",
 "The seed is 20260818 across all phases involving randomization. The cohort",
 "extraction manifest records a different seed, which is inert: that step",
@@ -884,6 +896,12 @@ add(prosa(
 "        checks the lockfile covers every library the procedures load",
 "    R/68_traduccion_yachay.R",
 "        generates the protocol document",
+"",
+"The other documents are [TRACEABILITY](outputs/fase20/TRACEABILITY.md),",
+"which records every published figure against its source file,",
+"[REPRODUCIBILITY](outputs/fase20/REPRODUCIBILITY.md), on the determinism of",
+"the extraction, and [PROTOCOLO](outputs/fase21/PROTOCOLO.md), which carries",
+"the findings into decisions for a separate study and is written in Spanish.",
 "",
 "## Language-model assistance",
 "",

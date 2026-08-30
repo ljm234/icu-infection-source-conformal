@@ -14,6 +14,7 @@ outputs/fase5/matriz_particionada.csv
 outputs/fase5/SELLADO_NO_ABRIR.csv
 outputs/fase6/imputaciones.rds
 outputs/fase6/objeto_mice.rds
+outputs/fase6/objeto_mice_ampliado.rds
 outputs/fase7/prob_calibracion.csv
 outputs/fase7/prob_prueba.csv
 outputs/fase8/prob_calibracion.csv
