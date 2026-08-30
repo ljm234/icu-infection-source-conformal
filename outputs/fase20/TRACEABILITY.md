@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-08-29 by R/59_verificar_cifras.R
+Generated on 2026-08-30 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -161,6 +161,22 @@ margin never exceeds the largest possible rounding error.
 | Regla del maximo, metodos contrastados | 4.0000 | 4.0000 | 0.50000 | yes |
 | Estancias que cambian de etiqueta | 0.0000 | 0.0000 | 0.50000 | yes |
 | Estancias cubiertas por el cruce de etiquetas | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Umbral de retencion de unidades | 500.0000 | 500.0000 | 0.50000 | yes |
+| Unidades retenidas | 6.0000 | 6.0000 | 0.50000 | yes |
+| Estancias retenidas | 22778.0000 | 22778.0000 | 0.50000 | yes |
+| Unidades descartadas | 10.0000 | 10.0000 | 0.50000 | yes |
+| Estancias descartadas | 435.0000 | 435.0000 | 0.50000 | yes |
+| Estancias de las unidades de desarrollo | 18054.0000 | 18054.0000 | 0.50000 | yes |
+| Estancias de la unidad reservada | 4724.0000 | 4724.0000 | 0.50000 | yes |
+| Cohorte, retenidas mas descartadas | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Unidades en la cohorte final | 16.0000 | 16.0000 | 0.50000 | yes |
+| Determinaciones candidatas | 73.0000 | 73.0000 | 0.50000 | yes |
+| Determinaciones retenidas | 17.0000 | 17.0000 | 0.50000 | yes |
+| Determinaciones descartadas | 56.0000 | 56.0000 | 0.50000 | yes |
+| Cobertura minima de las retenidas | 45.2000 | 45.2000 | 0.05000 | yes |
+| Cobertura maxima de las descartadas | 68.5000 | 68.5000 | 0.05000 | yes |
+| Descartadas sobre la retenida minima | 12.0000 | 12.0000 | 0.50000 | yes |
+| Atributos que separan los dos grupos | 0.0000 | 0.0000 | 0.50000 | yes |
 
 ## Source files
 
@@ -212,3 +228,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase26/recuentos_multiplicidad.csv`
 - `outputs/fase26/causas_fallo.csv`
 - `outputs/fase28/cobertura_vitales_por_etapa.csv`
+- `outputs/fase29/cohorte_analizada.csv`
+- `outputs/fase29/unidades_cohorte.csv`
+- `outputs/fase30/determinaciones_candidatas.csv`
+- `outputs/fase30/separacion_candidatas.csv`

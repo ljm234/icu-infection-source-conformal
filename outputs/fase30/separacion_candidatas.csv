@@ -1,0 +1,4 @@
+"atributo","valores_compartidos","solo_en_retenidas","solo_en_descartadas","descartadas_por_encima_de_la_retenida_minima","separa_los_grupos"
+"fluido",1,"","Urine",NA,FALSE
+"panel",3,"","",NA,FALSE
+"cobertura",NA,"","",12,FALSE

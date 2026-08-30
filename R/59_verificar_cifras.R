@@ -64,7 +64,11 @@ FUENTES <- list(
   "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
   "Recuentos bajo cada correccion"           = "outputs/fase26/recuentos_multiplicidad.csv",
   "Causa del fallo por sede"                 = "outputs/fase26/causas_fallo.csv",
-  "Cobertura de constantes por etapa"        = "outputs/fase28/cobertura_vitales_por_etapa.csv")
+  "Cobertura de constantes por etapa"        = "outputs/fase28/cobertura_vitales_por_etapa.csv",
+  "Composicion de la cohorte analizada"      = "outputs/fase29/cohorte_analizada.csv",
+  "Unidades de la cohorte"                   = "outputs/fase29/unidades_cohorte.csv",
+  "Determinaciones candidatas"               = "outputs/fase30/determinaciones_candidatas.csv",
+  "Separacion de las candidatas"             = "outputs/fase30/separacion_candidatas.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -660,6 +664,66 @@ if (!is.null(x)) {
     sum(x$estancias[!x$esperada]), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Estancias cubiertas por el cruce de etiquetas",
     sum(x$estancias), 23213, 0.5)
+}
+
+# ---------------------------------------------------------------------------
+# Composicion de la cohorte y descripcion de las candidatas de laboratorio
+#
+# Ambos depositos derivan de agregados anteriores, de modo que aqui se
+# contrasta la derivacion contra su fuente y no el archivo contra si mismo.
+# ---------------------------------------------------------------------------
+
+x <- leer(FUENTES[["Composicion de la cohorte analizada"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Umbral de retencion de unidades",
+    x$umbral, 500, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Unidades retenidas",
+    x$unidades_retenidas, 6, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias retenidas",
+    x$estancias_retenidas, 22778, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Unidades descartadas",
+    x$unidades_descartadas, 10, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias descartadas",
+    x$estancias_descartadas, 435, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias de las unidades de desarrollo",
+    x$estancias_de_desarrollo, 18054, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias de la unidad reservada",
+    x$estancias_reservadas, 4724, 0.5)
+  # La suma ha de reproducir el embudo, que es la fuente independiente.
+  f <- leer(FUENTES[["Embudo de seleccion"]])
+  if (!is.null(f))
+    reg[[length(reg)+1]] <- comprobar("Cohorte, retenidas mas descartadas",
+      x$estancias_retenidas + x$estancias_descartadas,
+      f$n[f$paso == "p5_cohorte_final"], 0.5)
+}
+
+x <- leer(FUENTES[["Unidades de la cohorte"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Unidades en la cohorte final",
+    nrow(x), 16, 0.5)
+}
+
+x <- leer(FUENTES[["Determinaciones candidatas"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Determinaciones candidatas",
+    nrow(x), 73, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Determinaciones retenidas",
+    sum(x$retenida), 17, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Determinaciones descartadas",
+    sum(!x$retenida), 56, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cobertura minima de las retenidas",
+    min(x$cobertura_pct[x$retenida]), 45.2, t1)
+  reg[[length(reg)+1]] <- comprobar("Cobertura maxima de las descartadas",
+    max(x$cobertura_pct[!x$retenida]), 68.5, t1)
+  reg[[length(reg)+1]] <- comprobar("Descartadas sobre la retenida minima",
+    sum(x$cobertura_pct[!x$retenida] >
+        min(x$cobertura_pct[x$retenida])), 12, 0.5)
+}
+
+x <- leer(FUENTES[["Separacion de las candidatas"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Atributos que separan los dos grupos",
+    sum(x$separa_los_grupos), 0, 0.5)
 }
 
 tab <- do.call(rbind, reg)

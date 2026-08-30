@@ -1,0 +1,74 @@
+"itemid","etiqueta","variable_en_el_modelo","fluido","panel","estancias","cobertura_pct","retenida"
+"51265","Platelet Count","plaquetas","Blood","Hematology",43762,66.9,TRUE
+"51222","Hemoglobin","hemoglobina","Blood","Hematology",43679,66.8,TRUE
+"51301","White Blood Cells","leucocitos","Blood","Hematology",43588,66.7,TRUE
+"51277","RDW","rdw","Blood","Hematology",43567,66.7,TRUE
+"50902","Chloride","cloro","Blood","Chemistry",42641,65.2,TRUE
+"50912","Creatinine","creatinina","Blood","Chemistry",42500,65,TRUE
+"51006","Urea Nitrogen","urea","Blood","Chemistry",42467,65,TRUE
+"50882","Bicarbonate","bicarbonato","Blood","Chemistry",42360,64.8,TRUE
+"50868","Anion Gap","brecha_anion","Blood","Chemistry",41512,63.5,TRUE
+"50971","Potassium","potasio","Blood","Chemistry",39254,60.1,TRUE
+"50983","Sodium","sodio","Blood","Chemistry",39208,60,TRUE
+"51237","INR(PT)","inr","Blood","Hematology",36806,56.3,TRUE
+"51275","PTT","ttpa","Blood","Hematology",36670,56.1,TRUE
+"50820","pH","ph","Blood","Blood Gas",30864,47.2,TRUE
+"50802","Base Excess","exceso_base","Blood","Blood Gas",30065,46,TRUE
+"50818","pCO2","pco2","Blood","Blood Gas",30063,46,TRUE
+"50813","Lactate","lactato","Blood","Blood Gas",29559,45.2,TRUE
+"51221","Hematocrit",NA,"Blood","Hematology",44775,68.5,FALSE
+"51279","Red Blood Cells",NA,"Blood","Hematology",43591,66.7,FALSE
+"51250","MCV",NA,"Blood","Hematology",43590,66.7,FALSE
+"51249","MCHC",NA,"Blood","Hematology",43580,66.7,FALSE
+"51248","MCH",NA,"Blood","Hematology",43579,66.7,FALSE
+"51274","PT",NA,"Blood","Hematology",36821,56.3,FALSE
+"50931","Glucose",NA,"Blood","Chemistry",35967,55,FALSE
+"50960","Magnesium",NA,"Blood","Chemistry",34987,53.5,FALSE
+"50893","Calcium, Total",NA,"Blood","Chemistry",34542,52.8,FALSE
+"50970","Phosphate",NA,"Blood","Chemistry",34538,52.8,FALSE
+"50821","pO2",NA,"Blood","Blood Gas",30072,46,FALSE
+"50804","Calculated Total CO2",NA,"Blood","Blood Gas",30062,46,FALSE
+"52172","RDW-SD",NA,"Blood","Hematology",23436,35.9,FALSE
+"51678","L",NA,"Blood","Chemistry",19986,30.6,FALSE
+"50934","H",NA,"Blood","Chemistry",19985,30.6,FALSE
+"50947","I",NA,"Blood","Chemistry",19984,30.6,FALSE
+"50808","Free Calcium",NA,"Blood","Blood Gas",19267,29.5,FALSE
+"51256","Neutrophils",NA,"Blood","Hematology",17307,26.5,FALSE
+"51146","Basophils",NA,"Blood","Hematology",17307,26.5,FALSE
+"51244","Lymphocytes",NA,"Blood","Hematology",17307,26.5,FALSE
+"51254","Monocytes",NA,"Blood","Hematology",17307,26.5,FALSE
+"51200","Eosinophils",NA,"Blood","Hematology",17306,26.5,FALSE
+"50878","Asparate Aminotransferase (AST)",NA,"Blood","Chemistry",17027,26,FALSE
+"50861","Alanine Aminotransferase (ALT)",NA,"Blood","Chemistry",16909,25.9,FALSE
+"50863","Alkaline Phosphatase",NA,"Blood","Chemistry",16802,25.7,FALSE
+"50885","Bilirubin, Total",NA,"Blood","Chemistry",16655,25.5,FALSE
+"50822","Potassium, Whole Blood",NA,"Blood","Blood Gas",14564,22.3,FALSE
+"50809","Glucose",NA,"Blood","Blood Gas",14280,21.8,FALSE
+"50824","Sodium, Whole Blood",NA,"Blood","Blood Gas",12565,19.2,FALSE
+"51214","Fibrinogen, Functional",NA,"Blood","Hematology",11946,18.3,FALSE
+"50810","Hematocrit, Calculated",NA,"Blood","Blood Gas",11826,18.1,FALSE
+"50811","Hemoglobin",NA,"Blood","Blood Gas",11825,18.1,FALSE
+"50806","Chloride, Whole Blood",NA,"Blood","Blood Gas",11259,17.2,FALSE
+"50817","Oxygen Saturation",NA,"Blood","Blood Gas",10563,16.2,FALSE
+"52069","Absolute Basophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"52073","Absolute Eosinophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"52075","Absolute Neutrophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"51133","Absolute Lymphocyte Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"52074","Absolute Monocyte Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"50862","Albumin",NA,"Blood","Chemistry",10136,15.5,FALSE
+"50954","Lactate Dehydrogenase (LD)",NA,"Blood","Chemistry",9900,15.1,FALSE
+"50911","Creatine Kinase, MB Isoenzyme",NA,"Blood","Chemistry",9861,15.1,FALSE
+"50910","Creatine Kinase (CK)",NA,"Blood","Chemistry",9410,14.4,FALSE
+"52135","Immature Granulocytes",NA,"Blood","Hematology",8404,12.9,FALSE
+"51003","Troponin T",NA,"Blood","Chemistry",7721,11.8,FALSE
+"51491","pH",NA,"Urine","Hematology",6445,9.9,FALSE
+"51498","Specific Gravity",NA,"Urine","Hematology",5898,9,FALSE
+"50825","Temperature",NA,"Blood","Blood Gas",5512,8.4,FALSE
+"50816","Oxygen",NA,"Blood","Blood Gas",4207,6.4,FALSE
+"51516","WBC",NA,"Urine","Hematology",3937,6,FALSE
+"51493","RBC",NA,"Urine","Hematology",3877,5.9,FALSE
+"51476","Epithelial Cells",NA,"Urine","Hematology",3656,5.6,FALSE
+"50819","PEEP",NA,"Blood","Blood Gas",3511,5.4,FALSE
+"51492","Protein",NA,"Urine","Hematology",3482,5.3,FALSE
+"51144","Bands",NA,"Blood","Hematology",3197,4.9,FALSE
+"50826","Tidal Volume",NA,"Blood","Blood Gas",3177,4.9,FALSE

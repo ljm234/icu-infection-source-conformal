@@ -1,0 +1,11 @@
+{
+  "fase": "29",
+  "ejecutado_en": "2026-08-30T00:19:36-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "proposito": "declarar la composicion de la cohorte analizada tras descartar las unidades por debajo del umbral",
+  "umbral": 500,
+  "origen_del_umbral": "R/14_cohorte.R y R/22_particion.R",
+  "derivado_de": "outputs/fase2/clase_por_unidad.csv",
+  "se_reejecuta": false,
+  "unidad_reservada": "identificada como la retenida que no figura entre las evaluadas dejando una sede fuera"
+}

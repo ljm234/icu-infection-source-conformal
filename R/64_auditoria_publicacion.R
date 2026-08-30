@@ -107,7 +107,11 @@ AFIRMACIONES <- list(
   c("Causa del fallo por sede", "outputs/fase26/causas_fallo.csv"),
   c("Criterios de cobertura", "outputs/fase26/criterios_cobertura.csv"),
   c("Procedencia de los manifiestos", "outputs/fase27/procedencia_manifiestos.csv"),
-  c("Cobertura de constantes por etapa", "outputs/fase28/cobertura_vitales_por_etapa.csv"))
+  c("Cobertura de constantes por etapa", "outputs/fase28/cobertura_vitales_por_etapa.csv"),
+  c("Composicion de la cohorte analizada", "outputs/fase29/cohorte_analizada.csv"),
+  c("Unidades de la cohorte", "outputs/fase29/unidades_cohorte.csv"),
+  c("Determinaciones candidatas", "outputs/fase30/determinaciones_candidatas.csv"),
+  c("Separacion de las candidatas", "outputs/fase30/separacion_candidatas.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

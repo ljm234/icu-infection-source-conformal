@@ -151,3 +151,19 @@
 "Regla del maximo, metodos contrastados",4,4,0.5,TRUE
 "Estancias que cambian de etiqueta",0,0,0.5,TRUE
 "Estancias cubiertas por el cruce de etiquetas",23213,23213,0.5,TRUE
+"Umbral de retencion de unidades",500,500,0.5,TRUE
+"Unidades retenidas",6,6,0.5,TRUE
+"Estancias retenidas",22778,22778,0.5,TRUE
+"Unidades descartadas",10,10,0.5,TRUE
+"Estancias descartadas",435,435,0.5,TRUE
+"Estancias de las unidades de desarrollo",18054,18054,0.5,TRUE
+"Estancias de la unidad reservada",4724,4724,0.5,TRUE
+"Cohorte, retenidas mas descartadas",23213,23213,0.5,TRUE
+"Unidades en la cohorte final",16,16,0.5,TRUE
+"Determinaciones candidatas",73,73,0.5,TRUE
+"Determinaciones retenidas",17,17,0.5,TRUE
+"Determinaciones descartadas",56,56,0.5,TRUE
+"Cobertura minima de las retenidas",45.2,45.2,0.05,TRUE
+"Cobertura maxima de las descartadas",68.5,68.5,0.05,TRUE
+"Descartadas sobre la retenida minima",12,12,0.5,TRUE
+"Atributos que separan los dos grupos",0,0,0.5,TRUE

@@ -2,7 +2,7 @@
 
 Documento de trabajo dirigido al equipo investigador.
 
-Generado el 2026-08-29 por `R/68_traduccion_yachay.R`.
+Generado el 2026-08-30 por `R/68_traduccion_yachay.R`.
 
 Las cifras que siguen proceden en su totalidad del banco de pruebas sobre
 MIMIC-IV y se leen de archivos versionados. Cuanto se afirma sobre el
