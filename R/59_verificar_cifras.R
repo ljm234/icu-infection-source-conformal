@@ -59,6 +59,8 @@ FUENTES <- list(
   "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv",
   "Validacion interna de la penalizacion"    = "outputs/fase22/decision_lambda.csv",
   "Calibracion en la unidad reservada"       = "outputs/fase23/calibracion_sellado.csv",
+  "Regla del maximo"                         = "outputs/fase24/regla_maximo.csv",
+  "Divergencia de etiquetado"                = "outputs/fase25/divergencia_etiquetado.csv",
   "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
   "Recuentos bajo cada correccion"           = "outputs/fase26/recuentos_multiplicidad.csv",
   "Causa del fallo por sede"                 = "outputs/fase26/causas_fallo.csv",
@@ -636,6 +638,28 @@ x <- leer(FUENTES[["Limites de la recalibracion local"]])
 if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Tamanos locales del ejercicio",
     nrow(x), 7, 0.5)
+}
+
+# La afirmacion publicada es que la regla del maximo no produjo ninguna
+# conclusion minoritaria con independencia del metodo. Sostenerla exige que
+# el recuento sea cero y que los cuatro metodos figuren en la tabla.
+x <- leer(FUENTES[["Regla del maximo"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Regla del maximo, conclusiones minoritarias",
+    sum(x$conclusiones_minoritarias), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Regla del maximo, metodos contrastados",
+    nrow(x), 4, 0.5)
+}
+
+# La afirmacion publicada es que ninguna estancia cambia de etiqueta entre
+# las dos escalas de desempate. El cruce solo la sostiene si cubre la
+# cohorte completa, de modo que el total tambien se contrasta.
+x <- leer(FUENTES[["Divergencia de etiquetado"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Estancias que cambian de etiqueta",
+    sum(x$estancias[!x$esperada]), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias cubiertas por el cruce de etiquetas",
+    sum(x$estancias), 23213, 0.5)
 }
 
 tab <- do.call(rbind, reg)

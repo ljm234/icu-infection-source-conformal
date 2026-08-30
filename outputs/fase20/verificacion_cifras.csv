@@ -147,3 +147,7 @@
 "Intubacion entre los respiratorios",72.2,72.2,0.05,TRUE
 "Intubacion entre los sin crecimiento",39.3,39.3,0.05,TRUE
 "Tamanos locales del ejercicio",7,7,0.5,TRUE
+"Regla del maximo, conclusiones minoritarias",0,0,0.5,TRUE
+"Regla del maximo, metodos contrastados",4,4,0.5,TRUE
+"Estancias que cambian de etiqueta",0,0,0.5,TRUE
+"Estancias cubiertas por el cruce de etiquetas",23213,23213,0.5,TRUE

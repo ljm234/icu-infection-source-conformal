@@ -157,6 +157,10 @@ margin never exceeds the largest possible rounding error.
 | Intubacion entre los respiratorios | 72.2000 | 72.2000 | 0.05000 | yes |
 | Intubacion entre los sin crecimiento | 39.3000 | 39.3000 | 0.05000 | yes |
 | Tamanos locales del ejercicio | 7.0000 | 7.0000 | 0.50000 | yes |
+| Regla del maximo, conclusiones minoritarias | 0.0000 | 0.0000 | 0.50000 | yes |
+| Regla del maximo, metodos contrastados | 4.0000 | 4.0000 | 0.50000 | yes |
+| Estancias que cambian de etiqueta | 0.0000 | 0.0000 | 0.50000 | yes |
+| Estancias cubiertas por el cruce de etiquetas | 23213.0000 | 23213.0000 | 0.50000 | yes |
 
 ## Source files
 
@@ -202,6 +206,8 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase20/fraccion_informacion_faltante.csv`
 - `outputs/fase22/decision_lambda.csv`
 - `outputs/fase23/calibracion_sellado.csv`
+- `outputs/fase24/regla_maximo.csv`
+- `outputs/fase25/divergencia_etiquetado.csv`
 - `outputs/fase26/intervalos_cobertura.csv`
 - `outputs/fase26/recuentos_multiplicidad.csv`
 - `outputs/fase26/causas_fallo.csv`
