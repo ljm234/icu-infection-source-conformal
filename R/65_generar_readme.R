@@ -254,7 +254,7 @@ add(prosa(
 "The source files are not redistributed and form no part of this repository.",
 "Reproducing the analysis requires separate credentialing and approved access.",
 "",
-"No patient-level derived data is versioned. `R/64_auditoria_publicacion.R`",
+"No patient-level derived data are versioned. `R/64_auditoria_publicacion.R`",
 "inspects the header of every tracked CSV, lists the tracked binary objects",
 "with their sizes, and checks that none of the protected paths appears in the",
 "commit history.",
@@ -266,7 +266,12 @@ for (i in seq_len(nrow(flujo)))
   add(cifra("    %-46s %12s", flujo$paso[i],
             format(flujo$n[i], big.mark = ",")))
 
-add(prosa(""))
+add(prosa(
+"",
+"The step labels are Spanish and read, in order: unique stays, adults, stays",
+"with a culture drawn, suspected infection and the final cohort.",
+""))
+
 add(prosa("Units contributing fewer than five hundred stays were dropped at the"))
 
 add(prosa(
@@ -280,6 +285,10 @@ for (i in seq_len(nrow(clases)))
             format(clases$n[i], big.mark = ","), clases$pct[i]))
 
 add(prosa(
+"",
+"The category names are Spanish: sin_crecimiento is no growth on culture,",
+"otro_sitio another site, urinario urinary, respiratorio respiratory, sangre",
+"bloodstream, herida wound and intraabdominal intra-abdominal.",
 "",
 "The abstention category groups wound, intra-abdominal, cerebrospinal fluid",
 "and other sites whose frequency does not support conditional calibration. It",
@@ -333,10 +342,11 @@ add(prosa(
 "training set alone was split by patient, the whole comparison repeated",
 "inside it, and the same criterion applied."))
 
-add(cifra("On %d stays held out from %d used for fitting the answer is the",
-          as.integer(val(lamb, "pacientes_validacion", TRUE)),
+add(cifra("On %d stays held out from the same training set, against the",
+          as.integer(val(lamb, "pacientes_validacion", TRUE))))
+add(cifra("%d used for fitting, the answer is the same, with a gain of",
           as.integer(val(lamb, "pacientes_ajuste", TRUE))))
-add(cifra("same, with a gain of %.4f. The reduced fit favours the",
+add(cifra("%.4f. The reduced fit favours the",
           val(lamb, "mejora_interna", TRUE)))
 
 add(prosa(
@@ -397,9 +407,9 @@ add(prosa(
 "### The argmax rule never names a source",
 "",
 "At minority prevalences of a few percent, no minority class probability",
-"exceeds the majority class. The model attains high apparent accuracy while",
-"identifying no source at all. This was observed under both penalty rules,",
-"under gradient boosting, and under the extended model.",
+"exceeds the majority class probability. The model attains high apparent",
+"accuracy while identifying no source at all. This was observed under both",
+"penalty rules, under gradient boosting, and under the extended model.",
 "",
 "### Confidence, resolution and error",
 ""))
@@ -507,10 +517,11 @@ add(prosa(
 "survive under Holm's correction at either level. The intervals above",
 "incorporate the calibration uncertainty; conditioning on the threshold",
 "instead narrows"))
-add(cifra("them by between %.0f and %.0f percent. All the cells of both",
+add(cifra("them by between %.0f and %.0f percent. All the cells of this",
           estrecha_min, estrecha_max))
 add(prosa(
-"sections are in `outputs/fase26/intervalos_cobertura.csv`.",
+"section and of the sealed-unit section below are in",
+"`outputs/fase26/intervalos_cobertura.csv`.",
 "",
 "The interval and the test are anchored slightly differently. The interval",
 "is inverted against the nominal level exactly; the test is taken against",
@@ -535,8 +546,8 @@ add(prosa(
 "The majority class is covered above nominal. No minority class has an",
 "interval falling below it, so this section reports no conclusion about the",
 "conditional guarantee here: the cases are too few to establish a shortfall",
-"in either direction. The over-coverage of the majority class follows from a",
-"prevalence shift: its mean predicted probability is"))
+"in either direction. The over-coverage of the majority class is consistent",
+"with a prevalence shift: its mean predicted probability is"))
 
 add(cifra("%.4f against an observed frequency of %.4f.", cal_may, frec_may))
 
@@ -570,7 +581,12 @@ for (i in seq_len(nrow(refs)))
             as.integer(refs$parametros[i]),
             refs$promedio_minoritarias[i]))
 
-add(prosa(""))
+add(prosa(
+"",
+"The specification names are Spanish: demografia is demographics, tres",
+"marcadores three markers, lineal sin unidad a linear model without the unit",
+"and modelo completo the full model.",
+""))
 add(cifra("Gradient boosted trees on the same predictors gain %.4f over the",
           mean(gbm$auc_gbm[gbm$clase != "sin_crecimiento"]) -
           mean(gbm$auc_lineal[gbm$clase != "sin_crecimiento"])))
@@ -669,6 +685,9 @@ for (i in seq_len(nrow(cove)))
 
 add(prosa(
 "",
+"The variable names are Spanish: temperatura temperature, frec_cardiaca heart",
+"rate, frec_respiratoria respiratory rate and saturacion oxygen saturation.",
+"",
 "Their medians are not constant across units. Heart rate ranges by"))
 
 add(cifra("%.0f beats per minute and respiratory rate by %.0f breaths across",
@@ -735,7 +754,7 @@ add(prosa(
 
 add(cifra("median substitution attains lower absolute error on %d variables,",
           as.integer(gana_med)))
-add(cifra("multivariate imputation on %d, and the remainder tie. The",
+add(cifra("multivariate imputation on %d, and the remaining variable ties. The",
           as.integer(gana_mice)))
 
 add(prosa(
@@ -750,12 +769,13 @@ add(cifra("Nursing observations are validated in batches, so between %.2f and",
           min(empc$pct)))
 add(cifra("%.2f percent of stays carry several measurements of the same",
           max(empc$pct)))
-add(cifra("variable with an identical storetime, up to %d at once. Selecting",
+add(cifra("variable with an identical storetime, up to %d at once. That is the",
           as.integer(max(empc$maximo_coincidentes))))
 
 add(prosa(
-"the first measurement by ordering on storetime alone leaves ties unresolved,",
-"and the row retained can differ between runs of the same query.",
+"time a result was recorded. Selecting the first measurement by ordering on",
+"storetime alone leaves ties unresolved, and the row retained can differ",
+"between runs of the same query.",
 ""))
 
 add(cifra(
@@ -766,11 +786,12 @@ add(prosa(
 "timestamp each result individually, which makes ties far rarer there but not",
 "absent. The laboratory extraction in `R/19_matriz.R` orders by storetime",
 "alone, the same pattern corrected here, and the re-extraction covered the",
-"vital signs only. No versioned file bounds the divergence that leaves in the",
+"vital signs only. No versioned file bounds the divergence this leaves in the",
 "core phases.",
 "",
-"Ordering now uses four keys: storetime, charttime, the value after unit",
-"conversion, and itemid. The converted value earns its place:"))
+"Ordering now uses four keys: storetime, charttime, the time the measurement",
+"was made, the value after unit conversion, and itemid, the identifier of the",
+"measured item. The converted value earns its place:"))
 
 add(cifra("%d groups of measurements agree on stay_id, storetime and charttime",
           as.integer(det$grupos_ambiguos)))
@@ -804,10 +825,10 @@ add(prosa(
 "the seed and the analytical choices but not hashes.",
 "",
 "The manifest of the eighth phase records the penalty to full precision,",
-"while the procedures that reuse it read the four significant figures the",
-"hyperparameter table publishes. The replica of the transportability",
+"while the procedures that reuse it read the shortened value the",
+"hyperparameter table publishes. The replication of the transportability",
 "validation used the shorter value and reproduced the published result, so",
-"the difference reaches no figure reported here.",
+"no figure reported here is affected.",
 "",
 "## Limitations",
 "",
@@ -822,8 +843,9 @@ add(prosa(
 "heterogeneity is a lower bound on what separate institutions would show.",
 "",
 "The phase that built the analysis matrix rewrote the outcome label with a",
-"shorter tie-break ladder than the phase that sealed the definitions, which",
-"promotes the urinary site above the intra-abdominal one. The two can differ",
+"shorter tie-break ladder than the phase that sealed the definitions, and the",
+"shorter ladder promotes the urinary site above the intra-abdominal one. The",
+"two can differ",
 "only for a stay positive at both those sites and at neither blood nor",
 "respiratory. No stay in the cohort is, so no label changes; the full",
 "crosswalk is in `outputs/fase25/divergencia_etiquetado.csv`.",
@@ -870,7 +892,7 @@ add(prosa(
 "agreement prohibits it. Every procedure was executed in the project",
 "environment under the author's direction. The published figures are",
 "checked automatically against their source files by",
-"`R/59_verificar_cifras.R`, and the deposit is audited by",
+"`R/59_verificar_cifras.R`, and the repository is audited by",
 "`R/64_auditoria_publicacion.R`.",
 "",
 "## License",

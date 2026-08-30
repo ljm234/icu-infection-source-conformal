@@ -26,7 +26,7 @@ MIMIC-IV version 3.1, obtained from PhysioNet under individual credentialing.
 The source files are not redistributed and form no part of this repository.
 Reproducing the analysis requires separate credentialing and approved access.
 
-No patient-level derived data is versioned. `R/64_auditoria_publicacion.R`
+No patient-level derived data are versioned. `R/64_auditoria_publicacion.R`
 inspects the header of every tracked CSV, lists the tracked binary objects
 with their sizes, and checks that none of the protected paths appears in the
 commit history.
@@ -38,6 +38,9 @@ commit history.
     p3_con_cultivo                                       33,045
     p4_sospecha_infeccion                                23,213
     p5_cohorte_final                                     23,213
+
+The step labels are Spanish and read, in order: unique stays, adults, stays
+with a culture drawn, suspected infection and the final cohort.
 
 Units contributing fewer than five hundred stays were dropped at the
 partition step, so the analysed cohort is smaller than the final funnel row.
@@ -51,6 +54,10 @@ partition step, so the analysed cohort is smaller than the final funnel row.
     sangre                   573     2.5 percent
     herida                   340     1.5 percent
     intraabdominal            66     0.3 percent
+
+The category names are Spanish: sin_crecimiento is no growth on culture,
+otro_sitio another site, urinario urinary, respiratorio respiratory, sangre
+bloodstream, herida wound and intraabdominal intra-abdominal.
 
 The abstention category groups wound, intra-abdominal, cerebrospinal fluid
 and other sites whose frequency does not support conditional calibration. It
@@ -94,8 +101,9 @@ reports discrimination and coverage. It is therefore a design decision
 taken on the evaluation data, and it was checked again without it: the
 training set alone was split by patient, the whole comparison repeated
 inside it, and the same criterion applied.
-On 2791 stays held out from 5578 used for fitting the answer is the
-same, with a gain of 0.0375. The reduced fit favours the
+On 2791 stays held out from the same training set, against the
+5578 used for fitting, the answer is the same, with a gain of
+0.0375. The reduced fit favours the
 one-standard-error rule, since a smaller sample calls for a heavier
 penalty, so the minimum wins there against the odds. The check is in
 `outputs/fase22/decision_lambda.csv`.
@@ -144,9 +152,9 @@ it once widened.
 ### The argmax rule never names a source
 
 At minority prevalences of a few percent, no minority class probability
-exceeds the majority class. The model attains high apparent accuracy while
-identifying no source at all. This was observed under both penalty rules,
-under gradient boosting, and under the extended model.
+exceeds the majority class probability. The model attains high apparent
+accuracy while identifying no source at all. This was observed under both
+penalty rules, under gradient boosting, and under the extended model.
 
 ### Confidence, resolution and error
 
@@ -214,8 +222,9 @@ Under the test that treats the threshold as known, 4 cells would
 survive under Holm's correction at either level. The intervals above
 incorporate the calibration uncertainty; conditioning on the threshold
 instead narrows
-them by between 10 and 34 percent. All the cells of both
-sections are in `outputs/fase26/intervalos_cobertura.csv`.
+them by between 10 and 34 percent. All the cells of this
+section and of the sealed-unit section below are in
+`outputs/fase26/intervalos_cobertura.csv`.
 
 The interval and the test are anchored slightly differently. The interval
 is inverted against the nominal level exactly; the test is taken against
@@ -237,8 +246,8 @@ Evaluated once, without recalibration, and read by the same criterion:
 The majority class is covered above nominal. No minority class has an
 interval falling below it, so this section reports no conclusion about the
 conditional guarantee here: the cases are too few to establish a shortfall
-in either direction. The over-coverage of the majority class follows from a
-prevalence shift: its mean predicted probability is
+in either direction. The over-coverage of the majority class is consistent
+with a prevalence shift: its mean predicted probability is
 0.9054 against an observed frequency of 0.9802.
 
 ### The limit of local recalibration
@@ -260,6 +269,10 @@ the class blocks.
     tres marcadores              12    0.5910
     lineal sin unidad            62    0.6343
     modelo completo             148    0.6735
+
+The specification names are Spanish: demografia is demographics, tres
+marcadores three markers, lineal sin unidad a linear model without the unit
+and modelo completo the full model.
 
 Gradient boosted trees on the same predictors gain 0.0002 over the
 penalized linear model. The ceiling belongs to the information available,
@@ -316,6 +329,9 @@ The figures used everywhere below are the cleaned ones. Both stages are in
     frec_respiratoria       98.7      98.3
     saturacion              98.9      98.8
 
+The variable names are Spanish: temperatura temperature, frec_cardiaca heart
+rate, frec_respiratoria respiratory rate and saturacion oxygen saturation.
+
 Their medians are not constant across units. Heart rate ranges by
 16 beats per minute and respiratory rate by 7 breaths across
 the six units. That variation confounds case mix with measurement practice
@@ -351,7 +367,7 @@ and stays at or below 0.0648 for vital signs.
 
 On masked observed values the two approaches are close:
 median substitution attains lower absolute error on 9 variables,
-multivariate imputation on 7, and the remainder tie. The
+multivariate imputation on 7, and the remaining variable ties. The
 multivariate approach wins where physiological correlation is high and loses
 where it is absent. It is retained because its purpose is to propagate the
 uncertainty of the fill, which a single substituted value cannot do.
@@ -360,19 +376,21 @@ uncertainty of the fill, which a single substituted value cannot do.
 
 Nursing observations are validated in batches, so between 25.46 and
 40.05 percent of stays carry several measurements of the same
-variable with an identical storetime, up to 38 at once. Selecting
-the first measurement by ordering on storetime alone leaves ties unresolved,
-and the row retained can differ between runs of the same query.
+variable with an identical storetime, up to 38 at once. That is the
+time a result was recorded. Selecting the first measurement by ordering on
+storetime alone leaves ties unresolved, and the row retained can differ
+between runs of the same query.
 
 Laboratory results are affected in 0.10 percent of stays. Analysers
 timestamp each result individually, which makes ties far rarer there but not
 absent. The laboratory extraction in `R/19_matriz.R` orders by storetime
 alone, the same pattern corrected here, and the re-extraction covered the
-vital signs only. No versioned file bounds the divergence that leaves in the
+vital signs only. No versioned file bounds the divergence this leaves in the
 core phases.
 
-Ordering now uses four keys: storetime, charttime, the value after unit
-conversion, and itemid. The converted value earns its place:
+Ordering now uses four keys: storetime, charttime, the time the measurement
+was made, the value after unit conversion, and itemid, the identifier of the
+measured item. The converted value earns its place:
 82 groups of measurements agree on stay_id, storetime and charttime
 while disagreeing on the converted value, so the first two keys alone leave
 the retained row undetermined.
@@ -394,10 +412,10 @@ SHA-256 hashes of the source files in their manifests; later phases record
 the seed and the analytical choices but not hashes.
 
 The manifest of the eighth phase records the penalty to full precision,
-while the procedures that reuse it read the four significant figures the
-hyperparameter table publishes. The replica of the transportability
+while the procedures that reuse it read the shortened value the
+hyperparameter table publishes. The replication of the transportability
 validation used the shorter value and reproduced the published result, so
-the difference reaches no figure reported here.
+no figure reported here is affected.
 
 ## Limitations
 
@@ -412,8 +430,9 @@ All units belong to a single tertiary academic centre, so the observed
 heterogeneity is a lower bound on what separate institutions would show.
 
 The phase that built the analysis matrix rewrote the outcome label with a
-shorter tie-break ladder than the phase that sealed the definitions, which
-promotes the urinary site above the intra-abdominal one. The two can differ
+shorter tie-break ladder than the phase that sealed the definitions, and the
+shorter ladder promotes the urinary site above the intra-abdominal one. The
+two can differ
 only for a stay positive at both those sites and at neither blood nor
 respiratory. No stay in the cohort is, so no label changes; the full
 crosswalk is in `outputs/fase25/divergencia_etiquetado.csv`.
@@ -456,7 +475,7 @@ patient-level data were transmitted to those tools: the PhysioNet data use
 agreement prohibits it. Every procedure was executed in the project
 environment under the author's direction. The published figures are
 checked automatically against their source files by
-`R/59_verificar_cifras.R`, and the deposit is audited by
+`R/59_verificar_cifras.R`, and the repository is audited by
 `R/64_auditoria_publicacion.R`.
 
 ## License
