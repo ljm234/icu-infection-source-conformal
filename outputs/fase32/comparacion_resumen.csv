@@ -1,2 +1,2 @@
-"determinaciones_retenidas","determinaciones_anadidas","columnas_retenidas","columnas_ampliada","no_nulos_retenidas","no_nulos_ampliada","estancias_ajuste","estancias_prueba","estancias_completas","denominador_cohorte","pct_de_la_cohorte","promedio_minoritarias_retenidas","promedio_minoritarias_ampliada","diferencia_minoritarias","peor_cambio_por_clase"
-17,12,23,35,31,39,2487,1011,3498,23213,15.07,0.6635,0.6522,-0.0113,-0.032
+"determinaciones_retenidas","determinaciones_anadidas","columnas_retenidas","columnas_ampliada","no_nulos_retenidas","no_nulos_ampliada","estancias_ajuste","estancias_prueba","estancias_completas","denominador_cohorte","pct_de_la_cohorte","promedio_minoritarias_retenidas","promedio_minoritarias_ampliada","diferencia_minoritarias","peor_cambio_por_clase","replicas","ic_inferior_minoritarias","ic_superior_minoritarias","direccion_sostenida"
+17,12,23,35,31,39,2487,1011,3498,23213,15.07,0.6635,0.6522,-0.0113,-0.032,1000,-0.0257,0.0036,FALSE

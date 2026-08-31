@@ -1,0 +1,6 @@
+"cantidad","diferencia","ic_inferior","ic_superior","excluye_cero"
+"sin_crecimiento",-0.0036,-0.0179,0.0118,FALSE
+"urinario",-0.0064,-0.0349,0.0225,FALSE
+"respiratorio",0.0046,-0.0146,0.0212,FALSE
+"sangre",-0.032,-0.0596,-8e-04,TRUE
+"promedio_minoritarias",-0.0113,-0.0257,0.0036,FALSE

@@ -181,14 +181,21 @@ margin never exceeds the largest possible rounding error.
 | Cota de casos completos en las candidatas | 3177.0000 | 3177.0000 | 0.50000 | yes |
 | Candidatas de cobertura baja | 28.0000 | 28.0000 | 0.50000 | yes |
 | Denominador de la cota | 65366.0000 | 65366.0000 | 0.50000 | yes |
+| Umbral de estancias de las candidatas | 3000.0000 | 3000.0000 | 0.50000 | yes |
 | Casos completos en las candidatas | 0.0000 | 0.0000 | 0.50000 | yes |
 | Casos completos en el subconjunto | 5867.0000 | 5867.0000 | 0.50000 | yes |
 | Denominador del recuento | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Maximo de candidatas en una estancia | 69.0000 | 69.0000 | 0.50000 | yes |
 | Comparacion, determinaciones anadidas | 12.0000 | 12.0000 | 0.50000 | yes |
 | Comparacion, estancias completas | 3498.0000 | 3498.0000 | 0.50000 | yes |
 | Comparacion, minoritarias retenidas | 0.6635 | 0.6635 | 0.00005 | yes |
 | Comparacion, minoritarias ampliada | 0.6522 | 0.6522 | 0.00005 | yes |
 | Comparacion, diferencia | -0.0113 | -0.0113 | 0.00010 | yes |
+| Comparacion, extremo inferior | -0.0257 | -0.0257 | 0.00005 | yes |
+| Comparacion, extremo superior | 0.0036 | 0.0036 | 0.00005 | yes |
+| Cantidades con intervalo depositado | 5.0000 | 5.0000 | 0.50000 | yes |
+| Intervalos que excluyen el cero | 1.0000 | 1.0000 | 0.50000 | yes |
+| Promedio minoritarias, excluye el cero | 0.0000 | 0.0000 | 0.50000 | yes |
 | Comparacion, clases evaluadas | 4.0000 | 4.0000 | 0.50000 | yes |
 | Comparacion, clases donde la ampliada gana | 1.0000 | 1.0000 | 0.50000 | yes |
 | Commits que tocan la seleccion | 1.0000 | 1.0000 | 0.50000 | yes |
@@ -252,3 +259,4 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase32/comparacion_por_clase.csv`
 - `outputs/fase32/comparacion_resumen.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
+- `outputs/fase32/intervalo_diferencia.csv`

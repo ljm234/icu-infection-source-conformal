@@ -150,6 +150,7 @@ recuento <- data.frame(
   estancias_completas = c(completas73, completas29),
   denominador = N_COHORTE,
   pct_de_la_cohorte = round(100 * c(completas73, completas29) / N_COHORTE, 2),
+  maximo_presentes = c(max(res$n73), max(res$n29)),
   row.names = NULL)
 
 cat("\n=== RECUENTO DEPOSITADO ===\n")

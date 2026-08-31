@@ -73,7 +73,8 @@ FUENTES <- list(
   "Casos completos en las candidatas"        = "outputs/fase31/casos_completos.csv",
   "Comparacion ampliada, por clase"          = "outputs/fase32/comparacion_por_clase.csv",
   "Comparacion ampliada, resumen"            = "outputs/fase32/comparacion_resumen.csv",
-  "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv")
+  "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
+  "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -745,6 +746,8 @@ if (!is.null(x) && !is.null(d)) {
     sum(d$cobertura_pct < x$umbral_de_cobertura_baja), 0.5)
   reg[[length(reg)+1]] <- comprobar("Denominador de la cota",
     x$estancias_del_denominador, 65366, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Umbral de estancias de las candidatas",
+    x$umbral_de_estancias, 3000, 0.5)
 }
 
 # El recuento efectivo de casos completos, que es lo que establece si la
@@ -757,6 +760,8 @@ if (!is.null(x)) {
     x$estancias_completas[x$conjunto == "subconjunto ampliado"], 5867, 0.5)
   reg[[length(reg)+1]] <- comprobar("Denominador del recuento",
     x$denominador[1], 23213, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Maximo de candidatas en una estancia",
+    x$maximo_presentes[x$conjunto == "candidatas"], 69, 0.5)
 }
 
 x <- leer(FUENTES[["Comparacion ampliada, resumen"]])
@@ -771,6 +776,24 @@ if (!is.null(x)) {
     x$promedio_minoritarias_ampliada, 0.6522, t4)
   reg[[length(reg)+1]] <- comprobar("Comparacion, diferencia",
     x$diferencia_minoritarias, -0.0113, t4d)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, extremo inferior",
+    x$ic_inferior_minoritarias, -0.0257, t4)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, extremo superior",
+    x$ic_superior_minoritarias, 0.0036, t4)
+}
+
+# El remuestreo es aleatorio: los extremos se contrastan con la tolerancia de
+# cuatro decimales, que es la que el archivo conserva, y el recuento de
+# intervalos que excluyen el cero con la suya. Si el remuestreo dejara de
+# reproducirse, la semilla habria cambiado y procede saberlo.
+x <- leer(FUENTES[["Intervalo de la diferencia"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Cantidades con intervalo depositado",
+    nrow(x), 5, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Intervalos que excluyen el cero",
+    sum(x$excluye_cero), 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Promedio minoritarias, excluye el cero",
+    as.integer(x$excluye_cero[x$cantidad == "promedio_minoritarias"]), 0, 0.5)
 }
 
 x <- leer(FUENTES[["Comparacion ampliada, por clase"]])

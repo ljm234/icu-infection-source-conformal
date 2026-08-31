@@ -29,6 +29,7 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase25/divergencia_etiquetado.csv",
              "outputs/fase26/intervalos_cobertura.csv",
              "outputs/fase28/cobertura_vitales_por_etapa.csv",
+             "outputs/fase30/determinaciones_candidatas.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -100,6 +101,10 @@ dec   <- leer("outputs/fase16/curvas_decision.csv")
 gbm   <- leer("outputs/fase16/gbm_comparacion.csv")
 cove  <- leer("outputs/fase28/cobertura_vitales_por_etapa.csv")
 coh   <- leer("outputs/fase29/cohorte_analizada.csv")
+via   <- leer("outputs/fase30/viabilidad_comparacion.csv")
+comp  <- leer("outputs/fase31/casos_completos.csv")
+cmp29 <- leer("outputs/fase32/comparacion_resumen.csv")
+icd   <- leer("outputs/fase32/intervalo_diferencia.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -316,6 +321,54 @@ add(prosa(
 "**Predictor window.** Six hours. The temporal filter uses the time a result",
 "was recorded rather than the time the specimen was drawn, since a result",
 "recorded afterwards was not available at the moment of decision.",
+"",
+"**Laboratory variables.** Seventeen, drawn from the candidates present in"))
+add(cifra("at least %s stays within the window, of which there are %d. The",
+          format(via$umbral_de_estancias, big.mark = ","),
+          as.integer(via$candidatas)))
+add(prosa(
+"rule that narrowed the candidates to the seventeen is not recorded, and",
+"nothing in the deposit reproduces it: neither the sample type, nor the",
+"panel the source dictionary assigns, nor the coverage separates the",
+"retained from the rest. The candidate with the highest coverage of all is",
+"among the discarded. `outputs/fase30/determinaciones_candidatas.csv`",
+"describes every one of them.",
+""))
+
+add(prosa(
+"A comparison on stays complete in all the candidates cannot be made."))
+add(cifra("%d of the %s stays have all of them within the window, and the most",
+          as.integer(comp$estancias_completas[comp$conjunto == "candidatas"]),
+          format(comp$denominador[1], big.mark = ",")))
+add(cifra("any stay reaches is %d. What can be compared is the seventeen",
+          as.integer(comp$maximo_presentes[comp$conjunto == "candidatas"])))
+add(cifra("against those plus the %d discarded whose coverage exceeds the",
+          as.integer(cmp29$determinaciones_anadidas)))
+add(cifra("least frequent retained one. On the %s stays complete in those",
+          format(cmp29$estancias_completas, big.mark = ",")))
+add(cifra("%d, the wider specification does not improve on the narrower: the",
+          as.integer(cmp29$determinaciones_retenidas +
+                     cmp29$determinaciones_anadidas)))
+add(cifra("mean area across minority classes moves by %.4f, with a paired",
+          cmp29$diferencia_minoritarias))
+add(cifra("bootstrap interval of %.4f to %.4f that contains zero, so the",
+          cmp29$ic_inferior_minoritarias, cmp29$ic_superior_minoritarias))
+
+add(prosa(
+"direction is not established. One of the four classes does show an interval",
+"that excludes zero, uncorrected for the four comparisons; the deposit",
+"carries all of them.",
+"",
+"Three things bound that comparison. Stays complete in that many",
+"determinations are not a random sample: they are the more heavily monitored",
+"ones, and monitoring intensity tracks both severity and unit, so the answer",
+"holds among patients with complete laboratory work rather than in the",
+"cohort. Both specifications were fitted linearly, without splines, without",
+"imputation and without the lactate ordering indicator, so that the variable",
+"set is the only thing that differs between them; neither figure is",
+"comparable with the areas reported elsewhere in this document. And the",
+"interval is for the difference, which is paired on the same stays and",
+"therefore tighter than the interval of either area alone.",
 "",
 "**Aggregation.** First recorded value per variable. The first value is the",
 "only one computable without knowing how many measurements follow, which",

@@ -34,6 +34,26 @@ library(jsonlite)
 # especificacion, de modo que ninguna compite con un valor ajustado para la
 # otra.
 #
+# LO QUE SE COMPARA NO ES EL MODELO PUBLICADO, y las areas que siguen no son
+# comparables con las del articulo. Difieren en cinco cosas, todas comunes a
+# las dos ramas y por tanto inocuas para la comparacion, pero decisivas para
+# quien intente cotejar cifras: aqui no hay imputacion, porque se trabaja
+# sobre casos completos; no hay splines, por la razon dicha; no entra el
+# indicador de solicitud de lactato; el conjunto de ajuste es mucho menor, al
+# quedar restringido a esos casos completos; y la penalizacion se valida
+# dentro de cada rama en vez de heredarse. La cifra de una rama solo significa
+# algo frente a la de la otra.
+#
+# La direccion de la diferencia no se afirma sin contraste. Con cuarenta y
+# cinco, sesenta y tres y sesenta casos en las categorias poco frecuentes, el
+# error tipico de un area ronda las cuatro centesimas. Ahora bien, lo que
+# interesa no es la precision de cada area sino la de su diferencia, y ambas
+# se calculan sobre las mismas estancias: la diferencia emparejada elimina la
+# variacion comun y puede ser bastante mas precisa que cualquiera de los dos
+# valores por separado. Se estima por remuestreo emparejado del conjunto de
+# evaluacion, con los modelos ajustados una sola vez, que es lo que aisla la
+# incertidumbre de la comparacion y no la del procedimiento entero.
+#
 # La unidad reservada no interviene: el ajuste emplea el conjunto de
 # entrenamiento y la evaluacion el de prueba.
 
@@ -51,6 +71,8 @@ RUTA_ESP  <- "outputs/fase7/especificacion.rds"
 RUTA_MAN  <- "outputs/fase7/manifiesto.json"
 RUTA_FLU  <- "outputs/fase2/flujo.csv"
 PLIEGUES <- 10
+REPLICAS <- 1000
+CONFIANZA <- 0.95
 
 detener <- function(...) {
   cat("\n", ..., "\n", sep = "")
@@ -209,7 +231,7 @@ evaluar <- function(vs, etiqueta) {
   p <- predict(mod, newx = Xp, type = "response")[, , 1]
   a <- sapply(CLASES, function(k) auc(p[, k], as.integer(pru$clase == k)))
   if (any(is.na(a))) detener(etiqueta, ": alguna area no se estima.")
-  list(etiqueta = etiqueta, auc = a, lambda = cv$lambda.min,
+  list(etiqueta = etiqueta, auc = a, prob = p, lambda = cv$lambda.min,
        columnas = ncol(X),
        no_nulos = sum(sapply(coef(mod), function(z) sum(z[-1] != 0))))
 }
@@ -234,6 +256,69 @@ cat("\nPromedio en minoritarias, retenidas:", round(pr17, 4), "\n")
 cat("Promedio en minoritarias, ampliada:  ", round(pr29, 4), "\n")
 cat("Diferencia:", round(pr29 - pr17, 4), "\n")
 
+# ---------------------------------------------------------------------------
+# Incertidumbre de la diferencia, por remuestreo emparejado
+#
+# Se remuestrean con reposicion las estancias de evaluacion, y en cada replica
+# se recalculan las dos areas sobre las mismas estancias. Los modelos no se
+# reajustan: la pregunta es cuanta incertidumbre tiene la diferencia observada
+# entre dos predicciones dadas, no cuanta tendria el procedimiento completo si
+# se repitiera de principio a fin.
+# ---------------------------------------------------------------------------
+
+cat("\nRemuestreando la diferencia,", REPLICAS, "replicas.\n")
+y <- as.character(pru$clase)
+n <- nrow(pru)
+al <- (1 - CONFIANZA) / 2
+
+difs <- matrix(NA_real_, nrow = REPLICAS, ncol = length(CLASES) + 1)
+colnames(difs) <- c(CLASES, "promedio_minoritarias")
+for (b in seq_len(REPLICAS)) {
+  i <- sample.int(n, n, replace = TRUE)
+  yb <- y[i]
+  # El nombre importa: d ya designa el marco de casos completos, y
+  # reutilizarlo aqui lo destruiria en silencio para todo lo que sigue.
+  dif_b <- sapply(CLASES, function(k) {
+    o <- as.integer(yb == k)
+    auc(r29$prob[i, k], o) - auc(r17$prob[i, k], o)
+  })
+  difs[b, seq_along(CLASES)] <- dif_b
+  difs[b, length(CLASES) + 1] <- mean(dif_b[MIN])
+}
+usables <- sum(complete.cases(difs))
+cat("Replicas utilizables:", usables, "de", REPLICAS, "\n")
+if (usables < 0.95 * REPLICAS)
+  detener("Demasiadas replicas sin area estimable. El remuestreo no ",
+          "sostiene un intervalo.")
+
+ic <- do.call(rbind, lapply(colnames(difs), function(cl) {
+  v <- difs[, cl]; v <- v[!is.na(v)]
+  q <- quantile(v, c(al, 1 - al), names = FALSE)
+  data.frame(cantidad = cl,
+             diferencia = round(if (cl == "promedio_minoritarias")
+               mean(r29$auc[MIN]) - mean(r17$auc[MIN]) else
+               r29$auc[cl] - r17$auc[cl], 4),
+             ic_inferior = round(q[1], 4), ic_superior = round(q[2], 4),
+             excluye_cero = q[1] > 0 | q[2] < 0,
+             row.names = NULL)
+}))
+
+cat("\n=== INTERVALO DE LA DIFERENCIA, REMUESTREO EMPAREJADO ===\n")
+print(ic, row.names = FALSE)
+
+fila <- ic[ic$cantidad == "promedio_minoritarias", ]
+cat("\n=== LO QUE ESTO AUTORIZA A DECIR ===\n")
+if (fila$excluye_cero) {
+  cat("El intervalo de la diferencia en el promedio de minoritarias excluye\n")
+  cat("el cero, de modo que la direccion se sostiene: la especificacion\n")
+  cat(if (fila$diferencia < 0) "ampliada empeora.\n" else
+      "ampliada mejora.\n")
+} else {
+  cat("El intervalo de la diferencia en el promedio de minoritarias\n")
+  cat("contiene el cero. La direccion no se sostiene, y lo unico que cabe\n")
+  cat("afirmar es que la especificacion ampliada no mejora.\n")
+}
+
 resumen <- data.frame(
   determinaciones_retenidas = length(vars17),
   determinaciones_anadidas = length(nuevas),
@@ -250,6 +335,10 @@ resumen <- data.frame(
   promedio_minoritarias_ampliada = round(pr29, 4),
   diferencia_minoritarias = round(pr29 - pr17, 4),
   peor_cambio_por_clase = round(min(r29$auc[MIN] - r17$auc[MIN]), 4),
+  replicas = REPLICAS,
+  ic_inferior_minoritarias = fila$ic_inferior,
+  ic_superior_minoritarias = fila$ic_superior,
+  direccion_sostenida = fila$excluye_cero,
   row.names = NULL)
 
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
@@ -258,6 +347,7 @@ write.csv(resumen, file.path(OUT, "comparacion_resumen.csv"),
           row.names = FALSE)
 write.csv(anadidas[, c("itemid","etiqueta","panel","fluido","cobertura_pct")],
           file.path(OUT, "determinaciones_anadidas.csv"), row.names = FALSE)
+write.csv(ic, file.path(OUT, "intervalo_diferencia.csv"), row.names = FALSE)
 
 writeLines(toJSON(list(
   fase = "32",
@@ -279,6 +369,19 @@ writeLines(toJSON(list(
   penalizacion = paste("validada por separado dentro de cada especificacion,",
                        "regla del minimo"),
   unidad_reservada = "no interviene",
+  no_comparable_con_el_modelo_publicado = paste(
+    "las areas de esta fase no se comparan con las del articulo. Difieren en",
+    "que aqui no hay imputacion, por trabajarse sobre casos completos; no hay",
+    "splines; no entra el indicador de solicitud de lactato; el conjunto de",
+    "ajuste es mucho menor; y la penalizacion se valida dentro de cada rama.",
+    "Las cinco diferencias son comunes a las dos ramas y no sesgan la",
+    "comparacion, pero impiden cotejar cualquiera de estas cifras con las",
+    "publicadas"),
+  incertidumbre = paste("intervalo de la diferencia por remuestreo emparejado",
+                        "del conjunto de evaluacion, con los modelos",
+                        "ajustados una sola vez"),
+  replicas = REPLICAS,
+  confianza = CONFIANZA,
   alpha = ALFA_NET), auto_unbox = TRUE, pretty = TRUE, digits = 15),
   file.path(OUT, "manifiesto.json"))
 

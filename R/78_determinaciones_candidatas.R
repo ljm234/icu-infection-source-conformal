@@ -206,6 +206,7 @@ viabilidad <- data.frame(
   denominador_de_la_cota = "primeras estancias en cuidados intensivos",
   estancias_del_denominador = flu$n[fi],
   pct_del_denominador = round(100 * cota / flu$n[fi], 2),
+  umbral_de_estancias = UMBRAL_ESTANCIAS,
   estancias_de_la_cohorte = flu$n[fc],
   pct_de_la_cohorte = round(100 * cota / flu$n[fc], 2),
   umbral_de_cobertura_baja = BAJA,

@@ -74,6 +74,38 @@ comparing against hospital admission.
 was recorded rather than the time the specimen was drawn, since a result
 recorded afterwards was not available at the moment of decision.
 
+**Laboratory variables.** Seventeen, drawn from the candidates present in
+at least 3,000 stays within the window, of which there are 73. The
+rule that narrowed the candidates to the seventeen is not recorded, and
+nothing in the deposit reproduces it: neither the sample type, nor the
+panel the source dictionary assigns, nor the coverage separates the
+retained from the rest. The candidate with the highest coverage of all is
+among the discarded. `outputs/fase30/determinaciones_candidatas.csv`
+describes every one of them.
+
+A comparison on stays complete in all the candidates cannot be made.
+0 of the 23,213 stays have all of them within the window, and the most
+any stay reaches is 69. What can be compared is the seventeen
+against those plus the 12 discarded whose coverage exceeds the
+least frequent retained one. On the 3,498 stays complete in those
+29, the wider specification does not improve on the narrower: the
+mean area across minority classes moves by -0.0113, with a paired
+bootstrap interval of -0.0257 to 0.0036 that contains zero, so the
+direction is not established. One of the four classes does show an interval
+that excludes zero, uncorrected for the four comparisons; the deposit
+carries all of them.
+
+Three things bound that comparison. Stays complete in that many
+determinations are not a random sample: they are the more heavily monitored
+ones, and monitoring intensity tracks both severity and unit, so the answer
+holds among patients with complete laboratory work rather than in the
+cohort. Both specifications were fitted linearly, without splines, without
+imputation and without the lactate ordering indicator, so that the variable
+set is the only thing that differs between them; neither figure is
+comparable with the areas reported elsewhere in this document. And the
+interval is for the difference, which is paired on the same stays and
+therefore tighter than the interval of either area alone.
+
 **Aggregation.** First recorded value per variable. The first value is the
 only one computable without knowing how many measurements follow, which
 matters because monitoring intensity differs across units.

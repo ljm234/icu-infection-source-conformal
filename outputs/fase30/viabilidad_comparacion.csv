@@ -1,2 +1,2 @@
-"candidatas","determinacion_menos_frecuente","cota_casos_completos","denominador_de_la_cota","estancias_del_denominador","pct_del_denominador","estancias_de_la_cohorte","pct_de_la_cohorte","umbral_de_cobertura_baja","candidatas_por_debajo"
-73,"Tidal Volume",3177,"primeras estancias en cuidados intensivos",65366,4.86,23213,13.69,20,28
+"candidatas","determinacion_menos_frecuente","cota_casos_completos","denominador_de_la_cota","estancias_del_denominador","pct_del_denominador","umbral_de_estancias","estancias_de_la_cohorte","pct_de_la_cohorte","umbral_de_cobertura_baja","candidatas_por_debajo"
+73,"Tidal Volume",3177,"primeras estancias en cuidados intensivos",65366,4.86,3000,23213,13.69,20,28
