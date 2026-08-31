@@ -194,25 +194,87 @@ if (nrow(d) != nrow(part)) detener("La union altera el numero de filas.")
 
 # ---------------------------------------------------------------------------
 # Casos completos y conjuntos
+#
+# La cifra final es el resultado de tres restricciones encadenadas, y se
+# deposita la cascada entera y no solo su ultimo peldano. Sin ella nadie
+# puede reconstruirla sin leer este archivo, y aplicar proporciones sobre el
+# total no la reproduce: la unidad reservada y las unidades por debajo del
+# umbral no entran en la particion, de modo que no se reparten como las
+# demas y su peso entre las estancias completas no tiene por que ser el que
+# tienen en la cohorte.
+#
+# La completitud se evalua sobre la matriz particionada, que ya paso por los
+# limites de plausibilidad. Un valor anulado por implausible cuenta aqui como
+# ausente y contaba como presente en el recuento de la fase trigesima
+# primera, que interroga la tabla de origen. Las dos cifras miden cosas
+# distintas y el deposito las enfrenta en lugar de dejarlas sueltas.
 # ---------------------------------------------------------------------------
-
-d <- d[d$clase %in% CLASES & d$grupo %in% c("entrenamiento", "prueba"), ]
-d$clase <- factor(as.character(d$clase), levels = CLASES)
-completo <- complete.cases(d[, c(vars17, nuevas)])
-n_antes <- nrow(d)
-d <- d[completo, ]
 
 flu <- read.csv(RUTA_FLU, stringsAsFactors = FALSE)
 N_COHORTE <- flu$n[flu$paso == "p5_cohorte_final"]
+if (nrow(d) != N_COHORTE)
+  detener("La matriz particionada no cubre la cohorte final del embudo.")
 
-cat("\n=== CASOS COMPLETOS ===\n")
-cat("Estancias de entrenamiento y prueba en las categorias modeladas:",
+completo   <- complete.cases(d[, c(vars17, nuevas)])
+en_conj    <- completo & d$grupo %in% c("entrenamiento", "prueba")
+en_clases  <- en_conj & d$clase %in% CLASES
+n_antes    <- sum(d$clase %in% CLASES & d$grupo %in% c("entrenamiento", "prueba"))
+
+cascada <- data.frame(
+  paso = seq_len(4),
+  descripcion = c(
+    "estancias de la cohorte en la matriz particionada",
+    "completas en las determinaciones comparadas",
+    "y ademas en entrenamiento o prueba",
+    "y ademas en una de las categorias modeladas"),
+  estancias = c(nrow(d), sum(completo), sum(en_conj), sum(en_clases)),
+  row.names = NULL)
+cascada$pct_del_paso_anterior <- round(
+  100 * cascada$estancias / c(NA, cascada$estancias[-nrow(cascada)]), 2)
+
+# Reparto de las estancias completas entre los conjuntos de la particion. Es
+# lo que dice a quien describe la comparacion: si un grupo aporta completas
+# en proporcion distinta a su tamano, la restriccion no es neutral respecto
+# de el.
+grupos <- sort(unique(d$grupo))
+por_grupo <- do.call(rbind, lapply(grupos, function(g) {
+  s <- d$grupo == g
+  data.frame(grupo = g, estancias = sum(s), completas = sum(s & completo),
+             pct_del_grupo = round(100 * sum(s & completo) / sum(s), 2),
+             pct_de_las_completas = round(100 * sum(s & completo) /
+                                          sum(completo), 2),
+             row.names = NULL)
+}))
+
+por_grupo_clase <- do.call(rbind, lapply(
+  sort(unique(as.character(d$grupo[en_clases]))), function(g)
+    do.call(rbind, lapply(CLASES, function(k)
+      data.frame(grupo = g, clase = k,
+                 estancias = sum(en_clases & d$grupo == g & d$clase == k),
+                 row.names = NULL)))))
+
+d <- d[en_clases, ]
+d$clase <- factor(as.character(d$clase), levels = CLASES)
+
+# La cascada ha de cerrar contra si misma y contra el desglose. Si dejara de
+# hacerlo, alguno de los dos describiria un conjunto distinto del ajustado.
+if (cascada$estancias[nrow(cascada)] != nrow(d))
+  detener("La cascada no termina en el conjunto que se ajusta.")
+if (sum(por_grupo$completas) != sum(completo))
+  detener("El reparto por grupo no suma las estancias completas.")
+if (sum(por_grupo_clase$estancias) != nrow(d))
+  detener("El desglose por grupo y categoria no suma el conjunto ajustado.")
+
+cat("\n=== CASCADA DE FILTROS ===\n")
+print(cascada, row.names = FALSE)
+cat("\n=== ESTANCIAS COMPLETAS POR CONJUNTO DE LA PARTICION ===\n")
+print(por_grupo, row.names = FALSE)
+cat("\n=== DESGLOSE DEL CONJUNTO AJUSTADO ===\n")
+print(por_grupo_clase, row.names = FALSE)
+cat("\nEstancias de entrenamiento y prueba en las categorias modeladas:",
     n_antes, "\n")
 cat("De ellas, completas en las", length(vars17) + length(nuevas), ":",
     nrow(d), sprintf("(%.2f por ciento)\n", 100 * nrow(d) / n_antes))
-cat("Sobre la cohorte de", N_COHORTE, ":",
-    sprintf("%.2f por ciento\n", 100 * nrow(d) / N_COHORTE))
-print(table(grupo = d$grupo, clase = d$clase))
 
 ent <- d[d$grupo == "entrenamiento", ]
 pru <- d[d$grupo == "prueba", ]
@@ -393,9 +455,9 @@ resumen <- data.frame(
   no_nulos_ampliada = r29$no_nulos,
   estancias_ajuste = nrow(ent),
   estancias_prueba = nrow(pru),
+  estancias_analizables = n_antes,
   estancias_completas = nrow(d),
-  denominador_cohorte = N_COHORTE,
-  pct_de_la_cohorte = round(100 * nrow(d) / N_COHORTE, 2),
+  pct_de_las_analizables = round(100 * nrow(d) / n_antes, 2),
   promedio_minoritarias_retenidas = round(pr17, 4),
   promedio_minoritarias_ampliada = round(pr29, 4),
   diferencia_minoritarias = round(pr29 - pr17, 4),
@@ -415,6 +477,12 @@ write.csv(resumen, file.path(OUT, "comparacion_resumen.csv"),
 write.csv(anadidas[, c("itemid","etiqueta","panel","fluido","cobertura_pct")],
           file.path(OUT, "determinaciones_anadidas.csv"), row.names = FALSE)
 write.csv(ic, file.path(OUT, "intervalo_diferencia.csv"), row.names = FALSE)
+write.csv(cascada, file.path(OUT, "cascada_casos_completos.csv"),
+          row.names = FALSE)
+write.csv(por_grupo, file.path(OUT, "completos_por_grupo.csv"),
+          row.names = FALSE)
+write.csv(por_grupo_clase, file.path(OUT, "conjunto_por_grupo_y_clase.csv"),
+          row.names = FALSE)
 write.csv(mult, file.path(OUT, "multiplicidad_diferencias.csv"),
           row.names = FALSE)
 
@@ -446,6 +514,15 @@ writeLines(toJSON(list(
     "Las cinco diferencias son comunes a las dos ramas y no sesgan la",
     "comparacion, pero impiden cotejar cualquiera de estas cifras con las",
     "publicadas"),
+  cascada = paste("la cifra de casos completos es el ultimo peldano de tres",
+                  "restricciones encadenadas; la cascada entera y el reparto",
+                  "por conjunto de la particion se depositan al lado, porque",
+                  "aplicar proporciones sobre el total no la reproduce"),
+  completitud = paste("evaluada sobre la matriz particionada, que ya paso por",
+                      "los limites de plausibilidad; un valor anulado por",
+                      "implausible cuenta aqui como ausente y contaba como",
+                      "presente en el recuento de la fase trigesima primera,",
+                      "que interroga la tabla de origen"),
   incertidumbre = paste("intervalo de la diferencia por remuestreo emparejado",
                         "del conjunto de evaluacion, con los modelos",
                         "ajustados una sola vez"),

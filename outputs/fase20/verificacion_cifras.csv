@@ -209,6 +209,9 @@
 "Maximo de candidatas en una estancia",69,69,0.5,TRUE
 "Comparacion, determinaciones anadidas",12,12,0.5,TRUE
 "Comparacion, estancias completas",3498,3498,0.5,TRUE
+"Comparacion, estancias analizables",11718,11718,0.5,TRUE
+"Comparacion, porcentaje de las analizables",29.85,29.85,0.005,TRUE
+"Comparacion, ajuste mas prueba",3498,3498,0.5,TRUE
 "Comparacion, minoritarias retenidas",0.6635,0.6635,5e-05,TRUE
 "Comparacion, minoritarias ampliada",0.6523,0.6523,5e-05,TRUE
 "Comparacion, diferencia",-0.0113,-0.0113,1e-04,TRUE
@@ -217,6 +220,18 @@
 "Comparacion, clases que excluyen el cero",1,1,0.5,TRUE
 "Comparacion, clases que resisten Holm",0,0,0.5,TRUE
 "Comparacion, replicas del remuestreo",10000,10000,0.5,TRUE
+"Cascada, peldanos depositados",4,4,0.5,TRUE
+"Cascada, cohorte de partida",23213,23213,0.5,TRUE
+"Cascada, completas en las comparadas",5866,5866,0.5,TRUE
+"Cascada, y ademas en entrenamiento o prueba",3774,3774,0.5,TRUE
+"Cascada, y ademas en categoria modelada",3498,3498,0.5,TRUE
+"Cascada, cierra en el conjunto ajustado",3498,3498,0.5,TRUE
+"Cascada, el primer peldano suma los grupos",23213,23213,0.5,TRUE
+"Cascada, el segundo suma las completas",5866,5866,0.5,TRUE
+"Cascada, el tercero suma los dos conjuntos",3774,3774,0.5,TRUE
+"Completitud del conjunto sellado",7.87,7.87,0.005,TRUE
+"Completitud del entrenamiento",29.78,29.78,0.005,TRUE
+"Cascada, el cuarto suma el desglose",3498,3498,0.5,TRUE
 "Diferencias corregidas conjuntamente",4,4,0.5,TRUE
 "Diferencias que resisten en algun nivel",0,0,0.5,TRUE
 "Niveles contrastados en la comparacion",2,2,0.5,TRUE

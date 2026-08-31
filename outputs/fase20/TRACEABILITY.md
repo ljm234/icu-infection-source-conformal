@@ -219,6 +219,9 @@ margin never exceeds the largest possible rounding error.
 | Maximo de candidatas en una estancia | 69.0000 | 69.0000 | 0.50000 | yes |
 | Comparacion, determinaciones anadidas | 12.0000 | 12.0000 | 0.50000 | yes |
 | Comparacion, estancias completas | 3498.0000 | 3498.0000 | 0.50000 | yes |
+| Comparacion, estancias analizables | 11718.0000 | 11718.0000 | 0.50000 | yes |
+| Comparacion, porcentaje de las analizables | 29.8500 | 29.8500 | 0.00500 | yes |
+| Comparacion, ajuste mas prueba | 3498.0000 | 3498.0000 | 0.50000 | yes |
 | Comparacion, minoritarias retenidas | 0.6635 | 0.6635 | 0.00005 | yes |
 | Comparacion, minoritarias ampliada | 0.6523 | 0.6523 | 0.00005 | yes |
 | Comparacion, diferencia | -0.0113 | -0.0113 | 0.00010 | yes |
@@ -227,6 +230,18 @@ margin never exceeds the largest possible rounding error.
 | Comparacion, clases que excluyen el cero | 1.0000 | 1.0000 | 0.50000 | yes |
 | Comparacion, clases que resisten Holm | 0.0000 | 0.0000 | 0.50000 | yes |
 | Comparacion, replicas del remuestreo | 10000.0000 | 10000.0000 | 0.50000 | yes |
+| Cascada, peldanos depositados | 4.0000 | 4.0000 | 0.50000 | yes |
+| Cascada, cohorte de partida | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Cascada, completas en las comparadas | 5866.0000 | 5866.0000 | 0.50000 | yes |
+| Cascada, y ademas en entrenamiento o prueba | 3774.0000 | 3774.0000 | 0.50000 | yes |
+| Cascada, y ademas en categoria modelada | 3498.0000 | 3498.0000 | 0.50000 | yes |
+| Cascada, cierra en el conjunto ajustado | 3498.0000 | 3498.0000 | 0.50000 | yes |
+| Cascada, el primer peldano suma los grupos | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Cascada, el segundo suma las completas | 5866.0000 | 5866.0000 | 0.50000 | yes |
+| Cascada, el tercero suma los dos conjuntos | 3774.0000 | 3774.0000 | 0.50000 | yes |
+| Completitud del conjunto sellado | 7.8700 | 7.8700 | 0.00500 | yes |
+| Completitud del entrenamiento | 29.7800 | 29.7800 | 0.00500 | yes |
+| Cascada, el cuarto suma el desglose | 3498.0000 | 3498.0000 | 0.50000 | yes |
 | Diferencias corregidas conjuntamente | 4.0000 | 4.0000 | 0.50000 | yes |
 | Diferencias que resisten en algun nivel | 0.0000 | 0.0000 | 0.50000 | yes |
 | Niveles contrastados en la comparacion | 2.0000 | 2.0000 | 0.50000 | yes |
@@ -306,6 +321,9 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase31/casos_completos.csv`
 - `outputs/fase32/comparacion_por_clase.csv`
 - `outputs/fase32/comparacion_resumen.csv`
+- `outputs/fase32/cascada_casos_completos.csv`
+- `outputs/fase32/completos_por_grupo.csv`
+- `outputs/fase32/conjunto_por_grupo_y_clase.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase33/versiones_del_bloque.csv`
 - `outputs/fase32/intervalo_diferencia.csv`

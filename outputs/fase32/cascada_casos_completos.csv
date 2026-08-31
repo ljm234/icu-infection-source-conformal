@@ -1,0 +1,5 @@
+"paso","descripcion","estancias","pct_del_paso_anterior"
+1,"estancias de la cohorte en la matriz particionada",23213,NA
+2,"completas en las determinaciones comparadas",5866,25.27
+3,"y ademas en entrenamiento o prueba",3774,64.34
+4,"y ademas en una de las categorias modeladas",3498,92.69

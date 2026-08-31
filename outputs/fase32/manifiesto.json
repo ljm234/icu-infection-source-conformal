@@ -1,6 +1,6 @@
 {
   "fase": "32",
-  "ejecutado_en": "2026-08-31T09:51:55-0600",
+  "ejecutado_en": "2026-08-31T14:19:45-0600",
   "semilla": 20260818,
   "r_version": "R version 4.6.1 (2026-06-24)",
   "glmnet_version": "5.0",
@@ -11,6 +11,8 @@
   "penalizacion": "validada por separado dentro de cada especificacion, regla del minimo",
   "unidad_reservada": "no interviene",
   "no_comparable_con_el_modelo_publicado": "las areas de esta fase no se comparan con las del articulo. Difieren en que aqui no hay imputacion, por trabajarse sobre casos completos; no hay splines; no entra el indicador de solicitud de lactato; el conjunto de ajuste es mucho menor; y la penalizacion se valida dentro de cada rama. Las cinco diferencias son comunes a las dos ramas y no sesgan la comparacion, pero impiden cotejar cualquiera de estas cifras con las publicadas",
+  "cascada": "la cifra de casos completos es el ultimo peldano de tres restricciones encadenadas; la cascada entera y el reparto por conjunto de la particion se depositan al lado, porque aplicar proporciones sobre el total no la reproduce",
+  "completitud": "evaluada sobre la matriz particionada, que ya paso por los limites de plausibilidad; un valor anulado por implausible cuenta aqui como ausente y contaba como presente en el recuento de la fase trigesima primera, que interroga la tabla de origen",
   "incertidumbre": "intervalo de la diferencia por remuestreo emparejado del conjunto de evaluacion, con los modelos ajustados una sola vez",
   "replicas": 10000,
   "confianza": 0.95,

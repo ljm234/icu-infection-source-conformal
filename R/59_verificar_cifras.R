@@ -78,6 +78,9 @@ FUENTES <- list(
   "Casos completos en las candidatas"        = "outputs/fase31/casos_completos.csv",
   "Comparacion ampliada, por clase"          = "outputs/fase32/comparacion_por_clase.csv",
   "Comparacion ampliada, resumen"            = "outputs/fase32/comparacion_resumen.csv",
+  "Cascada de casos completos"               = "outputs/fase32/cascada_casos_completos.csv",
+  "Completos por conjunto de la particion"   = "outputs/fase32/completos_por_grupo.csv",
+  "Conjunto ajustado por grupo y clase"      = "outputs/fase32/conjunto_por_grupo_y_clase.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -889,6 +892,12 @@ if (!is.null(x)) {
     x$determinaciones_anadidas, 12, 0.5)
   reg[[length(reg)+1]] <- comprobar("Comparacion, estancias completas",
     x$estancias_completas, 3498, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, estancias analizables",
+    x$estancias_analizables, 11718, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, porcentaje de las analizables",
+    x$pct_de_las_analizables, 29.85, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Comparacion, ajuste mas prueba",
+    x$estancias_ajuste + x$estancias_prueba, x$estancias_completas, 0.5)
   reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias retenidas",
     x$promedio_minoritarias_retenidas, 0.6635, t4)
   reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias ampliada",
@@ -905,6 +914,46 @@ if (!is.null(x)) {
     x$clases_que_resisten_holm, 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Comparacion, replicas del remuestreo",
     x$replicas, 10000, 0.5)
+}
+
+# La cascada de filtros. Cada peldano ha de cuadrar con el siguiente y con
+# los desgloses, de modo que la comprobacion cruzada es una identidad y no
+# una desigualdad: si algun dia dejara de cerrar, la cifra publicada
+# describiria un conjunto distinto del ajustado y el verificador lo diria.
+cas <- leer(FUENTES[["Cascada de casos completos"]])
+grp <- leer(FUENTES[["Completos por conjunto de la particion"]])
+gcl <- leer(FUENTES[["Conjunto ajustado por grupo y clase"]])
+rsm <- leer(FUENTES[["Comparacion ampliada, resumen"]])
+if (!is.null(cas)) {
+  reg[[length(reg)+1]] <- comprobar("Cascada, peldanos depositados",
+    nrow(cas), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cascada, cohorte de partida",
+    cas$estancias[1], 23213, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cascada, completas en las comparadas",
+    cas$estancias[2], 5866, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cascada, y ademas en entrenamiento o prueba",
+    cas$estancias[3], 3774, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cascada, y ademas en categoria modelada",
+    cas$estancias[4], 3498, 0.5)
+  if (!is.null(rsm))
+    reg[[length(reg)+1]] <- comprobar("Cascada, cierra en el conjunto ajustado",
+      cas$estancias[4], rsm$estancias_completas, 0.5)
+  if (!is.null(grp)) {
+    reg[[length(reg)+1]] <- comprobar("Cascada, el primer peldano suma los grupos",
+      cas$estancias[1], sum(grp$estancias), 0.5)
+    reg[[length(reg)+1]] <- comprobar("Cascada, el segundo suma las completas",
+      cas$estancias[2], sum(grp$completas), 0.5)
+    reg[[length(reg)+1]] <- comprobar("Cascada, el tercero suma los dos conjuntos",
+      cas$estancias[3],
+      sum(grp$completas[grp$grupo %in% c("entrenamiento", "prueba")]), 0.5)
+    reg[[length(reg)+1]] <- comprobar("Completitud del conjunto sellado",
+      grp$pct_del_grupo[grp$grupo == "sellado"], 7.87, tolerancia(2))
+    reg[[length(reg)+1]] <- comprobar("Completitud del entrenamiento",
+      grp$pct_del_grupo[grp$grupo == "entrenamiento"], 29.78, tolerancia(2))
+  }
+  if (!is.null(gcl))
+    reg[[length(reg)+1]] <- comprobar("Cascada, el cuarto suma el desglose",
+      cas$estancias[4], sum(gcl$estancias), 0.5)
 }
 
 x <- leer(FUENTES[["Multiplicidad de las diferencias"]])

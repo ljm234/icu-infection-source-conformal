@@ -87,8 +87,11 @@ A comparison on stays complete in all the candidates cannot be made.
 0 of the 23,213 stays have all of them within the window, and the most
 any stay reaches is 69. What can be compared is the seventeen
 against those plus the 12 discarded whose coverage exceeds the
-least frequent retained one. On the 3,498 stays complete in those
-29, the wider specification does not improve on the narrower: the
+least frequent retained one.
+Of that cohort, 5,866 stays are complete in those 29; 3,774 of them fall
+in the training or test partition, and 3,498 of those carry one of the
+four modelled classes. That last set carries the comparison, and on it the
+wider specification does not improve on the narrower: the
 mean area across minority classes moves by -0.0113, with a paired
 bootstrap interval of -0.0249 to 0.0027 that contains zero, so the
 direction is not established.
@@ -103,7 +106,11 @@ Three things bound that comparison. Stays complete in that many
 determinations are not a random sample: they are the more heavily monitored
 ones, and monitoring intensity tracks both severity and unit, so the answer
 holds among patients with complete laboratory work rather than in the
-cohort. Both specifications were fitted linearly, without splines, without
+cohort. How far completeness tracks the unit is measurable in the sealed
+one, which this comparison leaves out anyway: 7.87 percent of its
+stays are complete in these determinations, against 29.78 percent in
+the training partition.
+Both specifications were fitted linearly, without splines, without
 imputation and without the lactate ordering indicator, so that the variable
 set is the only thing that differs between them; neither figure is
 comparable with the areas reported elsewhere in this document. And the

@@ -110,6 +110,8 @@ comp  <- leer("outputs/fase31/casos_completos.csv")
 cmp29 <- leer("outputs/fase32/comparacion_resumen.csv")
 icd   <- leer("outputs/fase32/intervalo_diferencia.csv")
 mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
+casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
+cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -371,11 +373,17 @@ add(cifra("any stay reaches is %d. What can be compared is the seventeen",
           as.integer(comp$maximo_presentes[comp$conjunto == "candidatas"])))
 add(cifra("against those plus the %d discarded whose coverage exceeds the",
           as.integer(cmp29$determinaciones_anadidas)))
-add(cifra("least frequent retained one. On the %s stays complete in those",
-          format(cmp29$estancias_completas, big.mark = ",")))
-add(cifra("%d, the wider specification does not improve on the narrower: the",
+add(prosa("least frequent retained one."))
+add(cifra("Of that cohort, %s stays are complete in those %d; %s of them fall",
+          format(casc$estancias[2], big.mark = ","),
           as.integer(cmp29$determinaciones_retenidas +
-                     cmp29$determinaciones_anadidas)))
+                     cmp29$determinaciones_anadidas),
+          format(casc$estancias[3], big.mark = ",")))
+add(cifra("in the training or test partition, and %s of those carry one of the",
+          format(casc$estancias[4], big.mark = ",")))
+add(prosa(
+"four modelled classes. That last set carries the comparison, and on it the",
+"wider specification does not improve on the narrower: the"))
 add(cifra("mean area across minority classes moves by %.4f, with a paired",
           cmp29$diferencia_minoritarias))
 add(cifra("bootstrap interval of %.4f to %.4f that contains zero, so the",
@@ -399,7 +407,14 @@ add(prosa(
 "determinations are not a random sample: they are the more heavily monitored",
 "ones, and monitoring intensity tracks both severity and unit, so the answer",
 "holds among patients with complete laboratory work rather than in the",
-"cohort. Both specifications were fitted linearly, without splines, without",
+"cohort. How far completeness tracks the unit is measurable in the sealed"))
+add(cifra("one, which this comparison leaves out anyway: %.2f percent of its",
+          val(cgrp, "pct_del_grupo", cgrp$grupo == "sellado")))
+add(cifra("stays are complete in these determinations, against %.2f percent in",
+          val(cgrp, "pct_del_grupo", cgrp$grupo == "entrenamiento")))
+add(prosa(
+"the training partition.",
+"Both specifications were fitted linearly, without splines, without",
 "imputation and without the lactate ordering indicator, so that the variable",
 "set is the only thing that differs between them; neither figure is",
 "comparable with the areas reported elsewhere in this document. And the",
