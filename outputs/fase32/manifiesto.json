@@ -1,8 +1,9 @@
 {
   "fase": "32",
-  "ejecutado_en": "2026-08-31T14:19:45-0600",
+  "ejecutado_en": "2026-08-31T15:04:48-0600",
   "semilla": 20260818,
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "glmnet_version": "5.0",
   "naturaleza": "analisis posterior escrito el 2026-08-31; la seleccion se fijo el 2026-08-18 en R/19_matriz.R",
   "pregunta": "aportan las determinaciones descartadas de cobertura superior a la de la retenida menos frecuente",

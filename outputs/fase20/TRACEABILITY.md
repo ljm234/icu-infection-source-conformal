@@ -9,6 +9,8 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
+| Manifiestos que declaran la guardia | 14.0000 | 14.0000 | 0.50000 | yes |
+| Manifiestos anteriores a la guardia | 5.0000 | 5.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
 | Cobertura conforme, maximo entre categorias | 0.9044 | 0.9044 | 0.00005 | yes |

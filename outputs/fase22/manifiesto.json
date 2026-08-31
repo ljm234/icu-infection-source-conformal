@@ -1,8 +1,9 @@
 {
   "fase": "22",
-  "ejecutado_en": "2026-08-26T19:02:47-0600",
+  "ejecutado_en": "2026-08-31T15:03:11-0600",
   "semilla": 20260818,
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "glmnet_version": "5.0",
   "proposito": "contraste de la eleccion de lambda sin emplear el conjunto de prueba",
   "conjunto_empleado": "entrenamiento",

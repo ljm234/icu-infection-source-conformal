@@ -1,4 +1,6 @@
 "afirmacion","valor","esperado","tolerancia","concuerda"
+"Manifiestos que declaran la guardia",14,14,0.5,TRUE
+"Manifiestos anteriores a la guardia",5,5,0.5,TRUE
 "Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
 "Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE
 "Cobertura conforme, maximo entre categorias",0.9044,0.9044,5e-05,TRUE

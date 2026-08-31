@@ -1,7 +1,8 @@
 {
   "fase": "23",
-  "ejecutado_en": "2026-08-26T20:15:47-0600",
+  "ejecutado_en": "2026-08-31T15:05:36-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "proposito": "deposito de la calibracion por categoria en la unidad reservada",
   "fuente": "outputs/fase11/sellado_evaluado.csv",
   "origen": "evaluacion unica escrita por R/36_sellado.R; no se repite la prediccion",

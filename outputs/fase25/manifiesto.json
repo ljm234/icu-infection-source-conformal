@@ -1,7 +1,8 @@
 {
   "fase": "25",
-  "ejecutado_en": "2026-08-26T20:20:06-0600",
+  "ejecutado_en": "2026-08-31T15:00:56-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "duckdb_version": "1.5.5",
   "proposito": "cuantificar la divergencia de etiquetado entre la fase segunda y la cuarta",
   "definiciones_de_cohorte": "comunes a ambas fases, calculadas una sola vez",

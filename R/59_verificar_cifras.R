@@ -40,6 +40,37 @@ if (prueba == 0) {
 }
 cat("Guardia de emparejamiento parcial: activa y detiene.\n")
 
+# La comprobacion anterior acredita la guardia para este procedimiento, no
+# para quien escribio cada deposito. Un procedimiento ejecutado con --vanilla
+# no lee el perfil del proyecto y por tanto no tiene guardia; su deposito
+# podria llevar una cifra que no es la que su nombre dice, y este verificador
+# contrastaria el documento contra ella y concordaria. Por eso cada manifiesto
+# declara si la guardia estaba puesta al escribirse, y aqui se exige que
+# ninguno la declare ausente.
+#
+# Los manifiestos anteriores a la guardia no la declaran, y no se les inventa
+# el campo: se cuentan. Ese recuento solo puede bajar. Si subiera, seria un
+# deposito nuevo escrito sin declararlo.
+mfs <- system("git ls-files 'outputs/*/manifiesto.json'", intern = TRUE)
+decl <- sapply(mfs, function(m) {
+  d <- jsonlite::fromJSON(m)
+  v <- d[["guarda_de_emparejamiento_parcial"]]
+  if (is.null(v)) NA else isTRUE(v)
+})
+falsos <- sum(!is.na(decl) & !decl)
+N_MF_DECLARAN <- sum(!is.na(decl) & decl)
+N_MF_SIN      <- sum(is.na(decl))
+cat("Manifiestos versionados:", length(mfs),
+    " declaran la guardia:", sum(!is.na(decl) & decl),
+    " no la declaran:", sum(is.na(decl)),
+    " la declaran ausente:", falsos, "\n")
+if (falsos > 0) {
+  cat("\nUn deposito se escribio sin la guardia de nombres:\n")
+  for (m in mfs[!is.na(decl) & !decl]) cat("  ", m, "\n")
+  cat("No procede verificar cifras contra el.\n")
+  quit(status = 1)
+}
+
 leer <- function(ruta) {
   if (!file.exists(ruta)) return(NULL)
   read.csv(ruta, stringsAsFactors = FALSE)
@@ -150,6 +181,16 @@ comprobar <- function(etiqueta, valor, esperado, tol) {
 
 cat("\n=== CONTRASTE DE CIFRAS PRINCIPALES ===\n")
 reg <- list()
+
+# Los manifiestos que declaran la guardia solo pueden aumentar, y los que no
+# la declaran solo pueden disminuir: son anteriores a ella y se rehacen al
+# reejecutar su fase. Si el segundo recuento subiera, un deposito nuevo se
+# habria escrito sin declararlo, que es la via por la que la guardia se
+# eludiria sin dejar rastro.
+reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
+  N_MF_DECLARAN, 14, 0.5)
+reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
+  N_MF_SIN, 5, 0.5)
 t4 <- tolerancia(4); t4d <- tolerancia(4, 2)
 t2 <- tolerancia(2); t1 <- tolerancia(1)
 

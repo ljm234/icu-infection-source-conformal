@@ -135,6 +135,7 @@ writeLines(toJSON(list(
   fase = "34",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("deposito de la calibracion por categoria en el conjunto",
                     "de prueba, que es el dominio que faltaba de los cuatro",
                     "que el trabajo declara evaluar"),

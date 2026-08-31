@@ -122,6 +122,7 @@ writeLines(toJSON(list(
   fase = "29",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("declarar la composicion de la cohorte analizada tras",
                     "descartar las unidades por debajo del umbral"),
   umbral = UMBRAL,

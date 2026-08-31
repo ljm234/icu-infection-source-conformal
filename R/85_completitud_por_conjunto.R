@@ -148,6 +148,7 @@ writeLines(toJSON(list(
   fase = "36",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("medir la completitud analitica de cada conjunto de la",
                     "particion sobre las determinaciones del modelo",
                     "publicado, que son las que gobiernan cuanta imputacion",

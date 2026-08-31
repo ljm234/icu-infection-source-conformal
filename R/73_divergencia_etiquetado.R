@@ -317,6 +317,7 @@ writeLines(toJSON(list(
   fase = "25",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   duckdb_version = as.character(packageVersion("duckdb")),
   proposito = paste("cuantificar la divergencia de etiquetado entre la fase",
                     "segunda y la cuarta"),

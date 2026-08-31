@@ -15,7 +15,29 @@ source("renv/activate.R")
 # Se activa el aviso y se convierte en parada. Un aviso en una salida larga
 # se pierde, y la garantia no puede depender de que alguien lo lea. En sesion
 # interactiva se deja en aviso, para no derribar la consola de quien explora.
-options(warnPartialMatchDollar = TRUE)
+#
+# Las tres formas de emparejamiento parcial se tratan igual. La de argumentos
+# es la que mas usan los paquetes, y por eso hacerla fatal era el riesgo: si
+# glmnet, mice o duckdb la emplearan por dentro, la guardia mataria el
+# ajuste. Se comprobo sobre los veintidos procedimientos ejecutables, incluido
+# el que consulta la base con duckdb y los dos que reajustan modelos, y
+# ninguno la dispara.
+options(warnPartialMatchDollar = TRUE,
+        warnPartialMatchArgs   = TRUE,
+        warnPartialMatchAttr   = TRUE)
+
+# Cada deposito declara en su manifiesto si la guardia estaba puesta al
+# escribirse. Comprobar la guardia dentro del verificador la acredita para el
+# verificador y no para quien escribio el deposito: un procedimiento
+# ejecutado sin este perfil no tiene guardia, y la verificacion posterior
+# contrastaria el documento contra un archivo cuyo calculo nadie vigilo.
+#
+# El campo se compone leyendo la opcion directamente y no llamando a una
+# funcion definida aqui. Una funcion definida aqui no existe cuando el perfil
+# no se lee, de modo que el procedimiento moriria al escribir el manifiesto,
+# despues de haber escrito los datos: quedarian depositos sin vigilar junto a
+# un manifiesto anterior que sigue declarando que si lo estuvieron. Leyendo la
+# opcion, el manifiesto se escribe siempre y declara lo que hubo.
 
 if (!interactive()) {
   globalCallingHandlers(warning = function(w) {

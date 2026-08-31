@@ -226,6 +226,7 @@ writeLines(toJSON(list(
   fase = "24",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   glmnet_version = as.character(packageVersion("glmnet")),
   proposito = paste("deposito de la regla del maximo en las cuatro",
                     "configuraciones evaluadas"),

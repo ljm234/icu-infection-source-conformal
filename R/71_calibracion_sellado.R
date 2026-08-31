@@ -109,6 +109,7 @@ writeLines(toJSON(list(
   fase = "23",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("deposito de la calibracion por categoria en la unidad",
                     "reservada"),
   fuente = RUTA_EVA,

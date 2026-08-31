@@ -491,6 +491,7 @@ writeLines(toJSON(list(
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   semilla = SEMILLA,
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   glmnet_version = as.character(packageVersion("glmnet")),
   naturaleza = paste("analisis posterior escrito el 2026-08-31; la seleccion",
                      "se fijo el 2026-08-18 en R/19_matriz.R"),

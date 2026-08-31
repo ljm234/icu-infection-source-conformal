@@ -1,7 +1,8 @@
 {
   "fase": "33",
-  "ejecutado_en": "2026-08-31T14:03:03-0600",
+  "ejecutado_en": "2026-08-31T15:05:43-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "proposito": "acreditar que la seleccion de determinaciones no se modifico tras fijarse, que es lo que responde a la sospecha de que se ajustara al ver resultados",
   "archivo": "R/19_matriz.R",
   "bloque": "de la linea que abre items hasta la que define lista_ids",

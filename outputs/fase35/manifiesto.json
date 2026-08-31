@@ -1,7 +1,8 @@
 {
   "fase": "35",
-  "ejecutado_en": "2026-08-31T12:55:30-0600",
+  "ejecutado_en": "2026-08-31T15:05:46-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "proposito": "calibracion por tramos de probabilidad predicha y cota sobre la regla del maximo, que es lo que la calibracion en media de la fase trigesimo cuarta no puede mostrar",
   "fuentes": {
     "prueba": "outputs/fase8/prueba_con_conjuntos.csv",

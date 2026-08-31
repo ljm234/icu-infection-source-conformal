@@ -103,6 +103,7 @@ writeLines(toJSON(list(
   fase = "28",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("separar la cobertura de la extraccion cruda de la que",
                     "presenta la tabla sobre la que se ajusta el modelo"),
   denominador = "cohorte final del embudo de seleccion",

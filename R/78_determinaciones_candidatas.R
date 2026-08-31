@@ -223,6 +223,7 @@ writeLines(toJSON(list(
   fase = "30",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   naturaleza = paste("reconstruccion posterior redactada el 2026-08-30; la",
                      "seleccion se fijo el 2026-08-18 en R/19_matriz.R"),
   no_es_el_criterio = paste("el criterio con que se eligieron las retenidas",

@@ -117,11 +117,12 @@ if (campos$resumen_del_bloque[campos$es_alta] != resumen_disco)
 
 fila_alta <- campos[campos$es_alta, ]
 
-# Numero de commits posteriores en la rama, para dimensionar cuanto trabajo
-# se hizo despues sin tocar la seleccion. Es una cifra autorreferencial: vale
-# en la fecha en que se deposita y envejece con cada commit posterior, de
-# modo que el propio deposito consigna esa fecha al lado.
-posteriores <- length(ejecutar(paste0("git rev-list ", sha_alta, "..HEAD")))
+# No se deposita el numero de commits posteriores en la rama. Es una cifra
+# autorreferencial: envejece con cada commit y ya se desfaso tres veces en una
+# sola sesion de trabajo. El documento principal se niega a publicar los
+# recuentos de archivos y de lineas por esa misma razon, y no cabe aplicar un
+# criterio en un sitio y el contrario en otro. Quien quiera la cifra la obtiene
+# del historial, que es donde no envejece.
 
 acta <- data.frame(
   archivo = ARCHIVO,
@@ -134,8 +135,6 @@ acta <- data.frame(
   resumen_del_bloque = resumen_disco,
   coincide_con_el_bloque_en_disco = TRUE,
   fijada_en_el_alta_del_archivo = TRUE,
-  commits_posteriores_en_la_rama = posteriores,
-  posteriores_contados_el = format(Sys.Date()),
   comando = CMD_LISTA,
   row.names = NULL)
 
@@ -144,7 +143,6 @@ cat("La lista se fijo en", fila_alta$commit, "el", fila_alta$fecha, "\n")
 cat("Identificadores que declara:", fila_alta$identificadores, "\n")
 cat("Commits que tocan el archivo desde entonces:", nrow(campos) - 1, "\n")
 cat("De ellos, los que cambian la lista:", distintos - 1, "\n")
-cat("Commits posteriores en la rama:", posteriores, "\n")
 
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 write.csv(acta, file.path(OUT, "procedencia_seleccion.csv"), row.names = FALSE)
@@ -154,6 +152,7 @@ writeLines(toJSON(list(
   fase = "33",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("acreditar que la seleccion de determinaciones no se",
                     "modifico tras fijarse, que es lo que responde a la",
                     "sospecha de que se ajustara al ver resultados"),

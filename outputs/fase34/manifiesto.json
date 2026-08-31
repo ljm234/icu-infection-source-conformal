@@ -1,7 +1,8 @@
 {
   "fase": "34",
-  "ejecutado_en": "2026-08-31T11:41:11-0600",
+  "ejecutado_en": "2026-08-31T15:05:45-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "proposito": "deposito de la calibracion por categoria en el conjunto de prueba, que es el dominio que faltaba de los cuatro que el trabajo declara evaluar",
   "fuente": "outputs/fase8/prueba_con_conjuntos.csv",
   "origen": "probabilidades por estancia escritas por R/33_conformal.R al calibrar el modelo final; no se reajusta ni se vuelve a predecir",

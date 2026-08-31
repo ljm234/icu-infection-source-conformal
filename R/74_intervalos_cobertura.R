@@ -626,6 +626,7 @@ writeLines(toJSON(list(
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   semilla = SEMILLA,
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   glmnet_version = as.character(packageVersion("glmnet")),
   proposito = paste("intervalos exactos de la cobertura condicional y",
                     "aplicacion de un solo criterio"),

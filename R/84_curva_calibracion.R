@@ -314,6 +314,7 @@ writeLines(toJSON(list(
   fase = "35",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   proposito = paste("calibracion por tramos de probabilidad predicha y cota",
                     "sobre la regla del maximo, que es lo que la calibracion",
                     "en media de la fase trigesimo cuarta no puede mostrar"),

@@ -1,7 +1,8 @@
 {
   "fase": "31",
-  "ejecutado_en": "2026-08-31T09:30:59-0600",
+  "ejecutado_en": "2026-08-31T15:04:02-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "duckdb_version": "1.5.5",
   "proposito": "contar las estancias de la cohorte que tienen todas las candidatas dentro de la ventana, para establecer si una comparacion por casos completos es posible",
   "ventana": "seis horas desde el ingreso a la primera estancia en la unidad",
