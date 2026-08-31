@@ -7,19 +7,27 @@ library(jsonlite)
 # respuesta debe constar en el deposito y no solo en la memoria de quien la
 # comprobo.
 #
-# La lista de identificadores vive en una sola expresion de R/19_matriz.R. La
-# busqueda por contenido del historial devuelve los commits en que esa
-# expresion aparece o desaparece, de modo que si la lista se hubiera tocado
-# despues de fijarse habria mas de uno. El procedimiento ejecuta esa busqueda,
-# deposita lo que devuelve y consigna el comando, para que cualquiera con el
-# deposito clonado lo repita sin depender de esta ejecucion.
+# EL METODO ANTERIOR NO ACREDITABA LO QUE AFIRMABA. Este procedimiento
+# buscaba en el historial los commits en que aparecia o desaparecia la cadena
+# que abre la lista, y se detenia si habia mas de uno. Esa busqueda cuenta
+# apariciones de un token: editar los identificadores dentro del bloque no
+# altera cuantas veces aparece la cadena que lo abre, de modo que una lista
+# reescrita por completo habria devuelto igualmente un solo commit. La
+# comprobacion no podia fallar, y una comprobacion que no puede fallar no
+# comprueba nada. El archivo, ademas, si se modifico despues, en un segundo
+# commit que aquella busqueda no veia.
 #
-# Se detiene si aparece mas de un commit. En ese caso la afirmacion seria
-# falsa y no procede depositarla.
+# Lo que sigue compara el contenido. Para cada version del archivo que el
+# historial conserva se extrae el bloque y se resume, y se exige que todos
+# los resumenes coincidan entre si y con el bloque en disco. El resumen se
+# obtiene con git, de modo que el comando consignado produce exactamente la
+# misma cadena que aqui se deposita, en cualquier maquina y sin herramienta
+# externa alguna.
 
 OUT <- "outputs/fase33"
 ARCHIVO <- "R/19_matriz.R"
-EXPRESION <- "items <- c("
+BLOQUE <- "de la linea que abre items hasta la que define lista_ids"
+SED <- "/^items <- c(/,/^lista_ids/p"
 
 detener <- function(...) {
   cat("\n", ..., "\n", sep = "")
@@ -39,61 +47,108 @@ ejecutar <- function(cmd) {
 
 # El comando que se acredita. Se compone una sola vez y se consigna tal cual,
 # de modo que lo depositado y lo ejecutado sean la misma cadena.
-CMD_LISTA <- sprintf(
-  "git log --all --format='%%H %%ad %%an' --date=short -S'%s' -- %s",
-  EXPRESION, ARCHIVO)
-CMD_ALTA <- sprintf(
-  "git log --all --format='%%H %%ad %%an' --date=short --diff-filter=A -- %s",
-  ARCHIVO)
+CMD_LISTA <- paste0(
+  "git log --all --format=%H -- ", ARCHIVO,
+  " | while read c; do printf '%s %s\\n' \"$c\" \"$(git show $c:", ARCHIVO,
+  " | sed -n '", SED, "' | git hash-object --stdin)\"; done")
 
-cat("=== COMANDOS EJECUTADOS ===\n")
+cat("=== COMANDO ACREDITADO ===\n")
 cat("  ", CMD_LISTA, "\n", sep = "")
-cat("  ", CMD_ALTA, "\n", sep = "")
 
-lista <- ejecutar(CMD_LISTA)
-alta <- ejecutar(CMD_ALTA)
+commits <- ejecutar(paste0("git log --all --format='%H %ad' --date=short -- ",
+                           ARCHIVO))
+if (length(commits) == 0) detener("El historial no registra el archivo.")
 
-cat("\n=== COMMITS QUE TOCAN LA LISTA ===\n")
-if (length(lista) == 0) detener("La busqueda no devuelve commit alguno.")
-for (l in lista) cat("  ", l, "\n", sep = "")
-cat("\n=== ALTA DEL ARCHIVO ===\n")
-for (l in alta) cat("  ", l, "\n", sep = "")
+alta <- ejecutar(paste0("git log --all --format='%H %ad' --date=short ",
+                        "--diff-filter=A -- ", ARCHIVO))
+if (length(alta) != 1) detener("El archivo consta dado de alta mas de una vez.")
+sha_alta <- strsplit(alta, " ")[[1]][1]
 
-if (length(lista) != 1)
-  detener("La lista de identificadores se toco en mas de un commit. La ",
-          "afirmacion de que no se modifico es falsa.")
-if (length(alta) != 1)
-  detener("El archivo consta dado de alta mas de una vez.")
+# Resumen del bloque en cada version, y numero de identificadores que declara.
+# Ambos se leen del propio historial: transcribirlos permitiria que el
+# deposito describiera una lista que el archivo ya no contiene.
+resumen_de <- function(sha)
+  ejecutar(sprintf("git show %s:%s | sed -n '%s' | git hash-object --stdin",
+                   sha, ARCHIVO, SED))
 
-campos <- strsplit(lista, " ")[[1]]
-campos_alta <- strsplit(alta, " ")[[1]]
-if (campos[1] != campos_alta[1])
-  detener("La lista no se fijo en el mismo commit que dio de alta el ",
-          "archivo. Procede examinar el historial antes de acreditar nada.")
+ids_de <- function(sha) {
+  src <- ejecutar(sprintf("git show %s:%s", sha, ARCHIVO))
+  i <- grep("^items <- c\\(", src)
+  j <- grep("^lista_ids", src)
+  if (length(i) != 1 || length(j) != 1 || j <= i)
+    detener("No se localiza el bloque en la version ", sha)
+  blk <- paste(src[i:j], collapse = " ")
+  m <- gregexpr("[a-z][a-z0-9_]*[[:space:]]*=[[:space:]]*\"[0-9]+\"", blk)
+  length(regmatches(blk, m)[[1]])
+}
+
+campos <- do.call(rbind, lapply(commits, function(l) {
+  p <- strsplit(l, " ")[[1]]
+  data.frame(commit = p[1], fecha = p[2], es_alta = p[1] == sha_alta,
+             resumen_del_bloque = resumen_de(p[1]),
+             identificadores = ids_de(p[1]), row.names = NULL)
+}))
+
+# El bloque en disco ha de coincidir con el del historial. Si difiriera, el
+# deposito describiria una version que no es la que el analisis empleo.
+resumen_disco <- ejecutar(sprintf("sed -n '%s' %s | git hash-object --stdin",
+                                  SED, ARCHIVO))
+campos$coincide_con_el_actual <- campos$resumen_del_bloque == resumen_disco
+
+cat("\n=== VERSIONES DEL BLOQUE ===\n")
+print(campos, row.names = FALSE)
+
+distintos <- length(unique(campos$resumen_del_bloque))
+cat("\nCommits que tocan el archivo:", nrow(campos), "\n")
+cat("Resumenes distintos del bloque:", distintos, "\n")
+cat("Resumen del bloque en disco:", resumen_disco, "\n")
+
+if (distintos != 1)
+  detener("El bloque cambia de contenido entre versiones. La afirmacion de ",
+          "que la seleccion no se modifico es falsa.")
+if (!all(campos$coincide_con_el_actual))
+  detener("Alguna version del bloque no coincide con la que hay en disco.")
+if (length(unique(campos$identificadores)) != 1)
+  detener("El numero de identificadores varia entre versiones.")
+if (!any(campos$es_alta))
+  detener("El alta del archivo no figura entre los commits que lo tocan.")
+if (campos$resumen_del_bloque[campos$es_alta] != resumen_disco)
+  detener("El bloque no quedo fijado en el alta del archivo.")
+
+fila_alta <- campos[campos$es_alta, ]
 
 # Numero de commits posteriores en la rama, para dimensionar cuanto trabajo
-# se hizo despues sin tocar la seleccion.
-posteriores <- length(ejecutar(sprintf("git rev-list %s..HEAD", campos[1])))
+# se hizo despues sin tocar la seleccion. Es una cifra autorreferencial: vale
+# en la fecha en que se deposita y envejece con cada commit posterior, de
+# modo que el propio deposito consigna esa fecha al lado.
+posteriores <- length(ejecutar(paste0("git rev-list ", sha_alta, "..HEAD")))
 
 acta <- data.frame(
   archivo = ARCHIVO,
-  expresion = EXPRESION,
-  commit = campos[1],
-  fecha = campos[2],
-  commits_que_tocan_la_lista = length(lista),
+  bloque = BLOQUE,
+  commit = fila_alta$commit,
+  fecha = fila_alta$fecha,
+  commits_que_tocan_el_archivo = nrow(campos),
+  commits_que_tocan_la_lista = distintos,
+  identificadores = fila_alta$identificadores,
+  resumen_del_bloque = resumen_disco,
+  coincide_con_el_bloque_en_disco = TRUE,
   fijada_en_el_alta_del_archivo = TRUE,
   commits_posteriores_en_la_rama = posteriores,
+  posteriores_contados_el = format(Sys.Date()),
   comando = CMD_LISTA,
   row.names = NULL)
 
 cat("\n=== ACTA ===\n")
-cat("La lista se fijo en", campos[1], "el", campos[2], "\n")
-cat("Commits que la tocan desde entonces:", length(lista) - 1, "\n")
+cat("La lista se fijo en", fila_alta$commit, "el", fila_alta$fecha, "\n")
+cat("Identificadores que declara:", fila_alta$identificadores, "\n")
+cat("Commits que tocan el archivo desde entonces:", nrow(campos) - 1, "\n")
+cat("De ellos, los que cambian la lista:", distintos - 1, "\n")
 cat("Commits posteriores en la rama:", posteriores, "\n")
-cat("La seleccion no se modifico despues de fijarse.\n")
 
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 write.csv(acta, file.path(OUT, "procedencia_seleccion.csv"), row.names = FALSE)
+write.csv(campos, file.path(OUT, "versiones_del_bloque.csv"), row.names = FALSE)
 
 writeLines(toJSON(list(
   fase = "33",
@@ -103,18 +158,24 @@ writeLines(toJSON(list(
                     "modifico tras fijarse, que es lo que responde a la",
                     "sospecha de que se ajustara al ver resultados"),
   archivo = ARCHIVO,
-  expresion = EXPRESION,
-  commit = campos[1],
-  fecha = campos[2],
+  bloque = BLOQUE,
   comando = CMD_LISTA,
-  interpretacion = paste("la busqueda por contenido devuelve los commits en",
-                         "que la expresion aparece o desaparece; que devuelva",
-                         "uno solo, y que sea el del alta del archivo,",
-                         "significa que la lista no se ha tocado desde que se",
-                         "escribio"),
+  metodo = paste("se resume el contenido del bloque en cada version que el",
+                 "historial conserva y se exige que todos los resumenes",
+                 "coincidan entre si y con el bloque en disco"),
+  metodo_anterior = paste("una busqueda por contenido de la cadena que abre",
+                          "la lista. Contaba apariciones de un token y no",
+                          "podia detectar una edicion dentro del bloque, de",
+                          "modo que no acreditaba lo que se le atribuia"),
+  interpretacion = paste("un solo resumen distinto entre todas las versiones",
+                         "significa que el bloque no cambio de contenido; que",
+                         "ese resumen sea el del alta significa que quedo",
+                         "fijado al escribirse"),
   lo_que_no_acredita = paste("que la seleccion fuera correcta o estuviera",
-                             "razonada; solo que no se altero despues")),
-  auto_unbox = TRUE, pretty = TRUE, digits = 15),
+                             "razonada; solo que no se altero despues"),
+  commits_que_tocan_el_archivo = nrow(campos),
+  commits_que_tocan_la_lista = distintos),
+  auto_unbox = TRUE, pretty = TRUE),
   file.path(OUT, "manifiesto.json"))
 
 cat("\nDepositado en", OUT, "\n")

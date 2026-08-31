@@ -129,9 +129,12 @@ Folds assigned by patient. Restricted cubic splines where the cross-validated
 gain exceeded a threshold derived from a permutation null.
 
 The penalty is the cross-validated minimum and not the one-standard-error
-rule. The two were compared under a criterion fixed in advance: adopt the
-minimum if the mean area across minority classes improves by more than a
-declared margin and no class loses more than that same margin. The minimum
+rule. The two were compared under a stated criterion: adopt the minimum if
+the mean area across minority classes improves by more than a declared
+margin and no minority class loses more than that same margin. The
+criterion is written into `R/32_comparar_lambda.R`, which entered the
+repository in the same commit as its result, so no artefact establishes
+that it preceded the comparison. The minimum
 won, gaining 0.0395 against a margin of 0.02.
 
 That comparison was made on the test set, which is the set that later

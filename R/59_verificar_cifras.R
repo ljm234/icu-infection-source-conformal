@@ -79,6 +79,7 @@ FUENTES <- list(
   "Comparacion ampliada, por clase"          = "outputs/fase32/comparacion_por_clase.csv",
   "Comparacion ampliada, resumen"            = "outputs/fase32/comparacion_resumen.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
+  "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
   "Multiplicidad de las diferencias"          = "outputs/fase32/multiplicidad_diferencias.csv")
 
@@ -938,10 +939,30 @@ if (!is.null(x)) {
     sum(x$diferencia > 0), 1, 0.5)
 }
 
+# La procedencia de la seleccion. El acta resume, y el detalle por version
+# esta al lado: se contrasta que el detalle tenga tantas filas como commits
+# declara el acta y que todos sus resumenes coincidan con el que el acta
+# publica. Un acta que afirmara invariancia sobre un detalle que no la
+# mostrara seria peor que no tenerla.
 x <- leer(FUENTES[["Procedencia de la seleccion"]])
+v <- leer(FUENTES[["Versiones del bloque"]])
 if (!is.null(x)) {
-  reg[[length(reg)+1]] <- comprobar("Commits que tocan la seleccion",
+  reg[[length(reg)+1]] <- comprobar("Commits que cambian la seleccion",
     x$commits_que_tocan_la_lista, 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Commits que tocan el archivo",
+    x$commits_que_tocan_el_archivo, 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Identificadores que la lista declara",
+    x$identificadores, 17, 0.5)
+  if (!is.null(v)) {
+    reg[[length(reg)+1]] <- comprobar("Versiones del bloque contrastadas",
+      nrow(v), x$commits_que_tocan_el_archivo, 0.5)
+    reg[[length(reg)+1]] <- comprobar("Resumenes distintos entre versiones",
+      length(unique(v$resumen_del_bloque)), x$commits_que_tocan_la_lista, 0.5)
+    reg[[length(reg)+1]] <- comprobar("Versiones cuyo resumen es el del acta",
+      sum(v$resumen_del_bloque == x$resumen_del_bloque), nrow(v), 0.5)
+    reg[[length(reg)+1]] <- comprobar("Versiones que declaran los mismos identificadores",
+      sum(v$identificadores == x$identificadores), nrow(v), 0.5)
+  }
 }
 
 tab <- do.call(rbind, reg)

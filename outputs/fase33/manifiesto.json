@@ -1,13 +1,15 @@
 {
   "fase": "33",
-  "ejecutado_en": "2026-08-31T09:09:12-0600",
+  "ejecutado_en": "2026-08-31T14:03:03-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "proposito": "acreditar que la seleccion de determinaciones no se modifico tras fijarse, que es lo que responde a la sospecha de que se ajustara al ver resultados",
   "archivo": "R/19_matriz.R",
-  "expresion": "items <- c(",
-  "commit": "a805a0bedd94a0b4b50e99080e3b7c9afa27b7bc",
-  "fecha": "2026-08-18",
-  "comando": "git log --all --format='%H %ad %an' --date=short -S'items <- c(' -- R/19_matriz.R",
-  "interpretacion": "la busqueda por contenido devuelve los commits en que la expresion aparece o desaparece; que devuelva uno solo, y que sea el del alta del archivo, significa que la lista no se ha tocado desde que se escribio",
-  "lo_que_no_acredita": "que la seleccion fuera correcta o estuviera razonada; solo que no se altero despues"
+  "bloque": "de la linea que abre items hasta la que define lista_ids",
+  "comando": "git log --all --format=%H -- R/19_matriz.R | while read c; do printf '%s %s\\n' \"$c\" \"$(git show $c:R/19_matriz.R | sed -n '/^items <- c(/,/^lista_ids/p' | git hash-object --stdin)\"; done",
+  "metodo": "se resume el contenido del bloque en cada version que el historial conserva y se exige que todos los resumenes coincidan entre si y con el bloque en disco",
+  "metodo_anterior": "una busqueda por contenido de la cadena que abre la lista. Contaba apariciones de un token y no podia detectar una edicion dentro del bloque, de modo que no acreditaba lo que se le atribuia",
+  "interpretacion": "un solo resumen distinto entre todas las versiones significa que el bloque no cambio de contenido; que ese resumen sea el del alta significa que quedo fijado al escribirse",
+  "lo_que_no_acredita": "que la seleccion fuera correcta o estuviera razonada; solo que no se altero despues",
+  "commits_que_tocan_el_archivo": 2,
+  "commits_que_tocan_la_lista": 1
 }

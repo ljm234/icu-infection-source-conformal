@@ -21,6 +21,7 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "R/64_auditoria_publicacion.R", "R/65_generar_readme.R",
              "R/67_diagnostico_dependencias.R", "R/68_traduccion_yachay.R",
              "R/19_matriz.R", "R/21_perfil_unidades.R", "R/22_particion.R",
+             "R/32_comparar_lambda.R",
              "R/36_sellado.R", "R/38_recalibracion.R",
              "R/51_circularidad_glasgow.R",
              "outputs/fase5/distancia_unidades.csv",
@@ -428,9 +429,12 @@ add(prosa(
 "gain exceeded a threshold derived from a permutation null.",
 "",
 "The penalty is the cross-validated minimum and not the one-standard-error",
-"rule. The two were compared under a criterion fixed in advance: adopt the",
-"minimum if the mean area across minority classes improves by more than a",
-"declared margin and no class loses more than that same margin. The minimum"))
+"rule. The two were compared under a stated criterion: adopt the minimum if",
+"the mean area across minority classes improves by more than a declared",
+"margin and no minority class loses more than that same margin. The",
+"criterion is written into `R/32_comparar_lambda.R`, which entered the",
+"repository in the same commit as its result, so no artefact establishes",
+"that it preceded the comparison. The minimum"))
 
 add(cifra("won, gaining %.4f against a margin of %.2f.",
           val(lamb, "mejora_original", TRUE),

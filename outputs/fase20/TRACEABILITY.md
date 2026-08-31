@@ -235,7 +235,13 @@ margin never exceeds the largest possible rounding error.
 | Promedio minoritarias, excluye el cero | 0.0000 | 0.0000 | 0.50000 | yes |
 | Comparacion, clases evaluadas | 4.0000 | 4.0000 | 0.50000 | yes |
 | Comparacion, clases donde la ampliada gana | 1.0000 | 1.0000 | 0.50000 | yes |
-| Commits que tocan la seleccion | 1.0000 | 1.0000 | 0.50000 | yes |
+| Commits que cambian la seleccion | 1.0000 | 1.0000 | 0.50000 | yes |
+| Commits que tocan el archivo | 2.0000 | 2.0000 | 0.50000 | yes |
+| Identificadores que la lista declara | 17.0000 | 17.0000 | 0.50000 | yes |
+| Versiones del bloque contrastadas | 2.0000 | 2.0000 | 0.50000 | yes |
+| Resumenes distintos entre versiones | 1.0000 | 1.0000 | 0.50000 | yes |
+| Versiones cuyo resumen es el del acta | 2.0000 | 2.0000 | 0.50000 | yes |
+| Versiones que declaran los mismos identificadores | 2.0000 | 2.0000 | 0.50000 | yes |
 
 ## Source files
 
@@ -301,5 +307,6 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase32/comparacion_por_clase.csv`
 - `outputs/fase32/comparacion_resumen.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
+- `outputs/fase33/versiones_del_bloque.csv`
 - `outputs/fase32/intervalo_diferencia.csv`
 - `outputs/fase32/multiplicidad_diferencias.csv`

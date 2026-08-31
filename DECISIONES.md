@@ -14,10 +14,15 @@ registro no puede sobrevivir a los archivos que lo sostienen.
 
 La seleccion de determinaciones quedo fijada el 2026-08-18 en `R/19_matriz.R`,
 y el registro del historial que lo acredita esta en
-`outputs/fase33/procedencia_seleccion.csv`. Lo que acredita es cuando se fijo,
-no que estuviera razonada: el criterio con que se eligieron no consta en
-ninguna parte, y ningun procedimiento posterior lo reconstruye ni debe
-presentarse como si lo hiciera.
+`outputs/fase33/procedencia_seleccion.csv`, con el detalle por version en
+`outputs/fase33/versiones_del_bloque.csv`. La acreditacion compara el contenido
+del bloque en cada version que el historial conserva y exige que todos los
+resumenes coincidan entre si y con el que hay en disco. Una busqueda que solo
+contara apariciones de la cadena que abre la lista no habria visto una edicion
+dentro de ella, y por eso se sustituyo. Lo que acredita es cuando se fijo, no
+que estuviera razonada: el criterio con que se eligieron no consta en ninguna
+parte, y ningun procedimiento posterior lo reconstruye ni debe presentarse como
+si lo hiciera.
 
 Los procedimientos que siguen se escribieron despues de esa fecha. El documento
 lo comprueba contra el historial en lugar de fiarlo a lo que cada cabecera
@@ -138,6 +143,13 @@ la cota parezca concluyente.
 Que la seleccion de determinaciones estuviera razonada. El historial acredita
 cuando quedo fija. Sobre el porque no hay archivo, y por tanto no hay
 afirmacion posible.
+
+Que el criterio de la penalizacion se fijara de antemano.
+`R/32_comparar_lambda.R` lo declara, y el procedimiento y el deposito que lo
+aplica entraron en el mismo commit, de modo que el historial no separa el
+criterio de su resultado. El asunto de aquel commit emplea la palabra que lo
+afirma, y tampoco eso es artefacto. Lo que sostiene la decision es la
+comprobacion posterior dentro del entrenamiento, no su anterioridad.
 
 ## Cifras que no son comparables entre si
 

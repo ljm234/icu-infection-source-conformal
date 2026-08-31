@@ -198,6 +198,7 @@ if (length(reservadas) == 0) {
 # ---------------------------------------------------------------------------
 
 r19  <- ruta("R/19_matriz.R")
+r32  <- ruta("R/32_comparar_lambda.R")
 r59  <- ruta("R/59_verificar_cifras.R")
 r64  <- ruta("R/64_auditoria_publicacion.R")
 r65  <- ruta("R/65_generar_readme.R")
@@ -228,6 +229,7 @@ d32i <- ruta("outputs/fase32/intervalo_diferencia.csv")
 d32m <- ruta("outputs/fase32/multiplicidad_diferencias.csv")
 d32r <- ruta("outputs/fase32/comparacion_resumen.csv")
 d33  <- ruta("outputs/fase33/procedencia_seleccion.csv")
+d33v <- ruta("outputs/fase33/versiones_del_bloque.csv")
 d15  <- ruta("outputs/fase15/sensibilidad_lactato.csv")
 exc  <- ruta(".gitignore")
 
@@ -272,8 +274,13 @@ cerrar()
 
 add(cifra("La seleccion de determinaciones quedo fijada el %s en `%s`, y el",
           FIJADA, r19))
-add(cifra("registro del historial que lo acredita esta en `%s`. Lo que", d33))
+add(cifra("registro del historial que lo acredita esta en `%s`, con el", d33))
+add(cifra("detalle por version en `%s`. La acreditacion", d33v))
 add(prosa(
+"compara el contenido del bloque en cada version que el historial conserva y",
+"exige que todos los resumenes coincidan entre si y con el que hay en disco.",
+"Una busqueda que solo contara apariciones de la cadena que abre la lista no",
+"habria visto una edicion dentro de ella, y por eso se sustituyo. Lo que",
 "acredita es cuando se fijo, no que estuviera razonada: el criterio con que",
 "se eligieron no consta en ninguna parte, y ningun procedimiento posterior",
 "lo reconstruye ni debe presentarse como si lo hiciera."))
@@ -436,6 +443,15 @@ add(prosa(
 "Que la seleccion de determinaciones estuviera razonada. El historial",
 "acredita cuando quedo fija. Sobre el porque no hay archivo, y por tanto no",
 "hay afirmacion posible."))
+cerrar()
+
+add(cifra("Que el criterio de la penalizacion se fijara de antemano. `%s`", r32))
+add(prosa(
+"lo declara, y el procedimiento y el deposito que lo aplica entraron en el",
+"mismo commit, de modo que el historial no separa el criterio de su",
+"resultado. El asunto de aquel commit emplea la palabra que lo afirma, y",
+"tampoco eso es artefacto. Lo que sostiene la decision es la comprobacion",
+"posterior dentro del entrenamiento, no su anterioridad."))
 cerrar()
 
 add(prosa("## Cifras que no son comparables entre si"))
