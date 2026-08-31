@@ -1,9 +1,17 @@
-"clase","estrato","n","minimo","q1","mediana","q3","maximo"
-"sin_crecimiento","todas",3349,0.5007,0.855,0.9012,0.9337,0.9822
-"sin_crecimiento","de la categoria",2972,0.5007,0.8612,0.9046,0.9357,0.9822
-"urinario","todas",3349,0.0032,0.0236,0.0356,0.0531,0.2814
-"urinario","de la categoria",143,0.0156,0.0343,0.0456,0.068,0.1141
-"respiratorio","todas",3349,0.0029,0.0182,0.0298,0.0479,0.3331
-"respiratorio","de la categoria",128,0.007,0.0282,0.042,0.0764,0.3193
-"sangre","todas",3349,0.0006,0.015,0.024,0.0405,0.3253
-"sangre","de la categoria",106,0.0086,0.0245,0.0412,0.0737,0.2118
+"conjunto","clase","estrato","n","minimo","q1","mediana","q3","maximo"
+"prueba","sin_crecimiento","todas",3349,0.5007,0.855,0.9012,0.9337,0.9822
+"prueba","sin_crecimiento","de la categoria",2972,0.5007,0.8612,0.9046,0.9357,0.9822
+"prueba","urinario","todas",3349,0.0032,0.0236,0.0356,0.0531,0.2814
+"prueba","urinario","de la categoria",143,0.0156,0.0343,0.0456,0.068,0.1141
+"prueba","respiratorio","todas",3349,0.0029,0.0182,0.0298,0.0479,0.3331
+"prueba","respiratorio","de la categoria",128,0.007,0.0282,0.042,0.0764,0.3193
+"prueba","sangre","todas",3349,0.0006,0.015,0.024,0.0405,0.3253
+"prueba","sangre","de la categoria",106,0.0086,0.0245,0.0412,0.0737,0.2118
+"unidad reservada","sin_crecimiento","todas",4586,0.5698,0.8896,0.9097,0.9254,0.9751
+"unidad reservada","sin_crecimiento","de la categoria",4495,0.5698,0.8899,0.9099,0.9253,0.9751
+"unidad reservada","urinario","todas",4586,0.0045,0.0211,0.0291,0.0428,0.1528
+"unidad reservada","urinario","de la categoria",52,0.0112,0.0282,0.0375,0.0519,0.0966
+"unidad reservada","respiratorio","todas",4586,0.0055,0.0187,0.0241,0.0313,0.1162
+"unidad reservada","respiratorio","de la categoria",13,0.0139,0.0214,0.0333,0.0525,0.0895
+"unidad reservada","sangre","todas",4586,0.0062,0.0255,0.0323,0.0409,0.3804
+"unidad reservada","sangre","de la categoria",26,0.0166,0.0331,0.0497,0.066,0.204
