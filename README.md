@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-08-30 by `R/65_generar_readme.R`.
+Generated on 2026-08-31 by `R/65_generar_readme.R`.
 Every numeric figure below is read from a versioned results file. The
 generator rejects prose lines containing a digit, format patterns carrying
 digits outside their substitution codes, and any line that fails to compose.
@@ -42,8 +42,10 @@ commit history.
 The step labels are Spanish and read, in order: unique stays, adults, stays
 with a culture drawn, suspected infection and the final cohort.
 
-Units contributing fewer than five hundred stays were dropped at the
-partition step, so the analysed cohort is smaller than the final funnel row.
+Of the stays with suspected infection, those in units contributing at
+least 500 make up the analysed cohort: 22,778 stays across 6 units.
+The model was developed on the 18,054 stays of 5 of them and
+evaluated once on the 4,724 of the unit held back.
 
 ## Categories
 

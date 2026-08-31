@@ -158,6 +158,7 @@
 "Estancias descartadas",435,435,0.5,TRUE
 "Estancias de las unidades de desarrollo",18054,18054,0.5,TRUE
 "Estancias de la unidad reservada",4724,4724,0.5,TRUE
+"Unidades de desarrollo",5,5,0.5,TRUE
 "Cohorte, retenidas mas descartadas",23213,23213,0.5,TRUE
 "Unidades en la cohorte final",16,16,0.5,TRUE
 "Determinaciones candidatas",73,73,0.5,TRUE
@@ -167,3 +168,5 @@
 "Cobertura maxima de las descartadas",68.5,68.5,0.05,TRUE
 "Descartadas sobre la retenida minima",12,12,0.5,TRUE
 "Atributos que separan los dos grupos",0,0,0.5,TRUE
+"Cota de casos completos en las candidatas",3177,3177,0.5,TRUE
+"Candidatas de cobertura baja",28,28,0.5,TRUE

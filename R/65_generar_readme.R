@@ -99,6 +99,7 @@ agr   <- leer("outputs/fase15/comparacion_agregacion.csv")
 dec   <- leer("outputs/fase16/curvas_decision.csv")
 gbm   <- leer("outputs/fase16/gbm_comparacion.csv")
 cove  <- leer("outputs/fase28/cobertura_vitales_por_etapa.csv")
+coh   <- leer("outputs/fase29/cohorte_analizada.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -276,10 +277,19 @@ add(prosa(
 "with a culture drawn, suspected infection and the final cohort.",
 ""))
 
-add(prosa("Units contributing fewer than five hundred stays were dropped at the"))
+add(prosa(
+"Of the stays with suspected infection, those in units contributing at"))
+add(cifra("least %d make up the analysed cohort: %s stays across %d units.",
+          as.integer(coh$umbral),
+          format(coh$estancias_retenidas, big.mark = ","),
+          as.integer(coh$unidades_retenidas)))
+add(cifra("The model was developed on the %s stays of %d of them and",
+          format(coh$estancias_de_desarrollo, big.mark = ","),
+          as.integer(coh$unidades_de_desarrollo)))
+add(cifra("evaluated once on the %s of the unit held back.",
+          format(coh$estancias_reservadas, big.mark = ",")))
 
 add(prosa(
-"partition step, so the analysed cohort is smaller than the final funnel row.",
 "",
 "## Categories",
 ""))

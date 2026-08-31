@@ -111,7 +111,8 @@ AFIRMACIONES <- list(
   c("Composicion de la cohorte analizada", "outputs/fase29/cohorte_analizada.csv"),
   c("Unidades de la cohorte", "outputs/fase29/unidades_cohorte.csv"),
   c("Determinaciones candidatas", "outputs/fase30/determinaciones_candidatas.csv"),
-  c("Separacion de las candidatas", "outputs/fase30/separacion_candidatas.csv"))
+  c("Separacion de las candidatas", "outputs/fase30/separacion_candidatas.csv"),
+  c("Viabilidad de la comparacion", "outputs/fase30/viabilidad_comparacion.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

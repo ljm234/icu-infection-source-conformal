@@ -17,6 +17,12 @@ library(jsonlite)
 # transcribirse. Transcrita, este archivo podria dejar de describir el modelo
 # sin que nada lo advirtiera.
 #
+# El panel de cada determinacion no se deduce de su nombre: se toma del campo
+# de categoria de d_labitems, el diccionario de la propia base, que R/16
+# arrastro al archivo de cobertura. Conviene declararlo porque cambia lo que
+# significa la ausencia de patron: no es que el nombre no permita agrupar, es
+# que la clasificacion que la base misma asigna no separa los dos grupos.
+#
 # Ninguna de las cifras que siguen mide desempeno. Nadie ajusto un modelo con
 # las setenta y tres, de modo que no existe comparacion entre esa
 # especificacion y la que se publica, y este procedimiento no la construye.
@@ -139,14 +145,58 @@ if (alguno) {
 }
 cat("\nDescartadas con cobertura superior a la retenida de menor cobertura:",
     por_encima, "\n")
+
 cat("La de mayor cobertura entre las candidatas fue",
     if (tab$retenida[which.max(tab$cobertura_pct)]) "retenida" else
       "descartada", "\n")
 
+# ---------------------------------------------------------------------------
+# Viabilidad de una comparacion por casos completos
+#
+# Un revisor preguntara si la especificacion de setenta y tres rinde mejor. La
+# via natural seria ajustar ambas sobre las estancias que tienen las setenta y
+# tres a la vez, sin reimputar. Aqui se establece si esa via existe.
+#
+# La candidata menos frecuente acota por arriba el numero de estancias que
+# pueden tener las setenta y tres simultaneamente: ninguna interseccion supera
+# al menor de sus conjuntos. La cota se toma sobre las primeras estancias en
+# cuidados intensivos, que es el denominador de la fase tercera; la cohorte
+# con sospecha de infeccion es un subconjunto suyo, de modo que la cota le
+# vale tambien.
+#
+# La cota es generosa. Alcanzarla exigiria que las estancias que tienen la
+# determinacion mas rara tuvieran ademas todas las demas, y varias de las de
+# menor cobertura pertenecen a examenes distintos que no se piden juntos.
+# ---------------------------------------------------------------------------
+
+BAJA <- 20
+cota <- min(tab$estancias)
+raro <- tab$etiqueta[which.min(tab$estancias)]
+n_bajas <- sum(tab$cobertura_pct < BAJA)
+
+cat("\n=== VIABILIDAD DE UNA COMPARACION POR CASOS COMPLETOS ===\n")
+cat("Candidata menos frecuente:", raro, "en", cota, "estancias\n")
+cat("Cota superior de casos completos en las", nrow(tab), ":", cota, "\n")
+cat("Candidatas por debajo del", BAJA, "por ciento de cobertura:",
+    n_bajas, "de", nrow(tab), "\n")
+cat("La cohorte con sospecha de infeccion es un subconjunto de ese\n")
+cat("denominador, de modo que la cota vale tambien para ella y el numero\n")
+cat("efectivo queda por debajo.\n")
+
+viabilidad <- data.frame(
+  candidatas = nrow(tab),
+  determinacion_menos_frecuente = raro,
+  cota_casos_completos = cota,
+  denominador_de_la_cota = "primeras estancias en cuidados intensivos",
+  umbral_de_cobertura_baja = BAJA,
+  candidatas_por_debajo = n_bajas,
+  row.names = NULL)
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 write.csv(tab, file.path(OUT, "determinaciones_candidatas.csv"),
           row.names = FALSE)
 write.csv(sep, file.path(OUT, "separacion_candidatas.csv"), row.names = FALSE)
+write.csv(viabilidad, file.path(OUT, "viabilidad_comparacion.csv"),
+          row.names = FALSE)
 
 writeLines(toJSON(list(
   fase = "30",
@@ -168,7 +218,16 @@ writeLines(toJSON(list(
                                           "alguno con las candidatas no",
                                           "retenidas, de modo que no se ha",
                                           "medido si una especificacion mas",
-                                          "amplia rendiria mejor")),
+                                          "amplia rendiria mejor"),
+  panel = paste("tomado del campo de categoria de d_labitems, el diccionario",
+                "de la base, y no deducido del nombre de la determinacion"),
+  comparacion_por_casos_completos = sprintf(paste(
+    "no es viable sobre las %d candidatas: la menos frecuente las acota en",
+    "%d estancias de las primeras en cuidados intensivos, y %d quedan por",
+    "debajo del %d por ciento de cobertura, de modo que la interseccion de",
+    "todas queda muy por debajo de esa cota. La cohorte con sospecha de",
+    "infeccion es un subconjunto de ese denominador"),
+    nrow(tab), cota, n_bajas, BAJA)),
   auto_unbox = TRUE, pretty = TRUE, digits = 15),
   file.path(OUT, "manifiesto.json"))
 

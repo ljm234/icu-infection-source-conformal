@@ -1,6 +1,6 @@
 {
   "fase": "30",
-  "ejecutado_en": "2026-08-30T00:20:40-0600",
+  "ejecutado_en": "2026-08-31T08:37:01-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "naturaleza": "reconstruccion posterior redactada el 2026-08-30; la seleccion se fijo el 2026-08-18 en R/19_matriz.R",
   "no_es_el_criterio": "el criterio con que se eligieron las retenidas no consta en el codigo ni en ningun manifiesto; este deposito describe atributos registrados y no lo suple",
@@ -10,5 +10,7 @@
   "retenidas": 17,
   "descartadas": 56,
   "algun_atributo_separa": false,
-  "comparacion_de_especificaciones": "no existe: no se ajusto modelo alguno con las candidatas no retenidas, de modo que no se ha medido si una especificacion mas amplia rendiria mejor"
+  "comparacion_de_especificaciones": "no existe: no se ajusto modelo alguno con las candidatas no retenidas, de modo que no se ha medido si una especificacion mas amplia rendiria mejor",
+  "panel": "tomado del campo de categoria de d_labitems, el diccionario de la base, y no deducido del nombre de la determinacion",
+  "comparacion_por_casos_completos": "no es viable sobre las 73 candidatas: la menos frecuente las acota en 3177 estancias de las primeras en cuidados intensivos, y 28 quedan por debajo del 20 por ciento de cobertura, de modo que la interseccion de todas queda muy por debajo de esa cota. La cohorte con sospecha de infeccion es un subconjunto de ese denominador"
 }

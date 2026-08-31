@@ -68,7 +68,8 @@ FUENTES <- list(
   "Composicion de la cohorte analizada"      = "outputs/fase29/cohorte_analizada.csv",
   "Unidades de la cohorte"                   = "outputs/fase29/unidades_cohorte.csv",
   "Determinaciones candidatas"               = "outputs/fase30/determinaciones_candidatas.csv",
-  "Separacion de las candidatas"             = "outputs/fase30/separacion_candidatas.csv")
+  "Separacion de las candidatas"             = "outputs/fase30/separacion_candidatas.csv",
+  "Viabilidad de la comparacion"             = "outputs/fase30/viabilidad_comparacion.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -689,6 +690,8 @@ if (!is.null(x)) {
     x$estancias_de_desarrollo, 18054, 0.5)
   reg[[length(reg)+1]] <- comprobar("Estancias de la unidad reservada",
     x$estancias_reservadas, 4724, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Unidades de desarrollo",
+    x$unidades_de_desarrollo, 5, 0.5)
   # La suma ha de reproducir el embudo, que es la fuente independiente.
   f <- leer(FUENTES[["Embudo de seleccion"]])
   if (!is.null(f))
@@ -724,6 +727,18 @@ x <- leer(FUENTES[["Separacion de las candidatas"]])
 if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Atributos que separan los dos grupos",
     sum(x$separa_los_grupos), 0, 0.5)
+}
+
+# La cota de casos completos y el recuento de candidatas poco frecuentes se
+# contrastan contra la tabla de la que se derivan, no contra si mismos.
+x <- leer(FUENTES[["Viabilidad de la comparacion"]])
+d <- leer(FUENTES[["Determinaciones candidatas"]])
+if (!is.null(x) && !is.null(d)) {
+  reg[[length(reg)+1]] <- comprobar("Cota de casos completos en las candidatas",
+    x$cota_casos_completos, min(d$estancias), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Candidatas de cobertura baja",
+    x$candidatas_por_debajo,
+    sum(d$cobertura_pct < x$umbral_de_cobertura_baja), 0.5)
 }
 
 tab <- do.call(rbind, reg)
