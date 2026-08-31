@@ -150,6 +150,12 @@ margin never exceeds the largest possible rounding error.
 | Sedes sin fallo demostrable | 2.0000 | 2.0000 | 0.50000 | yes |
 | Sellada, probabilidad media mayoritaria | 0.9054 | 0.9054 | 0.00005 | yes |
 | Sellada, frecuencia observada mayoritaria | 0.9802 | 0.9802 | 0.00005 | yes |
+| Prueba, probabilidad media mayoritaria | 0.8884 | 0.8884 | 0.00005 | yes |
+| Prueba, frecuencia observada mayoritaria | 0.8874 | 0.8874 | 0.00005 | yes |
+| Prueba, desajuste de la mayoritaria | 0.0010 | 0.0010 | 0.00005 | yes |
+| Prueba, categorias calibradas | 4.0000 | 4.0000 | 0.50000 | yes |
+| Calibracion y cobertura, misma mayoritaria | 2972.0000 | 2972.0000 | 0.50000 | yes |
+| Calibracion y cobertura, mismas estancias | 3349.0000 | 3349.0000 | 0.50000 | yes |
 | Validacion interna, mejora | 0.0375 | 0.0375 | 0.00005 | yes |
 | Validacion interna, mejora original | 0.0395 | 0.0395 | 0.00005 | yes |
 | Validacion interna, estancias de ajuste | 5578.0000 | 5578.0000 | 0.50000 | yes |
@@ -250,6 +256,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase20/fraccion_informacion_faltante.csv`
 - `outputs/fase22/decision_lambda.csv`
 - `outputs/fase23/calibracion_sellado.csv`
+- `outputs/fase34/calibracion_prueba.csv`
 - `outputs/fase24/regla_maximo.csv`
 - `outputs/fase25/divergencia_etiquetado.csv`
 - `outputs/fase26/intervalos_cobertura.csv`

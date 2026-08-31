@@ -140,6 +140,12 @@
 "Sedes sin fallo demostrable",2,2,0.5,TRUE
 "Sellada, probabilidad media mayoritaria",0.9054,0.9054,5e-05,TRUE
 "Sellada, frecuencia observada mayoritaria",0.9802,0.9802,5e-05,TRUE
+"Prueba, probabilidad media mayoritaria",0.8884,0.8884,5e-05,TRUE
+"Prueba, frecuencia observada mayoritaria",0.8874,0.8874,5e-05,TRUE
+"Prueba, desajuste de la mayoritaria",0.001,0.001,5e-05,TRUE
+"Prueba, categorias calibradas",4,4,0.5,TRUE
+"Calibracion y cobertura, misma mayoritaria",2972,2972,0.5,TRUE
+"Calibracion y cobertura, mismas estancias",3349,3349,0.5,TRUE
 "Validacion interna, mejora",0.0375,0.0375,5e-05,TRUE
 "Validacion interna, mejora original",0.0395,0.0395,5e-05,TRUE
 "Validacion interna, estancias de ajuste",5578,5578,0.5,TRUE

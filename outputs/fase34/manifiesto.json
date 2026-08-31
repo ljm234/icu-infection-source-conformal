@@ -1,0 +1,14 @@
+{
+  "fase": "34",
+  "ejecutado_en": "2026-08-31T11:41:11-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "proposito": "deposito de la calibracion por categoria en el conjunto de prueba, que es el dominio que faltaba de los cuatro que el trabajo declara evaluar",
+  "fuente": "outputs/fase8/prueba_con_conjuntos.csv",
+  "origen": "probabilidades por estancia escritas por R/33_conformal.R al calibrar el modelo final; no se reajusta ni se vuelve a predecir",
+  "definicion_frecuencia": "proporcion de estancias cuya categoria observada es la de la fila",
+  "definicion_probabilidad": "media de la probabilidad predicha para la categoria de la fila",
+  "forma": "identica a la de outputs/fase23/calibracion_sellado.csv, para que las dos evaluaciones se lean enfrentadas",
+  "no_deposita": "intervalo alguno sobre la diferencia; la comparacion entre las dos evaluaciones se informa y no se concluye",
+  "estancias": 3349,
+  "categorias": 4
+}

@@ -59,6 +59,7 @@ FUENTES <- list(
   "Fraccion de informacion faltante"         = "outputs/fase20/fraccion_informacion_faltante.csv",
   "Validacion interna de la penalizacion"    = "outputs/fase22/decision_lambda.csv",
   "Calibracion en la unidad reservada"       = "outputs/fase23/calibracion_sellado.csv",
+  "Calibracion en el conjunto de prueba"     = "outputs/fase34/calibracion_prueba.csv",
   "Regla del maximo"                         = "outputs/fase24/regla_maximo.csv",
   "Divergencia de etiquetado"                = "outputs/fase25/divergencia_etiquetado.csv",
   "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
@@ -623,6 +624,31 @@ if (!is.null(x)) {
     s$probabilidad_media, 0.9054, t4)
   reg[[length(reg)+1]] <- comprobar("Sellada, frecuencia observada mayoritaria",
     s$frecuencia_observada, 0.9802, t4)
+}
+
+# La calibracion del conjunto de prueba, que es el cuarto dominio sobre el
+# conjunto en el que se reportan los otros tres. Los recuentos por categoria
+# se contrastan ademas contra la cobertura conforme, que es fuente
+# independiente: si difirieran, las dos tablas describirian evaluaciones
+# distintas y la comparacion entre las dos sedes no significaria nada.
+x <- leer(FUENTES[["Calibracion en el conjunto de prueba"]])
+c8 <- leer(FUENTES[["Cobertura conforme en prueba"]])
+if (!is.null(x)) {
+  s <- x[which.max(x$n), ]
+  reg[[length(reg)+1]] <- comprobar("Prueba, probabilidad media mayoritaria",
+    s$probabilidad_media, 0.8884, t4)
+  reg[[length(reg)+1]] <- comprobar("Prueba, frecuencia observada mayoritaria",
+    s$frecuencia_observada, 0.8874, t4)
+  reg[[length(reg)+1]] <- comprobar("Prueba, desajuste de la mayoritaria",
+    s$diferencia, 0.0010, t4)
+  reg[[length(reg)+1]] <- comprobar("Prueba, categorias calibradas",
+    nrow(x), 4, 0.5)
+  if (!is.null(c8)) {
+    reg[[length(reg)+1]] <- comprobar("Calibracion y cobertura, misma mayoritaria",
+      x$n[which.max(x$n)], c8$n[which.max(c8$n)], 0.5)
+    reg[[length(reg)+1]] <- comprobar("Calibracion y cobertura, mismas estancias",
+      sum(x$n), sum(c8$n), 0.5)
+  }
 }
 
 x <- leer(FUENTES[["Validacion interna de la penalizacion"]])

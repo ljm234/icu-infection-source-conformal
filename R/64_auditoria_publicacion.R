@@ -99,6 +99,7 @@ AFIRMACIONES <- list(
   c("Comparacion interna por categoria", "outputs/fase22/comparacion_lambda_interna.csv"),
   c("Particion de la validacion interna", "outputs/fase22/particion_interna.csv"),
   c("Calibracion en la unidad reservada", "outputs/fase23/calibracion_sellado.csv"),
+  c("Calibracion en el conjunto de prueba", "outputs/fase34/calibracion_prueba.csv"),
   c("Regla del maximo por metodo", "outputs/fase24/regla_maximo.csv"),
   c("Divergencia de etiquetado", "outputs/fase25/divergencia_etiquetado.csv"),
   c("Sitios positivos en la cohorte", "outputs/fase25/multisitio_cohorte.csv"),
