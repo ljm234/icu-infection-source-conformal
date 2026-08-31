@@ -1,0 +1,52 @@
+"conjunto","determinacion","estancias","presentes","pct_presentes"
+"desarrollo","urea",18054,13112,72.63
+"desarrollo","creatinina",18054,13121,72.68
+"desarrollo","cloro",18054,13172,72.96
+"desarrollo","bicarbonato",18054,13091,72.51
+"desarrollo","leucocitos",18054,12912,71.52
+"desarrollo","sodio",18054,13174,72.97
+"desarrollo","exceso_base",18054,9302,51.52
+"desarrollo","rdw",18054,12921,71.57
+"desarrollo","hemoglobina",18054,12941,71.68
+"desarrollo","plaquetas",18054,12920,71.56
+"desarrollo","inr",18054,10674,59.12
+"desarrollo","ttpa",18054,10568,58.54
+"desarrollo","ph",18054,9602,53.18
+"desarrollo","pco2",18054,9301,51.52
+"desarrollo","lactato",18054,9506,52.65
+"desarrollo","potasio",18054,13193,73.08
+"desarrollo","brecha_anion",18054,13067,72.38
+"unidad reservada","urea",4724,4120,87.21
+"unidad reservada","creatinina",4724,4119,87.19
+"unidad reservada","cloro",4724,4120,87.21
+"unidad reservada","bicarbonato",4724,4115,87.11
+"unidad reservada","leucocitos",4724,4506,95.39
+"unidad reservada","sodio",4724,3416,72.31
+"unidad reservada","exceso_base",4724,4313,91.3
+"unidad reservada","rdw",4724,4503,95.32
+"unidad reservada","hemoglobina",4724,4507,95.41
+"unidad reservada","plaquetas",4724,4517,95.62
+"unidad reservada","inr",4724,4435,93.88
+"unidad reservada","ttpa",4724,4440,93.99
+"unidad reservada","ph",4724,4332,91.7
+"unidad reservada","pco2",4724,4313,91.3
+"unidad reservada","lactato",4724,4105,86.9
+"unidad reservada","potasio",4724,3431,72.63
+"unidad reservada","brecha_anion",4724,3440,72.82
+"unidades descartadas","urea",435,298,68.51
+"unidades descartadas","creatinina",435,298,68.51
+"unidades descartadas","cloro",435,294,67.59
+"unidades descartadas","bicarbonato",435,294,67.59
+"unidades descartadas","leucocitos",435,306,70.34
+"unidades descartadas","sodio",435,297,68.28
+"unidades descartadas","exceso_base",435,196,45.06
+"unidades descartadas","rdw",435,306,70.34
+"unidades descartadas","hemoglobina",435,308,70.8
+"unidades descartadas","plaquetas",435,302,69.43
+"unidades descartadas","inr",435,275,63.22
+"unidades descartadas","ttpa",435,274,62.99
+"unidades descartadas","ph",435,199,45.75
+"unidades descartadas","pco2",435,196,45.06
+"unidades descartadas","lactato",435,174,40
+"unidades descartadas","potasio",435,293,67.36
+"unidades descartadas","brecha_anion",435,295,67.82

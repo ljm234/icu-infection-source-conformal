@@ -1,0 +1,14 @@
+{
+  "fase": "36",
+  "ejecutado_en": "2026-08-31T14:30:57-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "proposito": "medir la completitud analitica de cada conjunto de la particion sobre las determinaciones del modelo publicado, que son las que gobiernan cuanta imputacion recibe cada uno",
+  "fuente": "outputs/fase5/matriz_particionada.csv",
+  "determinaciones": 17,
+  "por_que_diecisiete": "la comparacion de especificaciones mide sobre veintinueve, que no son las del modelo publicado; la imputacion que el modelo recibe depende de las diecisiete que emplea",
+  "completas": "estancias con las diecisiete determinaciones a la vez",
+  "valores_presentes": "fraccion de celdas observadas sobre el producto de estancias por determinaciones; es la que gobierna cuanta imputacion recibe el conjunto, porque distingue a quien le falta una de a quien le faltan doce",
+  "bloques": "entrenamiento, calibracion y prueba forman el desarrollo",
+  "lectura": "no se deposita ninguna. Que mecanismo explique la sobrecobertura de la categoria mayoritaria en la unidad reservada no se decide aqui",
+  "estancias": 23213
+}

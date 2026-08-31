@@ -112,6 +112,7 @@ icd   <- leer("outputs/fase32/intervalo_diferencia.csv")
 mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
 casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
+cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -412,8 +413,13 @@ add(cifra("one, which this comparison leaves out anyway: %.2f percent of its",
           val(cgrp, "pct_del_grupo", cgrp$grupo == "sellado")))
 add(cifra("stays are complete in these determinations, against %.2f percent in",
           val(cgrp, "pct_del_grupo", cgrp$grupo == "entrenamiento")))
+add(cifra("the training partition. Over the %d the published model uses the",
+          as.integer(cmpl[["determinaciones"]][1])))
+add(cifra("ordering reverses, at %.2f against %.2f percent, so this figure",
+          val(cmpl, "pct_completas", cmpl$conjunto == "unidad reservada"),
+          val(cmpl, "pct_completas", cmpl$conjunto == "desarrollo")))
 add(prosa(
-"the training partition.",
+"belongs to the determinations compared here and not to the model.",
 "Both specifications were fitted linearly, without splines, without",
 "imputation and without the lactate ordering indicator, so that the variable",
 "set is the only thing that differs between them; neither figure is",
@@ -770,7 +776,25 @@ add(cifra("same model predicts that class to within %.4f of its observed",
           max(abs(calpr$diferencia))))
 add(prosa(
 "frequency, so the gap is specific to this unit rather than a property of",
-"the model on the data it was fitted from."))
+"the model on the data it was fitted from.",
+"",
+"Prevalence shift is not the only mechanism that would produce over-coverage",
+"there. A unit measured less completely would be predicted with more",
+"imputation, and imputation pulls predictions toward the training mean,",
+"which the majority class dominates. That mechanism is not available here:"))
+add(cifra("over the %d determinations the model uses, %.2f percent of the",
+          as.integer(cmpl[["determinaciones"]][1]),
+          val(cmpl, "pct_completas", cmpl$conjunto == "unidad reservada")))
+add(cifra("sealed unit's stays are complete against %.2f percent of the",
+          val(cmpl, "pct_completas", cmpl$conjunto == "desarrollo")))
+add(cifra("development set, and %.2f percent of its cells are observed against",
+          val(cmpl, "pct_valores_presentes",
+              cmpl$conjunto == "unidad reservada")))
+add(cifra("%.2f. The unit is measured more completely, not less, so the",
+          val(cmpl, "pct_valores_presentes", cmpl$conjunto == "desarrollo")))
+add(prosa(
+"asymmetry runs opposite to what that explanation would need. This work does",
+"not separate the mechanisms further."))
 
 add(prosa(
 "",
@@ -1064,6 +1088,17 @@ add(prosa(
 "Etiological classification depends on which tests were ordered. Culture",
 "positivity varies by an order of magnitude across specimen types, reflecting",
 "that confirmation depends on prior clinical suspicion.",
+"",
+"Four quantities measured here carry the practice of the site rather than the",
+"state of the patient. Whether lactate was ordered outweighs its value. A",
+"binary indicator of intubation discriminates the respiratory class about as",
+"well as the consciousness scale, and intubation is associated with whether",
+"that site is cultured at all. Temperature is recorded in a quarter more of",
+"the stays of one unit than of another. And laboratory completeness itself",
+"differs by unit: over the determinations the model uses, the sealed unit is",
+"complete in twice the proportion of stays that the development set is. Each",
+"is a route by which a model fitted in one place reads where the patient is",
+"rather than what is wrong with them.",
 "",
 "The respiratory category may include airway colonization in ventilated",
 "patients, which the available fields cannot distinguish from infection.",

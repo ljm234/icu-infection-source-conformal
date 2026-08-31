@@ -1,0 +1,6 @@
+"grupo","determinaciones","estancias","completas","pct_completas","determinaciones_medias","valores_posibles","valores_presentes","pct_valores_presentes"
+"calibracion",17,5416,1639,30.26,11.06,92072,59888,65.04
+"entrenamiento",17,9026,2734,30.29,11.27,153442,101754,66.31
+"excluido",17,435,121,27.82,10.59,7395,4605,62.27
+"prueba",17,3612,1105,30.59,11.33,61404,40935,66.67
+"sellado",17,4724,2867,60.69,14.97,80308,70732,88.08

@@ -242,6 +242,16 @@ margin never exceeds the largest possible rounding error.
 | Completitud del conjunto sellado | 7.8700 | 7.8700 | 0.00500 | yes |
 | Completitud del entrenamiento | 29.7800 | 29.7800 | 0.00500 | yes |
 | Cascada, el cuarto suma el desglose | 3498.0000 | 3498.0000 | 0.50000 | yes |
+| Completitud, determinaciones del modelo | 17.0000 | 17.0000 | 0.50000 | yes |
+| Completitud, completas en desarrollo | 30.3400 | 30.3400 | 0.00500 | yes |
+| Completitud, completas en la reservada | 60.6900 | 60.6900 | 0.00500 | yes |
+| Completitud, celdas observadas en desarrollo | 66.0000 | 66.0000 | 0.00500 | yes |
+| Completitud, celdas observadas en la reservada | 88.0800 | 88.0800 | 0.00500 | yes |
+| Completitud, la reservada supera al desarrollo | 1.0000 | 1.0000 | 0.50000 | yes |
+| Completitud, bloques que suman la cohorte | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Completitud, grupos y bloques coinciden | 277914.0000 | 277914.0000 | 0.50000 | yes |
+| Completitud, determinaciones contrastadas | 17.0000 | 17.0000 | 0.50000 | yes |
+| Completitud, determinaciones mejor medidas alli | 15.0000 | 15.0000 | 0.50000 | yes |
 | Diferencias corregidas conjuntamente | 4.0000 | 4.0000 | 0.50000 | yes |
 | Diferencias que resisten en algun nivel | 0.0000 | 0.0000 | 0.50000 | yes |
 | Niveles contrastados en la comparacion | 2.0000 | 2.0000 | 0.50000 | yes |
@@ -324,6 +334,9 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase32/cascada_casos_completos.csv`
 - `outputs/fase32/completos_por_grupo.csv`
 - `outputs/fase32/conjunto_por_grupo_y_clase.csv`
+- `outputs/fase36/completitud_por_conjunto.csv`
+- `outputs/fase36/completitud_por_grupo.csv`
+- `outputs/fase36/completitud_por_determinacion.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase33/versiones_del_bloque.csv`
 - `outputs/fase32/intervalo_diferencia.csv`

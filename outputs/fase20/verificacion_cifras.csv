@@ -232,6 +232,16 @@
 "Completitud del conjunto sellado",7.87,7.87,0.005,TRUE
 "Completitud del entrenamiento",29.78,29.78,0.005,TRUE
 "Cascada, el cuarto suma el desglose",3498,3498,0.5,TRUE
+"Completitud, determinaciones del modelo",17,17,0.5,TRUE
+"Completitud, completas en desarrollo",30.34,30.34,0.005,TRUE
+"Completitud, completas en la reservada",60.69,60.69,0.005,TRUE
+"Completitud, celdas observadas en desarrollo",66,66,0.005,TRUE
+"Completitud, celdas observadas en la reservada",88.08,88.08,0.005,TRUE
+"Completitud, la reservada supera al desarrollo",1,1,0.5,TRUE
+"Completitud, bloques que suman la cohorte",23213,23213,0.5,TRUE
+"Completitud, grupos y bloques coinciden",277914,277914,0.5,TRUE
+"Completitud, determinaciones contrastadas",17,17,0.5,TRUE
+"Completitud, determinaciones mejor medidas alli",15,15,0.5,TRUE
 "Diferencias corregidas conjuntamente",4,4,0.5,TRUE
 "Diferencias que resisten en algun nivel",0,0,0.5,TRUE
 "Niveles contrastados en la comparacion",2,2,0.5,TRUE

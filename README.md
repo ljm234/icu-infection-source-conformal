@@ -109,7 +109,9 @@ holds among patients with complete laboratory work rather than in the
 cohort. How far completeness tracks the unit is measurable in the sealed
 one, which this comparison leaves out anyway: 7.87 percent of its
 stays are complete in these determinations, against 29.78 percent in
-the training partition.
+the training partition. Over the 17 the published model uses the
+ordering reverses, at 60.69 against 30.34 percent, so this figure
+belongs to the determinations compared here and not to the model.
 Both specifications were fitted linearly, without splines, without
 imputation and without the lactate ordering indicator, so that the variable
 set is the only thing that differs between them; neither figure is
@@ -358,6 +360,17 @@ same model predicts that class to within 0.0010 of its observed
 frequency, so the gap is specific to this unit rather than a property of
 the model on the data it was fitted from.
 
+Prevalence shift is not the only mechanism that would produce over-coverage
+there. A unit measured less completely would be predicted with more
+imputation, and imputation pulls predictions toward the training mean,
+which the majority class dominates. That mechanism is not available here:
+over the 17 determinations the model uses, 60.69 percent of the
+sealed unit's stays are complete against 30.34 percent of the
+development set, and 88.08 percent of its cells are observed against
+66.00. The unit is measured more completely, not less, so the
+asymmetry runs opposite to what that explanation would need. This work does
+not separate the mechanisms further.
+
 ### The limit of local recalibration
 
 With 50 local cases an average of 1.0 of the 4 classes reaches
@@ -538,6 +551,17 @@ no figure reported here is affected.
 Etiological classification depends on which tests were ordered. Culture
 positivity varies by an order of magnitude across specimen types, reflecting
 that confirmation depends on prior clinical suspicion.
+
+Four quantities measured here carry the practice of the site rather than the
+state of the patient. Whether lactate was ordered outweighs its value. A
+binary indicator of intubation discriminates the respiratory class about as
+well as the consciousness scale, and intubation is associated with whether
+that site is cultured at all. Temperature is recorded in a quarter more of
+the stays of one unit than of another. And laboratory completeness itself
+differs by unit: over the determinations the model uses, the sealed unit is
+complete in twice the proportion of stays that the development set is. Each
+is a route by which a model fitted in one place reads where the patient is
+rather than what is wrong with them.
 
 The respiratory category may include airway colonization in ventilated
 patients, which the available fields cannot distinguish from infection.

@@ -81,6 +81,9 @@ FUENTES <- list(
   "Cascada de casos completos"               = "outputs/fase32/cascada_casos_completos.csv",
   "Completos por conjunto de la particion"   = "outputs/fase32/completos_por_grupo.csv",
   "Conjunto ajustado por grupo y clase"      = "outputs/fase32/conjunto_por_grupo_y_clase.csv",
+  "Completitud por conjunto"                 = "outputs/fase36/completitud_por_conjunto.csv",
+  "Completitud por grupo"                    = "outputs/fase36/completitud_por_grupo.csv",
+  "Completitud por determinacion"            = "outputs/fase36/completitud_por_determinacion.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -954,6 +957,46 @@ if (!is.null(cas)) {
   if (!is.null(gcl))
     reg[[length(reg)+1]] <- comprobar("Cascada, el cuarto suma el desglose",
       cas$estancias[4], sum(gcl$estancias), 0.5)
+}
+
+# La completitud analitica sobre las determinaciones del modelo publicado.
+# La asimetria se publica en dos secciones y en direccion contraria a la que
+# la fase trigesimo segunda mide sobre otras determinaciones, de modo que la
+# comprobacion fija las dos y el sentido de la diferencia.
+cpc <- leer(FUENTES[["Completitud por conjunto"]])
+cpg <- leer(FUENTES[["Completitud por grupo"]])
+cpd <- leer(FUENTES[["Completitud por determinacion"]])
+if (!is.null(cpc)) {
+  de <- cpc[cpc$conjunto == "desarrollo", ]
+  ur <- cpc[cpc$conjunto == "unidad reservada", ]
+  reg[[length(reg)+1]] <- comprobar("Completitud, determinaciones del modelo",
+    cpc[["determinaciones"]][1], 17, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Completitud, completas en desarrollo",
+    de$pct_completas, 30.34, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Completitud, completas en la reservada",
+    ur$pct_completas, 60.69, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Completitud, celdas observadas en desarrollo",
+    de$pct_valores_presentes, 66, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Completitud, celdas observadas en la reservada",
+    ur$pct_valores_presentes, 88.08, tolerancia(2))
+  # El sentido de la diferencia es lo que el texto afirma. Si se invirtiera,
+  # la frase publicada diria lo contrario de lo que el archivo sostiene.
+  reg[[length(reg)+1]] <- comprobar("Completitud, la reservada supera al desarrollo",
+    as.integer(ur$pct_valores_presentes > de$pct_valores_presentes), 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Completitud, bloques que suman la cohorte",
+    sum(cpc$estancias), 23213, 0.5)
+  if (!is.null(cpg))
+    reg[[length(reg)+1]] <- comprobar("Completitud, grupos y bloques coinciden",
+      sum(cpg$valores_presentes), sum(cpc$valores_presentes), 0.5)
+  if (!is.null(cpd)) {
+    d1 <- cpd[cpd$conjunto == "desarrollo", ]
+    d2 <- cpd[cpd$conjunto == "unidad reservada", ]
+    o <- match(d1$determinacion, d2$determinacion)
+    reg[[length(reg)+1]] <- comprobar("Completitud, determinaciones contrastadas",
+      nrow(d1), 17, 0.5)
+    reg[[length(reg)+1]] <- comprobar("Completitud, determinaciones mejor medidas alli",
+      sum(d2$pct_presentes[o] > d1$pct_presentes), 15, 0.5)
+  }
 }
 
 x <- leer(FUENTES[["Multiplicidad de las diferencias"]])
