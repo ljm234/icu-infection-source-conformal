@@ -90,10 +90,14 @@ against those plus the 12 discarded whose coverage exceeds the
 least frequent retained one. On the 3,498 stays complete in those
 29, the wider specification does not improve on the narrower: the
 mean area across minority classes moves by -0.0113, with a paired
-bootstrap interval of -0.0257 to 0.0036 that contains zero, so the
-direction is not established. One of the four classes does show an interval
-that excludes zero, uncorrected for the four comparisons; the deposit
-carries all of them.
+bootstrap interval of -0.0249 to 0.0027 that contains zero, so the
+direction is not established.
+1 of the 4 classes does show an interval that excludes zero. The
+four are corrected jointly by Holm's method, as the cells of the
+transportability section are, and neither at 0.05 nor at 0.025 does any
+of them survive: 0 resist. Reporting the one that excludes
+zero without saying that it does not survive correction would apply one
+standard here and another there.
 
 Three things bound that comparison. Stays complete in that many
 determinations are not a random sample: they are the more heavily monitored

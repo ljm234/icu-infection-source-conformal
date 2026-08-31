@@ -105,6 +105,7 @@ via   <- leer("outputs/fase30/viabilidad_comparacion.csv")
 comp  <- leer("outputs/fase31/casos_completos.csv")
 cmp29 <- leer("outputs/fase32/comparacion_resumen.csv")
 icd   <- leer("outputs/fase32/intervalo_diferencia.csv")
+mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -354,10 +355,19 @@ add(cifra("mean area across minority classes moves by %.4f, with a paired",
 add(cifra("bootstrap interval of %.4f to %.4f that contains zero, so the",
           cmp29$ic_inferior_minoritarias, cmp29$ic_superior_minoritarias))
 
+add(prosa("direction is not established."))
+add(cifra("%d of the %d classes does show an interval that excludes zero. The",
+          as.integer(cmp29$clases_que_excluyen_el_cero),
+          as.integer(nrow(icd) - 1)))
 add(prosa(
-"direction is not established. One of the four classes does show an interval",
-"that excludes zero, uncorrected for the four comparisons; the deposit",
-"carries all of them.",
+"four are corrected jointly by Holm's method, as the cells of the"))
+add(cifra("transportability section are, and neither at %s nor at %s does any",
+          format(mlt$nivel[1]), format(mlt$nivel[2])))
+add(cifra("of them survive: %d resist. Reporting the one that excludes",
+          as.integer(cmp29$clases_que_resisten_holm)))
+add(prosa(
+"zero without saying that it does not survive correction would apply one",
+"standard here and another there.",
 "",
 "Three things bound that comparison. Stays complete in that many",
 "determinations are not a random sample: they are the more heavily monitored",

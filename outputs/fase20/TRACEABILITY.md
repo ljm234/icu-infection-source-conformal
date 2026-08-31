@@ -189,10 +189,16 @@ margin never exceeds the largest possible rounding error.
 | Comparacion, determinaciones anadidas | 12.0000 | 12.0000 | 0.50000 | yes |
 | Comparacion, estancias completas | 3498.0000 | 3498.0000 | 0.50000 | yes |
 | Comparacion, minoritarias retenidas | 0.6635 | 0.6635 | 0.00005 | yes |
-| Comparacion, minoritarias ampliada | 0.6522 | 0.6522 | 0.00005 | yes |
+| Comparacion, minoritarias ampliada | 0.6523 | 0.6523 | 0.00005 | yes |
 | Comparacion, diferencia | -0.0113 | -0.0113 | 0.00010 | yes |
-| Comparacion, extremo inferior | -0.0257 | -0.0257 | 0.00005 | yes |
-| Comparacion, extremo superior | 0.0036 | 0.0036 | 0.00005 | yes |
+| Comparacion, extremo inferior | -0.0249 | -0.0249 | 0.00005 | yes |
+| Comparacion, extremo superior | 0.0027 | 0.0027 | 0.00005 | yes |
+| Comparacion, clases que excluyen el cero | 1.0000 | 1.0000 | 0.50000 | yes |
+| Comparacion, clases que resisten Holm | 0.0000 | 0.0000 | 0.50000 | yes |
+| Comparacion, replicas del remuestreo | 10000.0000 | 10000.0000 | 0.50000 | yes |
+| Diferencias corregidas conjuntamente | 4.0000 | 4.0000 | 0.50000 | yes |
+| Diferencias que resisten en algun nivel | 0.0000 | 0.0000 | 0.50000 | yes |
+| Niveles contrastados en la comparacion | 2.0000 | 2.0000 | 0.50000 | yes |
 | Cantidades con intervalo depositado | 5.0000 | 5.0000 | 0.50000 | yes |
 | Intervalos que excluyen el cero | 1.0000 | 1.0000 | 0.50000 | yes |
 | Promedio minoritarias, excluye el cero | 0.0000 | 0.0000 | 0.50000 | yes |
@@ -260,3 +266,4 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase32/comparacion_resumen.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase32/intervalo_diferencia.csv`
+- `outputs/fase32/multiplicidad_diferencias.csv`

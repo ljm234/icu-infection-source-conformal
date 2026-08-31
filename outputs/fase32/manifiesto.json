@@ -1,6 +1,6 @@
 {
   "fase": "32",
-  "ejecutado_en": "2026-08-31T09:29:52-0600",
+  "ejecutado_en": "2026-08-31T09:51:55-0600",
   "semilla": 20260818,
   "r_version": "R version 4.6.1 (2026-06-24)",
   "glmnet_version": "5.0",
@@ -12,7 +12,9 @@
   "unidad_reservada": "no interviene",
   "no_comparable_con_el_modelo_publicado": "las areas de esta fase no se comparan con las del articulo. Difieren en que aqui no hay imputacion, por trabajarse sobre casos completos; no hay splines; no entra el indicador de solicitud de lactato; el conjunto de ajuste es mucho menor; y la penalizacion se valida dentro de cada rama. Las cinco diferencias son comunes a las dos ramas y no sesgan la comparacion, pero impiden cotejar cualquiera de estas cifras con las publicadas",
   "incertidumbre": "intervalo de la diferencia por remuestreo emparejado del conjunto de evaluacion, con los modelos ajustados una sola vez",
-  "replicas": 1000,
+  "replicas": 10000,
   "confianza": 0.95,
+  "multiplicidad": "Holm sobre las cuatro diferencias por categoria, en los dos niveles que el trabajo emplea. El promedio sobre las minoritarias queda fuera de la familia por ser un unico resumen declarado y no una de cuatro comparaciones exploradas",
+  "niveles": [0.05, 0.025],
   "alpha": 1
 }

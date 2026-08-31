@@ -119,7 +119,8 @@ AFIRMACIONES <- list(
   c("Comparacion ampliada, resumen", "outputs/fase32/comparacion_resumen.csv"),
   c("Determinaciones anadidas", "outputs/fase32/determinaciones_anadidas.csv"),
   c("Procedencia de la seleccion", "outputs/fase33/procedencia_seleccion.csv"),
-  c("Intervalo de la diferencia", "outputs/fase32/intervalo_diferencia.csv"))
+  c("Intervalo de la diferencia", "outputs/fase32/intervalo_diferencia.csv"),
+  c("Multiplicidad de las diferencias", "outputs/fase32/multiplicidad_diferencias.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

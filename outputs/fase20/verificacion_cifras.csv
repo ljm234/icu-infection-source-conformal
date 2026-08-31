@@ -179,10 +179,16 @@
 "Comparacion, determinaciones anadidas",12,12,0.5,TRUE
 "Comparacion, estancias completas",3498,3498,0.5,TRUE
 "Comparacion, minoritarias retenidas",0.6635,0.6635,5e-05,TRUE
-"Comparacion, minoritarias ampliada",0.6522,0.6522,5e-05,TRUE
+"Comparacion, minoritarias ampliada",0.6523,0.6523,5e-05,TRUE
 "Comparacion, diferencia",-0.0113,-0.0113,1e-04,TRUE
-"Comparacion, extremo inferior",-0.0257,-0.0257,5e-05,TRUE
-"Comparacion, extremo superior",0.0036,0.0036,5e-05,TRUE
+"Comparacion, extremo inferior",-0.0249,-0.0249,5e-05,TRUE
+"Comparacion, extremo superior",0.0027,0.0027,5e-05,TRUE
+"Comparacion, clases que excluyen el cero",1,1,0.5,TRUE
+"Comparacion, clases que resisten Holm",0,0,0.5,TRUE
+"Comparacion, replicas del remuestreo",10000,10000,0.5,TRUE
+"Diferencias corregidas conjuntamente",4,4,0.5,TRUE
+"Diferencias que resisten en algun nivel",0,0,0.5,TRUE
+"Niveles contrastados en la comparacion",2,2,0.5,TRUE
 "Cantidades con intervalo depositado",5,5,0.5,TRUE
 "Intervalos que excluyen el cero",1,1,0.5,TRUE
 "Promedio minoritarias, excluye el cero",0,0,0.5,TRUE

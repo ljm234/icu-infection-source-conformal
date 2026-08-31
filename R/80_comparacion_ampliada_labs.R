@@ -71,8 +71,17 @@ RUTA_ESP  <- "outputs/fase7/especificacion.rds"
 RUTA_MAN  <- "outputs/fase7/manifiesto.json"
 RUTA_FLU  <- "outputs/fase2/flujo.csv"
 PLIEGUES <- 10
-REPLICAS <- 1000
+REPLICAS <- 10000
 CONFIANZA <- 0.95
+
+# Niveles de la familia. El trabajo corrige por multiplicidad en la seccion de
+# transportabilidad y no puede dejar de hacerlo aqui: serian dos varas de
+# medir en el mismo documento, que es el defecto que ya se corrigio entre el
+# conjunto de prueba y la unidad reservada. La familia son las cuatro
+# diferencias por categoria. El promedio sobre las minoritarias no entra en
+# ella: es un unico resumen declarado de antemano y no una de cuatro
+# comparaciones exploradas, y se reporta con su intervalo por separado.
+NIVELES <- c(0.05, 0.025)
 
 detener <- function(...) {
   cat("\n", ..., "\n", sep = "")
@@ -113,6 +122,15 @@ if (length(falta) > 0)
 # ---------------------------------------------------------------------------
 # Extraccion de las anadidas, con la regla de R/19: primera medicion dentro de
 # la ventana, ordenando por hora de registro.
+#
+# La ordenacion incorpora el valor y el identificador del registro ademas de
+# las dos horas. Ordenar solo por ellas no determina que fila se retiene
+# cuando varias comparten instante, y una primera version de este
+# procedimiento devolvia areas que diferian en la cuarta cifra entre
+# ejecuciones por esa causa. Es el mismo defecto que la fase vigesima
+# documenta para las constantes vitales. Con el valor en la clave, dos filas
+# que empaten en las anteriores presentan por definicion el mismo valor y da
+# igual cual se retenga.
 # ---------------------------------------------------------------------------
 
 con <- dbConnect(duckdb::duckdb())
@@ -145,6 +163,7 @@ ext <- dbGetQuery(con, sprintf("
            ROW_NUMBER() OVER (PARTITION BY e.stay_id, l.itemid
                               ORDER BY CAST(l.storetime AS TIMESTAMP),
                                        CAST(l.charttime AS TIMESTAMP),
+                                       CAST(l.valuenum AS DOUBLE),
                                        l.labevent_id) AS r
     FROM estancia e
     JOIN lab l ON l.hadm_id = e.hadm_id
@@ -160,7 +179,13 @@ ancho <- reshape(ext, idvar = "stay_id", timevar = "itemid",
                  direction = "wide")
 names(ancho) <- sub("^valuenum\\.", "x", names(ancho))
 ancho$stay_id <- as.numeric(ancho$stay_id)
-nuevas <- setdiff(names(ancho), "stay_id")
+# El orden de las columnas se fija. reshape las devuelve en el orden en que
+# encuentra los identificadores, que depende del orden de filas que la
+# consulta entregue, y el descenso por coordenadas de glmnet recorre los
+# predictores en el orden de la matriz: dos ordenes distintos convergen a
+# soluciones que difieren en la ultima cifra. Ordenarlas hace el ajuste
+# reproducible sin alterar el modelo.
+nuevas <- sort(setdiff(names(ancho), "stay_id"))
 if (length(nuevas) != nrow(anadidas))
   detener("La extraccion no devuelve todas las determinaciones anadidas.")
 
@@ -271,6 +296,10 @@ y <- as.character(pru$clase)
 n <- nrow(pru)
 al <- (1 - CONFIANZA) / 2
 
+# Diez mil replicas y no mil. El valor p mas pequeno que mil replicas puede
+# expresar es de dos milesimas, y el umbral escalonado de Holm sobre cuatro
+# comparaciones desciende hasta seis milesimas: con esa resolucion la decision
+# sobre una categoria situada junto al umbral dependeria del sorteo.
 difs <- matrix(NA_real_, nrow = REPLICAS, ncol = length(CLASES) + 1)
 colnames(difs) <- c(CLASES, "promedio_minoritarias")
 for (b in seq_len(REPLICAS)) {
@@ -303,8 +332,44 @@ ic <- do.call(rbind, lapply(colnames(difs), function(cl) {
              row.names = NULL)
 }))
 
+# Valor bilateral por remuestreo, obtenido invirtiendo el intervalo de
+# percentiles. La correccion de una unidad en numerador y denominador impide
+# que el valor resulte nulo, que ninguna cantidad finita de replicas acredita.
+valor_p <- function(v) {
+  v <- v[!is.na(v)]
+  b <- length(v)
+  min(1, 2 * min((1 + sum(v <= 0)) / (b + 1), (1 + sum(v >= 0)) / (b + 1)))
+}
+
+fam <- ic$cantidad %in% CLASES
+ic$p_bilateral <- NA_real_
+for (i in which(fam)) ic$p_bilateral[i] <- valor_p(difs[, ic$cantidad[i]])
+ic$p_holm <- NA_real_
+ic$p_holm[fam] <- p.adjust(ic$p_bilateral[fam], "holm")
+etq <- function(a) sub("[.]", "", format(a, nsmall = 3))
+for (a in NIVELES) ic[[paste0("resiste_holm_", etq(a))]] <- ic$p_holm <= a
+ic$p_bilateral <- signif(ic$p_bilateral, 4)
+ic$p_holm <- signif(ic$p_holm, 4)
+
+if (sum(fam) != length(CLASES))
+  detener("La familia no reune las cuatro diferencias por categoria.")
+
 cat("\n=== INTERVALO DE LA DIFERENCIA, REMUESTREO EMPAREJADO ===\n")
 print(ic, row.names = FALSE)
+
+cat("\n=== MULTIPLICIDAD SOBRE LAS", length(CLASES), "DIFERENCIAS ===\n")
+resisten <- sapply(NIVELES, function(a)
+  sum(ic[[paste0("resiste_holm_", etq(a))]][fam], na.rm = TRUE))
+mult <- data.frame(nivel = NIVELES, correccion = "holm",
+                   comparaciones = sum(fam),
+                   resisten = resisten, row.names = NULL)
+print(mult, row.names = FALSE)
+
+sin_corregir <- sum(ic$excluye_cero[fam])
+cat("\nCategorias cuyo intervalo excluye el cero sin corregir:",
+    sin_corregir, "\n")
+cat("Categorias que resisten la correccion en cualquiera de los niveles:",
+    max(resisten), "\n")
 
 fila <- ic[ic$cantidad == "promedio_minoritarias", ]
 cat("\n=== LO QUE ESTO AUTORIZA A DECIR ===\n")
@@ -339,6 +404,8 @@ resumen <- data.frame(
   ic_inferior_minoritarias = fila$ic_inferior,
   ic_superior_minoritarias = fila$ic_superior,
   direccion_sostenida = fila$excluye_cero,
+  clases_que_excluyen_el_cero = sin_corregir,
+  clases_que_resisten_holm = max(resisten),
   row.names = NULL)
 
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
@@ -348,6 +415,8 @@ write.csv(resumen, file.path(OUT, "comparacion_resumen.csv"),
 write.csv(anadidas[, c("itemid","etiqueta","panel","fluido","cobertura_pct")],
           file.path(OUT, "determinaciones_anadidas.csv"), row.names = FALSE)
 write.csv(ic, file.path(OUT, "intervalo_diferencia.csv"), row.names = FALSE)
+write.csv(mult, file.path(OUT, "multiplicidad_diferencias.csv"),
+          row.names = FALSE)
 
 writeLines(toJSON(list(
   fase = "32",
@@ -382,6 +451,12 @@ writeLines(toJSON(list(
                         "ajustados una sola vez"),
   replicas = REPLICAS,
   confianza = CONFIANZA,
+  multiplicidad = paste("Holm sobre las cuatro diferencias por categoria, en",
+                        "los dos niveles que el trabajo emplea. El promedio",
+                        "sobre las minoritarias queda fuera de la familia por",
+                        "ser un unico resumen declarado y no una de cuatro",
+                        "comparaciones exploradas"),
+  niveles = NIVELES,
   alpha = ALFA_NET), auto_unbox = TRUE, pretty = TRUE, digits = 15),
   file.path(OUT, "manifiesto.json"))
 

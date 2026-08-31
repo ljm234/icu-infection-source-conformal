@@ -74,7 +74,8 @@ FUENTES <- list(
   "Comparacion ampliada, por clase"          = "outputs/fase32/comparacion_por_clase.csv",
   "Comparacion ampliada, resumen"            = "outputs/fase32/comparacion_resumen.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
-  "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv")
+  "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
+  "Multiplicidad de las diferencias"          = "outputs/fase32/multiplicidad_diferencias.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -773,13 +774,29 @@ if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias retenidas",
     x$promedio_minoritarias_retenidas, 0.6635, t4)
   reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias ampliada",
-    x$promedio_minoritarias_ampliada, 0.6522, t4)
+    x$promedio_minoritarias_ampliada, 0.6523, t4)
   reg[[length(reg)+1]] <- comprobar("Comparacion, diferencia",
     x$diferencia_minoritarias, -0.0113, t4d)
   reg[[length(reg)+1]] <- comprobar("Comparacion, extremo inferior",
-    x$ic_inferior_minoritarias, -0.0257, t4)
+    x$ic_inferior_minoritarias, -0.0249, t4)
   reg[[length(reg)+1]] <- comprobar("Comparacion, extremo superior",
-    x$ic_superior_minoritarias, 0.0036, t4)
+    x$ic_superior_minoritarias, 0.0027, t4)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, clases que excluyen el cero",
+    x$clases_que_excluyen_el_cero, 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, clases que resisten Holm",
+    x$clases_que_resisten_holm, 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, replicas del remuestreo",
+    x$replicas, 10000, 0.5)
+}
+
+x <- leer(FUENTES[["Multiplicidad de las diferencias"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Diferencias corregidas conjuntamente",
+    x$comparaciones[1], 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Diferencias que resisten en algun nivel",
+    max(x$resisten), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Niveles contrastados en la comparacion",
+    nrow(x), 2, 0.5)
 }
 
 # El remuestreo es aleatorio: los extremos se contrastan con la tolerancia de
