@@ -49,8 +49,11 @@ cat("Guardia de emparejamiento parcial: activa y detiene.\n")
 # ninguno la declare ausente.
 #
 # Los manifiestos anteriores a la guardia no la declaran, y no se les inventa
-# el campo: se cuentan. Ese recuento solo puede bajar. Si subiera, seria un
-# deposito nuevo escrito sin declararlo.
+# el campo. Su estado no queda sin embargo en blanco: la fase trigesimo
+# septima lo deriva del historial, porque un deposito escrito antes de que la
+# guardia existiera se escribio sin ella por construccion. Aqui se cuentan, y
+# ese recuento solo puede bajar; si subiera, seria un deposito nuevo escrito
+# sin declararlo.
 mfs <- system("git ls-files 'outputs/*/manifiesto.json'", intern = TRUE)
 decl <- sapply(mfs, function(m) {
   d <- jsonlite::fromJSON(m)
@@ -144,6 +147,7 @@ FUENTES <- list(
   "Completitud por conjunto"                 = "outputs/fase36/completitud_por_conjunto.csv",
   "Completitud por grupo"                    = "outputs/fase36/completitud_por_grupo.csv",
   "Completitud por determinacion"            = "outputs/fase36/completitud_por_determinacion.csv",
+  "Guarda por deposito"                      = "outputs/fase37/guarda_por_deposito.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -188,9 +192,26 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 14, 0.5)
+  N_MF_DECLARAN, 15, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 5, 0.5)
+
+# El estado derivado. Ningun deposito puede quedar indeterminado: un
+# manifiesto posterior a la guardia que no la declarara seria justo la via de
+# elusion sin rastro, y la derivacion no alcanza a cubrirlo.
+gpd <- leer(FUENTES[["Guarda por deposito"]])
+if (!is.null(gpd)) {
+  reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
+    sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
+    nrow(gpd), 20, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
+    sum(!gpd$guardia_activa), 5, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",
+    sum(gpd$origen == "declarado en el manifiesto"), N_MF_DECLARAN, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Depositos con la guardia derivada",
+    sum(gpd$origen == "derivado del historial"), N_MF_SIN, 0.5)
+}
 t4 <- tolerancia(4); t4d <- tolerancia(4, 2)
 t2 <- tolerancia(2); t1 <- tolerancia(1)
 

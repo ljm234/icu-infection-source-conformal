@@ -128,6 +128,7 @@ AFIRMACIONES <- list(
   c("Completitud por conjunto de la particion", "outputs/fase36/completitud_por_conjunto.csv"),
   c("Completitud por grupo", "outputs/fase36/completitud_por_grupo.csv"),
   c("Completitud por determinacion", "outputs/fase36/completitud_por_determinacion.csv"),
+  c("Guarda de nombres por deposito", "outputs/fase37/guarda_por_deposito.csv"),
   c("Determinaciones anadidas", "outputs/fase32/determinaciones_anadidas.csv"),
   c("Procedencia de la seleccion", "outputs/fase33/procedencia_seleccion.csv"),
   c("Versiones del bloque de la seleccion", "outputs/fase33/versiones_del_bloque.csv"),

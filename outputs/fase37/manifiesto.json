@@ -1,0 +1,16 @@
+{
+  "fase": "37",
+  "ejecutado_en": "2026-08-31T15:26:56-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "declarar, para cada deposito versionado, si la guardia de nombres estaba activa cuando se escribio",
+  "guardia_introducida_en": "d70559a2076c9646b651c80e5d8e6f9472355791",
+  "guardia_introducida_el": "2026-08-31",
+  "comando": "git log --format='%at %H %ad' --date=short -S'warnPartialMatchDollar' -- .Rprofile",
+  "derivacion": "un manifiesto sin el campo cuya marca de ejecucion sea anterior al commit que introdujo la guardia se escribio sin ella por construccion; no es una suposicion sino un hecho del historial",
+  "lo_que_no_acredita": "que los depositos anteriores esten libres de emparejamiento parcial; acredita que se escribieron sin vigilancia. Cerrar esa duda exige reejecutarlos con la guardia y cotejar",
+  "manifiestos": 20,
+  "declarados": 15,
+  "derivados": 5,
+  "sin_guardia": 5
+}
