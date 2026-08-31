@@ -146,6 +146,31 @@
 "Prueba, categorias calibradas",4,4,0.5,TRUE
 "Calibracion y cobertura, misma mayoritaria",2972,2972,0.5,TRUE
 "Calibracion y cobertura, mismas estancias",3349,3349,0.5,TRUE
+"Curva, tramos por categoria",5,5,0.5,TRUE
+"Curva, categorias con tramos",4,4,0.5,TRUE
+"Curva, estancias cubiertas por los tramos",3349,3349,0.5,TRUE
+"Curva, casos cubiertos por los tramos",2972,2972,0.5,TRUE
+"Cota, minimo de la mayoritaria en prueba",0.5007,0.5007,5e-05,TRUE
+"Cota, tope de las minoritarias en prueba",0.4993,0.4993,5e-05,TRUE
+"Cota, margen en prueba",0.0014,0.00140000000000001,5e-05,TRUE
+"Cota, maximo observado en prueba",0.3331,0.3331,5e-05,TRUE
+"Cota, minimo de la mayoritaria en la sellada",0.5698,0.5698,5e-05,TRUE
+"Cota, tope de las minoritarias en la sellada",0.4302,0.4302,5e-05,TRUE
+"Cota, margen en la sellada",0.1396,0.1396,5e-05,TRUE
+"Cota, maximo observado en la sellada",0.3804,0.3804,5e-05,TRUE
+"Cota, conjuntos que sostienen la imposibilidad",2,2,0.5,TRUE
+"Cota, conjuntos evaluados",2,2,0.5,TRUE
+"Pendiente, la menor de las cuatro",0.8169,0.8169,5e-05,TRUE
+"Pendiente, la mayor de las cuatro",1.0381,1.0381,5e-05,TRUE
+"Calibracion en conjunto, la menor",-0.0103,-0.0103,5e-05,TRUE
+"Calibracion en conjunto, la mayor",0.0208,0.0208,5e-05,TRUE
+"Pendiente, extremo inferior del intervalo mas ancho",0.5666,0.5666,5e-05,TRUE
+"Pendiente, extremo superior del intervalo mas ancho",1.1197,1.1197,5e-05,TRUE
+"Pendiente, intervalos que cubren la unidad",4,4,0.5,TRUE
+"Urinario real, probabilidad mediana",0.0456,0.0456,5e-05,TRUE
+"Urinario real, probabilidad maxima",0.1141,0.1141,5e-05,TRUE
+"Urinario real, casos del estrato",143,143,0.5,TRUE
+"Recorrido, conjuntos por categoria y estrato",16,16,0.5,TRUE
 "Validacion interna, mejora",0.0375,0.0375,5e-05,TRUE
 "Validacion interna, mejora original",0.0395,0.0395,5e-05,TRUE
 "Validacion interna, estancias de ajuste",5578,5578,0.5,TRUE

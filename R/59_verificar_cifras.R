@@ -60,6 +60,10 @@ FUENTES <- list(
   "Validacion interna de la penalizacion"    = "outputs/fase22/decision_lambda.csv",
   "Calibracion en la unidad reservada"       = "outputs/fase23/calibracion_sellado.csv",
   "Calibracion en el conjunto de prueba"     = "outputs/fase34/calibracion_prueba.csv",
+  "Curva de calibracion"                     = "outputs/fase35/curva_calibracion.csv",
+  "Recorrido de la probabilidad predicha"    = "outputs/fase35/rango_probabilidad.csv",
+  "Cota sobre la regla del maximo"           = "outputs/fase35/separacion_argmax.csv",
+  "Pendiente de calibracion"                 = "outputs/fase35/pendiente_calibracion.csv",
   "Regla del maximo"                         = "outputs/fase24/regla_maximo.csv",
   "Divergencia de etiquetado"                = "outputs/fase25/divergencia_etiquetado.csv",
   "Intervalos de cobertura por celda"        = "outputs/fase26/intervalos_cobertura.csv",
@@ -649,6 +653,93 @@ if (!is.null(x)) {
     reg[[length(reg)+1]] <- comprobar("Calibracion y cobertura, mismas estancias",
       sum(x$n), sum(c8$n), 0.5)
   }
+}
+
+# La curva por tramos. Se contrasta el numero de tramos que el documento
+# publica y que el agrupamiento cubra cada conjunto entero: una curva que
+# describiera un subconjunto sin declararlo seria peor que no tenerla.
+x <- leer(FUENTES[["Curva de calibracion"]])
+if (!is.null(x) && !is.null(c8)) {
+  reg[[length(reg)+1]] <- comprobar("Curva, tramos por categoria",
+    max(x$grupo), 5, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Curva, categorias con tramos",
+    length(unique(x$clase)), 4, 0.5)
+  cl_may <- c8$clase[which.max(c8$n)]
+  reg[[length(reg)+1]] <- comprobar("Curva, estancias cubiertas por los tramos",
+    sum(x$n[x$clase == cl_may]), sum(c8$n), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Curva, casos cubiertos por los tramos",
+    sum(x$observados[x$clase == cl_may]), max(c8$n), 0.5)
+}
+
+# La cota sobre la regla del maximo. Ademas de los extremos publicados se
+# comprueba la derivacion: que la cota sea el complemento del minimo y la
+# separacion su diferencia, calculadas desde el propio archivo. Una cota que
+# no se dedujera de su minimo no seria una cota.
+x <- leer(FUENTES[["Cota sobre la regla del maximo"]])
+if (!is.null(x)) {
+  p <- x[x$conjunto == "prueba", ]
+  s <- x[x$conjunto == "unidad reservada", ]
+  reg[[length(reg)+1]] <- comprobar("Cota, minimo de la mayoritaria en prueba",
+    p$prob_minima_mayoritaria, 0.5007, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, tope de las minoritarias en prueba",
+    p$cota_de_cada_minoritaria, 1 - p$prob_minima_mayoritaria, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, margen en prueba",
+    p$separacion,
+    p$prob_minima_mayoritaria - p$cota_de_cada_minoritaria, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, maximo observado en prueba",
+    p$maximo_observado_minoritarias, 0.3331, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, minimo de la mayoritaria en la sellada",
+    s$prob_minima_mayoritaria, 0.5698, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, tope de las minoritarias en la sellada",
+    s$cota_de_cada_minoritaria, 1 - s$prob_minima_mayoritaria, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, margen en la sellada",
+    s$separacion,
+    s$prob_minima_mayoritaria - s$cota_de_cada_minoritaria, t4)
+  reg[[length(reg)+1]] <- comprobar("Cota, maximo observado en la sellada",
+    s$maximo_observado_minoritarias, 0.3804, t4)
+  # El documento enuncia la imposibilidad. Solo es licita si el minimo supera
+  # la mitad en los dos conjuntos, de modo que se cuenta cuantos la sostienen.
+  reg[[length(reg)+1]] <- comprobar("Cota, conjuntos que sostienen la imposibilidad",
+    sum(x$sostiene_la_imposibilidad), 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cota, conjuntos evaluados",
+    nrow(x), 2, 0.5)
+}
+
+x <- leer(FUENTES[["Pendiente de calibracion"]])
+if (!is.null(x)) {
+  iw <- which.max(x$pendiente_ic_superior - x$pendiente_ic_inferior)
+  reg[[length(reg)+1]] <- comprobar("Pendiente, la menor de las cuatro",
+    min(x$pendiente), 0.8169, t4)
+  reg[[length(reg)+1]] <- comprobar("Pendiente, la mayor de las cuatro",
+    max(x$pendiente), 1.0381, t4)
+  reg[[length(reg)+1]] <- comprobar("Calibracion en conjunto, la menor",
+    min(x$calibracion_en_conjunto), -0.0103, t4)
+  reg[[length(reg)+1]] <- comprobar("Calibracion en conjunto, la mayor",
+    max(x$calibracion_en_conjunto), 0.0208, t4)
+  reg[[length(reg)+1]] <- comprobar("Pendiente, extremo inferior del intervalo mas ancho",
+    x$pendiente_ic_inferior[iw], 0.5666, t4)
+  reg[[length(reg)+1]] <- comprobar("Pendiente, extremo superior del intervalo mas ancho",
+    x$pendiente_ic_superior[iw], 1.1197, t4)
+  reg[[length(reg)+1]] <- comprobar("Pendiente, intervalos que cubren la unidad",
+    sum(x$contiene_la_unidad), 4, 0.5)
+}
+
+# La probabilidad que recibe un caso real de la categoria urinaria, que es la
+# cifra con lectura clinica. Se contrasta ademas contra la prevalencia de esa
+# categoria en la fase anterior, que es de donde el documento la toma.
+x <- leer(FUENTES[["Recorrido de la probabilidad predicha"]])
+cp <- leer(FUENTES[["Calibracion en el conjunto de prueba"]])
+if (!is.null(x) && !is.null(cp)) {
+  u <- x[x$conjunto == "prueba" & x$estrato == "de la categoria" &
+         x$clase == "urinario", ]
+  reg[[length(reg)+1]] <- comprobar("Urinario real, probabilidad mediana",
+    u$mediana, 0.0456, t4)
+  reg[[length(reg)+1]] <- comprobar("Urinario real, probabilidad maxima",
+    u$maximo, 0.1141, t4)
+  reg[[length(reg)+1]] <- comprobar("Urinario real, casos del estrato",
+    u$n, cp$n[cp$clase == "urinario"], 0.5)
+  reg[[length(reg)+1]] <- comprobar("Recorrido, conjuntos por categoria y estrato",
+    nrow(x), 16, 0.5)
 }
 
 x <- leer(FUENTES[["Validacion interna de la penalizacion"]])

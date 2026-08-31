@@ -200,16 +200,55 @@ Mean predicted probability tracks observed frequency to within 0.0010
 in every class on the test set. That set comes from the same random
 partition as the training data, so agreement there is what a correctly
 fitted model should produce and is not evidence that it would hold
-elsewhere. It is also the weakest form of the claim: it concerns the mean
-within each class and says nothing about calibration across the
-probability range.
+elsewhere.
 
-### The argmax rule never names a source
+Within each class the test set was split into 5 equal bins of
+predicted probability, and observed frequency tracks predicted probability
+across the range and not only in the mean. The calibration slopes run
+from 0.8169 to 1.0381 and the calibration-in-the-large terms from
+-0.0103 to 0.0208, every interval covering the value that means no
+compression and no shift.
 
-At minority prevalences of a few percent, no minority class probability
-exceeds the majority class probability. The model attains high apparent
-accuracy while identifying no source at all. This was observed under both
-penalty rules, under gradient boosting, and under the extended model.
+That is absence of evidence of miscalibration, not evidence of good
+calibration. The intervals are wide at these class sizes: the widest
+slope runs from 0.5666 to 1.1197, so a moderate compression would not
+be detected. The bins and the coefficients are in
+`outputs/fase35/curva_calibracion.csv` and
+`outputs/fase35/pendiente_calibracion.csv`.
+
+### The argmax rule cannot name a source
+
+The four class probabilities sum to one in every stay, so if the majority
+class probability never falls below a value, no other class can reach one
+minus that value. On the test set the majority class never falls below
+0.5007, which caps every minority class at 0.4993. On the sealed unit
+it never falls below 0.5698, capping them at 0.4302.
+In both sets the cap lies below the floor, so the majority class is the
+maximum in every stay and the argmax rule cannot name a minority source.
+That is a bound and not an observation: it holds whatever the minority
+probabilities turn out to be, and it rests on one figure per set.
+
+The observed maxima are further below still. No minority probability
+exceeds 0.3331 on the test set or 0.3804 on the sealed unit. The margin
+the bound leaves is 0.0014 on the test set and 0.1396 on the sealed
+unit, so on the test set the model comes close to admitting a different
+maximum without ever producing one.
+
+The model attains high apparent accuracy while identifying no source at
+all. The same behaviour was observed under both penalty rules, under
+gradient boosting and under the extended model; the bound above is
+measured for the final model on the two sets it was evaluated on.
+
+What a genuine case receives is the clinical form of the same fact. Among
+the test-set stays whose source is urinary, the median probability the
+model assigns to the urinary class is 0.0456, against a prevalence
+of 0.0427, and the highest any of them receives is 0.1141.
+
+The model is calibrated and discriminates weakly: its probabilities are
+honest and almost flat. A real urinary case is told it is barely more
+likely to be urinary than the base rate. That is what a correctly fitted
+model on insufficient information looks like, and recalibration does not
+repair it.
 
 ### Confidence, resolution and error
 

@@ -156,6 +156,31 @@ margin never exceeds the largest possible rounding error.
 | Prueba, categorias calibradas | 4.0000 | 4.0000 | 0.50000 | yes |
 | Calibracion y cobertura, misma mayoritaria | 2972.0000 | 2972.0000 | 0.50000 | yes |
 | Calibracion y cobertura, mismas estancias | 3349.0000 | 3349.0000 | 0.50000 | yes |
+| Curva, tramos por categoria | 5.0000 | 5.0000 | 0.50000 | yes |
+| Curva, categorias con tramos | 4.0000 | 4.0000 | 0.50000 | yes |
+| Curva, estancias cubiertas por los tramos | 3349.0000 | 3349.0000 | 0.50000 | yes |
+| Curva, casos cubiertos por los tramos | 2972.0000 | 2972.0000 | 0.50000 | yes |
+| Cota, minimo de la mayoritaria en prueba | 0.5007 | 0.5007 | 0.00005 | yes |
+| Cota, tope de las minoritarias en prueba | 0.4993 | 0.4993 | 0.00005 | yes |
+| Cota, margen en prueba | 0.0014 | 0.0014 | 0.00005 | yes |
+| Cota, maximo observado en prueba | 0.3331 | 0.3331 | 0.00005 | yes |
+| Cota, minimo de la mayoritaria en la sellada | 0.5698 | 0.5698 | 0.00005 | yes |
+| Cota, tope de las minoritarias en la sellada | 0.4302 | 0.4302 | 0.00005 | yes |
+| Cota, margen en la sellada | 0.1396 | 0.1396 | 0.00005 | yes |
+| Cota, maximo observado en la sellada | 0.3804 | 0.3804 | 0.00005 | yes |
+| Cota, conjuntos que sostienen la imposibilidad | 2.0000 | 2.0000 | 0.50000 | yes |
+| Cota, conjuntos evaluados | 2.0000 | 2.0000 | 0.50000 | yes |
+| Pendiente, la menor de las cuatro | 0.8169 | 0.8169 | 0.00005 | yes |
+| Pendiente, la mayor de las cuatro | 1.0381 | 1.0381 | 0.00005 | yes |
+| Calibracion en conjunto, la menor | -0.0103 | -0.0103 | 0.00005 | yes |
+| Calibracion en conjunto, la mayor | 0.0208 | 0.0208 | 0.00005 | yes |
+| Pendiente, extremo inferior del intervalo mas ancho | 0.5666 | 0.5666 | 0.00005 | yes |
+| Pendiente, extremo superior del intervalo mas ancho | 1.1197 | 1.1197 | 0.00005 | yes |
+| Pendiente, intervalos que cubren la unidad | 4.0000 | 4.0000 | 0.50000 | yes |
+| Urinario real, probabilidad mediana | 0.0456 | 0.0456 | 0.00005 | yes |
+| Urinario real, probabilidad maxima | 0.1141 | 0.1141 | 0.00005 | yes |
+| Urinario real, casos del estrato | 143.0000 | 143.0000 | 0.50000 | yes |
+| Recorrido, conjuntos por categoria y estrato | 16.0000 | 16.0000 | 0.50000 | yes |
 | Validacion interna, mejora | 0.0375 | 0.0375 | 0.00005 | yes |
 | Validacion interna, mejora original | 0.0395 | 0.0395 | 0.00005 | yes |
 | Validacion interna, estancias de ajuste | 5578.0000 | 5578.0000 | 0.50000 | yes |
@@ -257,6 +282,10 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase22/decision_lambda.csv`
 - `outputs/fase23/calibracion_sellado.csv`
 - `outputs/fase34/calibracion_prueba.csv`
+- `outputs/fase35/curva_calibracion.csv`
+- `outputs/fase35/rango_probabilidad.csv`
+- `outputs/fase35/separacion_argmax.csv`
+- `outputs/fase35/pendiente_calibracion.csv`
 - `outputs/fase24/regla_maximo.csv`
 - `outputs/fase25/divergencia_etiquetado.csv`
 - `outputs/fase26/intervalos_cobertura.csv`
