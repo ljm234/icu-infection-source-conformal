@@ -11,6 +11,35 @@ tolerancia <- function(decimales, operaciones = 1) {
   (10^(-decimales) / 2) * operaciones
 }
 
+# ---------------------------------------------------------------------------
+# La guardia contra el emparejamiento parcial de nombres.
+#
+# El operador de acceso admite prefijos y devuelve una columna cuyo nombre no
+# es el pedido, sin error. Una cifra leida asi no es la que su nombre dice, y
+# toda la trazabilidad que este procedimiento comprueba descansa en que lo
+# sea. La guardia vive en el perfil del proyecto, de modo que alcanza a todo
+# procedimiento sin que ninguno tenga que acordarse de ella.
+#
+# Se comprueba aqui que este activa y que ademas detenga, no solo avise. Lo
+# segundo se prueba en un proceso aparte, porque probarlo en este lo mataria.
+# Una guardia que no se comprueba es una intencion.
+# ---------------------------------------------------------------------------
+
+if (!isTRUE(getOption("warnPartialMatchDollar"))) {
+  cat("La guardia de emparejamiento parcial no esta activa.\n")
+  cat("No procede verificar cifras sin ella.\n")
+  quit(status = 1)
+}
+prueba <- suppressWarnings(system(
+  paste("Rscript -e 'd <- data.frame(alfa_larga = 1);",
+        "invisible(d$alfa)' >/dev/null 2>&1"), intern = FALSE))
+if (prueba == 0) {
+  cat("La guardia avisa pero no detiene ante un emparejamiento parcial.\n")
+  cat("Un aviso en una salida larga se pierde. No procede continuar.\n")
+  quit(status = 1)
+}
+cat("Guardia de emparejamiento parcial: activa y detiene.\n")
+
 leer <- function(ruta) {
   if (!file.exists(ruta)) return(NULL)
   read.csv(ruta, stringsAsFactors = FALSE)
