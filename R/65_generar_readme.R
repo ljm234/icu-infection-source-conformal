@@ -33,7 +33,8 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
-             "outputs/fase21/PROTOCOLO.md")
+             "outputs/fase21/PROTOCOLO.md",
+             "R/82_decisiones_vivas.R")
 
 despojar <- function(s) {
   for (e in EXENTAS) s <- gsub(e, "", s, fixed = TRUE)
@@ -969,12 +970,18 @@ add(prosa(
 "        checks the lockfile covers every library the procedures load",
 "    R/68_traduccion_yachay.R",
 "        generates the protocol document",
+"    R/82_decisiones_vivas.R",
+"        generates the record of standing decisions",
 "",
 "The other documents are [TRACEABILITY](outputs/fase20/TRACEABILITY.md),",
 "which records every published figure against its source file,",
 "[REPRODUCIBILITY](outputs/fase20/REPRODUCIBILITY.md), on the determinism of",
-"the extraction, and [PROTOCOLO](outputs/fase21/PROTOCOLO.md), which carries",
-"the findings into decisions for a separate study and is written in Spanish.",
+"the extraction, [PROTOCOLO](outputs/fase21/PROTOCOLO.md), which carries the",
+"findings into decisions for a separate study, and",
+"[DECISIONES](DECISIONES.md), the record of standing decisions consulted",
+"before writing: what is declared as posterior analysis, which biases",
+"accompany which figure, which claims the files do not support, and which",
+"figures are not comparable with which. The last two are written in Spanish.",
 "",
 "## Language-model assistance",
 "",
