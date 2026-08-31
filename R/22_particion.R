@@ -2,6 +2,26 @@ set.seed(20260818)
 
 m <- read.csv("outputs/fase4/matriz_limpia.csv")
 
+# La particion asigna por posicion de fila, y la semilla fija la permutacion
+# de esas posiciones y no la de los pacientes. Si el archivo llega en otro
+# orden, la misma semilla reparte a estancias distintas. La consulta que
+# construye la matriz no fijaba su orden, de modo que dos ejecuciones del
+# mismo codigo con la misma semilla producian particiones distintas: se midio
+# el 2026-08-31 y el noventa y nueve por ciento de las posiciones cambiaban,
+# con el contenido identico celda a celda.
+#
+# Se ordena por estancia antes de repartir, y las categorias se recorren en
+# orden alfabetico en lugar de en orden de aparicion, que tambien dependia del
+# orden de fila. Con las dos cosas, la semilla fija pacientes.
+#
+# LA PARTICION PUBLICADA ES ANTERIOR A ESTE ARREGLO. Vive en
+# outputs/fase5/matriz_particionada.csv y no se regenera: rehacerla exigiria
+# reejecutar el modelo entero, y sus decisiones de diseno se tomaron habiendo
+# visto ya la unidad reservada. Este procedimiento queda reproducible hacia
+# adelante y no reproduce aquel archivo, y asi ha de declararse.
+m <- m[order(m$stay_id), ]
+row.names(m) <- NULL
+
 SELLADA <- "Cardiac Vascular Intensive Care Unit (CVICU)"
 
 m$grupo <- NA_character_
@@ -17,7 +37,7 @@ elegibles <- which(m$unidad %in% grandes & m$unidad != SELLADA)
 # en las proporciones fijadas, de modo que la distribucion del desenlace sea
 # comparable entre los tres conjuntos. Sin estratificar, las clases pequenas
 # podrian quedar concentradas en uno solo por azar.
-for (cl in unique(m$clase[elegibles])) {
+for (cl in sort(unique(m$clase[elegibles]))) {
   idx <- elegibles[m$clase[elegibles] == cl]
   idx <- sample(idx)
   n <- length(idx)

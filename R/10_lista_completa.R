@@ -33,7 +33,7 @@ res <- dbGetQuery(con, "
                         THEN micro_specimen_id END) AS con_crecimiento
   FROM ventana
   GROUP BY 1
-  ORDER BY cultivos DESC")
+  ORDER BY cultivos DESC, tipo_muestra")
 
 print(res, row.names = FALSE)
 cat("\nTipos distintos:", nrow(res), "\n")

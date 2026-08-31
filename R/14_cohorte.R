@@ -232,19 +232,19 @@ cat("\n=== DISTRIBUCION DE CLASES ===\n")
 clases <- dbGetQuery(con, "
   SELECT clase, COUNT(*) AS n,
          ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) AS pct
-  FROM cohorte GROUP BY 1 ORDER BY n DESC")
+  FROM cohorte GROUP BY 1 ORDER BY n DESC, clase")
 print(clases, row.names = FALSE)
 
 cat("\n=== CLASE POR UNIDAD ===\n")
 cruce <- dbGetQuery(con, "
   SELECT unidad, clase, COUNT(*) AS n
-  FROM cohorte GROUP BY 1,2 ORDER BY unidad, n DESC")
+  FROM cohorte GROUP BY 1,2 ORDER BY unidad, n DESC, clase")
 print(head(cruce, 30), row.names = FALSE)
 
 cat("\n=== TAMANO MINIMO DE CLASE POR UNIDAD ===\n")
 minimos <- dbGetQuery(con, "
   SELECT unidad, COUNT(*) AS estancias, COUNT(DISTINCT clase) AS clases
-  FROM cohorte GROUP BY 1 HAVING COUNT(*) >= 500 ORDER BY estancias DESC")
+  FROM cohorte GROUP BY 1 HAVING COUNT(*) >= 500 ORDER BY estancias DESC, unidad")
 print(minimos, row.names = FALSE)
 
 write.csv(flujo_df, file.path(OUT, "flujo.csv"),   row.names = FALSE)

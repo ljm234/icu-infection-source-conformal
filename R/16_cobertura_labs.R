@@ -39,7 +39,7 @@ res <- dbGetQuery(con, "
     AND l.valuenum IS NOT NULL
   GROUP BY 1,2,3,4
   HAVING COUNT(DISTINCT e.stay_id) >= 3000
-  ORDER BY estancias DESC")
+  ORDER BY estancias DESC, d.itemid")
 print(res, row.names = FALSE)
 
 cat("\nExamenes con cobertura suficiente:", nrow(res), "\n")

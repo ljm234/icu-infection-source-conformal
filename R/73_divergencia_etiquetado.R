@@ -225,7 +225,7 @@ multi <- dbGetQuery(con, "
     JOIN categoria_2 g ON g.spec_type_desc = c.spec_type_desc
     WHERE c.org_name IS NOT NULL
     GROUP BY c.stay_id)
-  GROUP BY sitios ORDER BY sitios")
+  GROUP BY sitios ORDER BY sitios, estancias")
 
 dbDisconnect(con, shutdown = TRUE)
 cat("Consulta terminada en",

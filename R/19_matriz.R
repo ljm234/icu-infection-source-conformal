@@ -208,7 +208,7 @@ dbExecute(con, "
 # Materializacion y control de calidad
 # ---------------------------------------------------------------------------
 
-matriz <- dbGetQuery(con, "SELECT * FROM matriz")
+matriz <- dbGetQuery(con, "SELECT * FROM matriz ORDER BY stay_id")
 
 cat("\n=== DIMENSIONES ===\n")
 cat("Filas:", nrow(matriz), " Columnas:", ncol(matriz), "\n")

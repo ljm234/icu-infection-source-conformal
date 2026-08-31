@@ -57,13 +57,13 @@ multi <- dbGetQuery(con, "
   )
   SELECT sitios_positivos, COUNT(*) AS estancias
   FROM (SELECT stay_id, COUNT(*) AS sitios_positivos FROM pos GROUP BY stay_id)
-  GROUP BY 1 ORDER BY 1")
+  GROUP BY 1 ORDER BY 1, estancias")
 print(multi)
 
 cat("\n-- Unidades de cuidado, analogo de sede --\n")
 unidades <- dbGetQuery(con, "
   SELECT first_careunit AS unidad, COUNT(*) AS estancias
-  FROM icustays GROUP BY 1 ORDER BY estancias DESC")
+  FROM icustays GROUP BY 1 ORDER BY estancias DESC, unidad")
 print(unidades)
 
 write.csv(n_real,   "outputs/n_real.csv",   row.names = FALSE)

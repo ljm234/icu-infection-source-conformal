@@ -54,7 +54,7 @@ res <- dbGetQuery(con, "
   FROM medidas m
   JOIN dlab d ON d.itemid = m.itemid
   GROUP BY 1
-  ORDER BY promedio DESC")
+  ORDER BY promedio DESC, itemid")
 print(res, row.names = FALSE)
 
 dir.create("outputs/fase3", recursive = TRUE, showWarnings = FALSE)
