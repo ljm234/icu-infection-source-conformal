@@ -247,14 +247,15 @@ binomial credits the evidence with a precision it does not have.
 
 Of the 20 cells, 5 have their whole interval below nominal and
 3 survive the correction. The count does not depend on the
-choice of correction or level:
+choice of correction or level, under the test that recognises the
+calibration:
 
-    correction     level   cells
+    correction                 level   cells
 
-    bonferroni     0.050       3
-    holm           0.050       3
-    bonferroni     0.025       3
-    holm           0.025       3
+    beta-binomial bonferroni   0.050       3
+    beta-binomial holm         0.050       3
+    beta-binomial bonferroni   0.025       3
+    beta-binomial holm         0.025       3
 
 Under the test that treats the threshold as known, 4 cells would
 survive under Holm's correction at either level. The intervals above

@@ -579,14 +579,20 @@ add(cifra("Of the %d cells, %d have their whole interval below nominal and",
 add(cifra("%d survive the correction. The count does not depend on the",
           as.integer(n_resiste)))
 add(prosa(
-"choice of correction or level:",
+"choice of correction or level, under the test that recognises the",
+"calibration:",
 "",
-"    correction     level   cells",
+"    correction                 level   cells",
 ""))
 
+# El nombre de la correccion se compone con la familia delante. El archivo
+# deposita las cuatro variantes, y `mb` retiene solo las que reconocen la
+# calibracion: imprimirlas con el nombre a secas publicaba un recuento que no
+# es el que ese nombre tiene en la fuente, y el parrafo siguiente, que da el
+# recuento condicionado al umbral, quedaba sin nada que lo distinguiera.
 for (i in seq_len(nrow(mb)))
-  add(cifra("    %-14s %5.3f  %6d", mb$correccion[i], mb$nivel[i],
-            as.integer(mb$celdas_resisten[i])))
+  add(cifra("    beta-binomial %-12s %5.3f  %6d", mb$correccion[i],
+            mb$nivel[i], as.integer(mb$celdas_resisten[i])))
 
 add(prosa(""))
 add(cifra("Under the test that treats the threshold as known, %d cells would",
