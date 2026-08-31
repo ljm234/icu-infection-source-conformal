@@ -112,7 +112,13 @@ AFIRMACIONES <- list(
   c("Unidades de la cohorte", "outputs/fase29/unidades_cohorte.csv"),
   c("Determinaciones candidatas", "outputs/fase30/determinaciones_candidatas.csv"),
   c("Separacion de las candidatas", "outputs/fase30/separacion_candidatas.csv"),
-  c("Viabilidad de la comparacion", "outputs/fase30/viabilidad_comparacion.csv"))
+  c("Viabilidad de la comparacion", "outputs/fase30/viabilidad_comparacion.csv"),
+  c("Casos completos en las candidatas", "outputs/fase31/casos_completos.csv"),
+  c("Determinaciones presentes por estancia", "outputs/fase31/distribucion_presentes.csv"),
+  c("Comparacion ampliada por clase", "outputs/fase32/comparacion_por_clase.csv"),
+  c("Comparacion ampliada, resumen", "outputs/fase32/comparacion_resumen.csv"),
+  c("Determinaciones anadidas", "outputs/fase32/determinaciones_anadidas.csv"),
+  c("Procedencia de la seleccion", "outputs/fase33/procedencia_seleccion.csv"))
 
 faltan <- 0
 for (a in AFIRMACIONES) {

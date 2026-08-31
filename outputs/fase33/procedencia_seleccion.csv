@@ -1,0 +1,2 @@
+"archivo","expresion","commit","fecha","commits_que_tocan_la_lista","fijada_en_el_alta_del_archivo","commits_posteriores_en_la_rama","comando"
+"R/19_matriz.R","items <- c(","a805a0bedd94a0b4b50e99080e3b7c9afa27b7bc","2026-08-18",1,TRUE,43,"git log --all --format='%H %ad %an' --date=short -S'items <- c(' -- R/19_matriz.R"

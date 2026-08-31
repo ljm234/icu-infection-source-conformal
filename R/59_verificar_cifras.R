@@ -69,7 +69,11 @@ FUENTES <- list(
   "Unidades de la cohorte"                   = "outputs/fase29/unidades_cohorte.csv",
   "Determinaciones candidatas"               = "outputs/fase30/determinaciones_candidatas.csv",
   "Separacion de las candidatas"             = "outputs/fase30/separacion_candidatas.csv",
-  "Viabilidad de la comparacion"             = "outputs/fase30/viabilidad_comparacion.csv")
+  "Viabilidad de la comparacion"             = "outputs/fase30/viabilidad_comparacion.csv",
+  "Casos completos en las candidatas"        = "outputs/fase31/casos_completos.csv",
+  "Comparacion ampliada, por clase"          = "outputs/fase32/comparacion_por_clase.csv",
+  "Comparacion ampliada, resumen"            = "outputs/fase32/comparacion_resumen.csv",
+  "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv")
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -739,6 +743,48 @@ if (!is.null(x) && !is.null(d)) {
   reg[[length(reg)+1]] <- comprobar("Candidatas de cobertura baja",
     x$candidatas_por_debajo,
     sum(d$cobertura_pct < x$umbral_de_cobertura_baja), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Denominador de la cota",
+    x$estancias_del_denominador, 65366, 0.5)
+}
+
+# El recuento efectivo de casos completos, que es lo que establece si la
+# comparacion sobre las setenta y tres podia hacerse.
+x <- leer(FUENTES[["Casos completos en las candidatas"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Casos completos en las candidatas",
+    x$estancias_completas[x$conjunto == "candidatas"], 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Casos completos en el subconjunto",
+    x$estancias_completas[x$conjunto == "subconjunto ampliado"], 5867, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Denominador del recuento",
+    x$denominador[1], 23213, 0.5)
+}
+
+x <- leer(FUENTES[["Comparacion ampliada, resumen"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Comparacion, determinaciones anadidas",
+    x$determinaciones_anadidas, 12, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, estancias completas",
+    x$estancias_completas, 3498, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias retenidas",
+    x$promedio_minoritarias_retenidas, 0.6635, t4)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, minoritarias ampliada",
+    x$promedio_minoritarias_ampliada, 0.6522, t4)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, diferencia",
+    x$diferencia_minoritarias, -0.0113, t4d)
+}
+
+x <- leer(FUENTES[["Comparacion ampliada, por clase"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Comparacion, clases evaluadas",
+    nrow(x), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Comparacion, clases donde la ampliada gana",
+    sum(x$diferencia > 0), 1, 0.5)
+}
+
+x <- leer(FUENTES[["Procedencia de la seleccion"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Commits que tocan la seleccion",
+    x$commits_que_tocan_la_lista, 1, 0.5)
 }
 
 tab <- do.call(rbind, reg)

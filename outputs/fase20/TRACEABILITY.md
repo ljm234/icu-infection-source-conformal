@@ -180,6 +180,18 @@ margin never exceeds the largest possible rounding error.
 | Atributos que separan los dos grupos | 0.0000 | 0.0000 | 0.50000 | yes |
 | Cota de casos completos en las candidatas | 3177.0000 | 3177.0000 | 0.50000 | yes |
 | Candidatas de cobertura baja | 28.0000 | 28.0000 | 0.50000 | yes |
+| Denominador de la cota | 65366.0000 | 65366.0000 | 0.50000 | yes |
+| Casos completos en las candidatas | 0.0000 | 0.0000 | 0.50000 | yes |
+| Casos completos en el subconjunto | 5867.0000 | 5867.0000 | 0.50000 | yes |
+| Denominador del recuento | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Comparacion, determinaciones anadidas | 12.0000 | 12.0000 | 0.50000 | yes |
+| Comparacion, estancias completas | 3498.0000 | 3498.0000 | 0.50000 | yes |
+| Comparacion, minoritarias retenidas | 0.6635 | 0.6635 | 0.00005 | yes |
+| Comparacion, minoritarias ampliada | 0.6522 | 0.6522 | 0.00005 | yes |
+| Comparacion, diferencia | -0.0113 | -0.0113 | 0.00010 | yes |
+| Comparacion, clases evaluadas | 4.0000 | 4.0000 | 0.50000 | yes |
+| Comparacion, clases donde la ampliada gana | 1.0000 | 1.0000 | 0.50000 | yes |
+| Commits que tocan la seleccion | 1.0000 | 1.0000 | 0.50000 | yes |
 
 ## Source files
 
@@ -236,3 +248,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase30/determinaciones_candidatas.csv`
 - `outputs/fase30/separacion_candidatas.csv`
 - `outputs/fase30/viabilidad_comparacion.csv`
+- `outputs/fase31/casos_completos.csv`
+- `outputs/fase32/comparacion_por_clase.csv`
+- `outputs/fase32/comparacion_resumen.csv`
+- `outputs/fase33/procedencia_seleccion.csv`

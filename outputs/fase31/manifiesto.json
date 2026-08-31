@@ -1,0 +1,13 @@
+{
+  "fase": "31",
+  "ejecutado_en": "2026-08-31T09:05:26-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "duckdb_version": "1.5.5",
+  "proposito": "contar las estancias de la cohorte que tienen todas las candidatas dentro de la ventana, para establecer si una comparacion por casos completos es posible",
+  "ventana": "seis horas desde el ingreso a la primera estancia en la unidad",
+  "filtro_temporal": "hora de registro, no de anotacion",
+  "pertenencia_a_la_cohorte": "outputs/fase4/matriz.csv",
+  "denominador": 23213,
+  "subconjunto_ampliado": "las retenidas mas las descartadas cuya cobertura supera a la de la retenida menos frecuente",
+  "determinaciones_del_subconjunto": 29
+}

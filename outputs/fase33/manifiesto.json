@@ -1,0 +1,13 @@
+{
+  "fase": "33",
+  "ejecutado_en": "2026-08-31T09:09:12-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "proposito": "acreditar que la seleccion de determinaciones no se modifico tras fijarse, que es lo que responde a la sospecha de que se ajustara al ver resultados",
+  "archivo": "R/19_matriz.R",
+  "expresion": "items <- c(",
+  "commit": "a805a0bedd94a0b4b50e99080e3b7c9afa27b7bc",
+  "fecha": "2026-08-18",
+  "comando": "git log --all --format='%H %ad %an' --date=short -S'items <- c(' -- R/19_matriz.R",
+  "interpretacion": "la busqueda por contenido devuelve los commits en que la expresion aparece o desaparece; que devuelva uno solo, y que sea el del alta del archivo, significa que la lista no se ha tocado desde que se escribio",
+  "lo_que_no_acredita": "que la seleccion fuera correcta o estuviera razonada; solo que no se altero despues"
+}

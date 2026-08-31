@@ -1,7 +1,9 @@
-# ESTE ARCHIVO ES UNA RECONSTRUCCION POSTERIOR. Se redacta el 2026-08-30 para
-# documentar que distingue a las determinaciones retenidas de las que no lo
-# fueron. La seleccion se fijo el 2026-08-18, en R/19_matriz.R, doce dias
-# antes. Lo que sigue NO es el criterio con que se eligieron: ese criterio no
+# ESTE ARCHIVO ES UNA RECONSTRUCCION POSTERIOR. Se escribe el 2026-08-30 y se
+# amplia el 2026-08-31 con la cota de casos completos, que es cuanto de su
+# contenido no procede del primer dia. Documenta que distingue a las
+# determinaciones retenidas de las que no lo fueron. La seleccion se fijo el
+# 2026-08-18, en R/19_matriz.R, doce dias antes de lo primero y trece de lo
+# segundo. Lo que sigue NO es el criterio con que se eligieron: ese criterio no
 # consta en el codigo, en ningun comentario ni en ningun manifiesto, y este
 # procedimiento no lo suple ni pretende suplirlo. Describe atributos
 # registrados, nada mas.
@@ -31,6 +33,7 @@ library(jsonlite)
 OUT <- "outputs/fase30"
 RUTA_COB <- "outputs/fase3/cobertura_labs.csv"
 RUTA_MAT <- "R/19_matriz.R"
+RUTA_FLU <- "outputs/fase2/flujo.csv"
 UMBRAL_ESTANCIAS <- 3000
 
 detener <- function(...) {
@@ -39,7 +42,7 @@ detener <- function(...) {
   quit(status = 1)
 }
 
-for (r in c(RUTA_COB, RUTA_MAT))
+for (r in c(RUTA_COB, RUTA_MAT, RUTA_FLU))
   if (!file.exists(r)) detener("Fuente ausente: ", r)
 
 cob <- read.csv(RUTA_COB, stringsAsFactors = FALSE)
@@ -164,9 +167,13 @@ cat("La de mayor cobertura entre las candidatas fue",
 # con sospecha de infeccion es un subconjunto suyo, de modo que la cota le
 # vale tambien.
 #
-# La cota es generosa. Alcanzarla exigiria que las estancias que tienen la
-# determinacion mas rara tuvieran ademas todas las demas, y varias de las de
-# menor cobertura pertenecen a examenes distintos que no se piden juntos.
+# La cota es generosa y no basta para concluir nada. Alcanzarla exigiria que
+# las estancias que tienen la determinacion mas rara tuvieran ademas todas las
+# demas. Lo que la cota establece es un techo, no una imposibilidad: el techo
+# equivale a una fraccion apreciable de la cohorte, y una comparacion de ese
+# tamano seria del orden del conjunto de prueba. El recuento efectivo se
+# realiza en R/79_casos_completos_candidatas.R y se deposita en la fase
+# trigesima primera; aqui solo consta la cota.
 # ---------------------------------------------------------------------------
 
 BAJA <- 20
@@ -183,11 +190,24 @@ cat("La cohorte con sospecha de infeccion es un subconjunto de ese\n")
 cat("denominador, de modo que la cota vale tambien para ella y el numero\n")
 cat("efectivo queda por debajo.\n")
 
+# El denominador de la cota se lee del embudo en lugar de nombrarse sin
+# cuantificar: sin el, tres mil ciento setenta y siete se lee como una cifra
+# pequena y no puede compararse con nada.
+flu <- read.csv(RUTA_FLU, stringsAsFactors = FALSE)
+fi <- which(flu$paso == "p1_estancias_unicas")
+fc <- which(flu$paso == "p5_cohorte_final")
+if (length(fi) != 1 || length(fc) != 1)
+  detener("El embudo no declara los pasos primero y quinto.")
+
 viabilidad <- data.frame(
   candidatas = nrow(tab),
   determinacion_menos_frecuente = raro,
   cota_casos_completos = cota,
   denominador_de_la_cota = "primeras estancias en cuidados intensivos",
+  estancias_del_denominador = flu$n[fi],
+  pct_del_denominador = round(100 * cota / flu$n[fi], 2),
+  estancias_de_la_cohorte = flu$n[fc],
+  pct_de_la_cohorte = round(100 * cota / flu$n[fc], 2),
   umbral_de_cobertura_baja = BAJA,
   candidatas_por_debajo = n_bajas,
   row.names = NULL)
@@ -221,13 +241,13 @@ writeLines(toJSON(list(
                                           "amplia rendiria mejor"),
   panel = paste("tomado del campo de categoria de d_labitems, el diccionario",
                 "de la base, y no deducido del nombre de la determinacion"),
-  comparacion_por_casos_completos = sprintf(paste(
-    "no es viable sobre las %d candidatas: la menos frecuente las acota en",
-    "%d estancias de las primeras en cuidados intensivos, y %d quedan por",
-    "debajo del %d por ciento de cobertura, de modo que la interseccion de",
-    "todas queda muy por debajo de esa cota. La cohorte con sospecha de",
-    "infeccion es un subconjunto de ese denominador"),
-    nrow(tab), cota, n_bajas, BAJA)),
+  cota_de_casos_completos = sprintf(paste(
+    "la candidata menos frecuente acota los casos completos de las %d en %d",
+    "estancias, el %.2f por ciento de las primeras estancias en cuidados",
+    "intensivos y el %.2f por ciento de la cohorte. Es un techo y no una",
+    "imposibilidad; el recuento efectivo se deposita en la fase trigesima",
+    "primera"),
+    nrow(tab), cota, 100 * cota / flu$n[fi], 100 * cota / flu$n[fc])),
   auto_unbox = TRUE, pretty = TRUE, digits = 15),
   file.path(OUT, "manifiesto.json"))
 

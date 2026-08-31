@@ -170,3 +170,15 @@
 "Atributos que separan los dos grupos",0,0,0.5,TRUE
 "Cota de casos completos en las candidatas",3177,3177,0.5,TRUE
 "Candidatas de cobertura baja",28,28,0.5,TRUE
+"Denominador de la cota",65366,65366,0.5,TRUE
+"Casos completos en las candidatas",0,0,0.5,TRUE
+"Casos completos en el subconjunto",5867,5867,0.5,TRUE
+"Denominador del recuento",23213,23213,0.5,TRUE
+"Comparacion, determinaciones anadidas",12,12,0.5,TRUE
+"Comparacion, estancias completas",3498,3498,0.5,TRUE
+"Comparacion, minoritarias retenidas",0.6635,0.6635,5e-05,TRUE
+"Comparacion, minoritarias ampliada",0.6522,0.6522,5e-05,TRUE
+"Comparacion, diferencia",-0.0113,-0.0113,1e-04,TRUE
+"Comparacion, clases evaluadas",4,4,0.5,TRUE
+"Comparacion, clases donde la ampliada gana",1,1,0.5,TRUE
+"Commits que tocan la seleccion",1,1,0.5,TRUE

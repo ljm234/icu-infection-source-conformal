@@ -1,0 +1,13 @@
+"itemid","etiqueta","panel","fluido","cobertura_pct"
+"51221","Hematocrit","Hematology","Blood",68.5
+"51279","Red Blood Cells","Hematology","Blood",66.7
+"51250","MCV","Hematology","Blood",66.7
+"51249","MCHC","Hematology","Blood",66.7
+"51248","MCH","Hematology","Blood",66.7
+"51274","PT","Hematology","Blood",56.3
+"50931","Glucose","Chemistry","Blood",55
+"50960","Magnesium","Chemistry","Blood",53.5
+"50893","Calcium, Total","Chemistry","Blood",52.8
+"50970","Phosphate","Chemistry","Blood",52.8
+"50821","pO2","Blood Gas","Blood",46
+"50804","Calculated Total CO2","Blood Gas","Blood",46
