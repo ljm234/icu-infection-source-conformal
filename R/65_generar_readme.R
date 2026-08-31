@@ -123,6 +123,7 @@ det   <- leer("outputs/fase20/determinismo_extraccion.csv")
 cobx  <- leer("outputs/fase20/cobertura_extraccion.csv")
 lamb  <- leer("outputs/fase22/decision_lambda.csv")
 calsl <- leer("outputs/fase23/calibracion_sellado.csv")
+calpr <- leer("outputs/fase34/calibracion_prueba.csv")
 iv    <- leer("outputs/fase26/intervalos_cobertura.csv")
 mult  <- leer("outputs/fase26/recuentos_multiplicidad.csv")
 causa <- leer("outputs/fase26/causas_fallo.csv")
@@ -482,6 +483,28 @@ add(prosa(
 "conclusion here: an interval that already contains a point still contains",
 "it once widened.",
 "",
+"### Calibration",
+"",
+"    class                 n   observed   predicted",
+""))
+
+for (i in seq_len(nrow(calpr)))
+  add(cifra("    %-16s %5d     %.4f      %.4f", calpr$clase[i],
+            as.integer(calpr$n[i]), calpr$frecuencia_observada[i],
+            calpr$probabilidad_media[i]))
+
+add(prosa(""))
+add(cifra("Mean predicted probability tracks observed frequency to within %.4f",
+          max(abs(calpr$diferencia))))
+
+add(prosa(
+"in every class on the test set. That set comes from the same random",
+"partition as the training data, so agreement there is what a correctly",
+"fitted model should produce and is not evidence that it would hold",
+"elsewhere. It is also the weakest form of the claim: it concerns the mean",
+"within each class and says nothing about calibration across the",
+"probability range.",
+"",
 "### The argmax rule never names a source",
 "",
 "At minority prevalences of a few percent, no minority class probability",
@@ -633,7 +656,12 @@ add(prosa(
 "in either direction. The over-coverage of the majority class is consistent",
 "with a prevalence shift: its mean predicted probability is"))
 
-add(cifra("%.4f against an observed frequency of %.4f.", cal_may, frec_may))
+add(cifra("%.4f against an observed frequency of %.4f. On the test set the", cal_may, frec_may))
+add(cifra("same model predicts that class to within %.4f of its observed",
+          max(abs(calpr$diferencia))))
+add(prosa(
+"frequency, so the gap is specific to this unit rather than a property of",
+"the model on the data it was fitted from."))
 
 add(prosa(
 "",

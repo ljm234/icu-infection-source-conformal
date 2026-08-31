@@ -187,6 +187,23 @@ the thresholds are re-estimated within each fold. It cannot change the
 conclusion here: an interval that already contains a point still contains
 it once widened.
 
+### Calibration
+
+    class                 n   observed   predicted
+
+    sin_crecimiento   2972     0.8874      0.8884
+    urinario           143     0.0427      0.0419
+    respiratorio       128     0.0382      0.0384
+    sangre             106     0.0317      0.0314
+
+Mean predicted probability tracks observed frequency to within 0.0010
+in every class on the test set. That set comes from the same random
+partition as the training data, so agreement there is what a correctly
+fitted model should produce and is not evidence that it would hold
+elsewhere. It is also the weakest form of the claim: it concerns the mean
+within each class and says nothing about calibration across the
+probability range.
+
 ### The argmax rule never names a source
 
 At minority prevalences of a few percent, no minority class probability
@@ -287,7 +304,10 @@ interval falling below it, so this section reports no conclusion about the
 conditional guarantee here: the cases are too few to establish a shortfall
 in either direction. The over-coverage of the majority class is consistent
 with a prevalence shift: its mean predicted probability is
-0.9054 against an observed frequency of 0.9802.
+0.9054 against an observed frequency of 0.9802. On the test set the
+same model predicts that class to within 0.0010 of its observed
+frequency, so the gap is specific to this unit rather than a property of
+the model on the data it was fitted from.
 
 ### The limit of local recalibration
 
