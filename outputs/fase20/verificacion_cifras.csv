@@ -211,6 +211,11 @@
 "Determinaciones descartadas",56,56,0.5,TRUE
 "Cobertura minima de las retenidas",45.2,45.2,0.05,TRUE
 "Cobertura maxima de las descartadas",68.5,68.5,0.05,TRUE
+"La de mayor cobertura quedo retenida",0,0,0.5,TRUE
+"Cobertura de la mayor de todas",68.5,68.5,0.05,TRUE
+"Candidatas de orina",6,6,0.5,TRUE
+"Retenidas de orina",0,0,0.5,TRUE
+"Cobertura maxima entre las de orina",9.9,9.9,0.05,TRUE
 "Descartadas sobre la retenida minima",12,12,0.5,TRUE
 "Atributos que separan los dos grupos",0,0,0.5,TRUE
 "Cota de casos completos en las candidatas",3177,3177,0.5,TRUE

@@ -221,6 +221,11 @@ margin never exceeds the largest possible rounding error.
 | Determinaciones descartadas | 56.0000 | 56.0000 | 0.50000 | yes |
 | Cobertura minima de las retenidas | 45.2000 | 45.2000 | 0.05000 | yes |
 | Cobertura maxima de las descartadas | 68.5000 | 68.5000 | 0.05000 | yes |
+| La de mayor cobertura quedo retenida | 0.0000 | 0.0000 | 0.50000 | yes |
+| Cobertura de la mayor de todas | 68.5000 | 68.5000 | 0.05000 | yes |
+| Candidatas de orina | 6.0000 | 6.0000 | 0.50000 | yes |
+| Retenidas de orina | 0.0000 | 0.0000 | 0.50000 | yes |
+| Cobertura maxima entre las de orina | 9.9000 | 9.9000 | 0.05000 | yes |
 | Descartadas sobre la retenida minima | 12.0000 | 12.0000 | 0.50000 | yes |
 | Atributos que separan los dos grupos | 0.0000 | 0.0000 | 0.50000 | yes |
 | Cota de casos completos en las candidatas | 3177.0000 | 3177.0000 | 0.50000 | yes |

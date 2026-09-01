@@ -30,9 +30,12 @@ declare.
 
 `R/78_determinaciones_candidatas.R`, alta el 2026-08-30. Pregunta que distingue
 a las determinaciones retenidas de las descartadas. La respuesta, en
-`outputs/fase30/separacion_candidatas.csv`, es que ningun atributo las separa:
-ni el fluido, ni el panel, ni la cobertura. Ese resultado negativo es el
-hallazgo, y se publica como tal.
+`outputs/fase30/separacion_candidatas.csv`, es que ningun valor de los tres
+atributos registrados es exclusivo de las retenidas. El tipo de muestra si
+informa en un sentido, y el documento lo dice: todas las retenidas son de
+sangre y todas las de orina se descartaron, pero ninguna de esas alcanza la
+cobertura de la retenida menos frecuente, de modo que no anade nada al orden
+por cobertura. Ese resultado negativo es el hallazgo, y se publica como tal.
 
 `R/79_casos_completos_candidatas.R`, alta el 2026-08-31. Cuenta cuantas
 estancias reunen todas las candidatas. Consta en
@@ -111,9 +114,9 @@ las reune todas dentro de la ventana. La comparacion directa no admite
 respuesta por casos completos, y lo que se compara es otra cosa, mas estrecha,
 que ha de nombrarse.
 
-Que un atributo separe a las retenidas de las descartadas.
-`outputs/fase30/separacion_candidatas.csv` recoge que no lo hay. Escribir un
-criterio ahora seria presentar una reconstruccion posterior como decision
+Que algun atributo registrado reproduzca la particion.
+`outputs/fase30/separacion_candidatas.csv` recoge que ninguno lo hace. Escribir
+un criterio ahora seria presentar una reconstruccion posterior como decision
 original.
 
 Que la especificacion ampliada pierda. `outputs/fase32/comparacion_resumen.csv`

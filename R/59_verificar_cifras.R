@@ -971,6 +971,20 @@ if (!is.null(x)) {
     min(x$cobertura_pct[x$retenida]), 45.2, t1)
   reg[[length(reg)+1]] <- comprobar("Cobertura maxima de las descartadas",
     max(x$cobertura_pct[!x$retenida]), 68.5, t1)
+  # Lo que el apartado de laboratorio publica sobre las candidatas. La
+  # primera es la que refuta el ataque de que las diecisiete sean las de
+  # mayor cobertura, y por eso se contrasta que la mayor este descartada.
+  im <- which.max(x$cobertura_pct)
+  reg[[length(reg)+1]] <- comprobar("La de mayor cobertura quedo retenida",
+    as.integer(x$retenida[im]), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cobertura de la mayor de todas",
+    x$cobertura_pct[im], 68.5, t1)
+  reg[[length(reg)+1]] <- comprobar("Candidatas de orina",
+    sum(x$fluido == "Urine"), 6, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Retenidas de orina",
+    sum(x$retenida & x$fluido == "Urine"), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Cobertura maxima entre las de orina",
+    max(x$cobertura_pct[x$fluido == "Urine"]), 9.9, t1)
   reg[[length(reg)+1]] <- comprobar("Descartadas sobre la retenida minima",
     sum(x$cobertura_pct[!x$retenida] >
         min(x$cobertura_pct[x$retenida])), 12, 0.5)

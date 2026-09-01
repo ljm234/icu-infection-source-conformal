@@ -1,6 +1,6 @@
 {
   "fase": "37",
-  "ejecutado_en": "2026-08-31T20:11:00-0600",
+  "ejecutado_en": "2026-08-31T21:26:16-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "declarar, para cada deposito versionado, si la guardia de nombres estaba activa cuando se escribio",

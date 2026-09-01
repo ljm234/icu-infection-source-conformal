@@ -296,8 +296,12 @@ add(cifra("`%s`, alta el %s. Pregunta que distingue a las", r78, ALTAS[[r78]]))
 add(cifra("determinaciones retenidas de las descartadas. La respuesta, en `%s`,",
           d30s))
 add(prosa(
-"es que ningun atributo las separa: ni el fluido, ni el panel, ni la",
-"cobertura. Ese resultado negativo es el hallazgo, y se publica como tal."))
+"es que ningun valor de los tres atributos registrados es exclusivo de las",
+"retenidas. El tipo de muestra si informa en un sentido, y el documento lo",
+"dice: todas las retenidas son de sangre y todas las de orina se",
+"descartaron, pero ninguna de esas alcanza la cobertura de la retenida menos",
+"frecuente, de modo que no anade nada al orden por cobertura. Ese resultado",
+"negativo es el hallazgo, y se publica como tal."))
 cerrar()
 
 add(cifra("`%s`, alta el %s. Cuenta cuantas", r79, ALTAS[[r79]]))
@@ -401,10 +405,9 @@ add(prosa(
 "lo que se compara es otra cosa, mas estrecha, que ha de nombrarse."))
 cerrar()
 
-add(cifra("Que un atributo separe a las retenidas de las descartadas. `%s`",
-          d30s))
+add(cifra("Que algun atributo registrado reproduzca la particion. `%s`", d30s))
 add(prosa(
-"recoge que no lo hay. Escribir un criterio ahora seria presentar una",
+"recoge que ninguno lo hace. Escribir un criterio ahora seria presentar una",
 "reconstruccion posterior como decision original."))
 cerrar()
 

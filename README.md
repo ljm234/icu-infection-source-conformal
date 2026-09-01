@@ -76,12 +76,21 @@ recorded afterwards was not available at the moment of decision.
 
 **Laboratory variables.** Seventeen, drawn from the candidates present in
 at least 3,000 stays within the window, of which there are 73. The
-rule that narrowed the candidates to the seventeen is not recorded, and
-nothing in the deposit reproduces it: neither the sample type, nor the
-panel the source dictionary assigns, nor the coverage separates the
-retained from the rest. The candidate with the highest coverage of all is
-among the discarded. `outputs/fase30/determinaciones_candidatas.csv`
-describes every one of them.
+candidate with the highest coverage of all, at 68.5 percent, is
+among the discarded, so the seventeen are not the seventeen most frequent.
+
+The rule that narrowed the candidates to the seventeen is not recorded, and
+nothing in the deposit reproduces it. No value of the sample type, of the
+panel the source dictionary assigns, or of the coverage is exclusive to the
+retained. The sample type does carry information in one direction: every
+retained determination is a blood assay, and every urine assay among the
+candidates was discarded, but none of those 6 reaches 9.9 percent in
+coverage against the 45.2 percent of the least covered retained one,
+so the sample type adds nothing to the coverage ordering. Coverage
+alone does not account for the split either:
+12 blood assays with higher coverage than that were discarded.
+`outputs/fase30/determinaciones_candidatas.csv` describes every one of
+them.
 
 A comparison on stays complete in all the candidates cannot be made.
 0 of the 23,213 stays have all of them within the window, and the most

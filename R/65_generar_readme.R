@@ -107,6 +107,7 @@ gbm   <- leer("outputs/fase16/gbm_comparacion.csv")
 cove  <- leer("outputs/fase28/cobertura_vitales_por_etapa.csv")
 coh   <- leer("outputs/fase29/cohorte_analizada.csv")
 via   <- leer("outputs/fase30/viabilidad_comparacion.csv")
+cand  <- leer("outputs/fase30/determinaciones_candidatas.csv")
 comp  <- leer("outputs/fase31/casos_completos.csv")
 cmp29 <- leer("outputs/fase32/comparacion_resumen.csv")
 icd   <- leer("outputs/fase32/intervalo_diferencia.csv")
@@ -156,6 +157,24 @@ i_ancho <- which.max(pcal$pendiente_ic_superior - pcal$pendiente_ic_inferior)
 ur_pru <- rngp[rngp$conjunto == "prueba" &
                rngp$estrato == "de la categoria" &
                rngp$clase == "urinario", ]
+
+# Las candidatas de laboratorio. Todo lo que el documento afirma sobre ellas
+# se deriva aqui del propio archivo: cual tiene la mayor cobertura y si quedo
+# retenida, cuantas son de orina y hasta donde llegan, y cuantas de sangre con
+# cobertura superior a la retenida menos frecuente se descartaron.
+i_max  <- which.max(cand$cobertura_pct)
+orina  <- cand$fluido == "Urine"
+cob_min_ret <- min(cand$cobertura_pct[cand$retenida])
+n_sobre <- sum(!cand$retenida & cand$cobertura_pct > cob_min_ret)
+if (cand$retenida[i_max]) {
+  cat("La candidata de mayor cobertura quedo retenida.\n")
+  cat("La frase que el documento compone afirma lo contrario.\n")
+  quit(status = 1)
+}
+if (any(cand$retenida & orina)) {
+  cat("Alguna retenida es de orina. La frase que el documento compone lo niega.\n")
+  quit(status = 1)
+}
 
 MIN <- c("urinario","respiratorio","sangre")
 CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
@@ -358,13 +377,28 @@ add(prosa(
 add(cifra("at least %s stays within the window, of which there are %d. The",
           format(via$umbral_de_estancias, big.mark = ","),
           as.integer(via$candidatas)))
+add(cifra("candidate with the highest coverage of all, at %.1f percent, is",
+          cand$cobertura_pct[i_max]))
 add(prosa(
-"rule that narrowed the candidates to the seventeen is not recorded, and",
-"nothing in the deposit reproduces it: neither the sample type, nor the",
-"panel the source dictionary assigns, nor the coverage separates the",
-"retained from the rest. The candidate with the highest coverage of all is",
-"among the discarded. `outputs/fase30/determinaciones_candidatas.csv`",
-"describes every one of them.",
+"among the discarded, so the seventeen are not the seventeen most frequent.",
+"",
+"The rule that narrowed the candidates to the seventeen is not recorded, and",
+"nothing in the deposit reproduces it. No value of the sample type, of the",
+"panel the source dictionary assigns, or of the coverage is exclusive to the",
+"retained. The sample type does carry information in one direction: every",
+"retained determination is a blood assay, and every urine assay among the"))
+add(cifra("candidates was discarded, but none of those %d reaches %.1f percent in",
+          as.integer(sum(orina)), max(cand$cobertura_pct[orina])))
+add(cifra("coverage against the %.1f percent of the least covered retained one,",
+          cob_min_ret))
+add(prosa(
+"so the sample type adds nothing to the coverage ordering. Coverage",
+"alone does not account for the split either:"))
+add(cifra("%d blood assays with higher coverage than that were discarded.",
+          as.integer(n_sobre)))
+add(prosa(
+"`outputs/fase30/determinaciones_candidatas.csv` describes every one of",
+"them.",
 ""))
 
 add(prosa(
