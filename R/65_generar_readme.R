@@ -25,6 +25,8 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "R/32_comparar_lambda.R",
              "R/36_sellado.R", "R/38_recalibracion.R",
              "R/51_circularidad_glasgow.R",
+             "R/89_contactos_con_el_sellado.R",
+             "outputs/fase11/sellado_evaluado.csv",
              "outputs/fase5/distancia_unidades.csv",
              "outputs/fase5/clases_por_unidad.csv",
              "outputs/fase22/decision_lambda.csv",
@@ -115,6 +117,8 @@ mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
 casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
+cont  <- leer("outputs/fase40/contactos_con_el_sellado.csv")
+apar  <- leer("outputs/fase40/conjunto_apartado.csv")
 ordm  <- leer("outputs/fase39/orden_de_la_matriz.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
@@ -175,6 +179,11 @@ if (any(cand$retenida & orina)) {
   cat("Alguna retenida es de orina. La frase que el documento compone lo niega.\n")
   quit(status = 1)
 }
+
+# Los contactos con la unidad reservada. Quien define la etiqueta no cuenta
+# como contacto: escribe el archivo que filtra.
+usa <- cont[cont$clase != "define la etiqueta", ]
+define <- paste0("R/", cont$procedimiento[cont$clase == "define la etiqueta"])
 
 MIN <- c("urinario","respiratorio","sangre")
 CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
@@ -528,21 +537,69 @@ add(prosa(
 "rule. `R/22_particion.R` names the unit as a constant and computes no",
 "selection criterion.",
 "",
-"The sealed unit is touched three times, and it is worth listing them.",
-"`R/36_sellado.R` evaluates the primary model there once, with the thresholds",
-"of the original calibration set and with that model already frozen.",
-"`R/38_recalibracion.R` then reuses those same predictions for a"))
+"How often the unit is touched afterwards, and with what commitment, is",
+"derived from the code by `R/89_contactos_con_el_sellado.R` rather than",
+"listed, because a list goes stale every time someone reads that unit",
+"again, as it did when the calibration curve was added. Two things count",
+"as a contact: reading the record of the evaluation,",
+"`outputs/fase11/sellado_evaluado.csv`, and filtering by the sealed group",
+"on a table held at patient level. Reading a file that merely contains its",
+"rows among others does not, since almost every deposit does that",
+"somewhere, and counting it would inflate the number until it meant",
+"nothing.",
+""))
 
-add(cifra("recalibration exercise, resampling the unit at each of %d local",
+add(cifra("On that accounting the unit is touched %d times, in %d classes.",
+          as.integer(nrow(usa)), as.integer(length(unique(usa$clase)))))
+
+add(prosa("", "    procedure                    contact"))
+for (i in seq_len(nrow(usa)))
+  add(cifra("    %-28s %s", paste0("R/", usa$procedimiento[i]), usa$clase[i]))
+
+add(prosa(
+"",
+"predice sobre la unidad predicts on it, reutiliza lo almacenado reuses the",
+"stored predictions, la describe sin predecir describes it without",
+"predicting. The single prediction was made with the thresholds of the",
+"original calibration set and with that model already frozen. The three",
+"that reuse it never refit and never predict again: one resamples the unit"))
+
+add(cifra("at each of %d local sizes and recomputes thresholds only, another",
           as.integer(nrow(recal))))
 
 add(prosa(
-"sizes; it recomputes thresholds only and never refits the model. And",
-"`R/51_circularidad_glasgow.R` describes the distribution of the",
-"consciousness scale in that unit, to decide whether the variable could",
-"enter the extension at all. The first is an evaluation, the second an",
-"exercise on the same predictions, the third a descriptive check on a",
-"candidate variable. The extended model was never evaluated there.",
+"deposits the per-class calibration this document reports below, and the",
+"third the calibration curve. The last describes the distribution of the",
+"consciousness scale in the unit, to decide whether the variable could",
+"enter the extension at all. The extended model was never evaluated there.",
+""))
+
+add(cifra("`%s` filters that same group and is not counted, for a",
+          define))
+
+add(prosa(
+"reason read off the code rather than asserted: it writes the file it",
+"filters. Whoever writes the label defines it, and stands upstream of every",
+"evaluation; whoever reads it afterwards uses it.",
+"",
+"The partition also wrote the sealed rows to a file of their own, whose",
+"name asks that it not be opened. That no procedure reads it is checkable",
+"rather than promised:"))
+
+add(cifra("%d procedures name the file and %d read it, namely the one that",
+          as.integer(apar$procedimientos_que_lo_nombran),
+          as.integer(apar$procedimientos_que_lo_leen)))
+
+add(prosa(
+"writes it and the audit that checks it is not versioned. The check is one",
+"command, recorded here with its output:",
+""))
+
+add(cifra("    %s", apar$comando))
+for (q in strsplit(apar$quienes_lo_nombran, ", ")[[1]])
+  add(cifra("    %s", q))
+
+add(prosa(
 "",
 "## Principal results",
 "",

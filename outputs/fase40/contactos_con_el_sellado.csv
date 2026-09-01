@@ -1,0 +1,7 @@
+"procedimiento","clase","lee_la_evaluacion","escribe_la_evaluacion","filtra_la_etiqueta","escribe_lo_que_filtra"
+"22_particion.R","define la etiqueta",FALSE,FALSE,TRUE,TRUE
+"36_sellado.R","predice sobre la unidad",FALSE,TRUE,TRUE,TRUE
+"38_recalibracion.R","reutiliza lo almacenado",TRUE,FALSE,FALSE,FALSE
+"71_calibracion_sellado.R","reutiliza lo almacenado",TRUE,FALSE,FALSE,FALSE
+"84_curva_calibracion.R","reutiliza lo almacenado",TRUE,FALSE,FALSE,FALSE
+"51_circularidad_glasgow.R","la describe sin predecir",FALSE,FALSE,TRUE,FALSE

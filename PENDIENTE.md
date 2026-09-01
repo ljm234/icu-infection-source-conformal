@@ -4,8 +4,8 @@ Estado del encargo, no documentacion del trabajo. Recoge lo que falta de la
 revision previa al manuscrito, para que una sesion nueva sepa donde retomar.
 Se borra cuando quede vacio.
 
-Van nueve bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
-estaba en la lista y salio por el camino. Quedan cinco y la parte B.
+Van diez bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
+estaba en la lista y salio por el camino. Quedan cuatro y la parte B.
 
 ## Como se trabaja
 
@@ -20,35 +20,6 @@ rehacerla produciria un modelo cuyas decisiones de diseno se tomaron habiendo
 visto ya la unidad reservada.
 
 ## Lote 7
-
-### A4. El recuento de contactos con la unidad reservada
-
-`README.md`, "The sealed unit is touched three times, and it is worth listing
-them", compuesto en `R/65_generar_readme.R`. Son mas de tres, y el recuento
-vuelve a quedarse corto cada vez que alguien lee ese archivo: ya paso al
-anadir `R/84`.
-
-Correccion acordada: derivar la lista del codigo en lugar de enumerarla, por
-dos patrones y solo esos dos.
-
-    lectura de outputs/fase11/sellado_evaluado.csv, que es el registro de su
-      evaluacion: R/38, R/71, R/84
-    filtro por el grupo sellado sobre la matriz particionada: R/22 que lo
-      crea, R/36 que predice, R/51 que describe la escala de conciencia
-
-No cuenta leer un archivo que contenga sus filas entre otras. `R/88` lee la
-matriz y por eso queda fuera; contarlo inflaria el numero hasta no significar
-nada, porque casi todo el deposito toca esas filas en algun punto. Tampoco
-cuentan `R/64`, que solo comprueba que el archivo no este versionado, ni los
-generadores que nombran la cadena sin leerla.
-
-El documento ha de distinguir tres cosas: quien predice sobre la unidad, quien
-reutiliza las predicciones almacenadas, y quien solo verifica que el archivo
-no este versionado.
-
-Anotado al margen: `outputs/fase5/SELLADO_NO_ABRIR.csv` lo escribe `R/22` y no
-lo lee ningun procedimiento. Es un hecho comprobable y favorable que hoy no
-consta en ninguna parte.
 
 ### A9. Dos listas de rutas reservadas
 

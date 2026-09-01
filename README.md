@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-08-31 by `R/65_generar_readme.R`.
+Generated on 2026-09-01 by `R/65_generar_readme.R`.
 Every numeric figure below is read from a versioned results file. The
 generator rejects prose lines containing a digit, format patterns carrying
 digits outside their substitution codes, and any line that fails to compose.
@@ -174,17 +174,52 @@ and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a
 rule. `R/22_particion.R` names the unit as a constant and computes no
 selection criterion.
 
-The sealed unit is touched three times, and it is worth listing them.
-`R/36_sellado.R` evaluates the primary model there once, with the thresholds
-of the original calibration set and with that model already frozen.
-`R/38_recalibracion.R` then reuses those same predictions for a
-recalibration exercise, resampling the unit at each of 7 local
-sizes; it recomputes thresholds only and never refits the model. And
-`R/51_circularidad_glasgow.R` describes the distribution of the
-consciousness scale in that unit, to decide whether the variable could
-enter the extension at all. The first is an evaluation, the second an
-exercise on the same predictions, the third a descriptive check on a
-candidate variable. The extended model was never evaluated there.
+How often the unit is touched afterwards, and with what commitment, is
+derived from the code by `R/89_contactos_con_el_sellado.R` rather than
+listed, because a list goes stale every time someone reads that unit
+again, as it did when the calibration curve was added. Two things count
+as a contact: reading the record of the evaluation,
+`outputs/fase11/sellado_evaluado.csv`, and filtering by the sealed group
+on a table held at patient level. Reading a file that merely contains its
+rows among others does not, since almost every deposit does that
+somewhere, and counting it would inflate the number until it meant
+nothing.
+
+On that accounting the unit is touched 5 times, in 3 classes.
+
+    procedure                    contact
+    R/36_sellado.R               predice sobre la unidad
+    R/38_recalibracion.R         reutiliza lo almacenado
+    R/71_calibracion_sellado.R   reutiliza lo almacenado
+    R/84_curva_calibracion.R     reutiliza lo almacenado
+    R/51_circularidad_glasgow.R  la describe sin predecir
+
+predice sobre la unidad predicts on it, reutiliza lo almacenado reuses the
+stored predictions, la describe sin predecir describes it without
+predicting. The single prediction was made with the thresholds of the
+original calibration set and with that model already frozen. The three
+that reuse it never refit and never predict again: one resamples the unit
+at each of 7 local sizes and recomputes thresholds only, another
+deposits the per-class calibration this document reports below, and the
+third the calibration curve. The last describes the distribution of the
+consciousness scale in the unit, to decide whether the variable could
+enter the extension at all. The extended model was never evaluated there.
+
+`R/22_particion.R` filters that same group and is not counted, for a
+reason read off the code rather than asserted: it writes the file it
+filters. Whoever writes the label defines it, and stands upstream of every
+evaluation; whoever reads it afterwards uses it.
+
+The partition also wrote the sealed rows to a file of their own, whose
+name asks that it not be opened. That no procedure reads it is checkable
+rather than promised:
+2 procedures name the file and 0 read it, namely the one that
+writes it and the audit that checks it is not versioned. The check is one
+command, recorded here with its output:
+
+    git grep -l -- 'outputs/fase5/SELLADO_NO_ABRIR.csv' -- 'R/*.R'
+    R/22_particion.R
+    R/64_auditoria_publicacion.R
 
 ## Principal results
 

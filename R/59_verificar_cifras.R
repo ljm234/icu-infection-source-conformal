@@ -150,6 +150,8 @@ FUENTES <- list(
   "Guarda por deposito"                      = "outputs/fase37/guarda_por_deposito.csv",
   "Orden total de los depositos"             = "outputs/fase38/orden_total.csv",
   "Orden de la matriz"                       = "outputs/fase39/orden_de_la_matriz.csv",
+  "Contactos con el sellado"                 = "outputs/fase40/contactos_con_el_sellado.csv",
+  "Conjunto apartado"                        = "outputs/fase40/conjunto_apartado.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -194,7 +196,7 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 18, 0.5)
+  N_MF_DECLARAN, 19, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 
@@ -223,6 +225,31 @@ if (!is.null(ordm)) {
     nrow(ordm), 5, 0.5)
 }
 
+cont <- leer(FUENTES[["Contactos con el sellado"]])
+if (!is.null(cont)) {
+  usa <- cont[cont$clase != "define la etiqueta", ]
+  reg[[length(reg)+1]] <- comprobar("Contactos con la unidad reservada",
+    nrow(usa), 5, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Clases de contacto",
+    length(unique(usa$clase)), 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Procedimientos que definen la etiqueta",
+    sum(cont$clase == "define la etiqueta"), 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Procedimientos que predicen sobre ella",
+    sum(cont$clase == "predice sobre la unidad"), 1, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Procedimientos que reutilizan lo almacenado",
+    sum(cont$clase == "reutiliza lo almacenado"), 3, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Procedimientos que la describen sin predecir",
+    sum(cont$clase == "la describe sin predecir"), 1, 0.5)
+}
+
+apar <- leer(FUENTES[["Conjunto apartado"]])
+if (!is.null(apar)) {
+  reg[[length(reg)+1]] <- comprobar("Conjunto apartado, lo nombran",
+    apar$procedimientos_que_lo_nombran[1], 2, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Conjunto apartado, lo leen",
+    apar$procedimientos_que_lo_leen[1], 0, 0.5)
+}
+
 ordt <- leer(FUENTES[["Orden total de los depositos"]])
 if (!is.null(ordt)) {
   reg[[length(reg)+1]] <- comprobar("Depositos de consulta sin orden total",
@@ -236,7 +263,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 22, 0.5)
+    nrow(gpd), 23, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
     sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",

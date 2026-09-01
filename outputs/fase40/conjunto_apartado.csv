@@ -1,0 +1,2 @@
+"archivo","procedimientos_que_lo_nombran","procedimientos_que_lo_leen","quienes_lo_nombran","comando"
+"outputs/fase5/SELLADO_NO_ABRIR.csv",2,0,"R/22_particion.R, R/64_auditoria_publicacion.R","git grep -l -- 'outputs/fase5/SELLADO_NO_ABRIR.csv' -- 'R/*.R'"

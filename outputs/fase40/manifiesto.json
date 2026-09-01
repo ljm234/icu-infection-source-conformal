@@ -1,0 +1,15 @@
+{
+  "fase": "40",
+  "ejecutado_en": "2026-09-01T12:09:17-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "derivar del codigo cuantos procedimientos tocan la unidad reservada y con que compromiso, en lugar de enumerarlos, porque el recuento crece con el trabajo",
+  "vias": "leer el registro de la evaluacion, y filtrar por el grupo sellado sobre un archivo a nivel de paciente",
+  "no_cuenta": "leer un archivo que contenga sus filas entre otras, ni nombrar una ruta dentro de una relacion sin leerla",
+  "nivel_de_paciente": "se toma de las rutas que el archivo de exclusiones reserva, que es donde esa distincion ya vive",
+  "exclusion_de_quien_define": "queda fuera del recuento quien escribe el archivo que filtra: define la etiqueta en lugar de usarla, y esta aguas arriba de toda evaluacion. La razon se deriva y no se escribe",
+  "contactos": 5,
+  "clases": 3,
+  "conjunto_apartado": "se escribe una vez y ningun procedimiento lo lee",
+  "comando": "git grep -l -- 'outputs/fase5/SELLADO_NO_ABRIR.csv' -- 'R/*.R'"
+}
