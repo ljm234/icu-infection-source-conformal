@@ -41,6 +41,10 @@ margin never exceeds the largest possible rounding error.
 | Aporte del valor de lactato | 0.0038 | 0.0038 | 0.00010 | yes |
 | Concordancia minima entre reglas de agregacion | 0.8722 | 0.8722 | 0.00005 | yes |
 | Beneficio neto maximo sobre politicas triviales | 0.0222 | 0.0222 | 0.00001 | yes |
+| Umbrales con beneficio neto negativo | 11.0000 | 11.0000 | 0.50000 | yes |
+| Umbrales examinados | 30.0000 | 30.0000 | 0.50000 | yes |
+| Primer umbral con beneficio negativo | 0.2000 | 0.2000 | 0.00500 | yes |
+| Beneficio neto minimo | -0.0023 | -0.0023 | 0.00001 | yes |
 | Arboles potenciados, ganancia en minoritarias | 0.0002 | 0.0002 | 0.00010 | yes |
 | Cobertura limpia de la frecuencia cardiaca | 99.2000 | 99.2000 | 0.05000 | yes |
 | Cobertura limpia de la presion sistolica | 74.9000 | 74.9000 | 0.05000 | yes |
@@ -56,6 +60,9 @@ margin never exceeds the largest possible rounding error.
 | Ganancia de la saturacion con spline | -47.8500 | -47.8500 | 0.00500 | yes |
 | Modelo ampliado, ganancia en minoritarias | 0.0146 | 0.0146 | 0.00010 | yes |
 | Modelo ampliado, desviacion de cobertura | 0.0736 | 0.0736 | 0.00005 | yes |
+| Ampliado, diferencia de dispersion | 0.0008 | 0.0008 | 0.00010 | yes |
+| Ampliado, la media empeora | 1.0000 | 1.0000 | 0.50000 | yes |
+| Ampliado, el minimo empeora | 1.0000 | 1.0000 | 0.50000 | yes |
 | Modelo ampliado, cobertura minima | 0.7757 | 0.7757 | 0.00005 | yes |
 | Cobertura limpia de temperatura | 92.7000 | 92.7000 | 0.05000 | yes |
 | Cobertura cruda de temperatura | 93.0000 | 93.0000 | 0.05000 | yes |

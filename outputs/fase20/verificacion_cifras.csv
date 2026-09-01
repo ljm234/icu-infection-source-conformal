@@ -31,6 +31,10 @@
 "Aporte del valor de lactato",0.00380000000000003,0.0038,1e-04,TRUE
 "Concordancia minima entre reglas de agregacion",0.8722,0.8722,5e-05,TRUE
 "Beneficio neto maximo sobre politicas triviales",0.0222,0.0222,1e-05,TRUE
+"Umbrales con beneficio neto negativo",11,11,0.5,TRUE
+"Umbrales examinados",30,30,0.5,TRUE
+"Primer umbral con beneficio negativo",0.2,0.2,0.005,TRUE
+"Beneficio neto minimo",-0.00231,-0.00231,5e-06,TRUE
 "Arboles potenciados, ganancia en minoritarias",0.000233333333333308,2e-04,1e-04,TRUE
 "Cobertura limpia de la frecuencia cardiaca",99.2,99.2,0.05,TRUE
 "Cobertura limpia de la presion sistolica",74.9,74.9,0.05,TRUE
@@ -46,6 +50,9 @@
 "Ganancia de la saturacion con spline",-47.85,-47.85,0.005,TRUE
 "Modelo ampliado, ganancia en minoritarias",0.0145666666666666,0.0146,1e-04,TRUE
 "Modelo ampliado, desviacion de cobertura",0.0736339459760239,0.0736,5e-05,TRUE
+"Ampliado, diferencia de dispersion",0.000768224691235608,8e-04,1e-04,TRUE
+"Ampliado, la media empeora",1,1,0.5,TRUE
+"Ampliado, el minimo empeora",1,1,0.5,TRUE
 "Modelo ampliado, cobertura minima",0.7757,0.7757,5e-05,TRUE
 "Cobertura limpia de temperatura",92.7,92.7,0.05,TRUE
 "Cobertura cruda de temperatura",93,93,0.05,TRUE

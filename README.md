@@ -285,8 +285,11 @@ usefully names the source.
 
 Decision curve analysis gives a maximum net benefit of 0.0222 over the
 better of the two trivial policies, for the question of whether any source
-is present. The benefit concentrates at low thresholds and converges to zero
-above them.
+is present. The benefit concentrates at low thresholds and does not
+converge to zero above them: it crosses it. The model's net benefit is
+below zero at 11 of the 30 thresholds examined, from 0.20 upward,
+reaching -0.00231, and the deposit marks those rows as not useful.
+
 
 ### Transportability
 
@@ -300,6 +303,14 @@ the same everywhere. Of the units that fail, 2 fail on sin_crecimiento and 1
 on respiratorio. The remaining 2 show point coverage of 0.7818 and 0.7586 on
 55 and 58 cases, too few to establish the shortfall. Absence of
 demonstration is not evidence of compliance.
+
+How a unit that the model has not seen is coded is a decision, not a
+detail. The unit enters the model as a set of indicators, and a held-out
+unit has none of its own, so its stays are scored with every unit indicator
+at zero. That is the coding of whichever unit comes first alphabetically
+among those the fold was fitted on. The alternative, dropping the unit term
+for this validation, was not evaluated, so the coverage reported here is
+conditional on that choice.
 
 The cells whose interval falls entirely below nominal, the 3 that
 survive correction among them:
@@ -482,9 +493,11 @@ Only temperature required a flexible functional form, with a gain of
 The extended model gains 0.0146 over the original in mean AUC across
 minority classes. It does not change the clinical verdict.
 
-Adding the vital signs does not improve transportability:
-coverage dispersion is 0.0736 against 0.0744, the mean falls from 0.8944
-to 0.8838, and the minimum from 0.8036 to 0.7757. The extended model
+Adding the vital signs does not improve transportability. Coverage
+dispersion is essentially unchanged, 0.0736 against 0.0744, and the
+claim rests on the other two: the mean falls from 0.8944 to 0.8838 and
+the minimum from 0.8036 to 0.7757.
+The extended model
 transports no better than the original. That is consistent with prevalence
 shift rather than predictor contamination as the mechanism, but does not
 establish it: the extended model adds the vital signs to the same laboratory

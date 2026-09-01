@@ -337,6 +337,17 @@ if (!is.null(x)) {
   s$gan <- s$bn_modelo - pmax(s$bn_tratar_todos, 0)
   reg[[length(reg)+1]] <- comprobar("Beneficio neto maximo sobre politicas triviales",
     max(s$gan), 0.0222, tolerancia(5, 2))
+  # El documento afirma que el beneficio cruza el cero y no que converja a el.
+  # Se contrasta el recuento de umbrales con beneficio negativo, el primero de
+  # ellos y el minimo, que es lo que la frase publica.
+  reg[[length(reg)+1]] <- comprobar("Umbrales con beneficio neto negativo",
+    sum(s$bn_modelo < 0), 11, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Umbrales examinados",
+    nrow(s), 30, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Primer umbral con beneficio negativo",
+    min(s$umbral[s$bn_modelo < 0]), 0.20, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Beneficio neto minimo",
+    min(s$bn_modelo), -0.00231, tolerancia(5))
 }
 
 # La cifra reportada corresponde al promedio sobre las categorias
@@ -414,6 +425,18 @@ x <- leer(FUENTES[["Modelo ampliado, transportabilidad"]])
 if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Modelo ampliado, desviacion de cobertura",
     sd(x$cobertura), 0.0736, t4)
+  # El documento dice que la dispersion queda practicamente igual y que la
+  # afirmacion se apoya en la media y el minimo. Lo primero exige que la
+  # diferencia sea pequena; lo segundo, que las otras dos vayan en su contra.
+  o <- leer(FUENTES[["Transportabilidad, cobertura"]])
+  if (!is.null(o)) {
+    reg[[length(reg)+1]] <- comprobar("Ampliado, diferencia de dispersion",
+      abs(sd(x$cobertura) - sd(o$cobertura)), 0.0008, tolerancia(4, 2))
+    reg[[length(reg)+1]] <- comprobar("Ampliado, la media empeora",
+      as.integer(mean(x$cobertura) < mean(o$cobertura)), 1, 0.5)
+    reg[[length(reg)+1]] <- comprobar("Ampliado, el minimo empeora",
+      as.integer(min(x$cobertura) < min(o$cobertura)), 1, 0.5)
+  }
   reg[[length(reg)+1]] <- comprobar("Modelo ampliado, cobertura minima",
     min(x$cobertura), 0.7757, t4)
 }

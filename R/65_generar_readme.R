@@ -277,6 +277,10 @@ n_pmax <- alfa$conclusiones_minoritarias[cm][i_pmax]
 
 sdec <- dec[dec$objetivo == "cualquier_foco", ]
 gan_dec <- max(sdec$bn_modelo - pmax(sdec$bn_tratar_todos, 0))
+# Donde el modelo deja de ser mejor que no tratar a nadie. El deposito lo
+# marca fila a fila en su columna de utilidad, y el texto lo decia como una
+# convergencia a cero cuando lo que hay es un cruce.
+neg_dec <- sdec[sdec$bn_modelo < 0, ]
 nmin <- min(recal$n_local)
 
 L <- character(0)
@@ -689,8 +693,16 @@ add(cifra("Decision curve analysis gives a maximum net benefit of %.4f over the"
 
 add(prosa(
 "better of the two trivial policies, for the question of whether any source",
-"is present. The benefit concentrates at low thresholds and converges to zero",
-"above them.",
+"is present. The benefit concentrates at low thresholds and does not",
+"converge to zero above them: it crosses it. The model's net benefit is"))
+add(cifra("below zero at %d of the %d thresholds examined, from %.2f upward,",
+          as.integer(nrow(neg_dec)), as.integer(nrow(sdec)),
+          min(neg_dec$umbral)))
+add(cifra("reaching %.5f, and the deposit marks those rows as not useful.",
+          min(neg_dec$bn_modelo)))
+
+add(prosa(
+"",
 "",
 "### Transportability",
 ""))
@@ -717,6 +729,14 @@ add(cifra("%d and %d cases, too few to establish the shortfall. Absence of",
 
 add(prosa(
 "demonstration is not evidence of compliance.",
+"",
+"How a unit that the model has not seen is coded is a decision, not a",
+"detail. The unit enters the model as a set of indicators, and a held-out",
+"unit has none of its own, so its stays are scored with every unit indicator",
+"at zero. That is the coding of whichever unit comes first alphabetically",
+"among those the fold was fitted on. The alternative, dropping the unit term",
+"for this validation, was not evaluated, so the coverage reported here is",
+"conditional on that choice.",
 ""))
 add(cifra("The cells whose interval falls entirely below nominal, the %d that",
           as.integer(n_resiste)))
@@ -1008,14 +1028,17 @@ add(cifra("The extended model gains %.4f over the original in mean AUC across",
 add(prosa(
 "minority classes. It does not change the clinical verdict.",
 "",
-"Adding the vital signs does not improve transportability:"))
+"Adding the vital signs does not improve transportability. Coverage"))
 
-add(cifra("coverage dispersion is %.4f against %.4f, the mean falls from %.4f",
-          sd(louoa$cobertura), sd(louo$cobertura), mean(louo$cobertura)))
-add(cifra("to %.4f, and the minimum from %.4f to %.4f. The extended model",
-          mean(louoa$cobertura), min(louo$cobertura), min(louoa$cobertura)))
+add(cifra("dispersion is essentially unchanged, %.4f against %.4f, and the",
+          sd(louoa$cobertura), sd(louo$cobertura)))
+add(cifra("claim rests on the other two: the mean falls from %.4f to %.4f and",
+          mean(louo$cobertura), mean(louoa$cobertura)))
+add(cifra("the minimum from %.4f to %.4f.",
+          min(louo$cobertura), min(louoa$cobertura)))
 
 add(prosa(
+"The extended model",
 "transports no better than the original. That is consistent with prevalence",
 "shift rather than predictor contamination as the mechanism, but does not",
 "establish it: the extended model adds the vital signs to the same laboratory",

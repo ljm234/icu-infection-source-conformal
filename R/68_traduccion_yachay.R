@@ -446,13 +446,14 @@ add(prosa(
 "constantes vitales no reemplaza a las determinaciones bioquimicas sino que",
 "se suma a ellas, de modo que los predictores presuntamente contaminados",
 "permanecen en el modelo y la comparacion no distingue entre ambas",
-"hipotesis. El modelo ampliado, ademas, no transporta mejor:"))
+"hipotesis. El modelo ampliado, ademas, no transporta mejor. La desviacion",
+"de la cobertura queda practicamente igual, de modo que la afirmacion se",
+"apoya en las otras dos:"))
 
-add(cifra("la desviacion de la cobertura pasa de %.4f a %.4f, la media",
-          sd(louo$cobertura), sd(louoa$cobertura)))
-add(cifra("desciende de %.4f a %.4f y el minimo de %.4f a %.4f.",
-          mean(louo$cobertura), mean(louoa$cobertura),
-          min(louo$cobertura), min(louoa$cobertura)))
+add(cifra("pasa de %.4f a %.4f, mientras que la media desciende de %.4f a",
+          sd(louo$cobertura), sd(louoa$cobertura), mean(louo$cobertura)))
+add(cifra("%.4f y el minimo de %.4f a %.4f.",
+          mean(louoa$cobertura), min(louo$cobertura), min(louoa$cobertura)))
 
 add(prosa(
 "",
