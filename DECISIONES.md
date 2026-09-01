@@ -24,9 +24,30 @@ que estuviera razonada: el criterio con que se eligieron no consta en ninguna
 parte, y ningun procedimiento posterior lo reconstruye ni debe presentarse como
 si lo hiciera.
 
-Los procedimientos que siguen se escribieron despues de esa fecha. El documento
-lo comprueba contra el historial en lugar de fiarlo a lo que cada cabecera
-declare.
+Cuantos analisis son posteriores no se enumera. `R/90_posterioridad.R` lo
+deriva del historial, y con tres categorias, porque no comprometen lo mismo.
+
+Posteriores a la fijacion hay 66. De ellos, 49 son ademas posteriores al
+2026-08-20, fecha en que la unidad reservada se abrio, que sale del alta de
+`outputs/fase11/cobertura_sellado.csv` y no de una constante escrita. Y 29 de
+esos leen ademas alguna tabla a nivel de paciente. El reparto completo,
+procedimiento a procedimiento, queda en `outputs/fase41/posterioridad.csv`.
+
+Ese ultimo numero solo alarma leido sin lo que lo acompana. Casi todo el
+trabajo posterior a la apertura son rondas de verificacion y de documentacion,
+y lo que importaria es que alguna reajustase o reescribiera el modelo
+publicado.
+
+Posteriores a la apertura que invocan un ajuste hay 6, y los que escriben en
+las fases donde vive el modelo publicado, 0: ajustan el suyo leyendo la
+especificacion congelada, y depositan fuera de ellas. Esas fases tampoco se
+nombran en la comprobacion, se derivan de donde hay un objeto ajustado bajo
+control de versiones, y el procedimiento se detiene si alguna vez alguno
+escribiera en ellas.
+
+Los que siguen se describen uno a uno por lo que dicen de la seleccion, no
+porque sean los unicos posteriores a ella. De cada uno se comprueba contra el
+historial que su alta lo sea, en lugar de fiarlo a lo que su cabecera declare.
 
 `R/78_determinaciones_candidatas.R`, alta el 2026-08-30. Pregunta que distingue
 a las determinaciones retenidas de las descartadas. La respuesta, en

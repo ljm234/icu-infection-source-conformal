@@ -132,6 +132,8 @@ AFIRMACIONES <- list(
   c("Contactos con la unidad reservada",
     "outputs/fase40/contactos_con_el_sellado.csv"),
   c("El conjunto apartado", "outputs/fase40/conjunto_apartado.csv"),
+  c("Posterioridad de los analisis", "outputs/fase41/posterioridad.csv"),
+  c("Fechas de la fijacion y la apertura", "outputs/fase41/fechas.csv"),
   c("Determinaciones anadidas", "outputs/fase32/determinaciones_anadidas.csv"),
   c("Procedencia de la seleccion", "outputs/fase33/procedencia_seleccion.csv"),
   c("Versiones del bloque de la seleccion", "outputs/fase33/versiones_del_bloque.csv"),

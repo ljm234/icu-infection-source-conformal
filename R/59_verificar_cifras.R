@@ -151,6 +151,8 @@ FUENTES <- list(
   "Orden total de los depositos"             = "outputs/fase38/orden_total.csv",
   "Orden de la matriz"                       = "outputs/fase39/orden_de_la_matriz.csv",
   "Contactos con el sellado"                 = "outputs/fase40/contactos_con_el_sellado.csv",
+  "Posterioridad de los analisis"            = "outputs/fase41/posterioridad.csv",
+  "Fechas de la posterioridad"               = "outputs/fase41/fechas.csv",
   "Conjunto apartado"                        = "outputs/fase40/conjunto_apartado.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
@@ -261,7 +263,7 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 19, 0.5)
+  N_MF_DECLARAN, 20, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 reg[[length(reg)+1]] <- comprobar("Rutas reservadas que el lector establece",
@@ -269,7 +271,7 @@ reg[[length(reg)+1]] <- comprobar("Rutas reservadas que el lector establece",
 reg[[length(reg)+1]] <- comprobar("Rutas reservadas que son un directorio",
   sum(rr$directorio_entero), 1, 0.5)
 reg[[length(reg)+1]] <- comprobar("Consumidores del lector unico",
-  length(llaman), 4, 0.5)
+  length(llaman), 5, 0.5)
 
 # El estado derivado. Ningun deposito puede quedar indeterminado: un
 # manifiesto posterior a la guardia que no la declarara seria justo la via de
@@ -313,6 +315,29 @@ if (!is.null(cont)) {
     sum(cont$clase == "la describe sin predecir"), 1, 0.5)
 }
 
+pos <- leer(FUENTES[["Posterioridad de los analisis"]])
+if (!is.null(pos)) {
+  TER <- "posterior a la apertura y lee filas por paciente"
+  reg[[length(reg)+1]] <- comprobar("Procedimientos contrastados",
+    nrow(pos), 88, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Posteriores a la fijacion",
+    sum(pos$posterior_a_la_fijacion), 66, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Posteriores a la apertura",
+    sum(pos$posterior_a_la_apertura), 49, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Ademas leen filas por paciente",
+    sum(pos$categoria == TER), 29, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Ajustan tras la apertura",
+    sum(pos$posterior_a_la_apertura & pos$ajusta_un_modelo), 6, 0.5)
+  # La cifra que decide si esa contabilidad es tranquilizadora o grave.
+  reg[[length(reg)+1]] <- comprobar("Escriben artefacto del modelo despues",
+    sum(pos$posterior_a_la_apertura & pos$escribe_artefacto_del_modelo), 0, 0.5)
+  # Y que el reparto se compusiera con el trabajo ya comprometido: un
+  # procedimiento sin alta en el historial es el que se esta introduciendo, y
+  # su fecha aun no existe.
+  reg[[length(reg)+1]] <- comprobar("Procedimientos sin alta registrada",
+    sum(!pos$registrado), 0, 0.5)
+}
+
 apar <- leer(FUENTES[["Conjunto apartado"]])
 if (!is.null(apar)) {
   reg[[length(reg)+1]] <- comprobar("Conjunto apartado, lo nombran",
@@ -334,7 +359,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 23, 0.5)
+    nrow(gpd), 24, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
     sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",

@@ -1,0 +1,20 @@
+{
+  "fase": "41",
+  "ejecutado_en": "2026-09-01T17:36:01-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "derivar del historial que analisis son posteriores a la fijacion de la seleccion y cuales ademas a la apertura de la unidad reservada, en lugar de enumerarlos",
+  "categorias": "posterior a la fijacion; posterior a la apertura; posterior a la apertura y ademas lee filas a nivel de paciente, que es la que compromete",
+  "origen_de_las_fechas": "la fijacion se lee del deposito que la acredita y la apertura del alta del unico agregado versionado de la fase que evaluo la unidad reservada; ninguna se escribe aqui",
+  "fases_del_modelo": "no se nombran: son aquellas con un objeto ajustado versionado",
+  "por_que_la_columna": "casi todo el trabajo es posterior a la apertura porque son rondas de verificacion y documentacion; lo que importa es si alguno reajusta o reescribe el modelo publicado",
+  "fijacion": "2026-08-18",
+  "apertura": "2026-08-20",
+  "procedimientos": 88,
+  "sin_registrar": 0,
+  "posteriores_a_la_fijacion": 66,
+  "posteriores_a_la_apertura": 49,
+  "ademas_leen_filas": 29,
+  "ajustan_tras_la_apertura": 6,
+  "escriben_artefacto_tras_la_apertura": 0
+}

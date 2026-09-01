@@ -154,7 +154,22 @@ if (!grepl("^20[0-9]{2}-[0-9]{2}-[0-9]{2}$", FIJADA)) {
   cat("La fecha de fijacion no tiene forma de fecha.\n"); quit(status = 1)
 }
 
-POSTERIORES <- c(
+post  <- leer("outputs/fase41/posterioridad.csv")
+fech  <- leer("outputs/fase41/fechas.csv")
+N_FIJ <- sum(post$posterior_a_la_fijacion)
+N_APE <- sum(post$posterior_a_la_apertura)
+N_FIL <- sum(post$categoria == "posterior a la apertura y lee filas por paciente")
+N_AJU <- sum(post$posterior_a_la_apertura & post$ajusta_un_modelo)
+N_ART <- sum(post$posterior_a_la_apertura & post$escribe_artefacto_del_modelo)
+if (N_ART > 0) {
+  cat("Un analisis posterior a la apertura escribe un artefacto del modelo.\n")
+  quit(status = 1)
+}
+
+# Los que el documento describe uno a uno. No es el censo de los posteriores,
+# que se deriva arriba: es una eleccion de que merece descripcion, y de cada
+# uno se comprueba contra el historial que en efecto lo sea.
+DESCRITOS <- c(
   "R/70_lambda_validacion_interna.R",
   "R/74_intervalos_cobertura.R",
   "R/77_cohorte_analizada.R",
@@ -164,8 +179,8 @@ POSTERIORES <- c(
   "R/81_procedencia_seleccion.R")
 
 cat("=== POSTERIORIDAD DE LOS ANALISIS ===\n")
-ALTAS <- setNames(sapply(POSTERIORES, fecha_alta), POSTERIORES)
-for (p in POSTERIORES) {
+ALTAS <- setNames(sapply(DESCRITOS, fecha_alta), DESCRITOS)
+for (p in DESCRITOS) {
   ok <- ALTAS[[p]] > FIJADA
   cat(sprintf("  %-42s %s  %s\n", p, ALTAS[[p]],
               if (ok) "posterior" else "NO POSTERIOR"))
@@ -174,7 +189,9 @@ for (p in POSTERIORES) {
     quit(status = 1)
   }
 }
-cat("Los", length(POSTERIORES), "son posteriores a la fijacion.\n\n")
+cat("Los", length(DESCRITOS), "descritos son posteriores a la fijacion.\n")
+cat("Derivados del historial: posteriores a la fijacion", N_FIJ,
+    " a la apertura", N_APE, " que ademas leen filas", N_FIL, "\n\n")
 
 # El recuento de rutas reservadas lo establece el lector unico, que las toma
 # del archivo de exclusiones, que es donde la decision surte efecto. Este
@@ -225,6 +242,8 @@ d33v <- ruta("outputs/fase33/versiones_del_bloque.csv")
 d15  <- ruta("outputs/fase15/sensibilidad_lactato.csv")
 exc  <- ruta(".gitignore")
 r00  <- ruta("R/00_rutas_reservadas.R")
+r90  <- ruta("R/90_posterioridad.R")
+p41  <- ruta("outputs/fase41/posterioridad.csv")
 
 # El documento se acumula por parrafos y no por lineas. Cada pieza se anade
 # al parrafo en curso y `cerrar` lo envuelve al ancho de la pagina. Componer
@@ -279,10 +298,48 @@ add(prosa(
 "lo reconstruye ni debe presentarse como si lo hiciera."))
 cerrar()
 
+add(cifra("Cuantos analisis son posteriores no se enumera. `%s` lo", r90))
 add(prosa(
-"Los procedimientos que siguen se escribieron despues de esa fecha. El",
-"documento lo comprueba contra el historial en lugar de fiarlo a lo que",
-"cada cabecera declare."))
+"deriva del historial, y con tres categorias, porque no comprometen lo",
+"mismo."))
+cerrar()
+
+add(cifra("Posteriores a la fijacion hay %d. De ellos, %d son ademas",
+          as.integer(N_FIJ), as.integer(N_APE)))
+add(cifra("posteriores al %s, fecha en que la unidad reservada se abrio, que",
+          fech$apertura_de_la_reservada[1]))
+add(cifra("sale del alta de `%s` y no de una constante escrita.",
+          ruta(fech$agregado_que_marca_la_apertura[1])))
+add(cifra("Y %d de esos leen ademas alguna tabla a nivel de paciente. El",
+          as.integer(N_FIL)))
+add(prosa(
+"reparto completo, procedimiento a procedimiento, queda en"))
+add(cifra("`%s`.", p41))
+cerrar()
+
+add(prosa(
+"Ese ultimo numero solo alarma leido sin lo que lo acompana. Casi todo el",
+"trabajo posterior a la apertura son rondas de verificacion y de",
+"documentacion, y lo que importaria es que alguna reajustase o reescribiera",
+"el modelo publicado."))
+cerrar()
+
+add(cifra("Posteriores a la apertura que invocan un ajuste hay %d, y los que",
+          as.integer(N_AJU)))
+add(cifra("escriben en las fases donde vive el modelo publicado, %d: ajustan",
+          as.integer(N_ART)))
+add(prosa(
+"el suyo leyendo la especificacion congelada, y depositan fuera de ellas.",
+"Esas fases tampoco se nombran en la comprobacion, se derivan de donde hay",
+"un objeto ajustado bajo control de versiones, y el procedimiento se detiene",
+"si alguna vez alguno escribiera en ellas."))
+cerrar()
+
+add(prosa(
+"Los que siguen se describen uno a uno por lo que dicen de la seleccion, no",
+"porque sean los unicos posteriores a ella. De cada uno se comprueba contra",
+"el historial que su alta lo sea, en lugar de fiarlo a lo que su cabecera",
+"declare."))
 cerrar()
 
 add(cifra("`%s`, alta el %s. Pregunta que distingue a las", r78, ALTAS[[r78]]))

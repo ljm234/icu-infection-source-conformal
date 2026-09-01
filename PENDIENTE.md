@@ -4,8 +4,8 @@ Estado del encargo, no documentacion del trabajo. Recoge lo que falta de la
 revision previa al manuscrito, para que una sesion nueva sepa donde retomar.
 Se borra cuando quede vacio.
 
-Van once bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
-estaba en la lista y salio por el camino. Quedan tres y la parte B.
+Van doce bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
+estaba en la lista y salio por el camino. Quedan dos y la parte B.
 
 ## Como se trabaja
 
@@ -20,19 +20,6 @@ rehacerla produciria un modelo cuyas decisiones de diseno se tomaron habiendo
 visto ya la unidad reservada.
 
 ## Lote 7
-
-### A10. Los analisis posteriores, enumerados a mano
-
-`R/82_decisiones_vivas.R:157`, la constante `POSTERIORES`, declara siete y el
-documento titula el apartado como si fuera un censo. Hay al menos nueve mas
-que depositan cifras publicadas: R/62, R/63, R/66, R/69, R/71, R/72, R/73,
-R/75, R/76.
-
-Correccion acordada: derivar del historial todo procedimiento cuya alta sea
-posterior a la fijacion, y separar en dos apartados, porque la categoria que
-importa para el manuscrito no es la misma: posteriores a la seleccion, y
-posteriores a la apertura del conjunto sellado. `R/72` y `R/73` son de los
-segundos y leen matrices a nivel de fila.
 
 ### A11. Las cinco diferencias son seis
 

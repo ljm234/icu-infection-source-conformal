@@ -9,11 +9,11 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
-| Manifiestos que declaran la guardia | 19.0000 | 19.0000 | 0.50000 | yes |
+| Manifiestos que declaran la guardia | 20.0000 | 20.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
 | Rutas reservadas que el lector establece | 14.0000 | 14.0000 | 0.50000 | yes |
 | Rutas reservadas que son un directorio | 1.0000 | 1.0000 | 0.50000 | yes |
-| Consumidores del lector unico | 4.0000 | 4.0000 | 0.50000 | yes |
+| Consumidores del lector unico | 5.0000 | 5.0000 | 0.50000 | yes |
 | Matriz, celdas que difieren entre versiones | 0.0000 | 0.0000 | 0.50000 | yes |
 | Matriz, celdas comparadas | 580325.0000 | 580325.0000 | 0.50000 | yes |
 | Matriz, posiciones que cambian antes del arreglo | 98.7700 | 98.7700 | 0.00500 | yes |
@@ -25,14 +25,21 @@ margin never exceeds the largest possible rounding error.
 | Procedimientos que predicen sobre ella | 1.0000 | 1.0000 | 0.50000 | yes |
 | Procedimientos que reutilizan lo almacenado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Procedimientos que la describen sin predecir | 1.0000 | 1.0000 | 0.50000 | yes |
+| Procedimientos contrastados | 88.0000 | 88.0000 | 0.50000 | yes |
+| Posteriores a la fijacion | 66.0000 | 66.0000 | 0.50000 | yes |
+| Posteriores a la apertura | 49.0000 | 49.0000 | 0.50000 | yes |
+| Ademas leen filas por paciente | 29.0000 | 29.0000 | 0.50000 | yes |
+| Ajustan tras la apertura | 6.0000 | 6.0000 | 0.50000 | yes |
+| Escriben artefacto del modelo despues | 0.0000 | 0.0000 | 0.50000 | yes |
+| Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
 | Conjunto apartado, lo nombran | 2.0000 | 2.0000 | 0.50000 | yes |
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 23.0000 | 23.0000 | 0.50000 | yes |
-| Depositos con estado establecido, recuento | 23.0000 | 23.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 24.0000 | 24.0000 | 0.50000 | yes |
+| Depositos con estado establecido, recuento | 24.0000 | 24.0000 | 0.50000 | yes |
 | Depositos escritos sin la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
-| Depositos con la guardia declarada | 19.0000 | 19.0000 | 0.50000 | yes |
+| Depositos con la guardia declarada | 20.0000 | 20.0000 | 0.50000 | yes |
 | Depositos con la guardia derivada | 4.0000 | 4.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
@@ -378,6 +385,8 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase38/orden_total.csv`
 - `outputs/fase39/orden_de_la_matriz.csv`
 - `outputs/fase40/contactos_con_el_sellado.csv`
+- `outputs/fase41/posterioridad.csv`
+- `outputs/fase41/fechas.csv`
 - `outputs/fase40/conjunto_apartado.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase33/versiones_del_bloque.csv`
