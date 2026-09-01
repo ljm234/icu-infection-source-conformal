@@ -1,0 +1,15 @@
+{
+  "fase": "39",
+  "ejecutado_en": "2026-08-31T20:09:55-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "medir el orden no fijado de la matriz de analisis, que hacia que la particion repartiera pacientes distintos con la misma semilla",
+  "archivo": "R/19_matriz.R",
+  "arreglo": "ORDER BY stay_id",
+  "arreglo_introducido_en": "358277c868cbe9b2cd607214e16b6c92ce543fe1",
+  "arreglo_introducido_el": "2026-08-31",
+  "metodo": "se recupera del historial la version anterior al arreglo y se ejecuta dos veces en un directorio aparte, y lo mismo con la corregida; los cuatro resultados se comparan entre si y contra la matriz publicada",
+  "la_matriz_publicada": "no se regenera; todo ocurre en un directorio temporal que se borra al terminar",
+  "lectura": "no se deposita ninguna",
+  "columnas": 25
+}

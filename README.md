@@ -520,6 +520,52 @@ The query was run 3 times and all 3 results are identical.
 Material divergence from the earlier extraction reaches 0.110 percent of
 stays per variable, and no coverage figure moves by more than 0.1 points.
 
+### A fixed seed does not fix a partition
+
+The query that built the analysis matrix did not fix its row order, and the
+partition assigns by row position rather than by stay. The seed therefore
+permuted positions and not patients: two runs of the same code, with the
+same seed, sent different stays to training, to calibration and to the test
+set.
+
+The pre-fix code was recovered from the history and run twice. The content
+is identical:
+0 of 580,325 cells differ between the two runs and both hold the same
+23,213 stays, while 98.77 percent of the row positions change. Against
+the published matrix the figures are 0 cells and 99.83 percent. With
+the ordering fixed, the same comparison gives 0.00 percent.
+
+This is a failure mode a fixed seed appears to cover and does not, which is
+why a careful analyst does not look for it. It is of the same family as the
+tie-breaking above, with one difference that matters: the ties moved
+figures, and this moved a design decision.
+
+No static analysis found it. It was found by running the code twice and
+comparing the deposits, and the same method then found insufficient
+orderings in nine further queries, four earlier audits having passed over
+all of them. A guard now stops any procedure whose deposit is not totally
+ordered by its own key. The evidence that such a guard is needed rather
+than merely tidy came from the guard on manifests: a routine re-run left a
+deposit recomputed and its manifest stating a condition that no longer held,
+and only a declaration at the level of the manifest caught it.
+
+The finding does not weaken the choice of a beta-binomial for the coverage
+intervals; it supplies the mechanism that choice assumes. That model was
+adopted because the conformal threshold is estimated from a finite
+calibration set and is therefore not a known quantity. The calibration set
+is now known to be one draw among many that a re-run would have produced
+differently.
+
+What reproduces and what does not. The funnel reproduces. The analysis
+matrix reproduces cell for cell. The sealed unit reproduces, because it is
+selected by unit name and not by position. The partition does not reproduce
+under the code as it stood, and the model therefore does not either. The
+chain is reproducible from the partitioned matrix onward, and the published
+partition predates the fix in `R/22_particion.R`: it is kept as a versioned
+artefact and is not regenerated, since rebuilding it would produce a model
+whose design decisions were taken with the sealed unit already seen.
+
+
 ## Requirements
 
 R 4.6.1. Exact library versions are recorded in `renv.lock`:

@@ -149,6 +149,7 @@ FUENTES <- list(
   "Completitud por determinacion"            = "outputs/fase36/completitud_por_determinacion.csv",
   "Guarda por deposito"                      = "outputs/fase37/guarda_por_deposito.csv",
   "Orden total de los depositos"             = "outputs/fase38/orden_total.csv",
+  "Orden de la matriz"                       = "outputs/fase39/orden_de_la_matriz.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -193,7 +194,7 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 17, 0.5)
+  N_MF_DECLARAN, 18, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 
@@ -203,6 +204,25 @@ reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
 # El orden de cada deposito que sale de una consulta ha de quedar determinado
 # por su contenido. Una clave de orden que repita valores deja el resto a la
 # implementacion de la base, y dos ejecuciones devuelven ordenes distintos.
+# El orden de la matriz, antes y despues del arreglo. Lo que el documento
+# publica es que el contenido no cambia y el orden si, y que el arreglo lo
+# fija: las tres cosas se contrastan.
+ordm <- leer(FUENTES[["Orden de la matriz"]])
+if (!is.null(ordm)) {
+  reg[[length(reg)+1]] <- comprobar("Matriz, celdas que difieren entre versiones",
+    sum(ordm$celdas_que_difieren), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Matriz, celdas comparadas",
+    ordm$celdas_comparadas[1], 580325, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Matriz, posiciones que cambian antes del arreglo",
+    ordm$pct_posiciones[ordm$comparacion == "antes_a frente a antes_b"],
+    98.77, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Matriz, posiciones que cambian despues",
+    ordm$pct_posiciones[ordm$comparacion == "despues_a frente a despues_b"],
+    0, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Matriz, comparaciones depositadas",
+    nrow(ordm), 5, 0.5)
+}
+
 ordt <- leer(FUENTES[["Orden total de los depositos"]])
 if (!is.null(ordt)) {
   reg[[length(reg)+1]] <- comprobar("Depositos de consulta sin orden total",
@@ -216,7 +236,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 21, 0.5)
+    nrow(gpd), 22, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
     sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",

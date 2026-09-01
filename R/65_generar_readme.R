@@ -17,6 +17,7 @@
 # que el texto nombra. Se retira cada uno antes de buscar digitos, de modo que
 # una cifra escrita junto a ellos se sigue detectando.
 EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
+             "R/22_particion.R",
              "SHA-256", "R/59_verificar_cifras.R",
              "R/64_auditoria_publicacion.R", "R/65_generar_readme.R",
              "R/67_diagnostico_dependencias.R", "R/68_traduccion_yachay.R",
@@ -113,6 +114,7 @@ mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
 casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
+ordm  <- leer("outputs/fase39/orden_de_la_matriz.csv")
 rec   <- leer("outputs/fase17/recorrido_por_unidad.csv")
 conc  <- leer("outputs/fase17/concordancia_presion.csv")
 cpres <- leer("outputs/fase17/cobertura_presion.csv")
@@ -1054,6 +1056,72 @@ add(cifra("Material divergence from the earlier extraction reaches %.3f percent 
           max(divg$pct_material)))
 add(cifra("stays per variable, and no coverage figure moves by more than %.1f points.",
           max(abs(cobx$diferencia))))
+
+add(prosa(
+"",
+"### A fixed seed does not fix a partition",
+"",
+"The query that built the analysis matrix did not fix its row order, and the",
+"partition assigns by row position rather than by stay. The seed therefore",
+"permuted positions and not patients: two runs of the same code, with the",
+"same seed, sent different stays to training, to calibration and to the test",
+"set.",
+"",
+"The pre-fix code was recovered from the history and run twice. The content",
+"is identical:"))
+add(cifra("%d of %s cells differ between the two runs and both hold the same",
+          as.integer(val(ordm, "celdas_que_difieren",
+                         ordm$comparacion == "antes_a frente a antes_b")),
+          format(val(ordm, "celdas_comparadas",
+                     ordm$comparacion == "antes_a frente a antes_b"),
+                 big.mark = ",")))
+add(cifra("%s stays, while %.2f percent of the row positions change. Against",
+          format(val(ordm, "filas",
+                     ordm$comparacion == "antes_a frente a antes_b"),
+                 big.mark = ","),
+          val(ordm, "pct_posiciones",
+              ordm$comparacion == "antes_a frente a antes_b")))
+add(cifra("the published matrix the figures are %d cells and %.2f percent. With",
+          as.integer(val(ordm, "celdas_que_difieren",
+                         ordm$comparacion == "publicada frente a antes_a")),
+          val(ordm, "pct_posiciones",
+              ordm$comparacion == "publicada frente a antes_a")))
+add(cifra("the ordering fixed, the same comparison gives %.2f percent.",
+          val(ordm, "pct_posiciones",
+              ordm$comparacion == "despues_a frente a despues_b")))
+
+add(prosa(
+"",
+"This is a failure mode a fixed seed appears to cover and does not, which is",
+"why a careful analyst does not look for it. It is of the same family as the",
+"tie-breaking above, with one difference that matters: the ties moved",
+"figures, and this moved a design decision.",
+"",
+"No static analysis found it. It was found by running the code twice and",
+"comparing the deposits, and the same method then found insufficient",
+"orderings in nine further queries, four earlier audits having passed over",
+"all of them. A guard now stops any procedure whose deposit is not totally",
+"ordered by its own key. The evidence that such a guard is needed rather",
+"than merely tidy came from the guard on manifests: a routine re-run left a",
+"deposit recomputed and its manifest stating a condition that no longer held,",
+"and only a declaration at the level of the manifest caught it.",
+"",
+"The finding does not weaken the choice of a beta-binomial for the coverage",
+"intervals; it supplies the mechanism that choice assumes. That model was",
+"adopted because the conformal threshold is estimated from a finite",
+"calibration set and is therefore not a known quantity. The calibration set",
+"is now known to be one draw among many that a re-run would have produced",
+"differently.",
+"",
+"What reproduces and what does not. The funnel reproduces. The analysis",
+"matrix reproduces cell for cell. The sealed unit reproduces, because it is",
+"selected by unit name and not by position. The partition does not reproduce",
+"under the code as it stood, and the model therefore does not either. The",
+"chain is reproducible from the partitioned matrix onward, and the published",
+"partition predates the fix in `R/22_particion.R`: it is kept as a versioned",
+"artefact and is not regenerated, since rebuilding it would produce a model",
+"whose design decisions were taken with the sealed unit already seen.",
+""))
 
 add(prosa(
 "",

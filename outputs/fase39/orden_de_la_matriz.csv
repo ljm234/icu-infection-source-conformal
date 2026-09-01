@@ -1,0 +1,6 @@
+"comparacion","filas","columnas","celdas_comparadas","celdas_que_difieren","mismas_estancias","posiciones_que_cambian","pct_posiciones"
+"publicada frente a antes_a",23213,25,580325,0,TRUE,23174,99.83
+"publicada frente a antes_b",23213,25,580325,0,TRUE,23180,99.86
+"antes_a frente a antes_b",23213,25,580325,0,TRUE,22928,98.77
+"despues_a frente a despues_b",23213,25,580325,0,TRUE,0,0
+"publicada frente a despues_a",23213,25,580325,0,TRUE,23212,100

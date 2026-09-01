@@ -9,14 +9,19 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
-| Manifiestos que declaran la guardia | 17.0000 | 17.0000 | 0.50000 | yes |
+| Manifiestos que declaran la guardia | 18.0000 | 18.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
+| Matriz, celdas que difieren entre versiones | 0.0000 | 0.0000 | 0.50000 | yes |
+| Matriz, celdas comparadas | 580325.0000 | 580325.0000 | 0.50000 | yes |
+| Matriz, posiciones que cambian antes del arreglo | 98.7700 | 98.7700 | 0.00500 | yes |
+| Matriz, posiciones que cambian despues | 0.0000 | 0.0000 | 0.00500 | yes |
+| Matriz, comparaciones depositadas | 5.0000 | 5.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 21.0000 | 21.0000 | 0.50000 | yes |
-| Depositos con estado establecido, recuento | 21.0000 | 21.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 22.0000 | 22.0000 | 0.50000 | yes |
+| Depositos con estado establecido, recuento | 22.0000 | 22.0000 | 0.50000 | yes |
 | Depositos escritos sin la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
-| Depositos con la guardia declarada | 17.0000 | 17.0000 | 0.50000 | yes |
+| Depositos con la guardia declarada | 18.0000 | 18.0000 | 0.50000 | yes |
 | Depositos con la guardia derivada | 4.0000 | 4.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
@@ -348,6 +353,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase36/completitud_por_determinacion.csv`
 - `outputs/fase37/guarda_por_deposito.csv`
 - `outputs/fase38/orden_total.csv`
+- `outputs/fase39/orden_de_la_matriz.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase33/versiones_del_bloque.csv`
 - `outputs/fase32/intervalo_diferencia.csv`
