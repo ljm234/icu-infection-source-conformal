@@ -218,14 +218,14 @@ e4 <- dbGetQuery(con, etiquetar("categoria_4"))
 # Sitios distintos con cultivo positivo por estancia, segun la clasificacion
 # de la fase segunda, que es la que distingue mas sitios.
 multi <- dbGetQuery(con, "
-  SELECT sitios, COUNT(*) AS estancias FROM (
+  SELECT sitios AS sitios_positivos, COUNT(*) AS estancias FROM (
     SELECT c.stay_id, COUNT(DISTINCT g.clase) AS sitios
     FROM cultivo_ventana c
     JOIN sospecha t  ON t.stay_id = c.stay_id
     JOIN categoria_2 g ON g.spec_type_desc = c.spec_type_desc
     WHERE c.org_name IS NOT NULL
     GROUP BY c.stay_id)
-  GROUP BY sitios ORDER BY sitios, estancias")
+  GROUP BY sitios ORDER BY sitios_positivos, estancias")
 
 dbDisconnect(con, shutdown = TRUE)
 cat("Consulta terminada en",
@@ -303,7 +303,6 @@ if (nrow(div) > 0) {
       sum(div$estancias[div$etiqueta_fase4 != residual]), "\n")
 }
 
-names(multi) <- c("sitios_positivos", "estancias")
 cat("\n=== SITIOS POSITIVOS DISTINTOS POR ESTANCIA ===\n")
 print(multi, row.names = FALSE)
 cat("Estancias con mas de un sitio positivo:",

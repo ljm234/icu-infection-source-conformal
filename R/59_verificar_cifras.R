@@ -148,6 +148,7 @@ FUENTES <- list(
   "Completitud por grupo"                    = "outputs/fase36/completitud_por_grupo.csv",
   "Completitud por determinacion"            = "outputs/fase36/completitud_por_determinacion.csv",
   "Guarda por deposito"                      = "outputs/fase37/guarda_por_deposito.csv",
+  "Orden total de los depositos"             = "outputs/fase38/orden_total.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
@@ -192,19 +193,30 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 16, 0.5)
+  N_MF_DECLARAN, 17, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 
 # El estado derivado. Ningun deposito puede quedar indeterminado: un
 # manifiesto posterior a la guardia que no la declarara seria justo la via de
 # elusion sin rastro, y la derivacion no alcanza a cubrirlo.
+# El orden de cada deposito que sale de una consulta ha de quedar determinado
+# por su contenido. Una clave de orden que repita valores deja el resto a la
+# implementacion de la base, y dos ejecuciones devuelven ordenes distintos.
+ordt <- leer(FUENTES[["Orden total de los depositos"]])
+if (!is.null(ordt)) {
+  reg[[length(reg)+1]] <- comprobar("Depositos de consulta sin orden total",
+    sum(!ordt$orden_total), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Depositos de consulta contrastados",
+    nrow(ordt), 13, 0.5)
+}
+
 gpd <- leer(FUENTES[["Guarda por deposito"]])
 if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 20, 0.5)
+    nrow(gpd), 21, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
     sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",

@@ -57,7 +57,7 @@ multi <- dbGetQuery(con, "
   )
   SELECT sitios_positivos, COUNT(*) AS estancias
   FROM (SELECT stay_id, COUNT(*) AS sitios_positivos FROM pos GROUP BY stay_id)
-  GROUP BY 1 ORDER BY 1, estancias")
+  GROUP BY 1 ORDER BY sitios_positivos, estancias")
 print(multi)
 
 cat("\n-- Unidades de cuidado, analogo de sede --\n")

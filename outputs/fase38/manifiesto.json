@@ -1,0 +1,12 @@
+{
+  "fase": "38",
+  "ejecutado_en": "2026-08-31T18:15:53-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "comprobar que todo deposito que sale de una consulta queda ordenado por columnas conjuntamente unicas, de modo que su orden lo determine el contenido y no la implementacion de la base",
+  "regla": "las columnas de la clausula de orden han de ser conjuntamente unicas en el resultado; si no lo son, el orden entre las filas que empatan queda sin determinar",
+  "por_que": "una clave inexistente o ambigua hace fallar la consulta y se ve; una clave existente pero no unica no falla, y reproduce dos veces seguidas por casualidad del dato",
+  "origen_de_las_claves": "se leen del codigo que escribe cada deposito; si no pueden leerse, el procedimiento se detiene en lugar de dar por bueno lo que no ha comprobado",
+  "depositos": 13,
+  "con_orden_total": 13
+}
