@@ -1,6 +1,6 @@
 {
   "fase": "30",
-  "ejecutado_en": "2026-08-31T15:05:41-0600",
+  "ejecutado_en": "2026-08-31T17:47:37-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "naturaleza": "reconstruccion posterior redactada el 2026-08-30; la seleccion se fijo el 2026-08-18 en R/19_matriz.R",

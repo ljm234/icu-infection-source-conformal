@@ -73,6 +73,7 @@ write.csv(unidades, "outputs/unidades.csv", row.names = FALSE)
 manifiesto <- list(
   ejecutado_en   = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version      = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   duckdb_version = as.character(packageVersion("duckdb")),
   sha256 = list(
     microbiologyevents = digest(file = MICRO, algo = "sha256"),

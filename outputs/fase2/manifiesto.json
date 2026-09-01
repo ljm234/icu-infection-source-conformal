@@ -1,8 +1,9 @@
 {
   "fase": "2",
-  "ejecutado_en": "2026-08-17T22:58:29-0600",
+  "ejecutado_en": "2026-08-31T17:59:06-0600",
   "semilla": 20260817,
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "duckdb_version": "1.5.5",
   "decisiones": {
     "unidad_analisis": "primera estancia en UCI por paciente",

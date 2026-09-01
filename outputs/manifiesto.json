@@ -1,6 +1,7 @@
 {
-  "ejecutado_en": "2026-08-17T20:57:01-0600",
+  "ejecutado_en": "2026-08-31T17:59:16-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
   "duckdb_version": "1.5.5",
   "sha256": {
     "microbiologyevents": "bfb17d9c67a5f7d7036e7acb0b8e35969fa491aceb1a710adac9645fcfc34a16",

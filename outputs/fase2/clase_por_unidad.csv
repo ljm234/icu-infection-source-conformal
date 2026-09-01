@@ -37,9 +37,9 @@
 "Neuro Intermediate","otro_sitio",3
 "Neuro Stepdown","sin_crecimiento",49
 "Neuro Stepdown","urinario",8
-"Neuro Stepdown","respiratorio",2
-"Neuro Stepdown","otro_sitio",2
 "Neuro Stepdown","herida",2
+"Neuro Stepdown","otro_sitio",2
+"Neuro Stepdown","respiratorio",2
 "Neuro Stepdown","sangre",1
 "Neuro Surgical Intensive Care Unit (Neuro SICU)","sin_crecimiento",109
 "Neuro Surgical Intensive Care Unit (Neuro SICU)","urinario",13
@@ -49,15 +49,15 @@
 "Neuro Surgical Intensive Care Unit (Neuro SICU)","otro_sitio",2
 "PACU","sin_crecimiento",2
 "PACU","otro_sitio",1
-"Surgery/Trauma","urinario",1
 "Surgery/Trauma","sin_crecimiento",1
+"Surgery/Trauma","urinario",1
 "Surgery/Vascular/Intermediate","sin_crecimiento",33
 "Surgery/Vascular/Intermediate","respiratorio",2
 "Surgery/Vascular/Intermediate","urinario",1
 "Surgical Intensive Care Unit (SICU)","sin_crecimiento",2600
 "Surgical Intensive Care Unit (SICU)","otro_sitio",139
-"Surgical Intensive Care Unit (SICU)","urinario",88
 "Surgical Intensive Care Unit (SICU)","herida",88
+"Surgical Intensive Care Unit (SICU)","urinario",88
 "Surgical Intensive Care Unit (SICU)","respiratorio",58
 "Surgical Intensive Care Unit (SICU)","sangre",41
 "Surgical Intensive Care Unit (SICU)","intraabdominal",13

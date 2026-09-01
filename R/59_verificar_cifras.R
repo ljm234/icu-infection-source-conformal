@@ -192,9 +192,9 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 15, 0.5)
+  N_MF_DECLARAN, 16, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
-  N_MF_SIN, 5, 0.5)
+  N_MF_SIN, 4, 0.5)
 
 # El estado derivado. Ningun deposito puede quedar indeterminado: un
 # manifiesto posterior a la guardia que no la declarara seria justo la via de
@@ -206,7 +206,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
     nrow(gpd), 20, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
-    sum(!gpd$guardia_activa), 5, 0.5)
+    sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",
     sum(gpd$origen == "declarado en el manifiesto"), N_MF_DECLARAN, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia derivada",

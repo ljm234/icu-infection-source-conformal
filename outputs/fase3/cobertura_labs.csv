@@ -33,10 +33,10 @@
 "50934","H","Blood","Chemistry",19985,30.6
 "50947","I","Blood","Chemistry",19984,30.6
 "50808","Free Calcium","Blood","Blood Gas",19267,29.5
-"51256","Neutrophils","Blood","Hematology",17307,26.5
 "51146","Basophils","Blood","Hematology",17307,26.5
 "51244","Lymphocytes","Blood","Hematology",17307,26.5
 "51254","Monocytes","Blood","Hematology",17307,26.5
+"51256","Neutrophils","Blood","Hematology",17307,26.5
 "51200","Eosinophils","Blood","Hematology",17306,26.5
 "50878","Asparate Aminotransferase (AST)","Blood","Chemistry",17027,26
 "50861","Alanine Aminotransferase (ALT)","Blood","Chemistry",16909,25.9
@@ -50,11 +50,11 @@
 "50811","Hemoglobin","Blood","Blood Gas",11825,18.1
 "50806","Chloride, Whole Blood","Blood","Blood Gas",11259,17.2
 "50817","Oxygen Saturation","Blood","Blood Gas",10563,16.2
+"51133","Absolute Lymphocyte Count","Blood","Hematology",10270,15.7
 "52069","Absolute Basophil Count","Blood","Hematology",10270,15.7
 "52073","Absolute Eosinophil Count","Blood","Hematology",10270,15.7
-"52075","Absolute Neutrophil Count","Blood","Hematology",10270,15.7
-"51133","Absolute Lymphocyte Count","Blood","Hematology",10270,15.7
 "52074","Absolute Monocyte Count","Blood","Hematology",10270,15.7
+"52075","Absolute Neutrophil Count","Blood","Hematology",10270,15.7
 "50862","Albumin","Blood","Chemistry",10136,15.5
 "50954","Lactate Dehydrogenase (LD)","Blood","Chemistry",9900,15.1
 "50911","Creatine Kinase, MB Isoenzyme","Blood","Chemistry",9861,15.1

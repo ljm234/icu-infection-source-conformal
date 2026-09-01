@@ -257,6 +257,7 @@ manifiesto <- list(
   ejecutado_en   = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   semilla        = SEMILLA,
   r_version      = R.version.string,
+  guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
   duckdb_version = as.character(packageVersion("duckdb")),
   decisiones = list(
     unidad_analisis = "primera estancia en UCI por paciente",

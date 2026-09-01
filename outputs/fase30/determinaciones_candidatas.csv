@@ -33,10 +33,10 @@
 "50934","H",NA,"Blood","Chemistry",19985,30.6,FALSE
 "50947","I",NA,"Blood","Chemistry",19984,30.6,FALSE
 "50808","Free Calcium",NA,"Blood","Blood Gas",19267,29.5,FALSE
-"51256","Neutrophils",NA,"Blood","Hematology",17307,26.5,FALSE
 "51146","Basophils",NA,"Blood","Hematology",17307,26.5,FALSE
 "51244","Lymphocytes",NA,"Blood","Hematology",17307,26.5,FALSE
 "51254","Monocytes",NA,"Blood","Hematology",17307,26.5,FALSE
+"51256","Neutrophils",NA,"Blood","Hematology",17307,26.5,FALSE
 "51200","Eosinophils",NA,"Blood","Hematology",17306,26.5,FALSE
 "50878","Asparate Aminotransferase (AST)",NA,"Blood","Chemistry",17027,26,FALSE
 "50861","Alanine Aminotransferase (ALT)",NA,"Blood","Chemistry",16909,25.9,FALSE
@@ -50,11 +50,11 @@
 "50811","Hemoglobin",NA,"Blood","Blood Gas",11825,18.1,FALSE
 "50806","Chloride, Whole Blood",NA,"Blood","Blood Gas",11259,17.2,FALSE
 "50817","Oxygen Saturation",NA,"Blood","Blood Gas",10563,16.2,FALSE
+"51133","Absolute Lymphocyte Count",NA,"Blood","Hematology",10270,15.7,FALSE
 "52069","Absolute Basophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
 "52073","Absolute Eosinophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
-"52075","Absolute Neutrophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
-"51133","Absolute Lymphocyte Count",NA,"Blood","Hematology",10270,15.7,FALSE
 "52074","Absolute Monocyte Count",NA,"Blood","Hematology",10270,15.7,FALSE
+"52075","Absolute Neutrophil Count",NA,"Blood","Hematology",10270,15.7,FALSE
 "50862","Albumin",NA,"Blood","Chemistry",10136,15.5,FALSE
 "50954","Lactate Dehydrogenase (LD)",NA,"Blood","Chemistry",9900,15.1,FALSE
 "50911","Creatine Kinase, MB Isoenzyme",NA,"Blood","Chemistry",9861,15.1,FALSE
