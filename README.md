@@ -213,13 +213,12 @@ evaluation; whoever reads it afterwards uses it.
 The partition also wrote the sealed rows to a file of their own, whose
 name asks that it not be opened. That no procedure reads it is checkable
 rather than promised:
-2 procedures name the file and 0 read it, namely the one that
-writes it and the audit that checks it is not versioned. The check is one
-command, recorded here with its output:
+2 procedures name the file and 0 read it, and the check is a
+single command, recorded here with the output it gives:
 
     git grep -l -- 'outputs/fase5/SELLADO_NO_ABRIR.csv' -- 'R/*.R'
     R/22_particion.R
-    R/64_auditoria_publicacion.R
+    R/89_contactos_con_el_sellado.R
 
 ## Principal results
 

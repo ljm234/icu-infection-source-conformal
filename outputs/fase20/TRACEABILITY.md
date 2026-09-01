@@ -11,6 +11,9 @@ margin never exceeds the largest possible rounding error.
 |---|---|---|---|---|
 | Manifiestos que declaran la guardia | 19.0000 | 19.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
+| Rutas reservadas que el lector establece | 14.0000 | 14.0000 | 0.50000 | yes |
+| Rutas reservadas que son un directorio | 1.0000 | 1.0000 | 0.50000 | yes |
+| Consumidores del lector unico | 4.0000 | 4.0000 | 0.50000 | yes |
 | Matriz, celdas que difieren entre versiones | 0.0000 | 0.0000 | 0.50000 | yes |
 | Matriz, celdas comparadas | 580325.0000 | 580325.0000 | 0.50000 | yes |
 | Matriz, posiciones que cambian antes del arreglo | 98.7700 | 98.7700 | 0.00500 | yes |

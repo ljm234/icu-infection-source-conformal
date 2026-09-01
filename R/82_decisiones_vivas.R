@@ -176,22 +176,14 @@ for (p in POSTERIORES) {
 }
 cat("Los", length(POSTERIORES), "son posteriores a la fijacion.\n\n")
 
-# El recuento de rutas reservadas se lee del archivo de exclusiones, que es
-# donde la decision surte efecto. Copiarlas aqui crearia una segunda lista
-# que podria divergir de la primera sin que nada lo advirtiera.
-gi <- readLines(ruta(".gitignore"))
-i <- grep("Patient level derived data", gi)
-if (length(i) != 1) {
-  cat("El archivo de exclusiones no delimita las rutas reservadas.\n")
-  quit(status = 1)
-}
-reservadas <- gi[(i + 1):length(gi)]
-reservadas <- reservadas[nzchar(trimws(reservadas)) &
-                         !grepl("^\\s*#", reservadas)]
-if (length(reservadas) == 0) {
-  cat("El archivo de exclusiones no relaciona ruta reservada alguna.\n")
-  quit(status = 1)
-}
+# El recuento de rutas reservadas lo establece el lector unico, que las toma
+# del archivo de exclusiones, que es donde la decision surte efecto. Este
+# procedimiento las analizaba por su cuenta, la auditoria las transcribia y
+# la contabilidad de contactos volvia a analizarlas: tres listas del mismo
+# archivo, ya separadas entre si.
+source("R/00_rutas_reservadas.R")
+res <- rutas_reservadas()
+reservadas <- res$ruta
 
 # ---------------------------------------------------------------------------
 # Composicion.
@@ -232,6 +224,7 @@ d33  <- ruta("outputs/fase33/procedencia_seleccion.csv")
 d33v <- ruta("outputs/fase33/versiones_del_bloque.csv")
 d15  <- ruta("outputs/fase15/sensibilidad_lactato.csv")
 exc  <- ruta(".gitignore")
+r00  <- ruta("R/00_rutas_reservadas.R")
 
 # El documento se acumula por parrafos y no por lineas. Cada pieza se anade
 # al parrafo en curso y `cerrar` lo envuelve al ancho de la pagina. Componer
@@ -549,16 +542,25 @@ cerrar()
 add(prosa(
 "El acuerdo de uso de PhysioNet prohibe redistribuir datos derivados a nivel",
 "de paciente, y su publicacion podria costar el acceso. La lista de rutas",
-"reservadas vive en un solo lugar, que es donde la exclusion surte efecto."))
+"reservadas vive en un solo lugar, que es donde la exclusion surte efecto, y",
+"un solo lector la obtiene de ahi."))
 cerrar()
 
-add(cifra("`%s` relaciona %d rutas bajo ese encabezado, ademas del",
-          exc, length(reservadas)))
+add(cifra("`%s` relaciona %d rutas bajo ese encabezado, y %d de ellas excluye",
+          exc, nrow(res), sum(res$directorio_entero)))
 add(prosa(
-"directorio de derivados y de la copia local de la base, que quedan fuera",
-"del repositorio por completo. Ninguna de esas rutas se abre para redactar,",
-"y ninguna cifra de este trabajo procede de leerlas a mano: los",
-"procedimientos las leen y depositan agregados, que es lo que se publica."))
+"un directorio entero. Queda fuera ademas la copia local de la base, que no",
+"forma parte del deposito. Ninguna de esas rutas se abre para redactar, y",
+"ninguna cifra de este trabajo procede de leerlas a mano: los procedimientos",
+"las leen y depositan agregados, que es lo que se publica."))
+cerrar()
+
+add(cifra("El lector es `%s`, y no hay otro. Se detiene si la", r00))
+add(prosa(
+"seccion no esta delimitada una sola vez, si alguna ruta declarada no la",
+"excluye git, o si la seccion queda vacia, y devuelve la misma lista se le",
+"llame desde donde se le llame. Antes cada procedimiento obtenia la lista",
+"por su cuenta y los tres discrepaban en su tamano."))
 cerrar()
 
 add(cifra("`%s` comprueba lo anterior sobre los hechos y no sobre la", r64))

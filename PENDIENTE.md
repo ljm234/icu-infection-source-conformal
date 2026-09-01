@@ -4,8 +4,8 @@ Estado del encargo, no documentacion del trabajo. Recoge lo que falta de la
 revision previa al manuscrito, para que una sesion nueva sepa donde retomar.
 Se borra cuando quede vacio.
 
-Van diez bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
-estaba en la lista y salio por el camino. Quedan cuatro y la parte B.
+Van once bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
+estaba en la lista y salio por el camino. Quedan tres y la parte B.
 
 ## Como se trabaja
 
@@ -20,16 +20,6 @@ rehacerla produciria un modelo cuyas decisiones de diseno se tomaron habiendo
 visto ya la unidad reservada.
 
 ## Lote 7
-
-### A9. Dos listas de rutas reservadas
-
-`DECISIONES.md` afirma que la lista vive en un solo lugar. Vive en dos:
-`.gitignore`, de donde `R/82_decisiones_vivas.R` la lee bien, y
-`R/64_auditoria_publicacion.R:45`, que la transcribe entera. Hoy coinciden,
-pero pueden divergir sin que nada lo advierta.
-
-Correccion acordada: que `R/64` la lea de `.gitignore` con el mismo
-delimitador que usa `R/82`.
 
 ### A10. Los analisis posteriores, enumerados a mano
 

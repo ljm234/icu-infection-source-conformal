@@ -40,16 +40,13 @@ detener <- function(...) {
   quit(status = 1)
 }
 
-if (!file.exists(".gitignore")) detener("Fuente ausente: .gitignore")
-
-# Las rutas a nivel de paciente, leidas de donde la exclusion surte efecto.
-gi <- readLines(".gitignore", warn = FALSE)
-i <- grep("Patient level derived data", gi)
-if (length(i) != 1) detener("El archivo de exclusiones no delimita las rutas.")
-reservadas <- gi[(i + 1):length(gi)]
-reservadas <- reservadas[nzchar(trimws(reservadas)) &
-                         !grepl("^\\s*#", reservadas)]
-reservadas <- c(reservadas, "data/")
+# Las rutas a nivel de paciente, por el lector unico. Antes se analizaban
+# aqui, y el directorio de derivados se anadia a mano una linea mas abajo:
+# esa linea era exactamente la clase de excepcion escrita que este trabajo
+# evita, y hacia que este procedimiento contase catorce rutas donde la
+# documentacion contaba trece.
+source("R/00_rutas_reservadas.R")
+reservadas <- rutas_reservadas()$ruta
 if (!EVAL %in% reservadas) detener("El registro de la evaluacion no figura ",
                                    "entre las rutas reservadas.")
 

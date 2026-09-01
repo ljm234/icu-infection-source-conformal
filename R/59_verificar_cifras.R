@@ -157,6 +157,71 @@ FUENTES <- list(
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
   "Multiplicidad de las diferencias"          = "outputs/fase32/multiplicidad_diferencias.csv")
 
+# ---------------------------------------------------------------------------
+# La lista de rutas reservadas se obtiene en un solo sitio.
+# ---------------------------------------------------------------------------
+# Tres procedimientos la necesitan y hasta hace poco cada uno la obtenia por
+# su cuenta: dos analizaban el archivo de exclusiones y el tercero lo
+# transcribia. Los tres discrepaban en su tamano. Un lector unico no basta si
+# nada impide que aparezca un cuarto analisis, de modo que se comprueba que
+# solo un archivo lea el de exclusiones, que sea el mismo que define la
+# funcion, y que quien la llame lo cargue en lugar de reescribirlo.
+#
+# Lo que se busca no es quien nombra el archivo, porque la documentacion lo
+# cita sin leerlo, sino quien delimita la seccion: el encabezado es la firma
+# inconfundible de extraer la lista. Los dos patrones llevan un signo de
+# repeticion donde el texto buscado lleva un espacio, de modo que esta
+# comprobacion no se cuenta a si misma. No hay excepcion escrita a mano: la
+# distincion es estructural, quien delimita escribe el encabezado y quien
+# busca delimitadores escribe su patron.
+fuentes_r <- sort(list.files("R", pattern = "[.]R$", full.names = TRUE))
+txt_r <- lapply(fuentes_r, function(f)
+  paste(readLines(f, warn = FALSE), collapse = "\n"))
+names(txt_r) <- basename(fuentes_r)
+busca <- function(pat) names(txt_r)[vapply(txt_r, grepl, logical(1),
+                                           pattern = pat)]
+
+lee_exc <- busca("Patient level +derived data")
+define  <- busca("rutas_reservadas <- +function")
+llaman  <- busca("rutas_reservadas\\(\\)")
+
+cat("=== EL LECTOR DE RUTAS RESERVADAS ===\n")
+cat("Archivos que delimitan la seccion:  ", length(lee_exc), "\n")
+cat("Archivos que definen la funcion:    ", length(define), "\n")
+cat("Archivos que la llaman:             ", length(llaman), "\n")
+
+if (length(define) != 1) {
+  cat("La funcion no se define en un solo archivo.\n"); quit(status = 1)
+}
+if (length(lee_exc) != 1 || !identical(lee_exc, define)) {
+  cat("La seccion la delimita alguien que no es el lector:\n")
+  for (f in setdiff(lee_exc, define)) cat("  ", f, "\n")
+  cat("La lista volveria a obtenerse en mas de un sitio.\n"); quit(status = 1)
+}
+sin_cargar <- setdiff(llaman, c(define,
+  busca(sprintf("source\\(\"R/%s\"", gsub("[.]", "[.]", define)))))
+if (length(sin_cargar) > 0) {
+  cat("Llaman a la funcion sin cargar al lector:\n")
+  for (f in sin_cargar) cat("  ", f, "\n"); quit(status = 1)
+}
+
+# Y que llamarlo desde otro directorio del deposito devuelva la misma lista,
+# porque de eso depende que los tres consumidores reciban lo mismo.
+# Se carga por su nombre literal, que es lo que la comprobacion de arriba
+# exige de todo el que la llame, esta incluida. Derivar el nombre aqui la
+# eximiria de su propia regla.
+source("R/00_rutas_reservadas.R")
+rr <- rutas_reservadas()
+otro <- paste0("cd outputs/fase20 && Rscript -e 'source(\"",
+               normalizePath(file.path("R", define)),
+               "\"); cat(rutas_reservadas()$ruta, sep = \"\\n\")' 2>/dev/null")
+desde_otro <- suppressWarnings(system(otro, intern = TRUE))
+if (!identical(rr$ruta, desde_otro)) {
+  cat("Llamado desde otro directorio devuelve otra lista.\n"); quit(status = 1)
+}
+cat("Rutas reservadas:", nrow(rr),
+    " identica desde otro directorio: si\n\n")
+
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
 for (n in names(FUENTES))
@@ -199,6 +264,12 @@ reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
   N_MF_DECLARAN, 19, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
+reg[[length(reg)+1]] <- comprobar("Rutas reservadas que el lector establece",
+  nrow(rr), 14, 0.5)
+reg[[length(reg)+1]] <- comprobar("Rutas reservadas que son un directorio",
+  sum(rr$directorio_entero), 1, 0.5)
+reg[[length(reg)+1]] <- comprobar("Consumidores del lector unico",
+  length(llaman), 4, 0.5)
 
 # El estado derivado. Ningun deposito puede quedar indeterminado: un
 # manifiesto posterior a la guardia que no la declarara seria justo la via de

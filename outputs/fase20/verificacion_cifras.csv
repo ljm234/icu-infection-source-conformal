@@ -1,6 +1,9 @@
 "afirmacion","valor","esperado","tolerancia","concuerda"
 "Manifiestos que declaran la guardia",19,19,0.5,TRUE
 "Manifiestos anteriores a la guardia",4,4,0.5,TRUE
+"Rutas reservadas que el lector establece",14,14,0.5,TRUE
+"Rutas reservadas que son un directorio",1,1,0.5,TRUE
+"Consumidores del lector unico",4,4,0.5,TRUE
 "Matriz, celdas que difieren entre versiones",0,0,0.5,TRUE
 "Matriz, celdas comparadas",580325,580325,0.5,TRUE
 "Matriz, posiciones que cambian antes del arreglo",98.77,98.77,0.005,TRUE

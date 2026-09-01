@@ -5,7 +5,7 @@ que archivo consta. Se consulta antes de escribir sobre cualquiera de estos
 puntos, para que lo que se publique se apoye en los archivos y no en el
 recuerdo de quien redacta.
 
-Generado el 2026-08-31 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
+Generado el 2026-09-01 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
 se comprueba al componer el documento: ha de existir y ha de estar bajo control
 de versiones. El procedimiento se detiene si alguna falta, de modo que este
 registro no puede sobrevivir a los archivos que lo sostienen.
@@ -219,13 +219,20 @@ comun.
 
 El acuerdo de uso de PhysioNet prohibe redistribuir datos derivados a nivel de
 paciente, y su publicacion podria costar el acceso. La lista de rutas
-reservadas vive en un solo lugar, que es donde la exclusion surte efecto.
+reservadas vive en un solo lugar, que es donde la exclusion surte efecto, y un
+solo lector la obtiene de ahi.
 
-`.gitignore` relaciona 13 rutas bajo ese encabezado, ademas del directorio de
-derivados y de la copia local de la base, que quedan fuera del repositorio por
-completo. Ninguna de esas rutas se abre para redactar, y ninguna cifra de este
-trabajo procede de leerlas a mano: los procedimientos las leen y depositan
-agregados, que es lo que se publica.
+`.gitignore` relaciona 14 rutas bajo ese encabezado, y 1 de ellas excluye un
+directorio entero. Queda fuera ademas la copia local de la base, que no forma
+parte del deposito. Ninguna de esas rutas se abre para redactar, y ninguna
+cifra de este trabajo procede de leerlas a mano: los procedimientos las leen y
+depositan agregados, que es lo que se publica.
+
+El lector es `R/00_rutas_reservadas.R`, y no hay otro. Se detiene si la seccion
+no esta delimitada una sola vez, si alguna ruta declarada no la excluye git, o
+si la seccion queda vacia, y devuelve la misma lista se le llame desde donde se
+le llame. Antes cada procedimiento obtenia la lista por su cuenta y los tres
+discrepaban en su tamano.
 
 `R/64_auditoria_publicacion.R` comprueba lo anterior sobre los hechos y no
 sobre la intencion: inspecciona el encabezado de cada archivo versionado en

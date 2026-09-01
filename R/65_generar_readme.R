@@ -586,13 +586,12 @@ add(prosa(
 "name asks that it not be opened. That no procedure reads it is checkable",
 "rather than promised:"))
 
-add(cifra("%d procedures name the file and %d read it, namely the one that",
+add(cifra("%d procedures name the file and %d read it, and the check is a",
           as.integer(apar$procedimientos_que_lo_nombran),
           as.integer(apar$procedimientos_que_lo_leen)))
 
 add(prosa(
-"writes it and the audit that checks it is not versioned. The check is one",
-"command, recorded here with its output:",
+"single command, recorded here with the output it gives:",
 ""))
 
 add(cifra("    %s", apar$comando))

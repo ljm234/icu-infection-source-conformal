@@ -1,4 +1,3 @@
-data/
 *.duckdb
 *.duckdb.wal
 *.parquet
@@ -8,6 +7,7 @@ data/
 renv/library/
 
 # Patient level derived data, excluded under the PhysioNet data use agreement
+data/
 outputs/fase4/matriz.csv
 outputs/fase4/matriz_limpia.csv
 outputs/fase5/matriz_particionada.csv

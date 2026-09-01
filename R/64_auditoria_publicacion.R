@@ -42,14 +42,12 @@ cat("\nContenido del directorio de derivados bajo control de versiones:",
     length(derivados), "\n")
 if (length(derivados) > 0) for (f in derivados) cat("  ", f, "\n")
 
-PROTEGIDAS <- c("data",
-  "outputs/fase4/matriz.csv", "outputs/fase4/matriz_limpia.csv",
-  "outputs/fase5/matriz_particionada.csv", "outputs/fase5/SELLADO_NO_ABRIR.csv",
-  "outputs/fase6/imputaciones.rds", "outputs/fase6/objeto_mice.rds",
-  "outputs/fase6/objeto_mice_ampliado.rds",
-  "outputs/fase7/prob_calibracion.csv", "outputs/fase7/prob_prueba.csv",
-  "outputs/fase8/prob_calibracion.csv", "outputs/fase8/prueba_con_conjuntos.csv",
-  "outputs/fase11/sellado_evaluado.csv", "outputs/fase15/matriz_peor_valor.csv")
+# Las rutas protegidas, por el lector unico. Estaban transcritas aqui, y una
+# transcripcion junto a dos analisis del mismo archivo son tres listas que
+# pueden separarse sin que nada lo advierta. Ya se habian separado.
+source("R/00_rutas_reservadas.R")
+PROTEGIDAS <- rutas_reservadas()$ruta
+cat("\nRutas reservadas que el lector unico establece:", length(PROTEGIDAS), "\n")
 
 historial <- system(paste("git log --all --oneline --",
   paste(PROTEGIDAS, collapse = " "), "2>/dev/null"), intern = TRUE)
