@@ -48,7 +48,16 @@ contra los archivos:
     B.1  composicion: renglones huerfanos de dos y tres palabras en README y
          PROTOCOLO
     B.2  oraciones que empiezan por cifra, cinco casos
-    B.8  nomenclatura entre archivos, cuatro casos
+    B.8  nomenclatura entre archivos, cuatro casos, y una quinta que salio
+         al derivar B.9 y es peor: varios procedimientos recortan el nombre
+         de la unidad para que la tabla quepa en la consola y depositan el
+         recorte. R/35 ya esta arreglado, porque bloqueaba B.9. Quedan
+         R/46, R/47, R/48, R/50, R/52 y R/57, con al menos seis depositos
+         que llevan "Cardiac Vascular Intensive Care Un" o "Medical/
+         Surgical Intensive Car". Y R/74:286 y R/77:67 emparejan por
+         prefijo para tolerarlo, que es codigo aguas abajo compensando un
+         identificador mutilado aguas arriba. Al arreglar el origen, esos
+         dos emparejamientos han de volver a ser por igualdad
     B.9  un hecho favorable que el README no aprovecha: la unidad sellada es
          la de mayor distancia de las seis, de modo que la validacion externa
          es el caso peor

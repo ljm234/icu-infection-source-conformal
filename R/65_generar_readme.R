@@ -37,6 +37,8 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase35/curva_calibracion.csv",
              "outputs/fase35/pendiente_calibracion.csv",
              "outputs/fase32/potencia_no_usada.csv",
+             "outputs/fase42/distancia_de_la_reservada.csv",
+             "outputs/fase42/extremos_por_categoria.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -119,6 +121,17 @@ casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
 pot   <- leer("outputs/fase32/potencia_no_usada.csv")
+dsel  <- leer("outputs/fase42/distancia_de_la_reservada.csv")
+xsel  <- leer("outputs/fase42/extremos_por_categoria.csv")
+rsel  <- leer("outputs/fase42/resumen.csv")
+
+# El hecho favorable solo se compone si los archivos lo sostienen.
+if (!dsel$es_la_mas_distante[1] || !rsel$extrema_en_todas[1]) {
+  cat("La unidad reservada no es la mas disimil en todo. El documento no\n")
+  cat("puede afirmarlo. El procedimiento se detiene.\n")
+  quit(status = 1)
+}
+i_alta <- which.max(xsel$reservada)
 cont  <- leer("outputs/fase40/contactos_con_el_sellado.csv")
 apar  <- leer("outputs/fase40/conjunto_apartado.csv")
 ordm  <- leer("outputs/fase39/orden_de_la_matriz.csv")
@@ -558,6 +571,38 @@ add(prosa(
 "and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a",
 "rule. `R/22_particion.R` names the unit as a constant and computes no",
 "selection criterion.",
+""))
+add(cifra("That unit is also the most dissimilar of the %d, which is worth",
+          as.integer(dsel$unidades[1])))
+add(prosa(
+"stating rather than leaving for a reader to find. By the same statistic",
+"that informed the judgement, the mean standardised difference between a",
+"unit and the rest of the cohort averaged over the determinations, it",
+"stands at"))
+
+add(cifra("%s against %s for the next, %s times the highest of the other",
+          format(dsel$distancia_de_la_reservada[1], nsmall = 3),
+          format(dsel$mayor_de_las_demas[1], nsmall = 3),
+          format(dsel$veces_la_siguiente[1], nsmall = 2)))
+add(cifra("%d and outside their range. It also takes the extreme share in",
+          as.integer(dsel$unidades[1] - 1)))
+add(cifra("every one of the %d columns of the class profile, holding",
+          as.integer(nrow(xsel))))
+add(cifra("%s percent of `%s` where no other unit exceeds %s.",
+          format(xsel$reservada[i_alta], nsmall = 1),
+          xsel$categoria[i_alta],
+          format(xsel$mayor_de_las_demas[i_alta], nsmall = 1)))
+add(prosa(
+"`outputs/fase42/distancia_de_la_reservada.csv` and",
+"`outputs/fase42/extremos_por_categoria.csv` carry both comparisons.",
+"",
+"What that establishes is that the external validation was not a favourable",
+"draw. It was made on the unit furthest from the rest, so it is the worst",
+"case among those available, and the sites that carry the leave-one-unit-out",
+"analysis span a narrower range of dissimilarity than the sealed one",
+"represents. What it does not establish is that the unit was chosen for that",
+"reason. The distance was computed first, the judgement had it in view, and",
+"no rule turns it into a criterion.",
 "",
 "How often the unit is touched afterwards, and with what commitment, is",
 "derived from the code by `R/89_contactos_con_el_sellado.R` rather than",

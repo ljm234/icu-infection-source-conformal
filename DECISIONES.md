@@ -27,7 +27,7 @@ si lo hiciera.
 Cuantos analisis son posteriores no se enumera. `R/90_posterioridad.R` lo
 deriva del historial, y con tres categorias, porque no comprometen lo mismo.
 
-Posteriores a la fijacion hay 66. De ellos, 49 son ademas posteriores al
+Posteriores a la fijacion hay 67. De ellos, 50 son ademas posteriores al
 2026-08-20, fecha en que la unidad reservada se abrio, que sale del alta de
 `outputs/fase11/cobertura_sellado.csv` y no de una constante escrita. Y 29 de
 esos leen ademas alguna tabla a nivel de paciente. El reparto completo,
@@ -45,7 +45,7 @@ nombran en la comprobacion, se derivan de donde hay un objeto ajustado bajo
 control de versiones, y el procedimiento se detiene si alguna vez alguno
 escribiera en ellas.
 
-Y de esos 49, 26 depositan algo de lo que el documento toma una cifra. Los
+Y de esos 50, 27 depositan algo de lo que el documento toma una cifra. Los
 otros 23 son comprobaciones: se ejecutan, se detienen si algo no cuadra, y no
 publican nada por su cuenta. Que un archivo sea publicado tampoco se enumera:
 lo es si lo lee un generador de prosa, y un generador de prosa es el que

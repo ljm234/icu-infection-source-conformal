@@ -9,7 +9,7 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
-| Manifiestos que declaran la guardia | 20.0000 | 20.0000 | 0.50000 | yes |
+| Manifiestos que declaran la guardia | 21.0000 | 21.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
 | Rutas reservadas que el lector establece | 14.0000 | 14.0000 | 0.50000 | yes |
 | Rutas reservadas que son un directorio | 1.0000 | 1.0000 | 0.50000 | yes |
@@ -25,17 +25,23 @@ margin never exceeds the largest possible rounding error.
 | Procedimientos que predicen sobre ella | 1.0000 | 1.0000 | 0.50000 | yes |
 | Procedimientos que reutilizan lo almacenado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Procedimientos que la describen sin predecir | 1.0000 | 1.0000 | 0.50000 | yes |
-| Procedimientos contrastados | 88.0000 | 88.0000 | 0.50000 | yes |
-| Posteriores a la fijacion | 66.0000 | 66.0000 | 0.50000 | yes |
-| Posteriores a la apertura | 49.0000 | 49.0000 | 0.50000 | yes |
+| Procedimientos contrastados | 89.0000 | 89.0000 | 0.50000 | yes |
+| Posteriores a la fijacion | 67.0000 | 67.0000 | 0.50000 | yes |
+| Posteriores a la apertura | 50.0000 | 50.0000 | 0.50000 | yes |
 | Ademas leen filas por paciente | 29.0000 | 29.0000 | 0.50000 | yes |
 | Ajustan tras la apertura | 6.0000 | 6.0000 | 0.50000 | yes |
 | Escriben artefacto del modelo despues | 0.0000 | 0.0000 | 0.50000 | yes |
 | Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
-| Producen una cifra publicada | 36.0000 | 36.0000 | 0.50000 | yes |
-| Posteriores que producen cifra publicada | 26.0000 | 26.0000 | 0.50000 | yes |
+| Producen una cifra publicada | 37.0000 | 37.0000 | 0.50000 | yes |
+| Posteriores que producen cifra publicada | 27.0000 | 27.0000 | 0.50000 | yes |
 | Celdas que resisten el analisis adoptado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Analisis depositados y no adoptados | 9.0000 | 9.0000 | 0.50000 | yes |
+| Distancia de la unidad reservada | 0.4020 | 0.4020 | 0.00050 | yes |
+| Mayor distancia de las demas | 0.2200 | 0.2200 | 0.00050 | yes |
+| Veces la siguiente | 1.8300 | 1.8300 | 0.00500 | yes |
+| Unidades del perfil | 6.0000 | 6.0000 | 0.50000 | yes |
+| Categorias en que es extremo | 5.0000 | 5.0000 | 0.50000 | yes |
+| Columnas del perfil de categorias | 5.0000 | 5.0000 | 0.50000 | yes |
 | Ajuste efectivo de la comparacion | 2487.0000 | 2487.0000 | 0.50000 | yes |
 | Ajuste posible con la calibracion | 4010.0000 | 4010.0000 | 0.50000 | yes |
 | Estancias que quedaron sin usar | 1523.0000 | 1523.0000 | 0.50000 | yes |
@@ -45,10 +51,10 @@ margin never exceeds the largest possible rounding error.
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 24.0000 | 24.0000 | 0.50000 | yes |
-| Depositos con estado establecido, recuento | 24.0000 | 24.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 25.0000 | 25.0000 | 0.50000 | yes |
+| Depositos con estado establecido, recuento | 25.0000 | 25.0000 | 0.50000 | yes |
 | Depositos escritos sin la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
-| Depositos con la guardia declarada | 20.0000 | 20.0000 | 0.50000 | yes |
+| Depositos con la guardia declarada | 21.0000 | 21.0000 | 0.50000 | yes |
 | Depositos con la guardia derivada | 4.0000 | 4.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
@@ -395,6 +401,8 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase39/orden_de_la_matriz.csv`
 - `outputs/fase40/contactos_con_el_sellado.csv`
 - `outputs/fase41/posterioridad.csv`
+- `outputs/fase42/distancia_de_la_reservada.csv`
+- `outputs/fase42/extremos_por_categoria.csv`
 - `outputs/fase41/fechas.csv`
 - `outputs/fase40/conjunto_apartado.csv`
 - `outputs/fase33/procedencia_seleccion.csv`

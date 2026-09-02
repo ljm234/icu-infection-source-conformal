@@ -188,6 +188,26 @@ and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a
 rule. `R/22_particion.R` names the unit as a constant and computes no
 selection criterion.
 
+That unit is also the most dissimilar of the 6, which is worth
+stating rather than leaving for a reader to find. By the same statistic
+that informed the judgement, the mean standardised difference between a
+unit and the rest of the cohort averaged over the determinations, it
+stands at
+0.402 against 0.220 for the next, 1.83 times the highest of the other
+5 and outside their range. It also takes the extreme share in
+every one of the 5 columns of the class profile, holding
+95.2 percent of `sin_crecimiento` where no other unit exceeds 85.9.
+`outputs/fase42/distancia_de_la_reservada.csv` and
+`outputs/fase42/extremos_por_categoria.csv` carry both comparisons.
+
+What that establishes is that the external validation was not a favourable
+draw. It was made on the unit furthest from the rest, so it is the worst
+case among those available, and the sites that carry the leave-one-unit-out
+analysis span a narrower range of dissimilarity than the sealed one
+represents. What it does not establish is that the unit was chosen for that
+reason. The distance was computed first, the judgement had it in view, and
+no rule turns it into a criterion.
+
 How often the unit is touched afterwards, and with what commitment, is
 derived from the code by `R/89_contactos_con_el_sellado.R` rather than
 listed, because a list goes stale every time someone reads that unit

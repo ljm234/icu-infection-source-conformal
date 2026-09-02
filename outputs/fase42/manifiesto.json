@@ -1,0 +1,15 @@
+{
+  "fase": "42",
+  "ejecutado_en": "2026-09-01T18:38:40-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "situar a la unidad reservada entre las demas por el estadistico que informo el juicio y por el reparto de categorias, para que el documento pueda decir un hecho favorable que hoy calla",
+  "identificacion": "la reservada se deriva de estar en el perfil de unidades y no en la validacion por sedes; no se escribe aqui",
+  "estadistico": "diferencia estandarizada media entre la unidad y el resto de la cohorte, promediada sobre las determinaciones, tal como la calcula el perfil de unidades",
+  "lo_que_establece": "que la validacion externa se hizo sobre la unidad mas alejada del resto, de modo que es el caso peor entre los disponibles, y que las sedes de la validacion cubren un rango de disimilitud mas estrecho",
+  "lo_que_no_establece": "que la unidad se eligiera por esa razon; la eleccion fue un juicio y ninguna regla la convierte en criterio",
+  "unidades": 6,
+  "distancia_de_la_reservada": 0.402,
+  "mayor_de_las_demas": 0.22,
+  "extrema_en_todas_las_categorias": true
+}
