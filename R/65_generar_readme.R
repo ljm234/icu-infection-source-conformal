@@ -545,9 +545,9 @@ add(cifra("Of the %s stays, %d have all of them within the window, and the",
           as.integer(comp$estancias_completas[comp$conjunto == "candidatas"])))
 add(cifra("most any stay reaches is %d. What can be compared is the seventeen",
           as.integer(comp$maximo_presentes[comp$conjunto == "candidatas"])))
-add(cifra("against those plus the %d discarded whose coverage exceeds the",
+add(cifra("against those same seventeen plus the %d discarded whose coverage",
           as.integer(cmp29$determinaciones_anadidas)))
-add(prosa("least frequent retained one."))
+add(prosa("exceeds that of the least frequent retained one."))
 add(cifra("Of that cohort, %s stays are complete in those %d; %s of them fall",
           format(casc$estancias[2], big.mark = ","),
           as.integer(cmp29$determinaciones_retenidas +
@@ -568,11 +568,14 @@ add(cifra("Only %d of the %d classes shows an interval that excludes zero. The",
           as.integer(cmp29$clases_que_excluyen_el_cero),
           as.integer(nrow(icd) - 1)))
 add(prosa(
-"four are corrected jointly by Holm's method, as the cells of the"))
-add(cifra("transportability section are, and neither at %s nor at %s does any",
-          format(mlt$nivel[1]), format(mlt$nivel[2])))
-add(cifra("of them survive: %d resist. Reporting the one that excludes",
+"four are corrected jointly by Holm's method, the same correction the",
+"transportability section applies, though there it runs over a"))
+add(cifra("beta-binomial test and here over a paired bootstrap. At neither %s nor",
+          format(mlt$nivel[1])))
+add(cifra("%s does any of them survive: %d do. Reporting the one that",
+          format(mlt$nivel[2]),
           as.integer(cmp29$clases_que_resisten_holm)))
+add(prosa("excludes"))
 add(prosa(
 "zero without saying that it does not survive correction would apply one",
 "standard here and another there.",
@@ -622,8 +625,9 @@ add(prosa(
 "not an objection. `outputs/fase32/potencia_no_usada.csv` carries the count.",
 "",
 "**Aggregation.** First recorded value per variable. The first value is the",
-"only one computable without knowing how many measurements follow, which",
-"matters because monitoring intensity differs across units."))
+"only one computable without knowing how many measurements follow, and",
+"that computability matters because monitoring intensity differs across",
+"units."))
 
 add(cifra("Correlation with worst-value aggregation never falls below %.4f",
           min(agr$correlacion)))
@@ -1098,7 +1102,9 @@ add(prosa(
 "",
 "### The sealed unit",
 "",
-"Evaluated once, without recalibration, and read by the same criterion:",
+"Evaluated once, without recalibration, and read by the criterion the",
+"transportability section uses: the Beta-Binomial interval, which is not the",
+"one the test-set table above reports.",
 "",
 "    class                 n   cover   interval",
 ""))

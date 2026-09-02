@@ -97,19 +97,20 @@ split either: 12 blood assays with higher coverage than that were discarded.
 
 A comparison on stays complete in all the candidates cannot be made. Of the
 23,213 stays, 0 have all of them within the window, and the most any stay
-reaches is 69. What can be compared is the seventeen against those plus the 12
-discarded whose coverage exceeds the least frequent retained one. Of that
-cohort, 5,866 stays are complete in those 29; 3,774 of them fall in the
-training or test partition, and 3,498 of those carry one of the four modelled
-classes. That last set carries the comparison, and on it the wider
-specification does not improve on the narrower: the mean area across minority
-classes moves by -0.0113, with a paired bootstrap interval of -0.0249 to
-0.0027 that contains zero, so the direction is not established. Only 1 of the
-4 classes shows an interval that excludes zero. The four are corrected jointly
-by Holm's method, as the cells of the transportability section are, and
-neither at 0.05 nor at 0.025 does any of them survive: 0 resist. Reporting the
-one that excludes zero without saying that it does not survive correction
-would apply one standard here and another there.
+reaches is 69. What can be compared is the seventeen against those same
+seventeen plus the 12 discarded whose coverage exceeds that of the least
+frequent retained one. Of that cohort, 5,866 stays are complete in those 29;
+3,774 of them fall in the training or test partition, and 3,498 of those carry
+one of the four modelled classes. That last set carries the comparison, and on
+it the wider specification does not improve on the narrower: the mean area
+across minority classes moves by -0.0113, with a paired bootstrap interval of
+-0.0249 to 0.0027 that contains zero, so the direction is not established.
+Only 1 of the 4 classes shows an interval that excludes zero. The four are
+corrected jointly by Holm's method, the same correction the transportability
+section applies, though there it runs over a beta-binomial test and here over
+a paired bootstrap. At neither 0.05 nor 0.025 does any of them survive: 0 do.
+Reporting the one that excludes zero without saying that it does not survive
+correction would apply one standard here and another there.
 
 Two things bound that comparison and two work in its favour. Stays complete in
 that many determinations are not a random sample: they are the more heavily
@@ -142,10 +143,10 @@ findings is not an objection. `outputs/fase32/potencia_no_usada.csv` carries
 the count.
 
 **Aggregation.** First recorded value per variable. The first value is the
-only one computable without knowing how many measurements follow, which
-matters because monitoring intensity differs across units. Correlation with
-worst-value aggregation never falls below 0.8722 across the seventeen
-laboratory variables; the comparison does not cover vital signs.
+only one computable without knowing how many measurements follow, and that
+computability matters because monitoring intensity differs across units.
+Correlation with worst-value aggregation never falls below 0.8722 across the
+seventeen laboratory variables; the comparison does not cover vital signs.
 
 **Imputation.** Chained equations with predictive mean matching, twenty
 datasets, ten iterations, estimated on the training set alone. The outcome is
@@ -443,7 +444,9 @@ where they coincide: on all 20 cells of the family.
 
 ### The sealed unit
 
-Evaluated once, without recalibration, and read by the same criterion:
+Evaluated once, without recalibration, and read by the criterion the
+transportability section uses: the Beta-Binomial interval, which is not the
+one the test-set table above reports.
 
     class                 n   cover   interval
 

@@ -105,8 +105,10 @@ completa es la reducida mas un desplazamiento fijo, que deja inalterado el
 orden y por tanto el area. La escala actuaba como indicador indirecto del
 tubo, y el tubo se asocia con fuerza a que el sitio respiratorio se cultive.
 Es asociacion, no determinacion: los datos no acreditan que lo uno cause lo
-otro, pero la magnitud basta para invalidar la escala como predictor
-fisiologico en esta cohorte.
+otro. Lo que si consta es que la escala no supera al indicador de intubacion
+en esta cohorte, y eso basta para no tratarla como medida fisiologica
+independiente aqui. Que quede invalidada como predictor fisiologico es una
+lectura que ningun archivo de este trabajo sostiene, y por eso no se hace.
 
 **Decision.** La escala figura entre las variables obligatorias del protocolo,
 y con fundamento: la meningitis altera la conciencia de forma directa, de modo
