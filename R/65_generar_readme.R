@@ -476,10 +476,10 @@ add(prosa(
 
 add(prosa(
 "A comparison on stays complete in all the candidates cannot be made."))
-add(cifra("%d of the %s stays have all of them within the window, and the most",
-          as.integer(comp$estancias_completas[comp$conjunto == "candidatas"]),
-          format(comp$denominador[1], big.mark = ",")))
-add(cifra("any stay reaches is %d. What can be compared is the seventeen",
+add(cifra("Of the %s stays, %d have all of them within the window, and the",
+          format(comp$denominador[1], big.mark = ","),
+          as.integer(comp$estancias_completas[comp$conjunto == "candidatas"])))
+add(cifra("most any stay reaches is %d. What can be compared is the seventeen",
           as.integer(comp$maximo_presentes[comp$conjunto == "candidatas"])))
 add(cifra("against those plus the %d discarded whose coverage exceeds the",
           as.integer(cmp29$determinaciones_anadidas)))
@@ -500,7 +500,7 @@ add(cifra("bootstrap interval of %.4f to %.4f that contains zero, so the",
           cmp29$ic_inferior_minoritarias, cmp29$ic_superior_minoritarias))
 
 add(prosa("direction is not established."))
-add(cifra("%d of the %d classes does show an interval that excludes zero. The",
+add(cifra("Only %d of the %d classes shows an interval that excludes zero. The",
           as.integer(cmp29$clases_que_excluyen_el_cero),
           as.integer(nrow(icd) - 1)))
 add(prosa(
@@ -886,10 +886,11 @@ add(prosa(
 ""))
 
 add(prosa("Under leave-one-unit-out validation, marginal coverage ranges from"))
-add(cifra("%.4f to %.4f with a mean of %.4f, below the nominal level. %d of the",
+add(cifra("%.4f to %.4f with a mean of %.4f, below the nominal level. Of the %d",
           min(louo$cobertura), max(louo$cobertura), mean(louo$cobertura),
+          as.integer(n_sedes)))
+add(cifra("units, %d fall below nominal on that measure.",
           as.integer(bajo_marg)))
-add(cifra("%d units fall below nominal on that measure.", as.integer(n_sedes)))
 
 add(prosa(""))
 add(prosa(
@@ -1521,6 +1522,39 @@ add(prosa(
 "",
 "Code under the MIT license. Data are governed by the PhysioNet data use",
 "agreement for MIMIC-IV."))
+
+# Envoltura de los parrafos de prosa.
+#
+# La composicion emite una linea por cadena, de modo que un parrafo que
+# termina en dos palabras deja un renglon de dos palabras, y otro tanto cada
+# vez que una cifra corta la frase. El generador del registro de decisiones no
+# tiene ese defecto porque acumula y envuelve al cerrar; aqui se consigue lo
+# mismo con una pasada al final, que ademas alcanza a los parrafos que nadie
+# ha tocado en esta revision.
+#
+# No se envuelve lo que no es prosa: las tablas, cuya sangria y alineamiento
+# son informacion; los titulos; y las relaciones.
+envolver <- function(x) {
+  es_prosa <- function(l) nzchar(trimws(l)) && !grepl("^ ", l) &&
+                          !grepl("^#", l) && !grepl("^[-*] ", l)
+  fuera <- character(0); buf <- character(0)
+  volcar <- function() {
+    if (length(buf) == 0) return(invisible(NULL))
+    fuera <<- c(fuera, strwrap(paste(buf, collapse = " "), width = 79))
+    buf <<- character(0)
+  }
+  for (l in x) {
+    if (es_prosa(l)) buf <- c(buf, l)
+    # Asignacion simple y no al entorno superior: dentro del cuerpo de la
+    # funcion, el operador de superasignacion salta la variable local y
+    # escribe en el global. Con el, las lineas que no son prosa, tablas y
+    # renglones en blanco incluidos, se perdian del documento.
+    else { volcar(); fuera <- c(fuera, l) }
+  }
+  volcar()
+  fuera
+}
+L <- envolver(L)
 
 # Ancho y repertorio. El documento se lee tambien en una terminal y en un
 # visor sin fuentes anchas, y un caracter fuera del repertorio basico se

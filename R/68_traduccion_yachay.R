@@ -197,8 +197,8 @@ add(prosa(
 
 add(cifra("La cobertura marginal oscila entre %.4f y %.4f con media de %.4f,",
           min(louo$cobertura), max(louo$cobertura), mean(louo$cobertura)))
-add(cifra("por debajo del nivel nominal. %d de %d sedes quedan por debajo",
-          as.integer(bajo_marg), as.integer(n_sedes)))
+add(cifra("por debajo del nivel nominal. De las %d sedes, %d quedan por debajo",
+          as.integer(n_sedes), as.integer(bajo_marg)))
 
 add(prosa("en esa medida.", ""))
 
@@ -486,6 +486,39 @@ if (decisiones != N_HALLAZGOS || encabezados != N_HALLAZGOS) {
 cat("Coinciden.\n\n")
 
 dir.create("outputs/fase21", recursive = TRUE, showWarnings = FALSE)
+# Envoltura de los parrafos de prosa.
+#
+# La composicion emite una linea por cadena, de modo que un parrafo que
+# termina en dos palabras deja un renglon de dos palabras, y otro tanto cada
+# vez que una cifra corta la frase. El generador del registro de decisiones no
+# tiene ese defecto porque acumula y envuelve al cerrar; aqui se consigue lo
+# mismo con una pasada al final, que ademas alcanza a los parrafos que nadie
+# ha tocado en esta revision.
+#
+# No se envuelve lo que no es prosa: las tablas, cuya sangria y alineamiento
+# son informacion; los titulos; y las relaciones.
+envolver <- function(x) {
+  es_prosa <- function(l) nzchar(trimws(l)) && !grepl("^ ", l) &&
+                          !grepl("^#", l) && !grepl("^[-*] ", l)
+  fuera <- character(0); buf <- character(0)
+  volcar <- function() {
+    if (length(buf) == 0) return(invisible(NULL))
+    fuera <<- c(fuera, strwrap(paste(buf, collapse = " "), width = 79))
+    buf <<- character(0)
+  }
+  for (l in x) {
+    if (es_prosa(l)) buf <- c(buf, l)
+    # Asignacion simple y no al entorno superior: dentro del cuerpo de la
+    # funcion, el operador de superasignacion salta la variable local y
+    # escribe en el global. Con el, las lineas que no son prosa, tablas y
+    # renglones en blanco incluidos, se perdian del documento.
+    else { volcar(); fuera <- c(fuera, l) }
+  }
+  volcar()
+  fuera
+}
+L <- envolver(L)
+
 # Ancho y repertorio. El documento se lee tambien en una terminal y en un
 # visor sin fuentes anchas, y un caracter fuera del repertorio basico se
 # convierte en un signo de interrogacion o en una caja. Las dos guardias
