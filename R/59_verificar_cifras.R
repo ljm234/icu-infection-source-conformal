@@ -392,6 +392,19 @@ reg[[length(reg)+1]] <- comprobar("Celdas que resisten el analisis adoptado",
 reg[[length(reg)+1]] <- comprobar("Analisis depositados y no adoptados",
   length(setdiff(grep("^resiste_", names(iv26), value = TRUE), ADOPT26)), 9, 0.5)
 
+# Denominadores que el documento declara y antes callaba.
+empc0 <- leer(FUENTES[["Coincidencias en la hora de registro"]])
+if (!is.null(empc0)) {
+  reg[[length(reg)+1]] <- comprobar("Menor denominador de los empates",
+    min(empc0$estancias), 4645, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Mayor denominador de los empates",
+    max(empc0$estancias), 63888, 0.5)
+}
+calsl0 <- leer(FUENTES[["Calibracion en la unidad reservada"]])
+if (!is.null(calsl0))
+  reg[[length(reg)+1]] <- comprobar("Denominador de la unidad reservada",
+    sum(calsl0$n), 4586, 0.5)
+
 posm <- leer(FUENTES[["Positividad por muestra"]])
 if (!is.null(posm)) {
   reg[[length(reg)+1]] <- comprobar("Cultivos de la ventana",

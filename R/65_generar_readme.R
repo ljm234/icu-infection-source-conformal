@@ -284,6 +284,17 @@ sll <- sll[match(CLC, sll$clase), ]
 mayor_sll <- sll$clase[which.max(sll$n)]
 cal_may <- val(calsl, "probabilidad_media", calsl$clase == mayor_sll)
 frec_may <- val(calsl, "frecuencia_observada", calsl$clase == mayor_sll)
+# El denominador de esa frecuencia son las estancias de la unidad que caen en
+# una de las categorias modeladas, y no todas las de la unidad. Se comprueba
+# en vez de suponerse, porque la diferencia entre uno y otro es lo que haria
+# irreproducible la cifra para quien la rehiciera.
+den_sll <- sum(calsl$n)
+if (abs(val(calsl, "n", calsl$clase == mayor_sll) / den_sll - frec_may) >
+    5e-4) {
+  cat("La frecuencia observada de la unidad reservada no se reproduce sobre\n")
+  cat("las estancias de las categorias modeladas. El denominador es otro.\n")
+  quit(status = 1)
+}
 
 # Causas del fallo. La frase que sigue supone dos causas distintas y una sola
 # sede sin fallo demostrable por cada una; si el archivo dejara de tener esa
@@ -417,13 +428,19 @@ add(prosa(
 "recorded afterwards was not available at the moment of decision.",
 "",
 "**Laboratory variables.** Seventeen, drawn from the candidates present in"))
-add(cifra("at least %s stays within the window, of which there are %d. The",
+add(cifra("at least %s of the %s first stays within the window, of which",
           format(via$umbral_de_estancias, big.mark = ","),
+          format(val(flujo, "n", flujo$paso == "p1_estancias_unicas"),
+                 big.mark = ",")))
+add(cifra("there are %d. That denominator is the one every coverage figure in",
           as.integer(via$candidatas)))
-add(cifra("candidate with the highest coverage of all, at %.1f percent, is",
+add(prosa(
+"this paragraph is taken over, and it is not the analysed cohort, which is",
+"smaller. The candidate with the highest coverage of all, at"))
+add(cifra("%.1f percent of those stays, is among the discarded, so the",
           cand$cobertura_pct[i_max]))
 add(prosa(
-"among the discarded, so the seventeen are not the seventeen most frequent.",
+"seventeen are not the seventeen most frequent.",
 "",
 "The rule that narrowed the candidates to the seventeen is not recorded, and",
 "nothing in the deposit reproduces it. No value of the sample type, of the",
@@ -976,12 +993,17 @@ add(prosa(
 "in either direction. The over-coverage of the majority class is consistent",
 "with a prevalence shift: its mean predicted probability is"))
 
-add(cifra("%.4f against an observed frequency of %.4f. On the test set the", cal_may, frec_may))
-add(cifra("same model predicts that class to within %.4f of its observed",
+add(cifra("%.4f against an observed frequency of %.4f over the", cal_may,
+          frec_may))
+add(cifra("%s stays of that unit which fall in one of the modelled classes,",
+          format(as.integer(den_sll), big.mark = ",")))
+add(prosa(
+"which is fewer than the stays it contributes in total. On the test set the",
+"same model predicts that class to within"))
+add(cifra("%.4f of its observed frequency, so the gap is specific to this",
           max(abs(calpr$diferencia))))
 add(prosa(
-"frequency, so the gap is specific to this unit rather than a property of",
-"the model on the data it was fitted from.",
+"unit rather than a property of the model on the data it was fitted from.",
 "",
 "Prevalence shift is not the only mechanism that would produce over-coverage",
 "there. A unit measured less completely would be predicted with more",
@@ -1233,11 +1255,16 @@ add(cifra("Nursing observations are validated in batches, so between %.2f and",
           min(empc$pct)))
 add(cifra("%.2f percent of stays carry several measurements of the same",
           max(empc$pct)))
-add(cifra("variable with an identical storetime, up to %d at once. That is the",
+add(cifra("variable with an identical storetime, up to %d at once. Each of",
           as.integer(max(empc$maximo_coincidentes))))
-
 add(prosa(
-"time a result was recorded. Selecting the first measurement by ordering on",
+"those percentages is taken over the stays in which that variable is",
+"recorded, which is not the same denominator for all of them: it runs"))
+add(cifra("from %s to %s stays. Storetime is the time a result was",
+          format(min(empc$estancias), big.mark = ","),
+          format(max(empc$estancias), big.mark = ",")))
+add(prosa(
+"recorded. Selecting the first measurement by ordering on",
 "storetime alone leaves ties unresolved, and the row retained can differ",
 "between runs of the same query.",
 ""))

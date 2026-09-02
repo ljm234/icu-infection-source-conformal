@@ -75,9 +75,12 @@ was recorded rather than the time the specimen was drawn, since a result
 recorded afterwards was not available at the moment of decision.
 
 **Laboratory variables.** Seventeen, drawn from the candidates present in
-at least 3,000 stays within the window, of which there are 73. The
-candidate with the highest coverage of all, at 68.5 percent, is
-among the discarded, so the seventeen are not the seventeen most frequent.
+at least 3,000 of the 65,366 first stays within the window, of which
+there are 73. That denominator is the one every coverage figure in
+this paragraph is taken over, and it is not the analysed cohort, which is
+smaller. The candidate with the highest coverage of all, at
+68.5 percent of those stays, is among the discarded, so the
+seventeen are not the seventeen most frequent.
 
 The rule that narrowed the candidates to the seventeen is not recorded, and
 nothing in the deposit reproduces it. No value of the sample type, of the
@@ -448,10 +451,12 @@ interval falling below it, so this section reports no conclusion about the
 conditional guarantee here: the cases are too few to establish a shortfall
 in either direction. The over-coverage of the majority class is consistent
 with a prevalence shift: its mean predicted probability is
-0.9054 against an observed frequency of 0.9802. On the test set the
-same model predicts that class to within 0.0010 of its observed
-frequency, so the gap is specific to this unit rather than a property of
-the model on the data it was fitted from.
+0.9054 against an observed frequency of 0.9802 over the
+4,586 stays of that unit which fall in one of the modelled classes,
+which is fewer than the stays it contributes in total. On the test set the
+same model predicts that class to within
+0.0010 of its observed frequency, so the gap is specific to this
+unit rather than a property of the model on the data it was fitted from.
 
 Prevalence shift is not the only mechanism that would produce over-coverage
 there. A unit measured less completely would be predicted with more
@@ -599,8 +604,11 @@ uncertainty of the fill, which a single substituted value cannot do.
 
 Nursing observations are validated in batches, so between 25.46 and
 40.05 percent of stays carry several measurements of the same
-variable with an identical storetime, up to 38 at once. That is the
-time a result was recorded. Selecting the first measurement by ordering on
+variable with an identical storetime, up to 38 at once. Each of
+those percentages is taken over the stays in which that variable is
+recorded, which is not the same denominator for all of them: it runs
+from 4,645 to 63,888 stays. Storetime is the time a result was
+recorded. Selecting the first measurement by ordering on
 storetime alone leaves ties unresolved, and the row retained can differ
 between runs of the same query.
 

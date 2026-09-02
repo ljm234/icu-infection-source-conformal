@@ -36,6 +36,9 @@ margin never exceeds the largest possible rounding error.
 | Posteriores que producen cifra publicada | 28.0000 | 28.0000 | 0.50000 | yes |
 | Celdas que resisten el analisis adoptado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Analisis depositados y no adoptados | 9.0000 | 9.0000 | 0.50000 | yes |
+| Menor denominador de los empates | 4645.0000 | 4645.0000 | 0.50000 | yes |
+| Mayor denominador de los empates | 63888.0000 | 63888.0000 | 0.50000 | yes |
+| Denominador de la unidad reservada | 4586.0000 | 4586.0000 | 0.50000 | yes |
 | Cultivos de la ventana | 65317.0000 | 65317.0000 | 0.50000 | yes |
 | Tipos de muestra retenidos | 7.0000 | 7.0000 | 0.50000 | yes |
 | Positividad minima | 5.5400 | 5.5400 | 0.00500 | yes |

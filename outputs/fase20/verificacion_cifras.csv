@@ -26,6 +26,9 @@
 "Posteriores que producen cifra publicada",28,28,0.5,TRUE
 "Celdas que resisten el analisis adoptado",3,3,0.5,TRUE
 "Analisis depositados y no adoptados",9,9,0.5,TRUE
+"Menor denominador de los empates",4645,4645,0.5,TRUE
+"Mayor denominador de los empates",63888,63888,0.5,TRUE
+"Denominador de la unidad reservada",4586,4586,0.5,TRUE
 "Cultivos de la ventana",65317,65317,0.5,TRUE
 "Tipos de muestra retenidos",7,7,0.5,TRUE
 "Positividad minima",5.54,5.54,0.005,TRUE
