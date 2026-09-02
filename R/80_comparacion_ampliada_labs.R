@@ -253,6 +253,36 @@ por_grupo_clase <- do.call(rbind, lapply(
                  estancias = sum(en_clases & d$grupo == g & d$clase == k),
                  row.names = NULL)))))
 
+# La potencia que este ajuste no usa, contada y no estimada.
+#
+# El grupo de calibracion queda fuera del conjunto por una razon que aqui no
+# rige: existe para fijar los umbrales conformes, y en esta comparacion no hay
+# calibracion conforme alguna. Nada obligaba a excluirlo, de modo que el
+# ajuste se hizo con menos estancias de las disponibles.
+#
+# NO SE CORRIGE, Y LA RAZON IMPORTA MAS QUE LA CORRECCION. Incorporarlo daria
+# mas potencia a una comparacion cuya conclusion es negativa, y rehacerla
+# despues de conocer el resultado, en la direccion que podria darle la vuelta,
+# es exactamente el patron que este trabajo reprocha en otro sitio. Lo que si
+# corresponde es medir cuanto se dejo sin usar y publicarlo, para que el
+# resultado negativo se lea sabiendo que esta peor establecido de lo que
+# podria haberlo estado.
+en_ajuste <- completo & d$grupo == "entrenamiento" & d$clase %in% CLASES
+posible   <- completo & d$grupo %in% c("entrenamiento", "calibracion") &
+             d$clase %in% CLASES
+potencia <- data.frame(
+  grupo_excluido = "calibracion",
+  estancias_del_grupo = sum(d$grupo == "calibracion"),
+  completas_del_grupo = sum(completo & d$grupo == "calibracion"),
+  ajuste_efectivo = sum(en_ajuste),
+  ajuste_posible = sum(posible),
+  estancias_no_usadas = sum(posible) - sum(en_ajuste),
+  aumento_pct = round(100 * (sum(posible) - sum(en_ajuste)) / sum(en_ajuste), 2),
+  row.names = NULL)
+if (potencia$ajuste_posible <= potencia$ajuste_efectivo)
+  detener("El grupo excluido no aporta estancias. La sexta diferencia que el ",
+          "documento declara no seria tal.")
+
 d <- d[en_clases, ]
 d$clase <- factor(as.character(d$clase), levels = CLASES)
 
@@ -481,6 +511,7 @@ write.csv(cascada, file.path(OUT, "cascada_casos_completos.csv"),
           row.names = FALSE)
 write.csv(por_grupo, file.path(OUT, "completos_por_grupo.csv"),
           row.names = FALSE)
+write.csv(potencia, file.path(OUT, "potencia_no_usada.csv"), row.names = FALSE)
 write.csv(por_grupo_clase, file.path(OUT, "conjunto_por_grupo_y_clase.csv"),
           row.names = FALSE)
 write.csv(mult, file.path(OUT, "multiplicidad_diferencias.csv"),

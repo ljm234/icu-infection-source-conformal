@@ -128,6 +128,20 @@ comparable with the areas reported elsewhere in this document. And the
 interval is for the difference, which is paired on the same stays and
 therefore tighter than the interval of either area alone.
 
+The fit also left power unused, and by a margin worth stating. The
+calibration partition exists to set the conformal thresholds, and this
+comparison sets none, so nothing in it required leaving that partition out.
+It was left out all the same: both specifications were fitted on
+2,487 stays where 4,010 were available, so 1,523 went unused,
+61.24 percent more than entered. That does not bias the comparison,
+since the restriction falls on both branches alike, but it costs power, and
+the conclusion here is a negative one, so the absence of improvement is
+worse established than it could have been. It is not redone. Refitting with
+more stays after seeing the result, in the direction that could reverse it,
+is the pattern this document objects to when describing how the penalty was
+fixed, and an objection that holds only against inconvenient findings is
+not an objection. `outputs/fase32/potencia_no_usada.csv` carries the count.
+
 **Aggregation.** First recorded value per variable. The first value is the
 only one computable without knowing how many measurements follow, which
 matters because monitoring intensity differs across units.

@@ -162,6 +162,17 @@ N_FIL <- sum(post$categoria == "posterior a la apertura y lee filas por paciente
 N_AJU <- sum(post$posterior_a_la_apertura & post$ajusta_un_modelo)
 N_ART <- sum(post$posterior_a_la_apertura & post$escribe_artefacto_del_modelo)
 N_PUB <- sum(post$posterior_a_la_apertura & post$produce_cifra_publicada)
+pot   <- leer("outputs/fase32/potencia_no_usada.csv")
+
+# Las diferencias que separan la comparacion ampliada del modelo publicado. Se
+# declaran como relacion y no como cifra escrita, porque el recuento ya estuvo
+# mal una vez: el texto decia cinco y eran seis. Cada rotulo se comprueba
+# despues contra el texto compuesto, de modo que anadir una a la prosa sin
+# anadirla aqui, o al reves, detiene el procedimiento.
+DIFERENCIAS <- c("no hay imputacion", "no hay splines",
+                 "indicador de solicitud de lactato",
+                 "conjunto de ajuste", "penalizacion se valida",
+                 "grupo de calibracion")
 N_SOL <- N_APE - N_PUB
 if (N_ART > 0) {
   cat("Un analisis posterior a la apertura escribe un artefacto del modelo.\n")
@@ -245,6 +256,7 @@ d15  <- ruta("outputs/fase15/sensibilidad_lactato.csv")
 exc  <- ruta(".gitignore")
 r00  <- ruta("R/00_rutas_reservadas.R")
 r90  <- ruta("R/90_posterioridad.R")
+d32p <- ruta("outputs/fase32/potencia_no_usada.csv")
 p41  <- ruta("outputs/fase41/posterioridad.csv")
 
 # El documento se acumula por parrafos y no por lineas. Cada pieza se anade
@@ -525,18 +537,54 @@ add(prosa("## Cifras que no son comparables entre si"))
 cerrar()
 
 add(cifra("Las areas de `%s` no son comparables con las del", d32c))
+add(cifra("modelo publicado. Difieren en %d cosas, todas comunes a las dos",
+          as.integer(length(DIFERENCIAS))))
 add(prosa(
-"modelo publicado. Difieren en cinco cosas, todas comunes a las dos ramas y",
-"por tanto inocuas para la comparacion entre ellas, pero decisivas para",
-"quien intente cotejar cifras con el resto del trabajo:"))
+"ramas y por tanto inocuas para la comparacion entre ellas, pero decisivas",
+"para quien intente cotejar cifras con el resto del trabajo:"))
 add(prosa(
 "no hay imputacion, porque se trabaja sobre casos completos; no hay",
 "splines, porque las determinaciones anadidas no tienen nudos definidos y",
 "dar forma flexible a unas y no a otras confundiria el conjunto de",
 "variables con la forma funcional; no entra el indicador de solicitud de",
 "lactato; el conjunto de ajuste es mucho menor, al quedar restringido a esos",
-"casos completos; y la penalizacion se valida dentro de cada rama en vez de",
-"heredarse. La cifra de una rama solo significa algo frente a la de la otra."))
+"casos completos; la penalizacion se valida dentro de cada rama en vez de",
+"heredarse; y el ajuste prescinde ademas del grupo de calibracion entero. La",
+"cifra de una rama solo significa algo frente a la de la otra."))
+cerrar()
+
+add(prosa(
+"La ultima merece parrafo aparte, porque no es como las demas."))
+add(cifra("Las otras %d vienen impuestas por la comparacion; esta no.",
+          as.integer(length(DIFERENCIAS) - 1)))
+add(prosa(
+"El grupo de calibracion",
+"existe para fijar los umbrales conformes, y en esta comparacion no hay",
+"calibracion conforme alguna, de modo que nada obligaba a dejarlo fuera. El",
+"ajuste pudo usarlo y no lo uso."))
+cerrar()
+
+add(cifra("Cuanto costo esta contado y no estimado, en `%s`:", d32p))
+add(cifra("el ajuste se hizo con %d estancias donde podia haberse hecho con",
+          as.integer(pot$ajuste_efectivo[1])))
+add(cifra("%d, de modo que quedaron sin usar %d, un %s por ciento mas de las",
+          as.integer(pot$ajuste_posible[1]),
+          as.integer(pot$estancias_no_usadas[1]),
+          format(pot$aumento_pct[1], nsmall = 2)))
+add(prosa(
+"que entraron. Eso no sesga la comparacion, porque la restriccion afecta por",
+"igual a las dos ramas, pero le resta potencia. Y como su conclusion es",
+"negativa, la consecuencia va en la direccion incomoda: la ausencia de",
+"mejora esta peor establecida de lo que podria haberlo estado."))
+cerrar()
+
+add(prosa(
+"No se corrige, y la razon es la misma que este trabajo invoca en otro sitio.",
+"Rehacer el ajuste con mas estancias despues de conocer el resultado, y en la",
+"direccion que podria darle la vuelta, es el patron que aqui se reprocha al",
+"describir como se fijo la penalizacion. Vale para lo que incomoda y para lo",
+"que conviene, o no vale. De modo que la comparacion queda como se hizo y lo",
+"que se anade es la medida de lo que dejo sin usar."))
 cerrar()
 
 add(prosa(
@@ -728,6 +776,28 @@ if (length(huerfanas) > 0) {
   quit(status = 1)
 }
 cat("Ninguna ruta eludio la comprobacion.\n")
+
+# ---------------------------------------------------------------------------
+# Tercera guardia: el recuento de diferencias y lo que el texto enumera.
+# ---------------------------------------------------------------------------
+# El texto decia cinco y eran seis. La cifra sale ahora del tamano de la
+# relacion, de modo que no puede quedarse corta; y cada rotulo se busca en el
+# documento, de modo que la relacion tampoco puede declarar una que el texto
+# no explique. Las dos mitades se sujetan entre si.
+
+texto <- paste(doc, collapse = "\n")
+ausentes <- DIFERENCIAS[!sapply(DIFERENCIAS, grepl, x = texto, fixed = TRUE)]
+
+cat("\n=== DIFERENCIAS DE LA COMPARACION AMPLIADA ===\n")
+cat("Declaradas:", length(DIFERENCIAS),
+    " halladas en el texto:", length(DIFERENCIAS) - length(ausentes), "\n")
+if (length(ausentes) > 0) {
+  cat("\nDECLARADAS Y NO EXPLICADAS EN EL TEXTO\n")
+  for (a in ausentes) cat("  ", a, "\n")
+  cat("\nEl registro no se escribe.\n")
+  quit(status = 1)
+}
+cat("Cada diferencia declarada se explica en el texto.\n")
 
 largas <- which(nchar(doc) > 79)
 if (length(largas) > 0) {

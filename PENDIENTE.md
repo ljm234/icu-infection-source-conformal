@@ -4,8 +4,8 @@ Estado del encargo, no documentacion del trabajo. Recoge lo que falta de la
 revision previa al manuscrito, para que una sesion nueva sepa donde retomar.
 Se borra cuando quede vacio.
 
-Van doce bloqueantes de catorce, mas el hallazgo de reproducibilidad que no
-estaba en la lista y salio por el camino. Quedan dos y la parte B.
+Los catorce bloqueantes estan cerrados, mas el hallazgo de reproducibilidad
+que no estaba en la lista y salio por el camino. Queda la parte B.
 
 ## Como se trabaja
 
@@ -19,31 +19,7 @@ La cadena de la fase cuarta a la quinta esta congelada y no se reejecuta:
 rehacerla produciria un modelo cuyas decisiones de diseno se tomaron habiendo
 visto ya la unidad reservada.
 
-## Lote 7
-
-### A11. Las cinco diferencias son seis
-
-`R/82_decisiones_vivas.R:465` y el apartado de laboratorio del README. El
-conjunto de ajuste de la comparacion de especificaciones es menor por dos
-razones y solo se declara una: ademas de la restriccion a casos completos,
-`R/80_comparacion_ampliada_labs.R:199` excluye el grupo de calibracion
-entero, que es el treinta por ciento del desarrollo y aqui no hace falta.
-
-Correccion acordada: declarar la sexta diferencia, y en `R/80` o bien
-incorporar la calibracion al ajuste o justificar en la cabecera por que no.
-
-### A12. El manifiesto de la fase 26 describe la maquinaria superseded
-
-`R/74_intervalos_cobertura.R:633` y siguientes. Declara intervalos de Clopper
-y Pearson, valor p binomial y correcciones de Bonferroni y Holm. El documento
-publica los intervalos Beta-Binomial, el valor p beta y beta-Holm; el analisis
-adoptado es `resiste_beta_holm_0025`. Quien abra el manifiesto para saber que
-se publico obtiene la respuesta equivocada.
-
-Correccion acordada: nombrar por separado lo publicado y lo condicionado al
-umbral, y consignar el analisis adoptado.
-
-## Lote 8. Parte B
+## Parte B
 
 Sin acuerdo cerrado todavia. Por orden de lo que un revisor puede comprobar
 contra los archivos:

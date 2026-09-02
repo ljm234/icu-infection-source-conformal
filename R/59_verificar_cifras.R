@@ -156,6 +156,7 @@ FUENTES <- list(
   "Conjunto apartado"                        = "outputs/fase40/conjunto_apartado.csv",
   "Procedencia de la seleccion"              = "outputs/fase33/procedencia_seleccion.csv",
   "Versiones del bloque"                     = "outputs/fase33/versiones_del_bloque.csv",
+  "Potencia no usada"                        = "outputs/fase32/potencia_no_usada.csv",
   "Intervalo de la diferencia"                = "outputs/fase32/intervalo_diferencia.csv",
   "Multiplicidad de las diferencias"          = "outputs/fase32/multiplicidad_diferencias.csv")
 
@@ -223,6 +224,47 @@ if (!identical(rr$ruta, desde_otro)) {
 }
 cat("Rutas reservadas:", nrow(rr),
     " identica desde otro directorio: si\n\n")
+
+# ---------------------------------------------------------------------------
+# El manifiesto de la multiplicidad declara que analisis se adopta.
+# ---------------------------------------------------------------------------
+# Ese deposito ofrece varias columnas de resistencia y solo una gobierna lo
+# publicado. El manifiesto describia la maquinaria que quedo atras y no
+# nombraba la que se usa: quien lo abriera para saber que se publico obtenia
+# la respuesta equivocada. Ahora lo declara, y aqui se comprueba que lo
+# declarado sea una columna real del deposito y ademas la que el documento usa
+# de verdad. Sin la segunda mitad, el campo podria declarar cualquier cosa.
+
+MF26 <- "outputs/fase26/manifiesto.json"
+IV26 <- "outputs/fase26/intervalos_cobertura.csv"
+if (file.exists(MF26) && file.exists(IV26)) {
+  m26 <- jsonlite::fromJSON(MF26)
+  iv26 <- read.csv(IV26, stringsAsFactors = FALSE)
+  cat("=== ANALISIS ADOPTADO ===\n")
+  if (is.null(m26$analisis_adoptado)) {
+    cat("El manifiesto no declara que analisis gobierna lo publicado.\n")
+    quit(status = 1)
+  }
+  ADOPT26 <- m26$analisis_adoptado
+  cat("Declarado:", ADOPT26, "\n")
+  if (!ADOPT26 %in% names(iv26)) {
+    cat("El analisis declarado no es una columna del deposito.\n")
+    quit(status = 1)
+  }
+  gen65 <- paste(readLines("R/65_generar_readme.R", warn = FALSE),
+                 collapse = "\n")
+  if (!grepl(ADOPT26, gen65, fixed = TRUE)) {
+    cat("El documento no compone desde el analisis declarado.\n")
+    quit(status = 1)
+  }
+  otros <- setdiff(grep("^resiste_", names(iv26), value = TRUE), ADOPT26)
+  if (!setequal(m26$analisis_depositados_no_adoptados, otros)) {
+    cat("Los analisis declarados como no adoptados no son los del deposito.\n")
+    quit(status = 1)
+  }
+  cat("Es columna del deposito, es la que el documento usa, y los",
+      length(otros), "restantes\nfiguran como depositados y no adoptados.\n\n")
+}
 
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
@@ -340,6 +382,29 @@ if (!is.null(pos)) {
     sum(pos$produce_cifra_publicada), 36, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores que producen cifra publicada",
     sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 26, 0.5)
+}
+
+reg[[length(reg)+1]] <- comprobar("Celdas que resisten el analisis adoptado",
+  sum(iv26$en_familia & iv26[[ADOPT26]]), 3, 0.5)
+reg[[length(reg)+1]] <- comprobar("Analisis depositados y no adoptados",
+  length(setdiff(grep("^resiste_", names(iv26), value = TRUE), ADOPT26)), 9, 0.5)
+
+pot <- leer(FUENTES[["Potencia no usada"]])
+if (!is.null(pot)) {
+  reg[[length(reg)+1]] <- comprobar("Ajuste efectivo de la comparacion",
+    pot$ajuste_efectivo[1], 2487, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Ajuste posible con la calibracion",
+    pot$ajuste_posible[1], 4010, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias que quedaron sin usar",
+    pot$estancias_no_usadas[1], 1523, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Aumento porcentual desaprovechado",
+    pot$aumento_pct[1], 61.24, tolerancia(2))
+  # El ajuste efectivo ha de seguir siendo el que la comparacion declara: si
+  # las dos cifras se separaran, una de las dos describiria otro conjunto.
+  rsm0 <- leer(FUENTES[["Comparacion ampliada, resumen"]])
+  if (!is.null(rsm0))
+    reg[[length(reg)+1]] <- comprobar("Ajuste efectivo frente al resumen",
+      pot$ajuste_efectivo[1], rsm0$estancias_ajuste[1], 0.5)
 }
 
 apar <- leer(FUENTES[["Conjunto apartado"]])

@@ -137,6 +137,7 @@ AFIRMACIONES <- list(
   c("Determinaciones anadidas", "outputs/fase32/determinaciones_anadidas.csv"),
   c("Procedencia de la seleccion", "outputs/fase33/procedencia_seleccion.csv"),
   c("Versiones del bloque de la seleccion", "outputs/fase33/versiones_del_bloque.csv"),
+  c("Potencia que el ajuste no uso", "outputs/fase32/potencia_no_usada.csv"),
   c("Intervalo de la diferencia", "outputs/fase32/intervalo_diferencia.csv"),
   c("Multiplicidad de las diferencias", "outputs/fase32/multiplicidad_diferencias.csv"))
 

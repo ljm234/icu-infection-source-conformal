@@ -36,6 +36,7 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase30/determinaciones_candidatas.csv",
              "outputs/fase35/curva_calibracion.csv",
              "outputs/fase35/pendiente_calibracion.csv",
+             "outputs/fase32/potencia_no_usada.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -117,6 +118,7 @@ mlt   <- leer("outputs/fase32/multiplicidad_diferencias.csv")
 casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
+pot   <- leer("outputs/fase32/potencia_no_usada.csv")
 cont  <- leer("outputs/fase40/contactos_con_el_sellado.csv")
 apar  <- leer("outputs/fase40/conjunto_apartado.csv")
 ordm  <- leer("outputs/fase39/orden_de_la_matriz.csv")
@@ -475,6 +477,26 @@ add(prosa(
 "comparable with the areas reported elsewhere in this document. And the",
 "interval is for the difference, which is paired on the same stays and",
 "therefore tighter than the interval of either area alone.",
+"",
+"The fit also left power unused, and by a margin worth stating. The",
+"calibration partition exists to set the conformal thresholds, and this",
+"comparison sets none, so nothing in it required leaving that partition out.",
+"It was left out all the same: both specifications were fitted on"))
+
+add(cifra("%s stays where %s were available, so %s went unused,",
+          format(as.integer(pot$ajuste_efectivo[1]), big.mark = ","),
+          format(as.integer(pot$ajuste_posible[1]), big.mark = ","),
+          format(as.integer(pot$estancias_no_usadas[1]), big.mark = ",")))
+add(cifra("%s percent more than entered. That does not bias the comparison,",
+          format(pot$aumento_pct[1], nsmall = 2)))
+add(prosa(
+"since the restriction falls on both branches alike, but it costs power, and",
+"the conclusion here is a negative one, so the absence of improvement is",
+"worse established than it could have been. It is not redone. Refitting with",
+"more stays after seeing the result, in the direction that could reverse it,",
+"is the pattern this document objects to when describing how the penalty was",
+"fixed, and an objection that holds only against inconvenient findings is",
+"not an objection. `outputs/fase32/potencia_no_usada.csv` carries the count.",
 "",
 "**Aggregation.** First recorded value per variable. The first value is the",
 "only one computable without knowing how many measurements follow, which",

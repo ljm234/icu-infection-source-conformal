@@ -621,6 +621,59 @@ write.csv(rec, file.path(OUT, "recuentos_multiplicidad.csv"),
           row.names = FALSE)
 write.csv(cau, file.path(OUT, "causas_fallo.csv"), row.names = FALSE)
 
+# ---------------------------------------------------------------------------
+# Que analisis gobierna la lectura publicada.
+# ---------------------------------------------------------------------------
+# Este deposito lleva varias columnas de resistencia: dos correcciones por dos
+# niveles, en su version binomial y en su version beta. Solo una gobierna lo
+# que el documento afirma, y el manifiesto declaraba la maquinaria que quedo
+# atras sin mencionar la que se usa. Quien lo abriera para saber que se publico
+# obtenia la respuesta equivocada.
+#
+# Cual se adopta no se escribe aqui. Se deriva de quien tiene la ultima
+# palabra sobre lo publicado, que son los generadores de prosa: si el
+# documento compone su afirmacion desde una columna, esa es la adoptada. Un
+# generador de prosa se reconoce por escribir un documento y componerlo con la
+# guardia que rechaza cifras literales, que es lo que lo separa de un libro de
+# asientos.
+#
+# Si los generadores usaran mas de una, el manifiesto no podria dar una
+# respuesta y este procedimiento se detiene en vez de elegir por su cuenta.
+
+alternativas <- grep("^resiste_", names(tab), value = TRUE)
+if (length(alternativas) < 2)
+  detener("El deposito no ofrece analisis alternativos que declarar.")
+
+fuentes_r <- sort(list.files("R", pattern = "[.]R$", full.names = TRUE))
+texto_r <- setNames(lapply(fuentes_r, function(f)
+  paste(readLines(f, warn = FALSE), collapse = "\n")), basename(fuentes_r))
+generadores <- names(texto_r)[
+  sapply(texto_r, grepl, pattern = 'writeLines\\([^,]+,\\s*"[^"]+[.]md"') &
+  sapply(texto_r, grepl, pattern = "cifra <- +function")]
+if (length(generadores) == 0)
+  detener("Ningun generador de prosa compone documento. El analisis adoptado ",
+          "no puede derivarse.")
+
+usadas <- alternativas[sapply(alternativas, function(c)
+  any(sapply(texto_r[generadores], grepl, pattern = c, fixed = TRUE)))]
+if (length(usadas) != 1)
+  detener("Los generadores usan ", length(usadas), " analisis de resistencia. ",
+          "El manifiesto no puede declarar cual gobierna la lectura.")
+
+ADOPTADO <- usadas
+resto <- setdiff(alternativas, ADOPTADO)
+partes <- strsplit(sub("^resiste_", "", ADOPTADO), "_")[[1]]
+FAMILIA <- if ("beta" %in% partes) "beta-binomial" else "binomial"
+CORREC  <- partes[length(partes) - 1]
+NIVEL   <- as.numeric(partes[length(partes)]) / 1000
+
+cat("\n=== ANALISIS QUE GOBIERNA LA LECTURA PUBLICADA ===\n")
+cat("Adoptado:", ADOPTADO, "\n")
+cat("Familia:", FAMILIA, " correccion:", CORREC, " nivel:", NIVEL, "\n")
+cat("Depositados y no adoptados:", length(resto), "\n")
+cat("Derivado de los generadores de prosa:",
+    paste(generadores, collapse = ", "), "\n")
+
 writeLines(toJSON(list(
   fase = "26",
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
@@ -630,7 +683,27 @@ writeLines(toJSON(list(
   glmnet_version = as.character(packageVersion("glmnet")),
   proposito = paste("intervalos exactos de la cobertura condicional y",
                     "aplicacion de un solo criterio"),
-  intervalo = "Clopper y Pearson, por inversion de la prueba binomial",
+  analisis_adoptado = ADOPTADO,
+  gobierna_la_lectura_publicada = paste(
+    "es la columna desde la que los generadores de prosa componen lo que el",
+    "documento afirma; no se declara aqui sino que se deriva de ellos, y este",
+    "procedimiento se detiene si usaran mas de una"),
+  familia_adoptada = FAMILIA,
+  correccion_adoptada = CORREC,
+  nivel_adoptado = NIVEL,
+  analisis_depositados_no_adoptados = resto,
+  por_que_se_depositan = paste(
+    "el deposito ofrece las dos correcciones a los dos niveles y en sus dos",
+    "familias para que la conclusion pueda comprobarse bajo cada una; que",
+    "esten depositadas no significa que esten adoptadas, y una lectura que",
+    "tome cualquiera de ellas no es la publicada"),
+  intervalo_publicado = paste(
+    "Beta-Binomial: el umbral conforme se reestima en cada pliegue y no es",
+    "una cantidad conocida, de modo que un intervalo binomial exacto trata",
+    "como fijo algo que varia"),
+  intervalo_de_referencia = paste(
+    "Clopper y Pearson, por inversion de la prueba binomial. Se deposita para",
+    "medir cuanto mas estrecho seria, y no es el intervalo que se publica"),
   confianza = CONFIANZA,
   lateralidad = paste("el intervalo es a dos colas; contrastar su extremo",
                       "superior contra el nominal equivale a una prueba",
@@ -649,10 +722,16 @@ writeLines(toJSON(list(
   falsas_positivas_esperadas = paste("bajo la hipotesis global de que toda",
                                      "cobertura alcanza el nominal, el",
                                      "numero de celdas por el nivel"),
-  valor_p = paste("exacto y unilateral, de la binomial acumulada; contrasta",
-                  "que la cobertura alcanza el nominal frente a que queda",
-                  "por debajo"),
-  correcciones = "Bonferroni y Holm, ambas sobre la tasa de error por familia",
+  valor_p_de_referencia = paste(
+    "exacto y unilateral, de la binomial acumulada; contrasta que la",
+    "cobertura alcanza el nominal frente a que queda por debajo. Se deposita",
+    "y no gobierna la lectura publicada"),
+  valor_p_adoptado = paste(
+    "el de la familia adoptada, que deja libre la posicion y fija la",
+    "sobredispersion en el tamano de calibracion"),
+  correcciones_depositadas = paste(
+    "Bonferroni y Holm, ambas sobre la tasa de error por familia, en sus dos",
+    "familias y a los dos niveles contrastados"),
   garantia = paste("unilateral: la cobertura por encima del nominal no",
                    "incumple la garantia"),
   origen_sede_fuera = paste("replica de R/35_louo.R, contrastada contra las",

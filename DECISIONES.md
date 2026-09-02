@@ -186,16 +186,38 @@ comprobacion posterior dentro del entrenamiento, no su anterioridad.
 ## Cifras que no son comparables entre si
 
 Las areas de `outputs/fase32/comparacion_por_clase.csv` no son comparables con
-las del modelo publicado. Difieren en cinco cosas, todas comunes a las dos
-ramas y por tanto inocuas para la comparacion entre ellas, pero decisivas para
-quien intente cotejar cifras con el resto del trabajo: no hay imputacion,
-porque se trabaja sobre casos completos; no hay splines, porque las
-determinaciones anadidas no tienen nudos definidos y dar forma flexible a unas
-y no a otras confundiria el conjunto de variables con la forma funcional; no
-entra el indicador de solicitud de lactato; el conjunto de ajuste es mucho
-menor, al quedar restringido a esos casos completos; y la penalizacion se
-valida dentro de cada rama en vez de heredarse. La cifra de una rama solo
-significa algo frente a la de la otra.
+las del modelo publicado. Difieren en 6 cosas, todas comunes a las dos ramas y
+por tanto inocuas para la comparacion entre ellas, pero decisivas para quien
+intente cotejar cifras con el resto del trabajo: no hay imputacion, porque se
+trabaja sobre casos completos; no hay splines, porque las determinaciones
+anadidas no tienen nudos definidos y dar forma flexible a unas y no a otras
+confundiria el conjunto de variables con la forma funcional; no entra el
+indicador de solicitud de lactato; el conjunto de ajuste es mucho menor, al
+quedar restringido a esos casos completos; la penalizacion se valida dentro de
+cada rama en vez de heredarse; y el ajuste prescinde ademas del grupo de
+calibracion entero. La cifra de una rama solo significa algo frente a la de la
+otra.
+
+La ultima merece parrafo aparte, porque no es como las demas. Las otras 5
+vienen impuestas por la comparacion; esta no. El grupo de calibracion existe
+para fijar los umbrales conformes, y en esta comparacion no hay calibracion
+conforme alguna, de modo que nada obligaba a dejarlo fuera. El ajuste pudo
+usarlo y no lo uso.
+
+Cuanto costo esta contado y no estimado, en
+`outputs/fase32/potencia_no_usada.csv`: el ajuste se hizo con 2487 estancias
+donde podia haberse hecho con 4010, de modo que quedaron sin usar 1523, un
+61.24 por ciento mas de las que entraron. Eso no sesga la comparacion, porque
+la restriccion afecta por igual a las dos ramas, pero le resta potencia. Y como
+su conclusion es negativa, la consecuencia va en la direccion incomoda: la
+ausencia de mejora esta peor establecida de lo que podria haberlo estado.
+
+No se corrige, y la razon es la misma que este trabajo invoca en otro sitio.
+Rehacer el ajuste con mas estancias despues de conocer el resultado, y en la
+direccion que podria darle la vuelta, es el patron que aqui se reprocha al
+describir como se fijo la penalizacion. Vale para lo que incomoda y para lo que
+conviene, o no vale. De modo que la comparacion queda como se hizo y lo que se
+anade es la medida de lo que dejo sin usar.
 
 La cobertura de constantes vitales antes y despues de la limpieza tampoco es la
 misma cantidad. Se publica por etapas separadas, y ambas se leen de

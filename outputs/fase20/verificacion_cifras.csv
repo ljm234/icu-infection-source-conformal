@@ -24,6 +24,13 @@
 "Procedimientos sin alta registrada",0,0,0.5,TRUE
 "Producen una cifra publicada",36,36,0.5,TRUE
 "Posteriores que producen cifra publicada",26,26,0.5,TRUE
+"Celdas que resisten el analisis adoptado",3,3,0.5,TRUE
+"Analisis depositados y no adoptados",9,9,0.5,TRUE
+"Ajuste efectivo de la comparacion",2487,2487,0.5,TRUE
+"Ajuste posible con la calibracion",4010,4010,0.5,TRUE
+"Estancias que quedaron sin usar",1523,1523,0.5,TRUE
+"Aumento porcentual desaprovechado",61.24,61.24,0.005,TRUE
+"Ajuste efectivo frente al resumen",2487,2487,0.5,TRUE
 "Conjunto apartado, lo nombran",2,2,0.5,TRUE
 "Conjunto apartado, lo leen",0,0,0.5,TRUE
 "Depositos de consulta sin orden total",0,0,0.5,TRUE

@@ -34,6 +34,13 @@ margin never exceeds the largest possible rounding error.
 | Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
 | Producen una cifra publicada | 36.0000 | 36.0000 | 0.50000 | yes |
 | Posteriores que producen cifra publicada | 26.0000 | 26.0000 | 0.50000 | yes |
+| Celdas que resisten el analisis adoptado | 3.0000 | 3.0000 | 0.50000 | yes |
+| Analisis depositados y no adoptados | 9.0000 | 9.0000 | 0.50000 | yes |
+| Ajuste efectivo de la comparacion | 2487.0000 | 2487.0000 | 0.50000 | yes |
+| Ajuste posible con la calibracion | 4010.0000 | 4010.0000 | 0.50000 | yes |
+| Estancias que quedaron sin usar | 1523.0000 | 1523.0000 | 0.50000 | yes |
+| Aumento porcentual desaprovechado | 61.2400 | 61.2400 | 0.00500 | yes |
+| Ajuste efectivo frente al resumen | 2487.0000 | 2487.0000 | 0.50000 | yes |
 | Conjunto apartado, lo nombran | 2.0000 | 2.0000 | 0.50000 | yes |
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
@@ -392,5 +399,6 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase40/conjunto_apartado.csv`
 - `outputs/fase33/procedencia_seleccion.csv`
 - `outputs/fase33/versiones_del_bloque.csv`
+- `outputs/fase32/potencia_no_usada.csv`
 - `outputs/fase32/intervalo_diferencia.csv`
 - `outputs/fase32/multiplicidad_diferencias.csv`
