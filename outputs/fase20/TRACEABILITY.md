@@ -91,6 +91,9 @@ margin never exceeds the largest possible rounding error.
 | Columnas del perfil de categorias | 5.0000 | 5.0000 | 0.50000 | yes |
 | Parametros de la especificacion final | 148.0000 | 148.0000 | 0.50000 | yes |
 | Casos de la minoritaria menor | 573.0000 | 573.0000 | 0.50000 | yes |
+| Tamano de modelo_final.rds | 2180.0000 | 2180.0000 | 0.50000 | yes |
+| Tamano de especificacion.rds | 536.0000 | 536.0000 | 0.50000 | yes |
+| Tamano de umbrales.csv | 228.0000 | 228.0000 | 0.50000 | yes |
 | Ajuste efectivo de la comparacion | 2487.0000 | 2487.0000 | 0.50000 | yes |
 | Ajuste posible con la calibracion | 4010.0000 | 4010.0000 | 0.50000 | yes |
 | Estancias que quedaron sin usar | 1523.0000 | 1523.0000 | 0.50000 | yes |

@@ -614,6 +614,25 @@ if (!is.null(cls2))
     min(cls2$n[cls2$clase %in% c("urinario","respiratorio","sangre")]),
     573, 0.5)
 
+# Los tres archivos que hacen falta para aplicar el modelo, y su tamano.
+#
+# El manuscrito publica los tres tamanos en bytes como parte de la
+# declaracion de disponibilidad del modelo. Eran las unicas cifras publicadas
+# que ninguna comprobacion contrastaba: la auditoria de publicacion las
+# imprime, y imprimir no es comprobar. Una seccion que afirma que cada cifra
+# publicada se contrasta contra su archivo no puede tener tres que no.
+MODELO_PUBLICADO <- c(
+  "outputs/fase8/modelo_final.rds"   = 2180,
+  "outputs/fase7/especificacion.rds" = 536,
+  "outputs/fase8/umbrales.csv"       = 228)
+for (f in names(MODELO_PUBLICADO)) {
+  if (!file.exists(f)) {
+    cat("Fuente ausente:", f, "\n"); quit(status = 1)
+  }
+  reg[[length(reg)+1]] <- comprobar(paste("Tamano de", basename(f)),
+    file.size(f), MODELO_PUBLICADO[[f]], 0.5)
+}
+
 pot <- leer(FUENTES[["Potencia no usada"]])
 if (!is.null(pot)) {
   reg[[length(reg)+1]] <- comprobar("Ajuste efectivo de la comparacion",

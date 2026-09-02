@@ -81,6 +81,9 @@
 "Columnas del perfil de categorias",5,5,0.5,TRUE
 "Parametros de la especificacion final",148,148,0.5,TRUE
 "Casos de la minoritaria menor",573,573,0.5,TRUE
+"Tamano de modelo_final.rds",2180,2180,0.5,TRUE
+"Tamano de especificacion.rds",536,536,0.5,TRUE
+"Tamano de umbrales.csv",228,228,0.5,TRUE
 "Ajuste efectivo de la comparacion",2487,2487,0.5,TRUE
 "Ajuste posible con la calibracion",4010,4010,0.5,TRUE
 "Estancias que quedaron sin usar",1523,1523,0.5,TRUE
