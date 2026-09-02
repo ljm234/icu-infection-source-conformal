@@ -205,6 +205,12 @@ define <- paste0("R/", cont$procedimiento[cont$clase == "define la etiqueta"])
 
 MIN <- c("urinario","respiratorio","sangre")
 CLC <- c("sin_crecimiento","urinario","respiratorio","sangre")
+
+# Las etiquetas que no se modelan. Son las que la abstencion recoge, y se
+# derivan de la tabla de la cohorte en lugar de enumerarse: el documento las
+# listaba a mano y colaba entre ellas el liquido cefalorraquideo, que no es
+# una etiqueta sino algo que cae dentro de otra.
+no_mod <- setdiff(clases$clase, CLC)
 VIT <- c("temperatura","frec_cardiaca","frec_respiratoria","saturacion")
 NOMINAL <- cob8$nominal[1]
 
@@ -414,9 +420,16 @@ add(prosa(
 "otro_sitio another site, urinario urinary, respiratorio respiratory, sangre",
 "bloodstream, herida wound and intraabdominal intra-abdominal.",
 "",
-"The abstention category groups wound, intra-abdominal, cerebrospinal fluid",
-"and other sites whose frequency does not support conditional calibration. It",
-"is not modelled.",
+"Abstention is not one of those labels. In the modelled table it is what",
+"remains once the four modelled classes are taken out, and in the cohort",
+"table above it corresponds to the labels that are not modelled:"))
+add(cifra("%s.", paste(no_mod, collapse = ", ")))
+add(cifra("Those are %d of the %d labels above. Cerebrospinal fluid has no",
+          as.integer(length(no_mod)), as.integer(nrow(clases))))
+add(prosa(
+"label of its own anywhere in this work and falls inside otro_sitio. None of",
+"them is frequent enough to support conditional calibration, and none is",
+"modelled.",
 "",
 "## Design decisions",
 "",
@@ -500,7 +513,8 @@ add(prosa(
 "zero without saying that it does not survive correction would apply one",
 "standard here and another there.",
 "",
-"Three things bound that comparison. Stays complete in that many",
+"Two things bound that comparison and two work in its favour. Stays complete",
+"in that many",
 "determinations are not a random sample: they are the more heavily monitored",
 "ones, and monitoring intensity tracks both severity and unit, so the answer",
 "holds among patients with complete laboratory work rather than in the",
@@ -902,18 +916,21 @@ add(prosa(
 "for this validation, was not evaluated, so the coverage reported here is",
 "conditional on that choice.",
 ""))
-add(cifra("The cells whose interval falls entirely below nominal, the %d that",
+add(cifra("The %d cells whose interval falls entirely below nominal are listed",
+          as.integer(n_bajo)))
+add(cifra("below, and the %d that survive the correction are marked in the",
           as.integer(n_resiste)))
 add(prosa(
-"survive correction among them:",
+"last column:",
 "",
-"    unit         class                 n   cover   interval",
+"    unit         class                 n   cover   interval          survives",
 ""))
 
 for (i in which(bajo_iv))
-  add(cifra("    %-12s %-16s %5d  %.4f  %.4f to %.4f",
+  add(cifra("    %-12s %-16s %5d  %.4f  %.4f to %.4f  %s",
             iv$sigla[i], iv$clase[i], as.integer(iv$n[i]),
-            iv$cobertura[i], iv$ic_beta_inferior[i], iv$ic_beta_superior[i]))
+            iv$cobertura[i], iv$ic_beta_inferior[i], iv$ic_beta_superior[i],
+            if (iv[[ADOPT]][i]) "yes" else "no"))
 
 add(prosa(
 "",

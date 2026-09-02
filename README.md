@@ -61,9 +61,14 @@ The category names are Spanish: sin_crecimiento is no growth on culture,
 otro_sitio another site, urinario urinary, respiratorio respiratory, sangre
 bloodstream, herida wound and intraabdominal intra-abdominal.
 
-The abstention category groups wound, intra-abdominal, cerebrospinal fluid
-and other sites whose frequency does not support conditional calibration. It
-is not modelled.
+Abstention is not one of those labels. In the modelled table it is what
+remains once the four modelled classes are taken out, and in the cohort
+table above it corresponds to the labels that are not modelled:
+otro_sitio, herida, intraabdominal.
+Those are 3 of the 7 labels above. Cerebrospinal fluid has no
+label of its own anywhere in this work and falls inside otro_sitio. None of
+them is frequent enough to support conditional calibration, and none is
+modelled.
 
 ## Design decisions
 
@@ -114,7 +119,8 @@ of them survive: 0 resist. Reporting the one that excludes
 zero without saying that it does not survive correction would apply one
 standard here and another there.
 
-Three things bound that comparison. Stays complete in that many
+Two things bound that comparison and two work in its favour. Stays complete
+in that many
 determinations are not a random sample: they are the more heavily monitored
 ones, and monitoring intensity tracks both severity and unit, so the answer
 holds among patients with complete laboratory work rather than in the
@@ -388,16 +394,17 @@ among those the fold was fitted on. The alternative, dropping the unit term
 for this validation, was not evaluated, so the coverage reported here is
 conditional on that choice.
 
-The cells whose interval falls entirely below nominal, the 3 that
-survive correction among them:
+The 5 cells whose interval falls entirely below nominal are listed
+below, and the 3 that survive the correction are marked in the
+last column:
 
-    unit         class                 n   cover   interval
+    unit         class                 n   cover   interval          survives
 
-    CCU          sin_crecimiento   1608  0.8004  0.7767 to 0.8227
-    MICU         sin_crecimiento   4686  0.7757  0.7570 to 0.7937
-    MICU/SICU    respiratorio       160  0.7500  0.6442 to 0.8398
-    SICU         respiratorio        58  0.7586  0.6119 to 0.8726
-    TSICU        respiratorio        55  0.7818  0.6348 to 0.8917
+    CCU          sin_crecimiento   1608  0.8004  0.7767 to 0.8227  yes
+    MICU         sin_crecimiento   4686  0.7757  0.7570 to 0.7937  yes
+    MICU/SICU    respiratorio       160  0.7500  0.6442 to 0.8398  yes
+    SICU         respiratorio        58  0.7586  0.6119 to 0.8726  no
+    TSICU        respiratorio        55  0.7818  0.6348 to 0.8917  no
 
 How that count was reached. The guarantee is assessed class by class
 within each unit, which gives 20 cells, and two things shape how
