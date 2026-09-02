@@ -125,6 +125,54 @@ if (length(falsas) > 0) {
   quit(status = 1)
 }
 
+# ---------------------------------------------------------------------------
+# La palabra que el trabajo retiro no vuelve por ninguna via.
+# ---------------------------------------------------------------------------
+# El manifiesto de la fase octava declaraba fijada de antemano una comparacion
+# que el historial no acredita como tal, y era el ultimo deposito que lo
+# hacia. La afirmacion se retiro de los documentos hace tiempo; el deposito y
+# once sitios del codigo la conservaban. Un revisor lee comentarios.
+#
+# La comprobacion alcanza tambien a este comentario, y por eso esta escrito
+# sin la palabra: una regla que exime a quien la enuncia no es una regla.
+#
+# Se busca en todo lo versionado: el codigo, los depositos y los documentos.
+# Los dos patrones llevan una clase de caracteres donde el texto buscado lleva
+# una letra, de modo que esta comprobacion no se encuentra a si misma. No hay
+# excepcion escrita a mano: quien afirma escribe la palabra, quien la busca
+# escribe su patron.
+RETIRADAS <- c("preespecificad[ao]s?", "prespecifi[e]d")
+
+vigilados <- c(system("git ls-files 'R/*.R'", intern = TRUE),
+               system("git ls-files 'outputs/*.csv' 'outputs/*/*.csv'",
+                      intern = TRUE),
+               system("git ls-files 'outputs/*/manifiesto.json'",
+                      intern = TRUE),
+               DOCUMENTOS[file.exists(DOCUMENTOS)])
+vigilados <- unique(vigilados[file.exists(vigilados)])
+
+cat("\n=== LA AFIRMACION RETIRADA ===\n")
+reaparece <- character(0)
+for (f in vigilados) {
+  l <- try(readLines(f, warn = FALSE), silent = TRUE)
+  if (inherits(l, "try-error")) next
+  for (pat in RETIRADAS) {
+    i <- grep(pat, l, ignore.case = TRUE)
+    for (k in i) reaparece <- c(reaparece,
+                                sprintf("%s:%d: %s", f, k, trimws(l[k])))
+  }
+}
+cat("Archivos vigilados:", length(vigilados), "\n")
+cat("Sitios donde reaparece:", length(reaparece), "\n")
+if (length(reaparece) > 0) {
+  for (r in reaparece) cat("  ", r, "\n")
+  cat("\nEl trabajo retiro esa afirmacion porque el historial no la",
+      "acredita:\nel criterio y su resultado entraron en el mismo commit.",
+      "No puede volver\nni al deposito ni a un comentario.\n")
+  cat("La auditoria no se supera. No procede publicar.\n")
+  quit(status = 1)
+}
+
 historial <- system(paste("git log --all --oneline --",
   paste(PROTEGIDAS, collapse = " "), "2>/dev/null"), intern = TRUE)
 cat("\nRegistros del historial que alcanzan datos por paciente:",

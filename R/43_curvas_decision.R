@@ -2,7 +2,9 @@ pru <- read.csv("outputs/fase8/prueba_con_conjuntos.csv",
                 stringsAsFactors = FALSE)
 CLASES <- c("sin_crecimiento","urinario","respiratorio","sangre")
 
-# Analisis de curvas de decision, preespecificado en el protocolo. El
+# Analisis de curvas de decision. El protocolo lo recoge, pero entro en el
+# repositorio cinco dias despues que este procedimiento, de modo que no lo
+# precede y no cabe llamarlo prefijado. El
 # beneficio neto a un umbral de probabilidad pt cuenta los verdaderos
 # positivos y descuenta los falsos positivos con peso pt/(1-pt), que
 # expresa la razon entre el dano de actuar sin necesidad y el beneficio de

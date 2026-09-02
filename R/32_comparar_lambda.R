@@ -99,7 +99,7 @@ cat("Pacientes con clase minoritaria como argmax: 1se =", r1$pred_min,
     " min =", r2$pred_min, "\n")
 
 peor <- min(r2$auc[min_cl] - r1$auc[min_cl])
-cat("\n=== DECISION SEGUN CRITERIO PREESPECIFICADO ===\n")
+cat("\n=== DECISION SEGUN EL CRITERIO DECLARADO ===\n")
 cat("Umbral de mejora relevante: 0.02\n")
 cat("Ninguna clase puede empeorar mas de 0.02\n")
 if (prom2 - prom1 > 0.02 && peor > -0.02) {

@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-09-01 by R/59_verificar_cifras.R
+Generated on 2026-09-02 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -105,7 +105,7 @@ margin never exceeds the largest possible rounding error.
 | Fases derivadas de la marca de ejecucion | 4.0000 | 4.0000 | 0.50000 | yes |
 | Fases sin manifiesto | 15.0000 | 15.0000 | 0.50000 | yes |
 | Fases sin manifiesto y sin estado | 0.0000 | 0.0000 | 0.50000 | yes |
-| Fases sin manifiesto rehechas despues | 6.0000 | 6.0000 | 0.50000 | yes |
+| Fases sin manifiesto rehechas despues | 7.0000 | 7.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
 | Cobertura conforme, maximo entre categorias | 0.9044 | 0.9044 | 0.00005 | yes |

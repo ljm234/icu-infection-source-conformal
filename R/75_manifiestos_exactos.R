@@ -32,6 +32,35 @@ library(jsonlite)
 
 TOL <- 1e-4
 
+# El campo que se corrige, y no solo se conserva.
+#
+# El manifiesto de la fase octava declaraba que la comparacion entre reglas de
+# penalizacion se habia fijado de antemano. El historial no lo sostiene: el
+# procedimiento que declara el criterio y el deposito que lo aplica entraron
+# en el mismo commit, de modo que ningun artefacto acredita que el criterio
+# precediera a la comparacion. Los documentos retiraron esa afirmacion; el
+# manifiesto la conservaba, y era el unico deposito del repositorio que
+# todavia la hacia.
+#
+# Se corrige aqui y no reejecutando la fase octava, que reescribiria archivos
+# excluidos del versionado. El valor anterior queda consignado en el propio
+# manifiesto: una correccion que borra lo corregido no es auditable.
+JUSTIFICACION <- paste(
+  "comparacion frente a 1se bajo el criterio que declara",
+  "R/32_comparar_lambda.R, que entro en el repositorio en el mismo commit",
+  "que su resultado, de modo que ningun artefacto acredita que precediera a",
+  "la comparacion")
+
+# La correccion se declara sin repetir lo corregido. El valor anterior afirmaba
+# que la comparacion se habia fijado de antemano; copiarlo aqui devolveria al
+# deposito la afirmacion que el trabajo retiro, y el historial ya lo conserva
+# literalmente en el commit anterior a esta reparacion, que es donde un
+# auditor debe buscarlo.
+CORRECCION <- paste(
+  "el valor anterior de este campo afirmaba que la comparacion se habia",
+  "fijado de antemano; el historial no lo sostiene, y el commit anterior a",
+  "esta reparacion conserva aquel valor literalmente")
+
 detener <- function(...) {
   cat("\n", ..., "\n", sep = "")
   cat("El procedimiento se detiene. No se reescribe manifiesto alguno.\n")
@@ -64,7 +93,7 @@ RUTA <- c(esp  = "outputs/fase7/especificacion.rds",
           umb  = "outputs/fase8/umbrales.csv",
           cob  = "outputs/fase8/cobertura.csv",
           man8 = "outputs/fase8/manifiesto.json",
-          imp  = "outputs/fase6/imputaciones.rds")
+          man6 = "outputs/fase6/manifiesto.json")
 for (r in RUTA) if (!file.exists(r)) detener("Fuente ausente: ", r)
 
 esp <- readRDS(RUTA[["esp"]])
@@ -105,8 +134,19 @@ ret <- unique(unlist(lapply(coef(m7), function(z) {
   nz <- which(z[-1] != 0); rownames(z)[-1][nz] })))
 nret <- anotar("7", "columnas_retenidas", length(ret),
                "outputs/fase7/modelo.rds")
-nimp <- anotar("7", "imputaciones_apiladas", length(readRDS(RUTA[["imp"]])),
-               "outputs/fase6/imputaciones.rds")
+# El recuento de imputaciones se toma del manifiesto de la fase sexta y no
+# del objeto que esa fase deposito. La cifra es la misma y la procedencia es
+# la de cualquier manifiesto: la escribio el procedimiento que creo el objeto,
+# en el momento de crearlo. Lo que cambia es quien puede comprobar esta
+# reparacion: el objeto esta entre las rutas reservadas, de modo que leerlo
+# exigia acceso credencializado para auditar un archivo que no contiene dato
+# alguno de paciente.
+a6 <- leer_json(RUTA[["man6"]])
+if (is.null(a6$m))
+  detener("El manifiesto de la fase sexta no declara el numero de ",
+          "imputaciones.")
+nimp <- anotar("7", "imputaciones_apiladas", a6$m,
+               "outputs/fase6/manifiesto.json")
 
 man7 <- list(
   fase = a7$fase,
@@ -154,7 +194,8 @@ man8 <- list(
   cobertura_nominal = nom,
   lambda = lam8,
   regla_lambda = a8$regla_lambda,
-  justificacion_lambda = a8$justificacion_lambda,
+  justificacion_lambda = JUSTIFICACION,
+  correccion_de_la_justificacion = CORRECCION,
   puntuacion = a8$puntuacion,
   calibracion = a8$calibracion,
   umbrales = um,
@@ -175,8 +216,16 @@ CONSERVADOS <- list(
   "7" = c("fase","ejecutado_en","semilla","glmnet_version","alpha",
           "regla_lambda","con_spline","lineales","pliegues_por_paciente"),
   "8" = c("fase","ejecutado_en","semilla","alfa","regla_lambda",
-          "justificacion_lambda","puntuacion","calibracion",
+          "puntuacion","calibracion",
           "cobertura_marginal","proporcion_con_conclusion"))
+
+# Campos que esta reparacion corrige, y no conserva ni deriva de una fuente.
+# Se declaran aparte porque son la unica categoria en que el manifiesto nuevo
+# dice algo distinto del anterior a proposito, y un lector tiene que poder
+# distinguir eso de un redondeo reparado.
+CORREGIDOS <- list("7" = character(0),
+                   "8" = c("justificacion_lambda",
+                           "correccion_de_la_justificacion"))
 
 # La marca de reparacion no procede del manifiesto anterior ni de fuente
 # alguna: la anade este procedimiento, y por eso se declara aparte. Un
@@ -192,6 +241,7 @@ for (f in c("7","8")) {
   for (campo in names(nuevo)) {
     origen <- if (campo %in% derivados[[f]]) "leido de su fuente"
               else if (campo %in% CONSERVADOS[[f]]) "conservado"
+              else if (campo %in% CORREGIDOS[[f]]) "corregido por la reparacion"
               else if (campo %in% ANADIDOS) "anadido por la reparacion"
               else NA_character_
     if (is.na(origen))
@@ -205,7 +255,7 @@ for (f in c("7","8")) {
 cat("\n=== CONTRASTE CON EL MANIFIESTO ANTERIOR ===\n")
 comparar <- function(f, nuevo, viejo) {
   for (campo in names(nuevo)) {
-    if (campo %in% ANADIDOS) next
+    if (campo %in% c(ANADIDOS, CORREGIDOS[[f]])) next
     a <- nuevo[[campo]]; b <- viejo[[campo]]
     if (is.null(b)) detener("El campo ", campo, " no figuraba en el ",
                             "manifiesto de la fase ", f, ".")

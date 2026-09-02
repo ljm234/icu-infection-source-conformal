@@ -5,7 +5,7 @@ que archivo consta. Se consulta antes de escribir sobre cualquiera de estos
 puntos, para que lo que se publique se apoye en los archivos y no en el
 recuerdo de quien redacta.
 
-Generado el 2026-09-01 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
+Generado el 2026-09-02 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
 se comprueba al componer el documento: ha de existir y ha de estar bajo control
 de versiones. El procedimiento se detiene si alguna falta, de modo que este
 registro no puede sobrevivir a los archivos que lo sostienen.

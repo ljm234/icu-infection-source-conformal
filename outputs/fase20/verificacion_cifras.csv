@@ -95,7 +95,7 @@
 "Fases derivadas de la marca de ejecucion",4,4,0.5,TRUE
 "Fases sin manifiesto",15,15,0.5,TRUE
 "Fases sin manifiesto y sin estado",0,0,0.5,TRUE
-"Fases sin manifiesto rehechas despues",6,6,0.5,TRUE
+"Fases sin manifiesto rehechas despues",7,7,0.5,TRUE
 "Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
 "Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE
 "Cobertura conforme, maximo entre categorias",0.9044,0.9044,5e-05,TRUE

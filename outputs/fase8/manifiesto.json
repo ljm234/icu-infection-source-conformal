@@ -6,7 +6,8 @@
   "cobertura_nominal": 0.9,
   "lambda": 0.0001910380708197862,
   "regla_lambda": "min",
-  "justificacion_lambda": "comparacion preespecificada frente a 1se",
+  "justificacion_lambda": "comparacion frente a 1se bajo el criterio que declara R/32_comparar_lambda.R, que entro en el repositorio en el mismo commit que su resultado, de modo que ningun artefacto acredita que precediera a la comparacion",
+  "correccion_de_la_justificacion": "el valor anterior de este campo afirmaba que la comparacion se habia fijado de antemano; el historial no lo sostiene, y el commit anterior a esta reparacion conserva aquel valor literalmente",
   "puntuacion": "1 - probabilidad predicha",
   "calibracion": "condicional por clase",
   "umbrales": {

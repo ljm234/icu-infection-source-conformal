@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-09-01 by `R/65_generar_readme.R`. Every numeric figure below
+Generated on 2026-09-02 by `R/65_generar_readme.R`. Every numeric figure below
 is read from a versioned results file. The generator rejects prose lines
 containing a digit, format patterns carrying digits outside their substitution
 codes, and any line that fails to compose.

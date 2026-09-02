@@ -51,7 +51,7 @@ apilar <- function(g) {
 # ---------------------------------------------------------------------------
 # Ajuste definitivo
 #
-# Se adopta lambda.min tras la comparacion preespecificada frente a
+# Se adopta lambda.min tras la comparacion frente a
 # lambda.1se, que arrojo una mejora de 0.0395 en el area bajo la curva
 # promediada sobre las clases minoritarias, sin que ninguna clase perdiera
 # mas de 0.02. La regla de un error estandar resulta excesivamente
@@ -241,7 +241,7 @@ writeLines(toJSON(list(
   cobertura_nominal = 1 - ALFA_CONFORMAL,
   lambda = LAMBDA,
   regla_lambda = "min",
-  justificacion_lambda = "comparacion preespecificada frente a 1se",
+  justificacion_lambda = "comparacion frente a 1se bajo el criterio que declara R/32_comparar_lambda.R, que entro en el repositorio en el mismo commit que su resultado, de modo que ningun artefacto acredita que precediera a la comparacion",
   puntuacion = "1 - probabilidad predicha",
   calibracion = "condicional por clase",
   umbrales = as.list(round(umbrales, 6)),

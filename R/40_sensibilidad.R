@@ -85,7 +85,7 @@ ajustar_evaluar <- function(cs, li, cu, ci, etiqueta) {
              row.names = NULL)
 }
 
-# Analisis de sensibilidad preespecificado. Se compara la especificacion
+# Analisis de sensibilidad. Ningun artefacto lo precede: se compara la especificacion
 # adoptada frente a su version sin lactato ni indicador de determinacion. El
 # proposito es cuantificar que parte del desempeno procede del valor medido y
 # que parte de la decision clinica implicita en haber solicitado el examen.

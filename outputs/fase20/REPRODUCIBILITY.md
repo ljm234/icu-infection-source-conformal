@@ -1,6 +1,6 @@
 # Reproducibility of the extraction step
 
-Generated on 2026-09-01 by R/64_auditoria_publicacion.R.
+Generated on 2026-09-02 by R/64_auditoria_publicacion.R.
 
 ## Finding
 

@@ -3,7 +3,7 @@
 "7","percentiles_nudos","nombres de los cuantiles en especificacion.rds","0.05 0.35 0.65 0.95"
 "7","columnas_diseno","outputs/fase7/modelo.rds","40"
 "7","columnas_retenidas","outputs/fase7/modelo.rds","11"
-"7","imputaciones_apiladas","outputs/fase6/imputaciones.rds","20"
+"7","imputaciones_apiladas","outputs/fase6/manifiesto.json","20"
 "8","lambda","outputs/fase8/modelo_final.rds","0.000191038070819786"
 "8","cobertura_nominal","outputs/fase8/cobertura.csv","0.9"
 "8","umbrales.sin_crecimiento","outputs/fase8/umbrales.csv","0.1875"

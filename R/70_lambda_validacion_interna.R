@@ -12,7 +12,7 @@ library(jsonlite)
 # Este procedimiento pregunta si la decision habria sido la misma sin mirar
 # prueba. Reproduce la comparacion entera dentro del conjunto de
 # entrenamiento: una porcion ajusta, la otra evalua, y el criterio
-# preespecificado se aplica sin modificacion sobre esa segunda porcion.
+# declarado se aplica sin modificacion sobre esa segunda porcion.
 #
 # Repetir la comparacion con la devianza de validacion cruzada no responderia
 # nada. lambda.min es por definicion el minimo de esa devianza y ganaria por
@@ -41,7 +41,7 @@ library(jsonlite)
 #
 # Ninguna cifra de resultado se escribe a mano. Las dos unicas constantes
 # numericas que este procedimiento declara son los umbrales del criterio
-# preespecificado, que proceden de R/32 y se reproducen sin alteracion.
+# declarado, que proceden de R/32 y se reproducen sin alteracion.
 
 SEMILLA <- 20260818
 set.seed(SEMILLA)
@@ -49,7 +49,7 @@ set.seed(SEMILLA)
 PROPORCION_AJUSTE <- 2 / 3
 PLIEGUES <- 10
 
-# Criterio preespecificado, tal como consta en R/32: se adopta el valor
+# Criterio declarado, tal como consta en R/32: se adopta el valor
 # minimo si la mejora promedio en las categorias poco frecuentes supera el
 # umbral y ninguna de ellas empeora mas de esa misma cantidad.
 MEJORA_MINIMA  <- 0.02
@@ -328,7 +328,7 @@ cumple_perdida <- peor > -PERDIDA_MAXIMA
 decision_interna <- if (cumple_mejora && cumple_perdida)
   "lambda.min" else "lambda.1se"
 
-cat("\n=== DECISION SEGUN EL CRITERIO PREESPECIFICADO ===\n")
+cat("\n=== DECISION SEGUN EL CRITERIO DECLARADO ===\n")
 cat("Mejora exigida:", MEJORA_MINIMA, " observada:", round(mejora, 4),
     if (cumple_mejora) " cumple\n" else " no cumple\n")
 cat("Perdida admitida:", PERDIDA_MAXIMA, " peor cambio:", round(peor, 4),

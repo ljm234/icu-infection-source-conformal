@@ -62,7 +62,7 @@ evaluar <- function(mod, datos) {
 # La regla de penalizacion no se hereda de la especificacion anterior. La
 # matriz de diseno ha variado al incorporar cuatro constantes, de modo que el
 # valor optimo del parametro puede diferir. Se repite por tanto la
-# comparacion preespecificada con el mismo criterio fijado en su momento:
+# comparacion con el mismo criterio que la rama original declara:
 # se adopta el valor minimo unicamente si mejora en mas de dos centesimas el
 # area promediada sobre las categorias minoritarias, sin que ninguna
 # categoria empeore en esa misma cuantia.
@@ -97,7 +97,7 @@ cat("\nPromedio minoritarias, regla 1se:", round(prom1, 4), "\n")
 cat("Promedio minoritarias, regla min:", round(prom2, 4), "\n")
 cat("Coeficientes no nulos: 1se =", r1$no_nulos, " min =", r2$no_nulos, "\n")
 
-cat("\n=== DECISION SEGUN CRITERIO PREESPECIFICADO ===\n")
+cat("\n=== DECISION SEGUN EL CRITERIO DECLARADO ===\n")
 if (prom2 - prom1 > 0.02 && peor > -0.02) {
   cat("Se adopta la regla min\n"); elegido <- r2; LAMBDA <- cv$lambda.min
 } else {

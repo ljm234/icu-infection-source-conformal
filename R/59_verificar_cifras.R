@@ -713,7 +713,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Fases sin manifiesto y sin estado",
     sum(gpd$manifiesto == "" & gpd$origen == "indeterminado"), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Fases sin manifiesto rehechas despues",
-    sum(gpd$manifiesto == "" & gpd$rehecha_tras_la_guardia), 6, 0.5)
+    sum(gpd$manifiesto == "" & gpd$rehecha_tras_la_guardia), 7, 0.5)
 }
 t4 <- tolerancia(4); t4d <- tolerancia(4, 2)
 t2 <- tolerancia(2); t1 <- tolerancia(1)

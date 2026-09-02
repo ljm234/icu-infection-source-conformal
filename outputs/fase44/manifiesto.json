@@ -1,6 +1,6 @@
 {
   "fase": "44",
-  "ejecutado_en": "2026-09-01T22:10:42-0600",
+  "ejecutado_en": "2026-09-02T00:03:11-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "saber de cada deposito versionado si sostiene una cifra publicada, si alguna comprobacion lo alcanza, o ninguna de las dos cosas",
