@@ -198,6 +198,17 @@ if (any(cand$retenida & orina)) {
   cat("Alguna retenida es de orina. La frase que el documento compone lo niega.\n")
   quit(status = 1)
 }
+# El documento decia que ninguna de orina ALCANZA la cifra que es su propio
+# maximo, y una la alcanzaba exactamente. Ahora dice que ninguna la excede,
+# que es cierto por construccion, y la afirmacion que de verdad sostiene el
+# argumento es la otra: que ninguna llega a la cobertura de la retenida menos
+# cubierta, porque si llegara, el tipo de muestra si ordenaria por cobertura.
+if (max(cand$cobertura_pct[orina]) >= cob_min_ret) {
+  cat("Alguna candidata de orina alcanza la cobertura de la retenida menos\n")
+  cat("cubierta. El tipo de muestra dejaria de ser inocuo para el orden por\n")
+  cat("cobertura, que es lo que el documento afirma. Se detiene.\n")
+  quit(status = 1)
+}
 
 # Los contactos con la unidad reservada. Quien define la etiqueta no cuenta
 # como contacto: escribe el archivo que filtra.
@@ -513,12 +524,12 @@ add(prosa(
 "panel the source dictionary assigns, or of the coverage is exclusive to the",
 "retained. The sample type does carry information in one direction: every",
 "retained determination is a blood assay, and every urine assay among the"))
-add(cifra("candidates was discarded, but none of those %d reaches %.1f percent in",
+add(cifra("candidates was discarded, but none of those %d exceeds %.1f percent",
           as.integer(sum(orina)), max(cand$cobertura_pct[orina])))
-add(cifra("coverage against the %.1f percent of the least covered retained one,",
+add(cifra("in coverage against the %.1f percent of the least covered retained",
           cob_min_ret))
 add(prosa(
-"so the sample type adds nothing to the coverage ordering. Coverage",
+"one, so the sample type adds nothing to the coverage ordering. Coverage",
 "alone does not account for the split either:"))
 add(cifra("%d blood assays with higher coverage than that were discarded.",
           as.integer(n_sobre)))

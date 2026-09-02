@@ -89,7 +89,7 @@ nothing in the deposit reproduces it. No value of the sample type, of the
 panel the source dictionary assigns, or of the coverage is exclusive to the
 retained. The sample type does carry information in one direction: every
 retained determination is a blood assay, and every urine assay among the
-candidates was discarded, but none of those 6 reaches 9.9 percent in coverage
+candidates was discarded, but none of those 6 exceeds 9.9 percent in coverage
 against the 45.2 percent of the least covered retained one, so the sample type
 adds nothing to the coverage ordering. Coverage alone does not account for the
 split either: 12 blood assays with higher coverage than that were discarded.
