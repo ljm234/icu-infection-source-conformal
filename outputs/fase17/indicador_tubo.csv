@@ -1,4 +1,4 @@
-"clase","casos_cohorte","pct_intubado","casos_desarrollo","auc_solo_tubo"
+"clase","casos_cohorte","pct_intubado","casos_entrenamiento_calibracion","auc_solo_tubo"
 "sin_crecimiento",19688,39.3,11885,0.4638
 "urinario",805,23.2,571,0.461
 "respiratorio",671,72.2,510,0.7111

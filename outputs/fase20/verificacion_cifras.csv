@@ -133,7 +133,7 @@
 "Total de valores implausibles marcados",216,216,0.5,TRUE
 "Intubacion en la unidad cardiovascular",72,72,0.05,TRUE
 "Escala de conciencia dentro del estrato con tubo",0.4865,0.4865,5e-05,TRUE
-"Escala de conciencia en la cohorte completa",0.7086,0.7086,5e-05,TRUE
+"Escala de conciencia en entrenamiento y calibracion",0.7086,0.7086,5e-05,TRUE
 "Ganancia de la temperatura con spline",283,283,0.005,TRUE
 "Ganancia de la saturacion con spline",-47.85,-47.85,0.005,TRUE
 "Modelo ampliado, ganancia en minoritarias",0.0145666666666666,0.0146,1e-04,TRUE

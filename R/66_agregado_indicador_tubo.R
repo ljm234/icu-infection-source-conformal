@@ -12,7 +12,7 @@ m <- read.csv("data/derivados/glasgow.csv", stringsAsFactors = FALSE)
 CL <- c("sin_crecimiento","urinario","respiratorio","sangre")
 
 d <- m[m$grupo %in% c("entrenamiento","calibracion"), ]
-cat("Estancias en los conjuntos de desarrollo:", nrow(d), "\n")
+cat("Estancias en entrenamiento y calibracion:", nrow(d), "\n")
 cat("Categorias presentes:", length(unique(d$clase)), "\n")
 
 auc <- function(p, y) {
@@ -24,15 +24,17 @@ auc <- function(p, y) {
   round((sum(r[y == 1]) - n1 * (n1 + 1) / 2) / (n1 * n0), 4)
 }
 
-# La proporcion de intubados se calcula sobre la cohorte completa, conforme
+# La proporcion de intubados se calcula sobre la cohorte entera, conforme
 # al procedimiento que la establecio, mientras que la discriminacion se
-# obtiene sobre los conjuntos de desarrollo.
+# obtiene sobre entrenamiento y calibracion.
 res <- do.call(rbind, lapply(CL, function(k) {
   s <- m[m$clase == k, ]
   data.frame(clase = k,
              casos_cohorte = nrow(s),
              pct_intubado = round(100 * mean(s$intubado, na.rm = TRUE), 1),
-             casos_desarrollo = sum(d$clase == k),
+             # La columna se llamaba casos_desarrollo, y desarrollo nombra
+             # 18.054 estancias en todas las demas fases. Estas son 14.442.
+             casos_entrenamiento_calibracion = sum(d$clase == k),
              auc_solo_tubo = auc(d$intubado, as.integer(d$clase == k)),
              row.names = NULL)
 }))

@@ -143,7 +143,7 @@ margin never exceeds the largest possible rounding error.
 | Total de valores implausibles marcados | 216.0000 | 216.0000 | 0.50000 | yes |
 | Intubacion en la unidad cardiovascular | 72.0000 | 72.0000 | 0.05000 | yes |
 | Escala de conciencia dentro del estrato con tubo | 0.4865 | 0.4865 | 0.00005 | yes |
-| Escala de conciencia en la cohorte completa | 0.7086 | 0.7086 | 0.00005 | yes |
+| Escala de conciencia en entrenamiento y calibracion | 0.7086 | 0.7086 | 0.00005 | yes |
 | Ganancia de la temperatura con spline | 283.0000 | 283.0000 | 0.00500 | yes |
 | Ganancia de la saturacion con spline | -47.8500 | -47.8500 | 0.00500 | yes |
 | Modelo ampliado, ganancia en minoritarias | 0.0146 | 0.0146 | 0.00010 | yes |

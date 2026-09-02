@@ -1325,10 +1325,10 @@ add(prosa(
 
 add(cifra("discriminates the respiratory class at %.4f. The scale scores %.4f",
           val(tubo, "auc_solo_tubo", tubo$clase == "respiratorio"),
-          val(gcs, "auc_gcs_total", gcs$estrato == "cohorte completa" &
+          val(gcs, "auc_gcs_total", gcs$estrato == "entrenamiento y calibracion" &
                                     gcs$clase == "respiratorio")))
 add(cifra("on its full three-component form and %.4f on eye plus motor. The",
-          val(gcs, "auc_gcs_em", gcs$estrato == "cohorte completa" &
+          val(gcs, "auc_gcs_em", gcs$estrato == "entrenamiento y calibracion" &
                                  gcs$clase == "respiratorio")))
 
 add(prosa(

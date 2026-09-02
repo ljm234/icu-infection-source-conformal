@@ -899,8 +899,8 @@ if (!is.null(x)) {
   s <- x[x$estrato == "con tubo endotraqueal" & x$clase == "respiratorio", ]
   reg[[length(reg)+1]] <- comprobar("Escala de conciencia dentro del estrato con tubo",
     s$auc_gcs_em, 0.4865, t4)
-  s2 <- x[x$estrato == "cohorte completa" & x$clase == "respiratorio", ]
-  reg[[length(reg)+1]] <- comprobar("Escala de conciencia en la cohorte completa",
+  s2 <- x[x$estrato == "entrenamiento y calibracion" & x$clase == "respiratorio", ]
+  reg[[length(reg)+1]] <- comprobar("Escala de conciencia en entrenamiento y calibracion",
     s2$auc_gcs_em, 0.7086, t4)
 }
 
@@ -1117,7 +1117,7 @@ if (!is.null(x)) {
 
 x <- leer(FUENTES[["Circularidad de la escala de conciencia"]])
 if (!is.null(x)) {
-  s <- x[x$estrato == "cohorte completa" & x$clase == "respiratorio", ]
+  s <- x[x$estrato == "entrenamiento y calibracion" & x$clase == "respiratorio", ]
   reg[[length(reg)+1]] <- comprobar("Escala completa en la cohorte, tres componentes",
     s$auc_gcs_total, 0.7313, t4)
   s2 <- x[x$estrato == "con tubo endotraqueal" & x$clase == "respiratorio", ]

@@ -303,10 +303,10 @@ add(prosa(
 
 add(cifra("El indicador alcanza %.4f. La escala obtiene %.4f en su forma completa",
           val(tubo, "auc_solo_tubo", tubo$clase == "respiratorio"),
-          val(gcs, "auc_gcs_total", gcs$estrato == "cohorte completa" &
+          val(gcs, "auc_gcs_total", gcs$estrato == "entrenamiento y calibracion" &
                                     gcs$clase == "respiratorio")))
 add(cifra("de tres componentes y %.4f en la reducida a apertura ocular y respuesta",
-          val(gcs, "auc_gcs_em", gcs$estrato == "cohorte completa" &
+          val(gcs, "auc_gcs_em", gcs$estrato == "entrenamiento y calibracion" &
                                  gcs$clase == "respiratorio")))
 
 add(prosa(

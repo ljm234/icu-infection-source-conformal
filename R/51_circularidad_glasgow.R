@@ -18,7 +18,7 @@ m <- read.csv("data/derivados/glasgow.csv", stringsAsFactors = FALSE)
 d <- m[m$grupo %in% c("entrenamiento","calibracion"), ]
 CL <- c("sin_crecimiento","urinario","respiratorio","sangre")
 
-cat("Estancias en los conjuntos de desarrollo:", nrow(d), "\n")
+cat("Estancias en entrenamiento y calibracion:", nrow(d), "\n")
 
 auc <- function(p, y) {
   ok <- !is.na(p) & !is.na(y)
@@ -57,8 +57,13 @@ print(do.call(rbind, lapply(CL, function(k) {
 # Se emplea la puntuacion con signo invertido porque un valor menor
 # corresponde a mayor probabilidad de la categoria, mientras que el area bajo
 # la curva presupone lo contrario.
+# El estrato completo se nombra por el conjunto que es. Se llamaba "cohorte
+# completa", y la cohorte son 23.213 estancias: esto son las de entrenamiento
+# y calibracion. La misma etiqueta nombraba ademas otra cantidad distinta en
+# el deposito de constantes por estrato, de modo que una palabra falsa
+# designaba dos conjuntos.
 estratos <- list(
-  "cohorte completa"      = rep(TRUE, nrow(d)),
+  "entrenamiento y calibracion" = rep(TRUE, nrow(d)),
   "con tubo endotraqueal" = !is.na(d$intubado) & d$intubado == 1,
   "sin tubo endotraqueal" = !is.na(d$intubado) & d$intubado == 0)
 
@@ -78,7 +83,7 @@ print(res, row.names = FALSE)
 
 cat("\n=== PERDIDA DE DISCRIMINACION AL ESTRATIFICAR ===\n")
 print(do.call(rbind, lapply(CL, function(k) {
-  a <- res[res$estrato == "cohorte completa"      & res$clase == k, ]
+  a <- res[res$estrato == "entrenamiento y calibracion" & res$clase == k, ]
   b <- res[res$estrato == "con tubo endotraqueal" & res$clase == k, ]
   cc <- res[res$estrato == "sin tubo endotraqueal" & res$clase == k, ]
   data.frame(clase = k,
@@ -108,7 +113,7 @@ print(data.frame(
   desviacion = round(c(sd(sel$gcs_total, na.rm = TRUE),
                        sd(sel$gcs_em, na.rm = TRUE)), 2),
   row.names = NULL), row.names = FALSE)
-cat("Desviacion en los conjuntos de desarrollo, ocular mas motora:",
+cat("Desviacion en entrenamiento y calibracion, ocular mas motora:",
     round(sd(d$gcs_em, na.rm = TRUE), 2), "\n")
 
 dir.create("outputs/fase17", recursive = TRUE, showWarnings = FALSE)

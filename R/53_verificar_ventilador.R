@@ -34,8 +34,11 @@ auc <- function(p, y) {
 # condicion de portar tubo permanece constante y no puede sostener asociacion
 # alguna. Una senal que se conserve en ambos estratos sera fisiologica.
 
+# Como en el deposito de la escala de conciencia: el estrato completo son las
+# estancias de entrenamiento y calibracion en las categorias modeladas, no la
+# cohorte.
 estratos <- list(
-  "cohorte completa" = rep(TRUE, nrow(d)),
+  "entrenamiento y calibracion" = rep(TRUE, nrow(d)),
   "con tubo"         = d$intubado == 1,
   "sin tubo"         = d$intubado == 0)
 
@@ -54,7 +57,8 @@ print(res, row.names = FALSE)
 
 cat("\n=== CONSERVACION DE LA SENAL AL ESTRATIFICAR ===\n")
 print(do.call(rbind, lapply(VITALES, function(vv) {
-  a <- res[res$estrato == "cohorte completa" & res$variable == vv, ]
+  a <- res[res$estrato == "entrenamiento y calibracion" &
+           res$variable == vv, ]
   b <- res[res$estrato == "con tubo"         & res$variable == vv, ]
   cc <- res[res$estrato == "sin tubo"        & res$variable == vv, ]
   fc <- max(abs(unlist(a[CL]) - 0.5))
