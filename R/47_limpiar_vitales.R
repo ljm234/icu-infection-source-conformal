@@ -117,16 +117,21 @@ print(data.frame(
                             mean(!is.na(v$pam_compuesta))), 1),
   row.names = NULL), row.names = FALSE)
 
+# El nombre de la unidad se recorta para que la tabla quepa en la consola, y
+# solo ahi. Recortarlo en el dato dejaba el deposito con un identificador
+# mutilado y obligaba a emparejar por prefijo aguas abajo.
+corto <- function(x, n) substr(x, 1, n)
+
 cat("\n=== COBERTURA COMBINADA Y USO DEL CATETER POR UNIDAD ===\n")
 u <- do.call(rbind, lapply(sort(unique(v$unidad)), function(un) {
   s <- v[v$unidad == un, ]
   if (nrow(s) < 500) return(NULL)
-  data.frame(unidad = substr(un, 1, 34), n = nrow(s),
+  data.frame(unidad = un, n = nrow(s),
              pct_combinada = round(100 * mean(!is.na(s$pam_compuesta)), 1),
              pct_por_cateter = round(100 * mean(s$metodo_invasivo), 1),
              row.names = NULL)
 }))
-print(u, row.names = FALSE)
+print(transform(u, unidad = corto(unidad, 34)), row.names = FALSE)
 
 cat("\n=== DIFERENCIA ENTRE METODOS EN QUIENES TIENEN AMBOS ===\n")
 amb <- !is.na(v$presion_media) & !is.na(v$pam_invasiva)

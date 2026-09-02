@@ -104,17 +104,22 @@ print(data.frame(
 cat("Cociente de dispersion, subgrupo sobre cohorte:",
     round(sd(d$pam_ni) / sd(v$presion_media, na.rm = TRUE), 3), "\n")
 
+# El nombre de la unidad se recorta para que la tabla quepa en la consola, y
+# solo ahi. Recortarlo en el dato dejaba el deposito con un identificador
+# mutilado y obligaba a emparejar por prefijo aguas abajo.
+corto <- function(x, n) substr(x, 1, n)
+
 cat("\n=== CONCORDANCIA POR UNIDAD ===\n")
 uni <- v[, c("stay_id","unidad")]
 d2 <- merge(d, uni, by = "stay_id")
-print(do.call(rbind, lapply(sort(unique(d2$unidad)), function(un) {
+print(transform(do.call(rbind, lapply(sort(unique(d2$unidad)), function(un) {
   s <- d2[d2$unidad == un, ]
   if (nrow(s) < 50) return(NULL)
-  data.frame(unidad = substr(un, 1, 34), n = nrow(s),
+  data.frame(unidad = un, n = nrow(s),
              correlacion = round(cor(s$pam_inv, s$pam_ni), 4),
              desfase_mediano_min = round(median(abs(s$desfase_min)), 1),
              row.names = NULL)
-})), row.names = FALSE)
+})), unidad = corto(unidad, 34)), row.names = FALSE)
 
 write.csv(d, "data/derivados/concordancia_presion.csv", row.names = FALSE)
 cat("\nGuardado en data/derivados/concordancia_presion.csv\n")

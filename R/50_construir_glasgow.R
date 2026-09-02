@@ -109,17 +109,22 @@ print(data.frame(
 cat("Correlacion entre ambas versiones:",
     round(cor(m$gcs_total, m$gcs_em, use = "complete.obs"), 4), "\n")
 
+# El nombre de la unidad se recorta para que la tabla quepa en la consola, y
+# solo ahi. Recortarlo en el dato dejaba el deposito con un identificador
+# mutilado y obligaba a emparejar por prefijo aguas abajo.
+corto <- function(x, n) substr(x, 1, n)
+
 cat("\n=== INTUBACION POR UNIDAD ===\n")
 u <- do.call(rbind, lapply(sort(unique(m$unidad)), function(un) {
   s <- m[m$unidad == un, ]
   if (nrow(s) < 500) return(NULL)
-  data.frame(unidad = substr(un, 1, 34), n = nrow(s),
+  data.frame(unidad = un, n = nrow(s),
              pct_intubado = round(100 * mean(s$intubado, na.rm = TRUE), 1),
              gcs_total_mediano = median(s$gcs_total, na.rm = TRUE),
              gcs_em_mediano = median(s$gcs_em, na.rm = TRUE),
              row.names = NULL)
 }))
-print(u, row.names = FALSE)
+print(transform(u, unidad = corto(unidad, 34)), row.names = FALSE)
 
 # Comprobacion determinante. Si la proporcion de pacientes con tubo
 # endotraqueal difiere entre las categorias del desenlace, la puntuacion que

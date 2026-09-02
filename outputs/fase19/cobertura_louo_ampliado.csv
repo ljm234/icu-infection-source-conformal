@@ -1,6 +1,6 @@
 "unidad","n","cobertura","tamano_medio","pct_resuelve"
 "Coronary Care Unit (CCU)",1835,0.8556,3.468,0.7
 "Medical Intensive Care Unit (MICU)",5524,0.7757,3.291,1.5
-"Medical/Surgical Intensive Care Un",4276,0.8847,3.229,2.1
-"Surgical Intensive Care Unit (SICU",2787,0.9541,2.716,10.6
+"Medical/Surgical Intensive Care Unit (MICU/SICU)",4276,0.8847,3.229,2.1
+"Surgical Intensive Care Unit (SICU)",2787,0.9541,2.716,10.6
 "Trauma SICU (TSICU)",2317,0.9491,2.814,10.6

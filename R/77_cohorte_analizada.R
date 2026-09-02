@@ -60,11 +60,11 @@ if (!setequal(tot$unidad[tot$retenida], ele$unidad))
 
 # La unidad reservada es la retenida que no figura entre las evaluadas
 # dejando una fuera. Se identifica asi, y no por su nombre escrito aqui, para
-# que la derivacion siga a los archivos. Los nombres publicados vienen
-# truncados, de modo que se casan por prefijo y se exige correspondencia
-# unica.
+# que la derivacion siga a los archivos. El emparejamiento es por igualdad:
+# antes era por prefijo, porque los archivos publicados llegaban con el nombre
+# truncado, y ese remiendo desaparece con el defecto que lo obligaba.
 casar <- function(corto, largos) {
-  i <- which(substr(largos, 1, nchar(corto)) == corto)
+  i <- which(largos == corto)
   if (length(i) != 1) detener("La sede no se identifica sin ambiguedad: ",
                               corto)
   largos[i]

@@ -124,14 +124,19 @@ for (u in UNIDADES) {
                           resuelve = mean(tam == 1))
 }
 
+# El recorte del nombre pasa de los datos a la impresion, por la misma razon
+# que en la validacion sin ampliar: recortarlo en el dato deja el deposito con
+# un identificador mutilado.
+corto <- function(x, n) substr(x, 1, n)
+
 cat("\n=== COBERTURA MARGINAL POR UNIDAD EXCLUIDA ===\n")
 tab <- do.call(rbind, lapply(resultados, function(r)
-  data.frame(unidad = substr(r$unidad, 1, 34), n = r$n,
+  data.frame(unidad = r$unidad, n = r$n,
              cobertura = round(r$cobertura, 4),
              tamano_medio = round(r$tamano, 3),
              pct_resuelve = round(100 * r$resuelve, 1),
              row.names = NULL)))
-print(tab, row.names = FALSE)
+print(transform(tab, unidad = corto(unidad, 34)), row.names = FALSE)
 cat("\nNominal:", 1 - ALFA, "\n")
 cat("Media:", round(mean(tab$cobertura), 4),
     " Desviacion:", round(sd(tab$cobertura), 4), "\n")
@@ -140,17 +145,17 @@ cat("Rango:", round(min(tab$cobertura), 4), "a",
 
 cat("\n=== COBERTURA POR CATEGORIA Y UNIDAD ===\n")
 cc <- do.call(rbind, lapply(resultados, function(r)
-  data.frame(unidad = substr(r$unidad, 1, 30),
+  data.frame(unidad = r$unidad,
              t(round(r$cob_clase, 4)), row.names = NULL)))
 names(cc)[2:5] <- CL
-print(cc, row.names = FALSE)
+print(transform(cc, unidad = corto(unidad, 30)), row.names = FALSE)
 
 cat("\n=== DISCRIMINACION POR CATEGORIA Y UNIDAD ===\n")
 aa <- do.call(rbind, lapply(resultados, function(r)
-  data.frame(unidad = substr(r$unidad, 1, 30),
+  data.frame(unidad = r$unidad,
              t(round(r$auc, 4)), row.names = NULL)))
 names(aa)[2:5] <- CL
-print(aa, row.names = FALSE)
+print(transform(aa, unidad = corto(unidad, 30)), row.names = FALSE)
 
 cat("\n=== HETEROGENEIDAD DEL DESEMPENO ===\n")
 for (k in CL) {

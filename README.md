@@ -175,12 +175,14 @@ reduced fit favours the one-standard-error rule, since a smaller sample calls
 for a heavier penalty, so the minimum wins there against the odds. The check
 is in `outputs/fase22/decision_lambda.csv`.
 
-**Partition.** The cardiovascular unit was sealed in full. The choice was a
-judgement informed by the unit profiles that `R/21_perfil_unidades.R`
-computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`
-and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a
-rule. `R/22_particion.R` names the unit as a constant and computes no
-selection criterion.
+**Partition.** The unit sealed in full is the one the deposit names `Cardiac
+Vascular Intensive Care Unit (CVICU)`, and it goes by that name everywhere in
+this repository. The choice was a judgement informed by the unit profiles that
+`R/21_perfil_unidades.R` computes, of which two are versioned:
+`outputs/fase5/distancia_unidades.csv` and
+`outputs/fase5/clases_por_unidad.csv`. It was not the application of a rule.
+`R/22_particion.R` names the unit as a constant and computes no selection
+criterion.
 
 That unit is also the most dissimilar of the 6, which is worth stating rather
 than leaving for a reader to find. By the same statistic that informed the

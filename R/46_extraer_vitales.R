@@ -106,16 +106,21 @@ cob <- data.frame(
   row.names = NULL)
 print(cob, row.names = FALSE)
 
+# El nombre de la unidad se recorta para que la tabla quepa en la consola, y
+# solo ahi. Recortarlo en el dato dejaba el deposito con un identificador
+# mutilado y obligaba a emparejar por prefijo aguas abajo.
+corto <- function(x, n) substr(x, 1, n)
+
 cat("\n=== COBERTURA POR UNIDAD ===\n")
 u <- do.call(rbind, lapply(sort(unique(m$unidad)), function(un) {
   s <- m[m$unidad == un, ]
   if (nrow(s) < 500) return(NULL)
-  data.frame(unidad = substr(un, 1, 34), n = nrow(s),
+  data.frame(unidad = un, n = nrow(s),
              t(round(100 * sapply(VITALES, function(v) mean(!is.na(s[[v]]))), 1)),
              row.names = NULL)
 }))
 names(u)[3:8] <- c("temp","fc","fr","pas","pam","spo2")
-print(u, row.names = FALSE)
+print(transform(u, unidad = corto(unidad, 34)), row.names = FALSE)
 
 cat("\n=== ESTANCIAS CON LOS SEIS SIGNOS ===\n")
 completos <- rowSums(!is.na(m[, VITALES])) == 6

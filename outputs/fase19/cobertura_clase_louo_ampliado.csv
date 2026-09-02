@@ -1,6 +1,6 @@
 "unidad","sin_crecimiento","urinario","respiratorio","sangre"
 "Coronary Care Unit (CCU)",0.8383,0.9892,1,0.9518
-"Medical Intensive Care Unit (M",0.7463,0.9191,0.9682,0.9302
-"Medical/Surgical Intensive Car",0.8818,0.9136,0.8312,0.9805
-"Surgical Intensive Care Unit (",0.9623,0.9091,0.6207,1
+"Medical Intensive Care Unit (MICU)",0.7463,0.9191,0.9682,0.9302
+"Medical/Surgical Intensive Care Unit (MICU/SICU)",0.8818,0.9136,0.8312,0.9805
+"Surgical Intensive Care Unit (SICU)",0.9623,0.9091,0.6207,1
 "Trauma SICU (TSICU)",0.9589,0.8871,0.6545,0.9189

@@ -179,6 +179,19 @@ base$clase <- factor(as.character(base$clase), levels = CLASES)
 
 UNIDADES <- sort(unique(base$unidad))
 
+# El nombre de la unidad reservada, derivado y no escrito. Es la que figura en
+# el perfil de unidades y no en el conjunto de desarrollo, que es lo que
+# significa haberla apartado. Estaba aqui como una abreviatura a mano,
+# "Cardiac Vascular", y esa abreviatura era el unico sitio del deposito donde
+# la unidad recibia un nombre distinto del suyo.
+PERFIL <- "outputs/fase5/distancia_unidades.csv"
+if (!file.exists(PERFIL)) detener("Fuente ausente: ", PERFIL)
+SELLADA <- setdiff(read.csv(PERFIL, stringsAsFactors = FALSE)$unidad, UNIDADES)
+if (length(SELLADA) != 1)
+  detener("La unidad reservada no queda determinada: hay ", length(SELLADA),
+          " que no entran en el desarrollo.")
+cat("Unidad reservada, derivada del perfil:", SELLADA, "\n")
+
 construir <- function(datos, niveles) {
   bl <- list()
   for (v in esp$con_spline) {
@@ -279,11 +292,13 @@ marg <- do.call(rbind, marginal)
 pub_cl <- read.csv(RUTA_CLC, stringsAsFactors = FALSE)
 pub_m  <- read.csv(RUTA_LOUO, stringsAsFactors = FALSE)
 
-# Los archivos publicados truncan el nombre de la sede. Se casan por el
-# prefijo comun, y se comprueba que la correspondencia sea uno a uno.
+# Los nombres de sede se casan por igualdad. Antes se casaban por prefijo,
+# porque los archivos publicados llegaban con el nombre truncado a la anchura
+# de la consola; corregido el origen, emparejar por prefijo seria conservar el
+# remiendo de un defecto que ya no existe, y taparia el siguiente.
 casar <- function(nombres, largos) {
   sapply(nombres, function(n) {
-    i <- which(substr(largos, 1, nchar(n)) == n)
+    i <- which(largos == n)
     if (length(i) != 1) detener("La sede no se identifica sin ambiguedad: ", n)
     largos[i]
   })
@@ -346,7 +361,7 @@ for (i in seq_len(nrow(sell))) {
     detener("El intervalo recompuesto no coincide con el publicado en ",
             sell$clase[i], ".")
   sfilas[[i]] <- data.frame(
-    seccion = "unidad reservada", sede = "Cardiac Vascular",
+    seccion = "unidad reservada", sede = SELLADA,
     clase = sell$clase[i], n = nk, cubiertos = kk, cobertura = kk / nk,
     ic_inferior = ic[1], ic_superior = ic[2],
     n_calibracion = as.integer(ncal_sell[[sell$clase[i]]]),

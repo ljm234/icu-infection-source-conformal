@@ -611,7 +611,11 @@ add(prosa(
 "penalty, so the minimum wins there against the odds. The check is in",
 "`outputs/fase22/decision_lambda.csv`.",
 "",
-"**Partition.** The cardiovascular unit was sealed in full. The choice was a",
+"**Partition.** The unit sealed in full is the one the deposit names"))
+add(cifra("`%s`, and it goes by that name everywhere in this repository. The",
+          rsel$unidad_reservada[1]))
+add(prosa(
+"choice was a",
 "judgement informed by the unit profiles that `R/21_perfil_unidades.R`",
 "computes, of which two are versioned: `outputs/fase5/distancia_unidades.csv`",
 "and `outputs/fase5/clases_por_unidad.csv`. It was not the application of a",

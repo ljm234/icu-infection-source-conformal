@@ -59,19 +59,24 @@ for (vv in VITALES) {
   })), row.names = FALSE)
 }
 
+# El nombre de la unidad se recorta para que la tabla quepa en la consola, y
+# solo ahi. Recortarlo en el dato dejaba el deposito con un identificador
+# mutilado y obligaba a emparejar por prefijo aguas abajo.
+corto <- function(x, n) substr(x, 1, n)
+
 # Una constante cuya mediana difiera de forma apreciable entre unidades
 # incorporaria practica de medicion y no fisiologia, circunstancia ya
 # constatada en el lactato, en la regla de agregacion, en el metodo de
 # determinacion de la presion y en la escala de conciencia.
 cat("\n=== MEDIANA DE CADA CONSTANTE POR UNIDAD ===\n")
-print(do.call(rbind, lapply(sort(unique(d$unidad)), function(un) {
+print(transform(do.call(rbind, lapply(sort(unique(d$unidad)), function(un) {
   s <- d[d$unidad == un, ]
   if (nrow(s) < 500) return(NULL)
-  data.frame(unidad = substr(un, 1, 34), n = nrow(s),
+  data.frame(unidad = un, n = nrow(s),
              t(round(sapply(VITALES, function(vv)
                median(s[[vv]], na.rm = TRUE)), 1)),
              row.names = NULL)
-})), row.names = FALSE)
+})), unidad = corto(unidad, 34)), row.names = FALSE)
 
 # Una constante fuertemente asociada a un predictor ya presente en el modelo
 # aportaria parametros sin informacion nueva. La comprobacion establece si
