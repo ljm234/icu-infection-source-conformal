@@ -14,19 +14,49 @@ cat("=== ARCHIVOS BAJO CONTROL DE VERSIONES CON IDENTIFICADORES ===\n")
 versionados <- system("git ls-files '*.csv'", intern = TRUE)
 cat("Archivos de datos versionados:", length(versionados), "\n")
 
+# El archivo entero, y no solo su encabezado. Inspeccionar la primera linea
+# supone que un identificador solo puede llegar como nombre de columna, y no
+# es cierto: puede venir como valor de una columna de texto, o el archivo
+# puede llevar cabecera de otra cosa. Leerlo entero cuesta lo mismo aqui, y
+# es la diferencia entre comprobar y suponer.
+IDENT <- "stay_id|subject_id|hadm_id"
 peligrosos <- sapply(versionados, function(f) {
   if (!file.exists(f)) return(FALSE)
-  h <- try(readLines(f, n = 1, warn = FALSE), silent = TRUE)
+  h <- try(readLines(f, warn = FALSE), silent = TRUE)
   if (inherits(h, "try-error") || length(h) == 0) return(FALSE)
-  grepl("stay_id|subject_id|hadm_id", h)
+  any(grepl(IDENT, h))
 })
 
-if (any(peligrosos)) {
-  cat("\nARCHIVOS QUE CONTIENEN IDENTIFICADORES POR PACIENTE\n")
-  for (f in versionados[peligrosos]) cat("  ", f, "\n")
-} else {
-  cat("Ninguno contiene identificadores por paciente.\n")
+# Y una segunda via que no depende de como se llamen las cosas: una tabla con
+# tantas filas como estancias tiene la cohorte es una tabla por paciente,
+# aunque ninguna columna lo diga. El tamano de la cohorte se lee del embudo.
+FLUJO <- "outputs/fase2/flujo.csv"
+cohorte <- if (file.exists(FLUJO)) {
+  fl <- read.csv(FLUJO, stringsAsFactors = FALSE)
+  # El ultimo peldano del embudo, que es la cohorte analizada. Tomar el
+  # primero dejaria pasar una tabla con una fila por estancia de la cohorte,
+  # que es exactamente lo que se busca impedir.
+  min(fl$n)
+} else NA
+por_forma <- rep(FALSE, length(versionados))
+if (!is.na(cohorte)) {
+  por_forma <- sapply(versionados, function(f) {
+    if (!file.exists(f)) return(FALSE)
+    n <- try(length(readLines(f, warn = FALSE)) - 1, silent = TRUE)
+    !inherits(n, "try-error") && n >= cohorte
+  })
+  cat("Filas a partir de las cuales una tabla es por paciente:", cohorte, "\n")
 }
+
+if (any(peligrosos) || any(por_forma)) {
+  cat("\nARCHIVOS QUE CONTIENEN IDENTIFICADORES POR PACIENTE\n")
+  for (f in versionados[peligrosos]) cat("   por nombre: ", f, "\n")
+  for (f in versionados[por_forma]) cat("   por tamano: ", f, "\n")
+} else {
+  cat("Ninguno contiene identificadores por paciente, ni por el nombre de\n")
+  cat("sus columnas ni por tener una fila por estancia de la cohorte.\n")
+}
+peligrosos <- peligrosos | por_forma
 
 binarios <- system("git ls-files '*.rds'", intern = TRUE)
 cat("\nObjetos binarios versionados:", length(binarios), "\n")
@@ -348,15 +378,36 @@ add(prosa(
 "not re-extracted, since rebuilding the cohort after the sealed set had been",
 "opened would void the external validation."))
 
-writeLines(L, "outputs/fase20/REPRODUCIBILITY.md")
-cat("\nRegistro escrito en outputs/fase20/REPRODUCIBILITY.md\n")
-
 cat("\n=== RESULTADO DE LA AUDITORIA ===\n")
 cat("Deposito libre de datos por paciente:", if (seguro) "si" else "NO", "\n")
 cat("Afirmaciones sin respaldo:", faltan, "\n")
 
+# La puerta va antes de escribir, por la misma razon que en la verificacion de
+# cifras: el estado de salida se pierde y el archivo queda.
 if (!seguro || faltan > 0) {
   cat("\nLa auditoria no se supera. No procede publicar.\n")
+  cat("El registro no se escribe.\n")
   quit(status = 1)
 }
+
+# Ancho y repertorio. El documento se lee tambien en una terminal y en un
+# visor sin fuentes anchas, y un caracter fuera del repertorio basico se
+# convierte en un signo de interrogacion o en una caja. Las dos guardias
+# existian en un solo generador de los cuatro.
+largas <- which(nchar(L) > 79)
+if (length(largas) > 0) {
+  cat("\nLineas que exceden el ancho:", length(largas), "\n")
+  for (i in largas) cat("  ", L[i], "\n")
+  cat("El documento no se escribe.\n")
+  quit(status = 1)
+}
+if (any(grepl("[^ -~]", L))) {
+  cat("\nEl documento contiene caracteres fuera del repertorio basico.\n")
+  for (i in which(grepl("[^ -~]", L))) cat("  ", L[i], "\n")
+  cat("El documento no se escribe.\n")
+  quit(status = 1)
+}
+
+writeLines(L, "outputs/fase20/REPRODUCIBILITY.md")
+cat("\nRegistro escrito en outputs/fase20/REPRODUCIBILITY.md\n")
 cat("\nAuditoria superada. El deposito admite publicacion.\n")

@@ -1522,6 +1522,24 @@ add(prosa(
 "Code under the MIT license. Data are governed by the PhysioNet data use",
 "agreement for MIMIC-IV."))
 
+# Ancho y repertorio. El documento se lee tambien en una terminal y en un
+# visor sin fuentes anchas, y un caracter fuera del repertorio basico se
+# convierte en un signo de interrogacion o en una caja. Las dos guardias
+# existian en un solo generador de los cuatro.
+largas <- which(nchar(L) > 79)
+if (length(largas) > 0) {
+  cat("\nLineas que exceden el ancho:", length(largas), "\n")
+  for (i in largas) cat("  ", L[i], "\n")
+  cat("El documento no se escribe.\n")
+  quit(status = 1)
+}
+if (any(grepl("[^ -~]", L))) {
+  cat("\nEl documento contiene caracteres fuera del repertorio basico.\n")
+  for (i in which(grepl("[^ -~]", L))) cat("  ", L[i], "\n")
+  cat("El documento no se escribe.\n")
+  quit(status = 1)
+}
+
 writeLines(L, "README.md")
 
 cat("=== DOCUMENTACION GENERADA ===\n")

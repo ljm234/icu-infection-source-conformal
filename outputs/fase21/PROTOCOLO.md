@@ -2,7 +2,7 @@
 
 Documento de trabajo dirigido al equipo investigador.
 
-Generado el 2026-08-31 por `R/68_traduccion_yachay.R`.
+Generado el 2026-09-01 por `R/68_traduccion_yachay.R`.
 
 Las cifras que siguen proceden en su totalidad del banco de pruebas sobre
 MIMIC-IV y se leen de archivos versionados. Cuanto se afirma sobre el
@@ -209,9 +209,11 @@ observado, pero el banco de pruebas no lo acredita: la incorporacion de las
 constantes vitales no reemplaza a las determinaciones bioquimicas sino que
 se suma a ellas, de modo que los predictores presuntamente contaminados
 permanecen en el modelo y la comparacion no distingue entre ambas
-hipotesis. El modelo ampliado, ademas, no transporta mejor:
-la desviacion de la cobertura pasa de 0.0744 a 0.0736, la media
-desciende de 0.8944 a 0.8838 y el minimo de 0.8036 a 0.7757.
+hipotesis. El modelo ampliado, ademas, no transporta mejor. La desviacion
+de la cobertura queda practicamente igual, de modo que la afirmacion se
+apoya en las otras dos:
+pasa de 0.0744 a 0.0736, mientras que la media desciende de 0.8944 a
+0.8838 y el minimo de 0.8036 a 0.7757.
 
 No permite anticipar cuantos casos reunira cada sede ni con que distribucion
 etiologica. Esa informacion condiciona la viabilidad de la recalibracion

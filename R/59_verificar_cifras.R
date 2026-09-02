@@ -269,6 +269,48 @@ if (file.exists(MF26) && file.exists(IV26)) {
       length(otros), "restantes\nfiguran como depositados y no adoptados.\n\n")
 }
 
+# ---------------------------------------------------------------------------
+# Constantes escritas dentro de una consulta, contrastadas contra su fuente.
+# ---------------------------------------------------------------------------
+# La consulta de cobertura de laboratorio lleva el denominador escrito dentro
+# del SQL, y el umbral de estancias aparece ademas en el procedimiento que
+# describe a las candidatas. Ninguno de los dos se puede derivar sin
+# reejecutar una extraccion cuya entrada no esta disponible aqui, de modo que
+# no se sustituyen: se comprueban. Un literal contrastado contra la fuente que
+# deberia igualar deja de ser una cifra suelta.
+COB16 <- "R/16_cobertura_labs.R"
+CAN78 <- "R/78_determinaciones_candidatas.R"
+if (file.exists(COB16) && file.exists(CAN78) && file.exists(FUENTES[["Embudo de seleccion"]])) {
+  t16 <- paste(readLines(COB16, warn = FALSE), collapse = "\n")
+  t78 <- paste(readLines(CAN78, warn = FALSE), collapse = "\n")
+  fl <- read.csv(FUENTES[["Embudo de seleccion"]], stringsAsFactors = FALSE)
+  den <- regmatches(t16, regexpr("/ *([0-9]+)[.]0", t16))
+  um16 <- regmatches(t16, regexpr("COUNT[(]DISTINCT e[.]stay_id[)] >= *[0-9]+",
+                                  t16))
+  um78 <- regmatches(t78, regexpr("UMBRAL_ESTANCIAS *<- *[0-9]+", t78))
+  cat("=== CONSTANTES DENTRO DE LA CONSULTA ===\n")
+  if (length(den) != 1 || length(um16) != 1 || length(um78) != 1) {
+    cat("No se pueden leer las constantes de la consulta de cobertura.\n")
+    quit(status = 1)
+  }
+  den <- as.numeric(sub(".*/ *([0-9]+)[.]0", "\\1", den))
+  um16 <- as.numeric(sub(".*>= *", "", um16))
+  um78 <- as.numeric(sub(".*<- *", "", um78))
+  primeras <- fl$n[fl$paso == "p1_estancias_unicas"]
+  cat("Denominador escrito en la consulta:", den,
+      " primeras estancias del embudo:", primeras, "\n")
+  cat("Umbral en la consulta:", um16, " en el procedimiento:", um78, "\n")
+  if (length(primeras) != 1 || den != primeras) {
+    cat("El denominador escrito en la consulta no es el del embudo.\n")
+    quit(status = 1)
+  }
+  if (um16 != um78) {
+    cat("El umbral de estancias no coincide entre los dos archivos.\n")
+    quit(status = 1)
+  }
+  cat("Ambas concuerdan con su fuente.\n\n")
+}
+
 cat("=== INVENTARIO DE FUENTES ===\n")
 existe <- sapply(names(FUENTES), function(n) file.exists(FUENTES[[n]]))
 for (n in names(FUENTES))
@@ -1504,13 +1546,38 @@ lineas <- c(lineas, "", "## Source files", "")
 for (n in names(FUENTES))
   if (existe[n]) lineas <- c(lineas, sprintf("- `%s`", FUENTES[[n]]))
 
+# La puerta va ANTES de escribir, y no despues.
+#
+# Escribia el registro y luego salia con estado uno. Quien mirara el disco
+# encontraba un registro fresco, con marca de tiempo reciente, describiendo
+# una verificacion que no se habia superado. El estado de salida vive en la
+# terminal y se pierde; el archivo queda. De las dos senales, la que sobrevive
+# era la enganosa.
+if (disc > 0) {
+  cat("\nLa verificacion no se supera. No procede documentar sobre esta base.\n")
+  cat("El registro no se escribe: dejarlo actualizado tras una verificacion\n")
+  cat("fallida haria pasar por buena una comprobacion que no lo es.\n")
+  quit(status = 1)
+}
+
 dir.create("outputs/fase20", recursive = TRUE, showWarnings = FALSE)
+# Repertorio. Un caracter fuera del basico se convierte en un signo de
+# interrogacion o en una caja segun donde se lea, y eso vale para cualquier
+# archivo de texto que se publique.
+#
+# La guardia de ancho NO se aplica aqui, y la razon no es una excepcion sino
+# la misma distincion que separa un documento de prosa de un libro de
+# asientos: este registro es una tabla con una fila por cifra contrastada, y
+# recortarla a setenta y nueve columnas la partiria. Las cuatro guardias de
+# ancho viven en los cuatro generadores que componen prosa.
+if (any(grepl("[^ -~]", lineas))) {
+  cat("\nEl documento contiene caracteres fuera del repertorio basico.\n")
+  for (i in which(grepl("[^ -~]", lineas))) cat("  ", lineas[i], "\n")
+  cat("El documento no se escribe.\n")
+  quit(status = 1)
+}
+
 writeLines(lineas, "outputs/fase20/TRACEABILITY.md")
 write.csv(tab, "outputs/fase20/verificacion_cifras.csv", row.names = FALSE)
 cat("\nRegistro escrito en outputs/fase20/TRACEABILITY.md\n")
-
-if (disc > 0) {
-  cat("\nLa verificacion no se supera. No procede documentar sobre esta base.\n")
-  quit(status = 1)
-}
 cat("Verificacion superada.\n")
