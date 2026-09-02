@@ -185,6 +185,59 @@ ur_pru <- rngp[rngp$conjunto == "prueba" &
 # se deriva aqui del propio archivo: cual tiene la mayor cobertura y si quedo
 # retenida, cuantas son de orina y hasta donde llegan, y cuantas de sangre con
 # cobertura superior a la retenida menos frecuente se descartaron.
+# Los procedimientos que inspeccionan el repositorio, no los datos. La lista
+# la escribia una mano y se quedo corta: omitia las cuatro guardias y las tres
+# derivaciones que esta revision anadio. Aqui la descripcion sigue siendo
+# editorial, pero el conjunto se deriva y se contrasta contra ella, de modo
+# que no puede volver a quedarse corta en silencio.
+REPO_PROC <- c(
+  "59_verificar_cifras.R" =
+    "checks reported figures against their source files",
+  "60_inventario_resultados.R" =
+    "lists every versioned deposit with its shape",
+  "64_auditoria_publicacion.R" =
+    "checks the repository is safe to publish",
+  "65_generar_readme.R" =
+    "generates this document",
+  "67_diagnostico_dependencias.R" =
+    "checks the lockfile covers every library the procedures load",
+  "68_traduccion_yachay.R" =
+    "generates the protocol document",
+  "74_intervalos_cobertura.R" =
+    "derives from the generators which analysis governs what is published",
+  "81_procedencia_seleccion.R" =
+    "accredits from the history when the variable selection was fixed",
+  "82_decisiones_vivas.R" =
+    "generates the record of standing decisions",
+  "86_guarda_por_deposito.R" =
+    "establishes whether the guard was in force when each phase was written",
+  "87_orden_total.R" =
+    "stops when a deposit is not totally ordered by its own key",
+  "88_orden_de_la_matriz.R" =
+    "measures from the history the unfixed order of the analysis matrix",
+  "89_contactos_con_el_sellado.R" =
+    "derives from the code how often the sealed unit is touched, and how",
+  "90_posterioridad.R" =
+    "derives which analyses are posterior to the selection and the opening",
+  "93_huerfanas.R" =
+    "derives which deposits support a published figure and which check one")
+
+fuentes_repo <- sort(list.files("R", pattern = "[.]R$", full.names = TRUE))
+txt_repo <- sapply(fuentes_repo, function(x)
+  paste(readLines(x, warn = FALSE), collapse = "\n"))
+inspecciona <- grepl('list[.]files\\("R"', txt_repo) |
+               grepl("git ls-files|git log|git grep|git show", txt_repo) |
+               (grepl("cifra <- +function", txt_repo) &
+                grepl('writeLines\\([^,]+,\\s*"[^"]+[.]md"', txt_repo))
+derivados <- basename(fuentes_repo)[inspecciona]
+if (!setequal(derivados, names(REPO_PROC))) {
+  cat("La relacion de procedimientos que inspeccionan el repositorio no\n")
+  cat("coincide con la derivada del codigo.\n")
+  for (d in setdiff(derivados, names(REPO_PROC))) cat("  falta: ", d, "\n")
+  for (d in setdiff(names(REPO_PROC), derivados)) cat("  sobra: ", d, "\n")
+  quit(status = 1)
+}
+
 i_max  <- which.max(cand$cobertura_pct)
 orina  <- cand$fluido == "Urine"
 cob_min_ret <- min(cand$cobertura_pct[cand$retenida])
@@ -1597,20 +1650,17 @@ add(prosa(
 "",
 "File and line counts are omitted here: they are self-referential, so any",
 "later commit makes them stale, and `git ls-files` reports them directly.",
-"The self-checking procedures are:",
-"",
-"    R/59_verificar_cifras.R",
-"        checks reported figures against their source files",
-"    R/64_auditoria_publicacion.R",
-"        checks the repository is safe to publish",
-"    R/65_generar_readme.R",
-"        generates this document",
-"    R/67_diagnostico_dependencias.R",
-"        checks the lockfile covers every library the procedures load",
-"    R/68_traduccion_yachay.R",
-"        generates the protocol document",
-"    R/82_decisiones_vivas.R",
-"        generates the record of standing decisions",
+"The procedures that inspect the repository itself rather than the data are",
+"not listed by hand: they are derived as the ones that read the source of",
+"other procedures or the version history, and the list below is checked",
+"against that derivation before this document is written."))
+add(cifra("There are %d.", as.integer(length(REPO_PROC))))
+add(prosa(""))
+for (i in seq_along(REPO_PROC)) {
+  add(cifra("    R/%s", names(REPO_PROC)[i]))
+  add(prosa(paste0("        ", REPO_PROC[[i]])))
+}
+add(prosa(
 "",
 "The other documents are [TRACEABILITY](outputs/fase20/TRACEABILITY.md),",
 "which records every published figure against its source file,",

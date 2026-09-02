@@ -360,7 +360,9 @@ escrita a mano, ante una ruta que no exista o no este versionada, ante una ruta
 escrita en la prosa que haya eludido esa comprobacion, y ante un analisis
 declarado posterior cuya alta en el historial no lo sea.
 
-Los demas procedimientos de comprobacion son `R/59_verificar_cifras.R`,
-`R/64_auditoria_publicacion.R`, `R/65_generar_readme.R` y
-`R/67_diagnostico_dependencias.R`. El documento principal es `README.md`.
+Los demas procedimientos que inspeccionan el repositorio en lugar de los datos
+no se enumeran aqui, porque una relacion escrita a mano se queda corta en
+cuanto se anade una guardia, y ya se quedo. Los relaciona el documento
+principal, y esa relacion se contrasta contra el codigo antes de escribirse. El
+documento principal es `README.md`.
 

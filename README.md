@@ -752,10 +752,15 @@ the same information.
 
 File and line counts are omitted here: they are self-referential, so any later
 commit makes them stale, and `git ls-files` reports them directly. The
-self-checking procedures are:
+procedures that inspect the repository itself rather than the data are not
+listed by hand: they are derived as the ones that read the source of other
+procedures or the version history, and the list below is checked against that
+derivation before this document is written. There are 15.
 
     R/59_verificar_cifras.R
         checks reported figures against their source files
+    R/60_inventario_resultados.R
+        lists every versioned deposit with its shape
     R/64_auditoria_publicacion.R
         checks the repository is safe to publish
     R/65_generar_readme.R
@@ -764,8 +769,24 @@ self-checking procedures are:
         checks the lockfile covers every library the procedures load
     R/68_traduccion_yachay.R
         generates the protocol document
+    R/74_intervalos_cobertura.R
+        derives from the generators which analysis governs what is published
+    R/81_procedencia_seleccion.R
+        accredits from the history when the variable selection was fixed
     R/82_decisiones_vivas.R
         generates the record of standing decisions
+    R/86_guarda_por_deposito.R
+        establishes whether the guard was in force when each phase was written
+    R/87_orden_total.R
+        stops when a deposit is not totally ordered by its own key
+    R/88_orden_de_la_matriz.R
+        measures from the history the unfixed order of the analysis matrix
+    R/89_contactos_con_el_sellado.R
+        derives from the code how often the sealed unit is touched, and how
+    R/90_posterioridad.R
+        derives which analyses are posterior to the selection and the opening
+    R/93_huerfanas.R
+        derives which deposits support a published figure and which check one
 
 The other documents are [TRACEABILITY](outputs/fase20/TRACEABILITY.md), which
 records every published figure against its source file,

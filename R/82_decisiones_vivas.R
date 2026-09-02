@@ -789,9 +789,13 @@ add(prosa(
 "analisis declarado posterior cuya alta en el historial no lo sea."))
 cerrar()
 
-add(cifra("Los demas procedimientos de comprobacion son `%s`,", r59))
-add(cifra("`%s`, `%s` y", r64, r65))
-add(cifra("`%s`. El documento principal es `%s`.", r67, lee))
+add(prosa(
+"Los demas procedimientos que inspeccionan el repositorio en lugar de los",
+"datos no se enumeran aqui, porque una relacion escrita a mano se queda corta",
+"en cuanto se anade una guardia, y ya se quedo. Los relaciona el documento",
+"principal, y esa relacion se contrasta contra el codigo antes de",
+"escribirse."))
+add(cifra("El documento principal es `%s`.", lee))
 cerrar()
 cerrar()
 
