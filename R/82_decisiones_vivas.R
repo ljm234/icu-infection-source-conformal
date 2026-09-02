@@ -687,9 +687,12 @@ cerrar()
 
 add(cifra("`%s` comprueba lo anterior sobre los hechos y no sobre la", r64))
 add(prosa(
-"intencion: inspecciona el encabezado de cada archivo versionado en busca de",
-"identificadores, revisa los objetos binarios y recorre el historial por si",
-"alguna de esas rutas fue alcanzada en algun momento."))
+"intencion: lee entero cada archivo versionado en busca de identificadores, y",
+"no solo su encabezado, porque un identificador puede llegar como valor y no",
+"solo como nombre de columna; marca ademas toda tabla versionada con tantas",
+"filas como estancias tiene la cohorte, que es una tabla por paciente sea",
+"cual sea el nombre de sus columnas; revisa los objetos binarios y recorre el",
+"historial por si alguna de esas rutas fue alcanzada en algun momento."))
 cerrar()
 
 add(prosa("## Defectos recurrentes y como se evitan"))

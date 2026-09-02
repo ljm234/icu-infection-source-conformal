@@ -26,9 +26,12 @@ The source files are not redistributed and form no part of this repository.
 Reproducing the analysis requires separate credentialing and approved access.
 
 No patient-level derived data are versioned. `R/64_auditoria_publicacion.R`
-inspects the header of every tracked CSV, lists the tracked binary objects
-with their sizes, and checks that none of the protected paths appears in the
-commit history.
+reads every tracked CSV in full, not only its header, since an identifier can
+arrive as a value and not only as a column name; it also flags any tracked
+table with as many rows as the cohort has stays, which is a patient-level
+table by shape whatever its columns are called. It lists the tracked binary
+objects with their sizes and checks that none of the protected paths appears
+in the commit history.
 
 ## Cohort
 
