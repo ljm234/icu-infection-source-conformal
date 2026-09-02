@@ -48,16 +48,18 @@
 "Umbral del maximo, respiratorio",0.04,0.04,0.005,TRUE
 "Umbrales negativos, respiratorio",4,4,0.5,TRUE
 "La binaria es la de mayor beneficio",1,1,0.5,TRUE
-"Basales, bloques",4,4,0.5,TRUE
+"Basales, bloques",5,5,0.5,TRUE
 "Basales, suman la cohorte",23213,23213,0.5,TRUE
-"Basales, desarrollo",14442,14442,0.5,TRUE
+"Basales, entrenamiento",9026,9026,0.5,TRUE
+"Basales, calibracion",5416,5416,0.5,TRUE
+"Basales, bloques llamados desarrollo",0,0,0.5,TRUE
 "Basales, prueba",3612,3612,0.5,TRUE
 "Basales, unidad reservada",4724,4724,0.5,TRUE
 "Basales, mujeres en la reservada",31.86,31.86,0.005,TRUE
 "Basales, celdas de sexo bajo el minimo",0,0,0.5,TRUE
 "Basales, celdas de categoria bajo el minimo",0,0,0.5,TRUE
 "Basales, determinaciones por bloque",17,17,0.5,TRUE
-"Basales, filas de determinacion",68,68,0.5,TRUE
+"Basales, filas de determinacion",85,85,0.5,TRUE
 "Cultivos de la ventana",65317,65317,0.5,TRUE
 "Tipos de muestra retenidos",7,7,0.5,TRUE
 "Positividad minima",5.54,5.54,0.005,TRUE

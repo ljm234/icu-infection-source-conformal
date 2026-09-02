@@ -510,11 +510,19 @@ cat45 <- leer(FUENTES[["Categorias por conjunto"]])
 det45 <- leer(FUENTES[["Determinaciones por conjunto"]])
 if (!is.null(bas)) {
   reg[[length(reg)+1]] <- comprobar("Basales, bloques",
-    nrow(bas), 4, 0.5)
+    nrow(bas), 5, 0.5)
   reg[[length(reg)+1]] <- comprobar("Basales, suman la cohorte",
     sum(bas$estancias), 23213, 0.5)
-  reg[[length(reg)+1]] <- comprobar("Basales, desarrollo",
-    bas$estancias[bas$bloque == "desarrollo"], 14442, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, entrenamiento",
+    bas$estancias[bas$bloque == "entrenamiento"], 9026, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, calibracion",
+    bas$estancias[bas$bloque == "calibracion"], 5416, 0.5)
+  # Ningun bloque de esta tabla se llama desarrollo: la palabra nombra otra
+  # cantidad en la fase que mide la completitud por conjunto, y usarla aqui
+  # para 14.442 la hacia significar dos cosas en dos archivos que un mismo
+  # parrafo cita.
+  reg[[length(reg)+1]] <- comprobar("Basales, bloques llamados desarrollo",
+    sum(bas$bloque == "desarrollo"), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Basales, prueba",
     bas$estancias[bas$bloque == "prueba"], 3612, 0.5)
   reg[[length(reg)+1]] <- comprobar("Basales, unidad reservada",
@@ -533,7 +541,7 @@ if (!is.null(det45)) {
   reg[[length(reg)+1]] <- comprobar("Basales, determinaciones por bloque",
     length(unique(det45$determinacion)), 17, 0.5)
   reg[[length(reg)+1]] <- comprobar("Basales, filas de determinacion",
-    nrow(det45), 17 * 4, 0.5)
+    nrow(det45), 17 * 5, 0.5)
 }
 
 posm <- leer(FUENTES[["Positividad por muestra"]])

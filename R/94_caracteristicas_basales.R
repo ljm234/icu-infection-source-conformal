@@ -22,11 +22,12 @@ options(scipen = 999)
 # suprimir una sola celda de una fila cuyo total se publica la deja
 # reconstruible por resta.
 #
-# LOS BLOQUES. Desarrollo es donde el modelo se ajusta y se calibra; prueba es
-# donde se evalua; la unidad reservada es donde se transporta. Se anade el
-# bloque de las unidades descartadas, que no entra en ningun analisis, porque
-# sin el los totales de la tabla no cuadran con el embudo y un revisor tendria
-# que preguntar donde fueron las estancias que faltan.
+# LOS BLOQUES. Los cinco conjuntos de la particion, uno por fila y sin
+# agrupar: entrenamiento, donde el modelo se ajusta; calibracion, de donde
+# salen los umbrales conformes; prueba, donde se evalua; la unidad reservada,
+# donde se transporta; y las unidades descartadas, que no entran en ningun
+# analisis y figuran porque sin ellas los totales no cuadran con el embudo y
+# un revisor tendria que preguntar donde fueron las estancias que faltan.
 
 OUT <- "outputs/fase45"
 
@@ -36,11 +37,26 @@ RUTA_FLU  <- "outputs/fase2/flujo.csv"
 
 MINIMO <- 5
 
-BLOQUE <- c(entrenamiento = "desarrollo", calibracion = "desarrollo",
+# Los bloques son los cinco conjuntos de la particion, sin agrupar. La
+# calibracion es un conjunto con funcion propia —de ella salen los umbrales
+# conformes— y fundirla con el entrenamiento la esconde detras de una palabra.
+#
+# Y hay una razon mas fuerte: "desarrollo" ya nombra otra cantidad en este
+# deposito. La fase que mide la completitud por conjunto llama desarrollo a
+# entrenamiento mas calibracion mas prueba, que son 18.054 estancias; aqui
+# nombraba a entrenamiento mas calibracion, que son 14.442. La misma palabra
+# para dos cantidades distintas, en dos archivos que un mismo parrafo cita.
+# Se retira de aqui y se conserva alli, que es la acepcion mayoritaria.
+BLOQUE <- c(entrenamiento = "entrenamiento", calibracion = "calibracion",
             prueba = "prueba", sellado = "unidad reservada",
             excluido = "unidades descartadas")
-ORDEN <- c("desarrollo", "prueba", "unidad reservada",
+ORDEN <- c("entrenamiento", "calibracion", "prueba", "unidad reservada",
            "unidades descartadas")
+
+# Ninguna otra parte de este procedimiento puede reintroducir la palabra por
+# la puerta de atras: se comprueba sobre las etiquetas que se van a depositar.
+if (any(grepl("desarrollo", ORDEN, fixed = TRUE)))
+  stop("Este deposito no nombra desarrollo a ningun bloque.")
 
 detener <- function(...) {
   cat("\n", ..., "\n", sep = "")

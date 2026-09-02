@@ -525,9 +525,12 @@ add(prosa(
 "",
 "Baseline characteristics by partition set are deposited rather than printed",
 "here: age, sex, outcome distribution and, for the seventeen determinations",
-"the model uses, the median and the share missing, for the development set,",
-"the test set, the sealed unit and the units left out. The full table belongs",
-"to the manuscript, not to this document. No published count cell falls below"))
+"the model uses, the median and the share missing. The sets are given one per",
+"row and not grouped: training, calibration, test, the sealed unit and the",
+"units left out. Calibration is kept apart because it is a set with a",
+"function of its own, the one the conformal thresholds come from. The full",
+"table belongs to the",
+"manuscript, not to this document. No published count cell falls below"))
 add(cifra("%d cases, and the %d blocks sum to the analysed cohort.",
           as.integer(min45), as.integer(nrow(bas))))
 add(prosa(

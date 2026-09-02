@@ -58,16 +58,18 @@ margin never exceeds the largest possible rounding error.
 | Umbral del maximo, respiratorio | 0.0400 | 0.0400 | 0.00500 | yes |
 | Umbrales negativos, respiratorio | 4.0000 | 4.0000 | 0.50000 | yes |
 | La binaria es la de mayor beneficio | 1.0000 | 1.0000 | 0.50000 | yes |
-| Basales, bloques | 4.0000 | 4.0000 | 0.50000 | yes |
+| Basales, bloques | 5.0000 | 5.0000 | 0.50000 | yes |
 | Basales, suman la cohorte | 23213.0000 | 23213.0000 | 0.50000 | yes |
-| Basales, desarrollo | 14442.0000 | 14442.0000 | 0.50000 | yes |
+| Basales, entrenamiento | 9026.0000 | 9026.0000 | 0.50000 | yes |
+| Basales, calibracion | 5416.0000 | 5416.0000 | 0.50000 | yes |
+| Basales, bloques llamados desarrollo | 0.0000 | 0.0000 | 0.50000 | yes |
 | Basales, prueba | 3612.0000 | 3612.0000 | 0.50000 | yes |
 | Basales, unidad reservada | 4724.0000 | 4724.0000 | 0.50000 | yes |
 | Basales, mujeres en la reservada | 31.8600 | 31.8600 | 0.00500 | yes |
 | Basales, celdas de sexo bajo el minimo | 0.0000 | 0.0000 | 0.50000 | yes |
 | Basales, celdas de categoria bajo el minimo | 0.0000 | 0.0000 | 0.50000 | yes |
 | Basales, determinaciones por bloque | 17.0000 | 17.0000 | 0.50000 | yes |
-| Basales, filas de determinacion | 68.0000 | 68.0000 | 0.50000 | yes |
+| Basales, filas de determinacion | 85.0000 | 85.0000 | 0.50000 | yes |
 | Cultivos de la ventana | 65317.0000 | 65317.0000 | 0.50000 | yes |
 | Tipos de muestra retenidos | 7.0000 | 7.0000 | 0.50000 | yes |
 | Positividad minima | 5.5400 | 5.5400 | 0.00500 | yes |

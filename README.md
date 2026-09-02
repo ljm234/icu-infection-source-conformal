@@ -46,10 +46,12 @@ with a culture drawn, suspected infection and the final cohort.
 
 Baseline characteristics by partition set are deposited rather than printed
 here: age, sex, outcome distribution and, for the seventeen determinations the
-model uses, the median and the share missing, for the development set, the
-test set, the sealed unit and the units left out. The full table belongs to
-the manuscript, not to this document. No published count cell falls below 5
-cases, and the 4 blocks sum to the analysed cohort.
+model uses, the median and the share missing. The sets are given one per row
+and not grouped: training, calibration, test, the sealed unit and the units
+left out. Calibration is kept apart because it is a set with a function of its
+own, the one the conformal thresholds come from. The full table belongs to the
+manuscript, not to this document. No published count cell falls below 5 cases,
+and the 5 blocks sum to the analysed cohort.
 `outputs/fase45/basales_por_conjunto.csv` carries it.
 
 Of the stays with suspected infection, those in units contributing at least

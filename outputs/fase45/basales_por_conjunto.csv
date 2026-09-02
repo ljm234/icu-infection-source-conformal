@@ -1,5 +1,6 @@
 "bloque","estancias","pct_de_la_cohorte","edad_q1","edad_mediana","edad_q3","mujeres","hombres","pct_mujeres"
-"desarrollo",14442,62.22,53,65,77,6703,7739,46.41
+"entrenamiento",9026,38.88,53,65,77,4195,4831,46.48
+"calibracion",5416,23.33,52,65,77,2508,2908,46.31
 "prueba",3612,15.56,52,65,77,1656,1956,45.85
 "unidad reservada",4724,20.35,60,68,76,1505,3219,31.86
 "unidades descartadas",435,1.87,52,66,76.5,205,230,47.13

@@ -1,6 +1,6 @@
 {
   "fase": "37",
-  "ejecutado_en": "2026-09-02T00:03:44-0600",
+  "ejecutado_en": "2026-09-02T00:39:31-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "declarar, para cada fase con deposito versionado, si la guardia de nombres estaba activa cuando se escribio. Se enumeran fases y no manifiestos: quince de las cuarenta y dos no tienen manifiesto, y enumerar manifiestos las dejaba fuera del alcance que este campo declaraba",
