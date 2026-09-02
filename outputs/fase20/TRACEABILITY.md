@@ -355,12 +355,13 @@ margin never exceeds the largest possible rounding error.
 | Comparacion, clases evaluadas | 4.0000 | 4.0000 | 0.50000 | yes |
 | Comparacion, clases donde la ampliada gana | 1.0000 | 1.0000 | 0.50000 | yes |
 | Commits que cambian la seleccion | 1.0000 | 1.0000 | 0.50000 | yes |
-| Commits que tocan el archivo | 2.0000 | 2.0000 | 0.50000 | yes |
+| Commits que tocan el archivo | 3.0000 | 3.0000 | 0.50000 | yes |
+| Commits que el historial registra hoy | 3.0000 | 3.0000 | 0.50000 | yes |
 | Identificadores que la lista declara | 17.0000 | 17.0000 | 0.50000 | yes |
-| Versiones del bloque contrastadas | 2.0000 | 2.0000 | 0.50000 | yes |
+| Versiones del bloque contrastadas | 3.0000 | 3.0000 | 0.50000 | yes |
 | Resumenes distintos entre versiones | 1.0000 | 1.0000 | 0.50000 | yes |
-| Versiones cuyo resumen es el del acta | 2.0000 | 2.0000 | 0.50000 | yes |
-| Versiones que declaran los mismos identificadores | 2.0000 | 2.0000 | 0.50000 | yes |
+| Versiones cuyo resumen es el del acta | 3.0000 | 3.0000 | 0.50000 | yes |
+| Versiones que declaran los mismos identificadores | 3.0000 | 3.0000 | 0.50000 | yes |
 
 ## Source files
 

@@ -1559,7 +1559,17 @@ if (!is.null(x)) {
   reg[[length(reg)+1]] <- comprobar("Commits que cambian la seleccion",
     x$commits_que_tocan_la_lista, 1, 0.5)
   reg[[length(reg)+1]] <- comprobar("Commits que tocan el archivo",
-    x$commits_que_tocan_el_archivo, 2, 0.5)
+    x$commits_que_tocan_el_archivo, 3, 0.5)
+  # Y contra el historial de HOY, no solo contra una cifra fijada. El deposito
+  # se quedo atras una vez: se compuso a las tres de la tarde y un commit
+  # posterior toco el archivo esa misma noche, de modo que declaraba dos
+  # versiones donde ya habia tres. Fijar la cifra no basta, porque el deposito
+  # desfasado y la cifra fijada coinciden entre si y ninguno con el
+  # repositorio. Esta comprobacion mira el repositorio.
+  n_hoy <- length(suppressWarnings(system(
+    "git log --all --format=%H -- R/19_matriz.R", intern = TRUE)))
+  reg[[length(reg)+1]] <- comprobar("Commits que el historial registra hoy",
+    x$commits_que_tocan_el_archivo, n_hoy, 0.5)
   reg[[length(reg)+1]] <- comprobar("Identificadores que la lista declara",
     x$identificadores, 17, 0.5)
   if (!is.null(v)) {

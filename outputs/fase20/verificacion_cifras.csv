@@ -345,9 +345,10 @@
 "Comparacion, clases evaluadas",4,4,0.5,TRUE
 "Comparacion, clases donde la ampliada gana",1,1,0.5,TRUE
 "Commits que cambian la seleccion",1,1,0.5,TRUE
-"Commits que tocan el archivo",2,2,0.5,TRUE
+"Commits que tocan el archivo",3,3,0.5,TRUE
+"Commits que el historial registra hoy",3,3,0.5,TRUE
 "Identificadores que la lista declara",17,17,0.5,TRUE
-"Versiones del bloque contrastadas",2,2,0.5,TRUE
+"Versiones del bloque contrastadas",3,3,0.5,TRUE
 "Resumenes distintos entre versiones",1,1,0.5,TRUE
-"Versiones cuyo resumen es el del acta",2,2,0.5,TRUE
-"Versiones que declaran los mismos identificadores",2,2,0.5,TRUE
+"Versiones cuyo resumen es el del acta",3,3,0.5,TRUE
+"Versiones que declaran los mismos identificadores",3,3,0.5,TRUE

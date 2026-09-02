@@ -1,6 +1,6 @@
 {
   "fase": "33",
-  "ejecutado_en": "2026-08-31T15:05:43-0600",
+  "ejecutado_en": "2026-09-01T21:29:32-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "acreditar que la seleccion de determinaciones no se modifico tras fijarse, que es lo que responde a la sospecha de que se ajustara al ver resultados",
@@ -11,6 +11,6 @@
   "metodo_anterior": "una busqueda por contenido de la cadena que abre la lista. Contaba apariciones de un token y no podia detectar una edicion dentro del bloque, de modo que no acreditaba lo que se le atribuia",
   "interpretacion": "un solo resumen distinto entre todas las versiones significa que el bloque no cambio de contenido; que ese resumen sea el del alta significa que quedo fijado al escribirse",
   "lo_que_no_acredita": "que la seleccion fuera correcta o estuviera razonada; solo que no se altero despues",
-  "commits_que_tocan_el_archivo": 2,
+  "commits_que_tocan_el_archivo": 3,
   "commits_que_tocan_la_lista": 1
 }
