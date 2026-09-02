@@ -603,6 +603,60 @@ if (!is.null(ordt)) {
     nrow(ordt), 13, 0.5)
 }
 
+# ---------------------------------------------------------------------------
+# El recuento de la guardia describe los depositos de hoy.
+# ---------------------------------------------------------------------------
+# La fase que resume el estado de la guardia guarda la marca de ejecucion de
+# cada manifiesto. Reejecutar cualquier fase cambia su marca y deja ese
+# resumen describiendo una ejecucion que ya no es. Paso: el resumen conservaba
+# la marca vieja de la procedencia de la seleccion despues de rehacerla.
+#
+# Es el mismo defecto que el de la procedencia, un nivel mas arriba, y el
+# remedio es el mismo: no fijar la cifra, sino comparar el resumen contra lo
+# que hay. Una dependencia sin guardia es una que nadie ve romperse.
+GPD <- "outputs/fase37/guarda_por_deposito.csv"
+if (file.exists(GPD)) {
+  g0 <- read.csv(GPD, stringsAsFactors = FALSE)
+  # La fase que compone el resumen no puede figurar en el con su marca final:
+  # escribe la tabla antes que el manifiesto que registra esa ejecucion, de
+  # modo que su propia fila lleva siempre la marca de la vez anterior. Se
+  # excluye por eso, y la exclusion se deriva de cual es el archivo que se
+  # esta leyendo, no de un nombre escrito aqui.
+  PROPIO <- file.path(dirname(GPD), "manifiesto.json")
+  con_mf <- g0[nzchar(g0$manifiesto) & g0$manifiesto != PROPIO, ]
+  cat("=== EL RESUMEN DE LA GUARDIA FRENTE A LOS MANIFIESTOS ===\n")
+  hoy <- sapply(con_mf$manifiesto, function(m) {
+    if (!file.exists(m)) return(NA_character_)
+    d <- jsonlite::fromJSON(m)
+    if (is.null(d$ejecutado_en)) NA_character_ else d$ejecutado_en
+  })
+  desfasadas <- which(is.na(hoy) | hoy != con_mf$ejecutado_en)
+  # Y que no falte ni sobre ninguna fase respecto de lo que git tiene hoy.
+  fases_hoy <- sort(unique(dirname(suppressWarnings(system(
+    "git ls-files 'outputs/*/*'", intern = TRUE)))))
+  fases_hoy <- basename(fases_hoy)
+  cat("Fases en el resumen:", nrow(g0),
+      " fases con deposito versionado hoy:", length(fases_hoy), "\n")
+  if (length(desfasadas) > 0) {
+    cat("\nMarcas del resumen que no son las del manifiesto de hoy:\n")
+    for (i in desfasadas)
+      cat("  ", con_mf$fase[i], ": resumen ", con_mf$ejecutado_en[i],
+          " manifiesto ", if (is.na(hoy[i])) "ausente" else hoy[i], "\n",
+          sep = "")
+    cat("El resumen del estado de la guardia describe ejecuciones que ya no\n")
+    cat("son. Reejecutar la fase que lo compone antes de documentar.\n")
+    quit(status = 1)
+  }
+  if (!setequal(g0$fase, fases_hoy)) {
+    cat("\nEl resumen no cubre las mismas fases que el deposito de hoy:\n")
+    for (f in setdiff(fases_hoy, g0$fase)) cat("  falta: ", f, "\n")
+    for (f in setdiff(g0$fase, fases_hoy)) cat("  sobra: ", f, "\n")
+    quit(status = 1)
+  }
+  cat("Cada marca del resumen es la del manifiesto de hoy, y cubre las\n")
+  cat("mismas fases que el deposito.\n\n")
+}
+
 gpd <- leer(FUENTES[["Guarda por deposito"]])
 if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
