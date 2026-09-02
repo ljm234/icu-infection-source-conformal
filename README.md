@@ -683,9 +683,12 @@ reproduces cell for cell. The sealed unit reproduces, because it is selected
 by unit name and not by position. The partition does not reproduce under the
 code as it stood, and the model therefore does not either. The chain is
 reproducible from the partitioned matrix onward, and the published partition
-predates the fix in `R/22_particion.R`: it is kept as a versioned artefact and
-is not regenerated, since rebuilding it would produce a model whose design
-decisions were taken with the sealed unit already seen.
+predates the fix in `R/22_particion.R`. That partition is
+`outputs/fase5/matriz_particionada.csv`, which is retained on disk as an
+artefact excluded from version control, under the same data use agreement that
+excludes every patient-level file, and is not regenerated, since rebuilding it
+would produce a model whose design decisions were taken with the sealed unit
+already seen.
 
 
 ## Requirements

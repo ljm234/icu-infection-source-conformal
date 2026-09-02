@@ -79,6 +79,52 @@ source("R/00_rutas_reservadas.R")
 PROTEGIDAS <- rutas_reservadas()$ruta
 cat("\nRutas reservadas que el lector unico establece:", length(PROTEGIDAS), "\n")
 
+# ---------------------------------------------------------------------------
+# Ninguna afirmacion publicada llama versionado a lo que no lo esta.
+# ---------------------------------------------------------------------------
+# El documento decia de la particion que se conserva "as a versioned
+# artefact". No lo esta: es una de las rutas que el lector unico reserva, y
+# esta en disco excluida del control de versiones. Era la unica afirmacion
+# falsa de un documento que presume de exactitud, y la clase de frase por la
+# que un revisor deja de creerse el resto.
+#
+# La comprobacion es sobre la forma adjetiva. "Excluded from version control"
+# describe correctamente lo que ocurre y no debe detener nada; "is versioned"
+# o "a versioned artefact" si, cuando la oracion nombra una ruta reservada.
+DOCUMENTOS <- c("README.md", "DECISIONES.md",
+                "outputs/fase21/PROTOCOLO.md",
+                "outputs/fase20/REPRODUCIBILITY.md")
+VERSIONADO <- "\\bversioned\\b|\\bversionad[oa]s?\\b"
+
+cat("\n=== AFIRMACIONES SOBRE LO VERSIONADO ===\n")
+falsas <- character(0)
+for (doc in DOCUMENTOS) {
+  if (!file.exists(doc)) next
+  # Se unen las lineas en parrafos antes de partir en oraciones, porque los
+  # documentos van envueltos a una anchura fija y una oracion ocupa varias.
+  l <- readLines(doc, warn = FALSE)
+  parrafos <- split(l, cumsum(!nzchar(l)))
+  texto <- sapply(parrafos, function(p) paste(p, collapse = " "))
+  oraciones <- unlist(strsplit(paste(texto, collapse = " "), "(?<=[.]) ",
+                               perl = TRUE), use.names = FALSE)
+  for (o in oraciones) {
+    if (!grepl(VERSIONADO, o, perl = TRUE)) next
+    for (r in PROTEGIDAS)
+      if (grepl(r, o, fixed = TRUE))
+        falsas <- c(falsas, paste0(doc, ": ", trimws(o)))
+  }
+}
+cat("Documentos inspeccionados:", sum(file.exists(DOCUMENTOS)), "\n")
+cat("Afirmaciones que llaman versionada a una ruta reservada:",
+    length(falsas), "\n")
+if (length(falsas) > 0) {
+  for (f in falsas) cat("  ", f, "\n")
+  cat("\nUna ruta que el lector unico reserva no esta bajo control de\n")
+  cat("versiones, y el documento afirma lo contrario.\n")
+  cat("La auditoria no se supera. No procede publicar.\n")
+  quit(status = 1)
+}
+
 historial <- system(paste("git log --all --oneline --",
   paste(PROTEGIDAS, collapse = " "), "2>/dev/null"), intern = TRUE)
 cat("\nRegistros del historial que alcanzan datos por paciente:",
