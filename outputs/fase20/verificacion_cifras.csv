@@ -33,6 +33,19 @@
 "En cuantas es extremo",5,5,0.5,TRUE
 "Sedes de la validacion",5,5,0.5,TRUE
 "Depositos publicados sin contraste",0,0,0.5,TRUE
+"Beneficio neto maximo, cualquier_foco",0.0222,0.0222,5e-05,TRUE
+"Umbral del maximo, cualquier_foco",0.11,0.11,0.005,TRUE
+"Umbrales negativos, cualquier_foco",11,11,0.5,TRUE
+"Beneficio neto maximo, sangre",0.00869,0.0087,5e-05,TRUE
+"Umbral del maximo, sangre",0.03,0.03,0.005,TRUE
+"Umbrales negativos, sangre",19,19,0.5,TRUE
+"Beneficio neto maximo, urinario",0.00707,0.0071,5e-05,TRUE
+"Umbral del maximo, urinario",0.04,0.04,0.005,TRUE
+"Umbrales negativos, urinario",21,21,0.5,TRUE
+"Beneficio neto maximo, respiratorio",0.00671,0.0067,5e-05,TRUE
+"Umbral del maximo, respiratorio",0.04,0.04,0.005,TRUE
+"Umbrales negativos, respiratorio",4,4,0.5,TRUE
+"La binaria es la de mayor beneficio",1,1,0.5,TRUE
 "Cultivos de la ventana",65317,65317,0.5,TRUE
 "Tipos de muestra retenidos",7,7,0.5,TRUE
 "Positividad minima",5.54,5.54,0.005,TRUE

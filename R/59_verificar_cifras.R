@@ -464,6 +464,33 @@ if (!is.null(hue))
   reg[[length(reg)+1]] <- comprobar("Depositos publicados sin contraste",
     hue$depositos[hue$situacion == "publicado sin contraste"], 0, 0.5)
 
+# Las cuatro curvas de decision, las doce cifras. El documento publicaba solo
+# la binaria, que es la mejor de las cuatro; ahora publica las cuatro, y cada
+# una de las tres cifras de cada una se contrasta contra el deposito.
+dec0 <- leer(FUENTES[["Curvas de decision"]])
+if (!is.null(dec0)) {
+  ESP <- list(cualquier_foco = c(0.0222, 0.11, 11),
+              sangre         = c(0.0087, 0.03, 19),
+              urinario       = c(0.0071, 0.04, 21),
+              respiratorio   = c(0.0067, 0.04,  4))
+  for (o in names(ESP)) {
+    x <- dec0[dec0$objetivo == o, ]
+    g <- x$bn_modelo - pmax(x$bn_tratar_todos, x$bn_no_tratar)
+    i <- which.max(g)
+    reg[[length(reg)+1]] <- comprobar(paste("Beneficio neto maximo,", o),
+      g[i], ESP[[o]][1], tolerancia(4))
+    reg[[length(reg)+1]] <- comprobar(paste("Umbral del maximo,", o),
+      x$umbral[i], ESP[[o]][2], tolerancia(2))
+    reg[[length(reg)+1]] <- comprobar(paste("Umbrales negativos,", o),
+      sum(x$bn_modelo < 0), ESP[[o]][3], 0.5)
+  }
+  # Y que la binaria siga siendo la mejor, que es lo que el texto afirma.
+  mx <- sapply(names(ESP), function(o) { x <- dec0[dec0$objetivo == o, ]
+    max(x$bn_modelo - pmax(x$bn_tratar_todos, x$bn_no_tratar)) })
+  reg[[length(reg)+1]] <- comprobar("La binaria es la de mayor beneficio",
+    as.numeric(mx[["cualquier_foco"]] == max(mx)), 1, 0.5)
+}
+
 posm <- leer(FUENTES[["Positividad por muestra"]])
 if (!is.null(posm)) {
   reg[[length(reg)+1]] <- comprobar("Cultivos de la ventana",

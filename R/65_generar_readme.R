@@ -41,6 +41,7 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase42/extremos_por_categoria.csv",
              "outputs/fase43/positividad_retenidos.csv",
              "outputs/fase16/gbm_comparacion.csv",
+             "outputs/fase16/curvas_decision.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -331,7 +332,41 @@ pmin_alfa <- (alfa$aciertos_minoritarios[cm] /
               alfa$conclusiones_minoritarias[cm])[i_pmax]
 n_pmax <- alfa$conclusiones_minoritarias[cm][i_pmax]
 
-sdec <- dec[dec$objetivo == "cualquier_foco", ]
+# Las cuatro curvas de decision, y no solo la mejor.
+#
+# El deposito calcula cuatro: una pregunta binaria, hay algun foco, y una por
+# cada foco modelado. El documento publicaba solo la binaria, que resulta ser
+# la de mayor beneficio neto de las cuatro. Omitir las otras tres parecia
+# seleccion y era lo contrario: las de identificacion son las que este trabajo
+# se plantea, y que salgan peor sostiene su conclusion.
+BINARIA <- "cualquier_foco"
+mejor_trivial <- function(x) pmax(x$bn_tratar_todos, x$bn_no_tratar)
+res_dec <- do.call(rbind, lapply(sort(unique(dec$objetivo)), function(o) {
+  x <- dec[dec$objetivo == o, ]
+  g <- x$bn_modelo - mejor_trivial(x)
+  i <- which.max(g)
+  data.frame(objetivo = o, bn_maximo = g[i], umbral = x$umbral[i],
+             negativos = sum(x$bn_modelo < 0), umbrales = nrow(x),
+             row.names = NULL)
+}))
+if (!BINARIA %in% res_dec$objetivo) {
+  cat("El deposito no trae la pregunta binaria.\n"); quit(status = 1)
+}
+if (length(unique(res_dec$umbrales)) != 1) {
+  cat("Las curvas no comparten el numero de umbrales examinados.\n")
+  quit(status = 1)
+}
+otras <- res_dec[res_dec$objetivo != BINARIA, ]
+otras <- otras[order(-otras$bn_maximo), ]
+res_dec <- rbind(res_dec[res_dec$objetivo == BINARIA, ], otras)
+# Si la binaria dejara de ser la mejor, la frase que sigue diria otra cosa.
+if (res_dec$bn_maximo[1] != max(res_dec$bn_maximo)) {
+  cat("La pregunta binaria ya no es la de mayor beneficio neto. El texto\n")
+  cat("afirma lo contrario. El procedimiento se detiene.\n")
+  quit(status = 1)
+}
+
+sdec <- dec[dec$objetivo == BINARIA, ]
 gan_dec <- max(sdec$bn_modelo - pmax(sdec$bn_tratar_todos, 0))
 # Donde el modelo deja de ser mejor que no tratar a nadie. El deposito lo
 # marca fila a fila en su columna de utilidad, y el texto lo decia como una
@@ -870,18 +905,49 @@ add(prosa(
 "### Clinical utility",
 ""))
 
-add(cifra("Decision curve analysis gives a maximum net benefit of %.4f over the",
-          gan_dec))
-
+add(cifra("Decision curve analysis was computed for %d questions and all %d are",
+          as.integer(nrow(res_dec)), as.integer(nrow(res_dec))))
 add(prosa(
-"better of the two trivial policies, for the question of whether any source",
-"is present. The benefit concentrates at low thresholds and does not",
-"converge to zero above them: it crosses it. The model's net benefit is"))
-add(cifra("below zero at %d of the %d thresholds examined, from %.2f upward,",
+"reported. The first is the binary one, whether any source is present. The",
+"other three are the identification questions this work exists to answer,",
+"one for each modelled source. Reporting only the first would report the",
+"most favourable of the four.",
+""))
+# El encabezado se compone con los mismos anchos que las filas, de modo que
+# la alineacion no dependa de contar espacios a ojo.
+add(cifra("    %-16s %11s %14s    %s", "question", "net benefit",
+          "at threshold", "negative"))
+add(prosa(""))
+for (i in seq_len(nrow(res_dec)))
+  add(cifra("    %-16s %11.4f %14.2f    %2d of %d",
+            res_dec$objetivo[i], res_dec$bn_maximo[i], res_dec$umbral[i],
+            as.integer(res_dec$negativos[i]),
+            as.integer(res_dec$umbrales[i])))
+add(prosa(
+"",
+"The names are Spanish: cualquier_foco any source, urinario urinary,",
+"respiratorio respiratory and sangre bloodstream. Net benefit is the maximum",
+"gain over the better of the two trivial policies, treat all and treat none.",
+"The last column counts the thresholds at which the model's own net benefit",
+"falls below zero.",
+""))
+add(cifra("The binary question reaches %.4f at a threshold of %.2f. The three",
+          res_dec$bn_maximo[1], res_dec$umbral[1]))
+add(cifra("identification questions reach between %.4f and %.4f. That the",
+          min(otras$bn_maximo), max(otras$bn_maximo)))
+add(prosa(
+"questions this work poses do worse than the one it does not is the result",
+"and not an inconvenience: it is what the discrimination and the conformal",
+"sets already show, arriving by a third route.",
+"",
+"The benefit concentrates at low thresholds and does not converge to zero",
+"above them: it crosses it. For the binary question the model's net benefit"))
+add(cifra("is below zero at %d of the %d thresholds examined, from %.2f upward,",
           as.integer(nrow(neg_dec)), as.integer(nrow(sdec)),
           min(neg_dec$umbral)))
-add(cifra("reaching %.5f, and the deposit marks those rows as not useful.",
+add(cifra("reaching %.5f. The deposit marks those rows as not useful, and it is",
           min(neg_dec$bn_modelo)))
+add(prosa("`outputs/fase16/curvas_decision.csv`."))
 
 add(prosa(
 "",

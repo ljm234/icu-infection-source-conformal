@@ -341,12 +341,36 @@ usefully names the source.
 
 ### Clinical utility
 
-Decision curve analysis gives a maximum net benefit of 0.0222 over the better
-of the two trivial policies, for the question of whether any source is
-present. The benefit concentrates at low thresholds and does not converge to
-zero above them: it crosses it. The model's net benefit is below zero at 11 of
-the 30 thresholds examined, from 0.20 upward, reaching -0.00231, and the
-deposit marks those rows as not useful.
+Decision curve analysis was computed for 4 questions and all 4 are reported.
+The first is the binary one, whether any source is present. The other three
+are the identification questions this work exists to answer, one for each
+modelled source. Reporting only the first would report the most favourable of
+the four.
+
+    question         net benefit   at threshold    negative
+
+    cualquier_foco        0.0222           0.11    11 of 30
+    sangre                0.0087           0.03    19 of 30
+    urinario              0.0071           0.04    21 of 30
+    respiratorio          0.0067           0.04     4 of 30
+
+The names are Spanish: cualquier_foco any source, urinario urinary,
+respiratorio respiratory and sangre bloodstream. Net benefit is the maximum
+gain over the better of the two trivial policies, treat all and treat none.
+The last column counts the thresholds at which the model's own net benefit
+falls below zero.
+
+The binary question reaches 0.0222 at a threshold of 0.11. The three
+identification questions reach between 0.0067 and 0.0087. That the questions
+this work poses do worse than the one it does not is the result and not an
+inconvenience: it is what the discrimination and the conformal sets already
+show, arriving by a third route.
+
+The benefit concentrates at low thresholds and does not converge to zero above
+them: it crosses it. For the binary question the model's net benefit is below
+zero at 11 of the 30 thresholds examined, from 0.20 upward, reaching -0.00231.
+The deposit marks those rows as not useful, and it is
+`outputs/fase16/curvas_decision.csv`.
 
 
 ### Transportability

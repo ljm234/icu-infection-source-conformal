@@ -43,6 +43,19 @@ margin never exceeds the largest possible rounding error.
 | En cuantas es extremo | 5.0000 | 5.0000 | 0.50000 | yes |
 | Sedes de la validacion | 5.0000 | 5.0000 | 0.50000 | yes |
 | Depositos publicados sin contraste | 0.0000 | 0.0000 | 0.50000 | yes |
+| Beneficio neto maximo, cualquier_foco | 0.0222 | 0.0222 | 0.00005 | yes |
+| Umbral del maximo, cualquier_foco | 0.1100 | 0.1100 | 0.00500 | yes |
+| Umbrales negativos, cualquier_foco | 11.0000 | 11.0000 | 0.50000 | yes |
+| Beneficio neto maximo, sangre | 0.0087 | 0.0087 | 0.00005 | yes |
+| Umbral del maximo, sangre | 0.0300 | 0.0300 | 0.00500 | yes |
+| Umbrales negativos, sangre | 19.0000 | 19.0000 | 0.50000 | yes |
+| Beneficio neto maximo, urinario | 0.0071 | 0.0071 | 0.00005 | yes |
+| Umbral del maximo, urinario | 0.0400 | 0.0400 | 0.00500 | yes |
+| Umbrales negativos, urinario | 21.0000 | 21.0000 | 0.50000 | yes |
+| Beneficio neto maximo, respiratorio | 0.0067 | 0.0067 | 0.00005 | yes |
+| Umbral del maximo, respiratorio | 0.0400 | 0.0400 | 0.00500 | yes |
+| Umbrales negativos, respiratorio | 4.0000 | 4.0000 | 0.50000 | yes |
+| La binaria es la de mayor beneficio | 1.0000 | 1.0000 | 0.50000 | yes |
 | Cultivos de la ventana | 65317.0000 | 65317.0000 | 0.50000 | yes |
 | Tipos de muestra retenidos | 7.0000 | 7.0000 | 0.50000 | yes |
 | Positividad minima | 5.5400 | 5.5400 | 0.00500 | yes |
