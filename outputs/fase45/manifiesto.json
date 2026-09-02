@@ -1,0 +1,15 @@
+{
+  "fase": "45",
+  "ejecutado_en": "2026-09-01T22:07:39-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "caracteristicas basales por conjunto de la particion, que es el primer deposito que una guia de reporte exige y que ningun documento de este trabajo tenia",
+  "bloques": "desarrollo es donde el modelo se ajusta y se calibra, prueba donde se evalua, la unidad reservada donde se transporta; se incluye el bloque descartado para que los totales cuadren con el embudo",
+  "contenido": "solo agregados: recuentos, proporciones, medianas y cuartiles; ninguna fila, ningun identificador",
+  "regla_de_las_cinco": "ninguna celda de recuento publicada baja de 5 casos; las categorias que caen se agrupan en una sola, y agrupar y no suprimir es deliberado, porque suprimir una celda de una fila cuyo total se publica la deja reconstruible por resta",
+  "minimo": 5,
+  "categorias_agrupadas": 0,
+  "medianas_retiradas": 0,
+  "determinaciones": 17,
+  "estancias": 23213
+}

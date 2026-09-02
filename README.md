@@ -44,6 +44,14 @@ in the commit history.
 The step labels are Spanish and read, in order: unique stays, adults, stays
 with a culture drawn, suspected infection and the final cohort.
 
+Baseline characteristics by partition set are deposited rather than printed
+here: age, sex, outcome distribution and, for the seventeen determinations the
+model uses, the median and the share missing, for the development set, the
+test set, the sealed unit and the units left out. The full table belongs to
+the manuscript, not to this document. No published count cell falls below 5
+cases, and the 4 blocks sum to the analysed cohort.
+`outputs/fase45/basales_por_conjunto.csv` carries it.
+
 Of the stays with suspected infection, those in units contributing at least
 500 make up the analysed cohort: 22,778 stays across 6 units. The model was
 developed on the 18,054 stays of 5 of them and evaluated once on the 4,724 of

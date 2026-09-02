@@ -1,5 +1,5 @@
 "afirmacion","valor","esperado","tolerancia","concuerda"
-"Manifiestos que declaran la guardia",23,23,0.5,TRUE
+"Manifiestos que declaran la guardia",24,24,0.5,TRUE
 "Manifiestos anteriores a la guardia",4,4,0.5,TRUE
 "Rutas reservadas que el lector establece",14,14,0.5,TRUE
 "Rutas reservadas que son un directorio",1,1,0.5,TRUE
@@ -17,15 +17,15 @@
 "Procedimientos que predicen sobre ella",1,1,0.5,TRUE
 "Procedimientos que reutilizan lo almacenado",3,3,0.5,TRUE
 "Procedimientos que la describen sin predecir",1,1,0.5,TRUE
-"Procedimientos contrastados",91,91,0.5,TRUE
-"Posteriores a la fijacion",69,69,0.5,TRUE
-"Posteriores a la apertura",52,52,0.5,TRUE
-"Ademas leen filas por paciente",29,29,0.5,TRUE
+"Procedimientos contrastados",92,92,0.5,TRUE
+"Posteriores a la fijacion",70,70,0.5,TRUE
+"Posteriores a la apertura",53,53,0.5,TRUE
+"Ademas leen filas por paciente",30,30,0.5,TRUE
 "Ajustan tras la apertura",6,6,0.5,TRUE
 "Escriben artefacto del modelo despues",0,0,0.5,TRUE
 "Procedimientos sin alta registrada",0,0,0.5,TRUE
-"Producen una cifra publicada",39,39,0.5,TRUE
-"Posteriores que producen cifra publicada",29,29,0.5,TRUE
+"Producen una cifra publicada",40,40,0.5,TRUE
+"Posteriores que producen cifra publicada",30,30,0.5,TRUE
 "Celdas que resisten el analisis adoptado",3,3,0.5,TRUE
 "Analisis depositados y no adoptados",9,9,0.5,TRUE
 "Menor denominador de los empates",4645,4645,0.5,TRUE
@@ -48,6 +48,16 @@
 "Umbral del maximo, respiratorio",0.04,0.04,0.005,TRUE
 "Umbrales negativos, respiratorio",4,4,0.5,TRUE
 "La binaria es la de mayor beneficio",1,1,0.5,TRUE
+"Basales, bloques",4,4,0.5,TRUE
+"Basales, suman la cohorte",23213,23213,0.5,TRUE
+"Basales, desarrollo",14442,14442,0.5,TRUE
+"Basales, prueba",3612,3612,0.5,TRUE
+"Basales, unidad reservada",4724,4724,0.5,TRUE
+"Basales, mujeres en la reservada",31.86,31.86,0.005,TRUE
+"Basales, celdas de sexo bajo el minimo",0,0,0.5,TRUE
+"Basales, celdas de categoria bajo el minimo",0,0,0.5,TRUE
+"Basales, determinaciones por bloque",17,17,0.5,TRUE
+"Basales, filas de determinacion",68,68,0.5,TRUE
 "Cultivos de la ventana",65317,65317,0.5,TRUE
 "Tipos de muestra retenidos",7,7,0.5,TRUE
 "Positividad minima",5.54,5.54,0.005,TRUE
@@ -78,10 +88,10 @@
 "Conjunto apartado, lo leen",0,0,0.5,TRUE
 "Depositos de consulta sin orden total",0,0,0.5,TRUE
 "Depositos de consulta contrastados",13,13,0.5,TRUE
-"Depositos con estado de guardia establecido",42,42,0.5,TRUE
-"Fases con deposito versionado",42,42,0.5,TRUE
+"Depositos con estado de guardia establecido",43,43,0.5,TRUE
+"Fases con deposito versionado",43,43,0.5,TRUE
 "Fases escritas sin la guardia",19,19,0.5,TRUE
-"Fases con la guardia declarada",23,23,0.5,TRUE
+"Fases con la guardia declarada",24,24,0.5,TRUE
 "Fases derivadas de la marca de ejecucion",4,4,0.5,TRUE
 "Fases sin manifiesto",15,15,0.5,TRUE
 "Fases sin manifiesto y sin estado",0,0,0.5,TRUE

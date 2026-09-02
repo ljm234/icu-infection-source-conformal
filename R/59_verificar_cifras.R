@@ -156,6 +156,9 @@ FUENTES <- list(
   "Resumen de la reservada"                  = "outputs/fase42/resumen.csv",
   "Depositos huerfanos"                      = "outputs/fase44/recuento.csv",
   "Positividad por muestra"                  = "outputs/fase43/resumen_positividad.csv",
+  "Basales por conjunto"                     = "outputs/fase45/basales_por_conjunto.csv",
+  "Categorias por conjunto"                  = "outputs/fase45/categorias_por_conjunto.csv",
+  "Determinaciones por conjunto"             = "outputs/fase45/determinaciones_por_conjunto.csv",
   "Extremos por categoria"                   = "outputs/fase42/extremos_por_categoria.csv",
   "Fechas de la posterioridad"               = "outputs/fase41/fechas.csv",
   "Conjunto apartado"                        = "outputs/fase40/conjunto_apartado.csv",
@@ -352,7 +355,7 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 23, 0.5)
+  N_MF_DECLARAN, 24, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 reg[[length(reg)+1]] <- comprobar("Rutas reservadas que el lector establece",
@@ -416,13 +419,13 @@ pos <- leer(FUENTES[["Posterioridad de los analisis"]])
 if (!is.null(pos)) {
   TER <- "posterior a la apertura y lee filas por paciente"
   reg[[length(reg)+1]] <- comprobar("Procedimientos contrastados",
-    nrow(pos), 91, 0.5)
+    nrow(pos), 92, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores a la fijacion",
-    sum(pos$posterior_a_la_fijacion), 69, 0.5)
+    sum(pos$posterior_a_la_fijacion), 70, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores a la apertura",
-    sum(pos$posterior_a_la_apertura), 52, 0.5)
+    sum(pos$posterior_a_la_apertura), 53, 0.5)
   reg[[length(reg)+1]] <- comprobar("Ademas leen filas por paciente",
-    sum(pos$categoria == TER), 29, 0.5)
+    sum(pos$categoria == TER), 30, 0.5)
   reg[[length(reg)+1]] <- comprobar("Ajustan tras la apertura",
     sum(pos$posterior_a_la_apertura & pos$ajusta_un_modelo), 6, 0.5)
   # La cifra que decide si esa contabilidad es tranquilizadora o grave.
@@ -434,9 +437,9 @@ if (!is.null(pos)) {
   reg[[length(reg)+1]] <- comprobar("Procedimientos sin alta registrada",
     sum(!pos$registrado), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Producen una cifra publicada",
-    sum(pos$produce_cifra_publicada), 39, 0.5)
+    sum(pos$produce_cifra_publicada), 40, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores que producen cifra publicada",
-    sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 29, 0.5)
+    sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 30, 0.5)
 }
 
 reg[[length(reg)+1]] <- comprobar("Celdas que resisten el analisis adoptado",
@@ -497,6 +500,40 @@ if (!is.null(dec0)) {
     max(x$bn_modelo - pmax(x$bn_tratar_todos, x$bn_no_tratar)) })
   reg[[length(reg)+1]] <- comprobar("La binaria es la de mayor beneficio",
     as.numeric(mx[["cualquier_foco"]] == max(mx)), 1, 0.5)
+}
+
+# La tabla basal por conjunto. Se contrastan los recuentos, que los bloques
+# sumen la cohorte, y que la regla de las cinco se cumpla en toda celda de
+# recuento publicada, que es lo que permite depositarla.
+bas <- leer(FUENTES[["Basales por conjunto"]])
+cat45 <- leer(FUENTES[["Categorias por conjunto"]])
+det45 <- leer(FUENTES[["Determinaciones por conjunto"]])
+if (!is.null(bas)) {
+  reg[[length(reg)+1]] <- comprobar("Basales, bloques",
+    nrow(bas), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, suman la cohorte",
+    sum(bas$estancias), 23213, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, desarrollo",
+    bas$estancias[bas$bloque == "desarrollo"], 14442, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, prueba",
+    bas$estancias[bas$bloque == "prueba"], 3612, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, unidad reservada",
+    bas$estancias[bas$bloque == "unidad reservada"], 4724, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, mujeres en la reservada",
+    bas$pct_mujeres[bas$bloque == "unidad reservada"], 31.86, tolerancia(2))
+  # Ninguna celda de recuento bajo el minimo, ni de sexo ni de categoria.
+  sx <- c(bas$mujeres, bas$hombres)
+  reg[[length(reg)+1]] <- comprobar("Basales, celdas de sexo bajo el minimo",
+    sum(sx > 0 & sx < 5), 0, 0.5)
+}
+if (!is.null(cat45))
+  reg[[length(reg)+1]] <- comprobar("Basales, celdas de categoria bajo el minimo",
+    sum(cat45$estancias > 0 & cat45$estancias < 5), 0, 0.5)
+if (!is.null(det45)) {
+  reg[[length(reg)+1]] <- comprobar("Basales, determinaciones por bloque",
+    length(unique(det45$determinacion)), 17, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Basales, filas de determinacion",
+    nrow(det45), 17 * 4, 0.5)
 }
 
 posm <- leer(FUENTES[["Positividad por muestra"]])
@@ -662,7 +699,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Fases con deposito versionado",
-    nrow(gpd), 42, 0.5)
+    nrow(gpd), 43, 0.5)
   reg[[length(reg)+1]] <- comprobar("Fases escritas sin la guardia",
     sum(!gpd$guardia_activa), 19, 0.5)
   reg[[length(reg)+1]] <- comprobar("Fases con la guardia declarada",

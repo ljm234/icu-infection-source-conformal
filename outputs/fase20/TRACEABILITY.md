@@ -9,7 +9,7 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
-| Manifiestos que declaran la guardia | 23.0000 | 23.0000 | 0.50000 | yes |
+| Manifiestos que declaran la guardia | 24.0000 | 24.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
 | Rutas reservadas que el lector establece | 14.0000 | 14.0000 | 0.50000 | yes |
 | Rutas reservadas que son un directorio | 1.0000 | 1.0000 | 0.50000 | yes |
@@ -27,15 +27,15 @@ margin never exceeds the largest possible rounding error.
 | Procedimientos que predicen sobre ella | 1.0000 | 1.0000 | 0.50000 | yes |
 | Procedimientos que reutilizan lo almacenado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Procedimientos que la describen sin predecir | 1.0000 | 1.0000 | 0.50000 | yes |
-| Procedimientos contrastados | 91.0000 | 91.0000 | 0.50000 | yes |
-| Posteriores a la fijacion | 69.0000 | 69.0000 | 0.50000 | yes |
-| Posteriores a la apertura | 52.0000 | 52.0000 | 0.50000 | yes |
-| Ademas leen filas por paciente | 29.0000 | 29.0000 | 0.50000 | yes |
+| Procedimientos contrastados | 92.0000 | 92.0000 | 0.50000 | yes |
+| Posteriores a la fijacion | 70.0000 | 70.0000 | 0.50000 | yes |
+| Posteriores a la apertura | 53.0000 | 53.0000 | 0.50000 | yes |
+| Ademas leen filas por paciente | 30.0000 | 30.0000 | 0.50000 | yes |
 | Ajustan tras la apertura | 6.0000 | 6.0000 | 0.50000 | yes |
 | Escriben artefacto del modelo despues | 0.0000 | 0.0000 | 0.50000 | yes |
 | Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
-| Producen una cifra publicada | 39.0000 | 39.0000 | 0.50000 | yes |
-| Posteriores que producen cifra publicada | 29.0000 | 29.0000 | 0.50000 | yes |
+| Producen una cifra publicada | 40.0000 | 40.0000 | 0.50000 | yes |
+| Posteriores que producen cifra publicada | 30.0000 | 30.0000 | 0.50000 | yes |
 | Celdas que resisten el analisis adoptado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Analisis depositados y no adoptados | 9.0000 | 9.0000 | 0.50000 | yes |
 | Menor denominador de los empates | 4645.0000 | 4645.0000 | 0.50000 | yes |
@@ -58,6 +58,16 @@ margin never exceeds the largest possible rounding error.
 | Umbral del maximo, respiratorio | 0.0400 | 0.0400 | 0.00500 | yes |
 | Umbrales negativos, respiratorio | 4.0000 | 4.0000 | 0.50000 | yes |
 | La binaria es la de mayor beneficio | 1.0000 | 1.0000 | 0.50000 | yes |
+| Basales, bloques | 4.0000 | 4.0000 | 0.50000 | yes |
+| Basales, suman la cohorte | 23213.0000 | 23213.0000 | 0.50000 | yes |
+| Basales, desarrollo | 14442.0000 | 14442.0000 | 0.50000 | yes |
+| Basales, prueba | 3612.0000 | 3612.0000 | 0.50000 | yes |
+| Basales, unidad reservada | 4724.0000 | 4724.0000 | 0.50000 | yes |
+| Basales, mujeres en la reservada | 31.8600 | 31.8600 | 0.00500 | yes |
+| Basales, celdas de sexo bajo el minimo | 0.0000 | 0.0000 | 0.50000 | yes |
+| Basales, celdas de categoria bajo el minimo | 0.0000 | 0.0000 | 0.50000 | yes |
+| Basales, determinaciones por bloque | 17.0000 | 17.0000 | 0.50000 | yes |
+| Basales, filas de determinacion | 68.0000 | 68.0000 | 0.50000 | yes |
 | Cultivos de la ventana | 65317.0000 | 65317.0000 | 0.50000 | yes |
 | Tipos de muestra retenidos | 7.0000 | 7.0000 | 0.50000 | yes |
 | Positividad minima | 5.5400 | 5.5400 | 0.00500 | yes |
@@ -88,10 +98,10 @@ margin never exceeds the largest possible rounding error.
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 42.0000 | 42.0000 | 0.50000 | yes |
-| Fases con deposito versionado | 42.0000 | 42.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 43.0000 | 43.0000 | 0.50000 | yes |
+| Fases con deposito versionado | 43.0000 | 43.0000 | 0.50000 | yes |
 | Fases escritas sin la guardia | 19.0000 | 19.0000 | 0.50000 | yes |
-| Fases con la guardia declarada | 23.0000 | 23.0000 | 0.50000 | yes |
+| Fases con la guardia declarada | 24.0000 | 24.0000 | 0.50000 | yes |
 | Fases derivadas de la marca de ejecucion | 4.0000 | 4.0000 | 0.50000 | yes |
 | Fases sin manifiesto | 15.0000 | 15.0000 | 0.50000 | yes |
 | Fases sin manifiesto y sin estado | 0.0000 | 0.0000 | 0.50000 | yes |
@@ -446,6 +456,9 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase42/resumen.csv`
 - `outputs/fase44/recuento.csv`
 - `outputs/fase43/resumen_positividad.csv`
+- `outputs/fase45/basales_por_conjunto.csv`
+- `outputs/fase45/categorias_por_conjunto.csv`
+- `outputs/fase45/determinaciones_por_conjunto.csv`
 - `outputs/fase42/extremos_por_categoria.csv`
 - `outputs/fase41/fechas.csv`
 - `outputs/fase40/conjunto_apartado.csv`

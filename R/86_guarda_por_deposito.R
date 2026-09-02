@@ -83,8 +83,15 @@ filas <- do.call(rbind, lapply(fases, function(f) {
                          shQuote(f)))
   cu <- ejecutar(sprintf("git log -1 --format=%%ad --date=short -- %s",
                          shQuote(f)))
-  if (length(ca) == 0) detener("El historial no registra la fase ", f)
-  primero <- ca[1]; ultimo <- cu[1]
+  # Una fase que el historial no registra todavia es la que se esta
+  # introduciendo. Si trae manifiesto, su marca de ejecucion resuelve la
+  # pregunta y las fechas del historial son informativas; si no lo trae, no
+  # hay de donde derivar y el procedimiento se detiene.
+  primero <- if (length(ca) > 0) ca[1] else ""
+  ultimo  <- if (length(cu) > 0) cu[1] else ""
+  if (!file.exists(m) && primero == "")
+    detener("La fase ", f, " no tiene manifiesto y el historial no la ",
+            "registra. Su estado no puede derivarse.")
   if (!file.exists(m)) {
     # Sin manifiesto no hay marca de ejecucion, de modo que se deriva del
     # historial: un deposito cuyo primer commit es anterior a la guardia se
@@ -119,7 +126,8 @@ filas <- do.call(rbind, lapply(fases, function(f) {
     manifiesto = m,
     ejecutado_en = d$ejecutado_en,
     primer_commit = primero, ultimo_commit = ultimo,
-    rehecha_tras_la_guardia = fecha_a_instante(ultimo) >= T_GUARDIA,
+    rehecha_tras_la_guardia = ultimo != "" &&
+                              fecha_a_instante(ultimo) >= T_GUARDIA,
     declara_la_guardia = if (is.null(decl)) NA else isTRUE(decl),
     anterior_a_la_guardia = anterior,
     guardia_activa = if (!is.null(decl)) isTRUE(decl)

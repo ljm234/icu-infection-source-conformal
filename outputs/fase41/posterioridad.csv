@@ -28,6 +28,7 @@
 "83_calibracion_prueba.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
 "84_curva_calibracion.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
 "85_completitud_por_conjunto.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"94_caracteristicas_basales.R","2026-09-01",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
 "00_rutas_reservadas.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
 "45_catalogo_vitales.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
 "59_verificar_cifras.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE

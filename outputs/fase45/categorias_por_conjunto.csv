@@ -1,0 +1,21 @@
+"bloque","categoria","estancias","pct_del_bloque"
+"desarrollo","abstencion",1052,7.28
+"desarrollo","respiratorio",510,3.53
+"desarrollo","sangre",424,2.94
+"desarrollo","sin_crecimiento",11885,82.29
+"desarrollo","urinario",571,3.95
+"prueba","abstencion",263,7.28
+"prueba","respiratorio",128,3.54
+"prueba","sangre",106,2.93
+"prueba","sin_crecimiento",2972,82.28
+"prueba","urinario",143,3.96
+"unidad reservada","abstencion",138,2.92
+"unidad reservada","respiratorio",13,0.28
+"unidad reservada","sangre",26,0.55
+"unidad reservada","sin_crecimiento",4495,95.15
+"unidad reservada","urinario",52,1.1
+"unidades descartadas","abstencion",23,5.29
+"unidades descartadas","respiratorio",20,4.6
+"unidades descartadas","sangre",17,3.91
+"unidades descartadas","sin_crecimiento",336,77.24
+"unidades descartadas","urinario",39,8.97

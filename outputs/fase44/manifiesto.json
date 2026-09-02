@@ -1,14 +1,14 @@
 {
   "fase": "44",
-  "ejecutado_en": "2026-09-01T21:39:10-0600",
+  "ejecutado_en": "2026-09-01T22:10:42-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "saber de cada deposito versionado si sostiene una cifra publicada, si alguna comprobacion lo alcanza, o ninguna de las dos cosas",
   "publicado": "lo lee un generador de prosa, que es el que escribe un documento y lo compone con la guardia que rechaza cifras literales",
   "contrastado": "figura en la relacion de fuentes de la verificacion de cifras, leida de su codigo y no copiada aqui",
   "caso_grave": "publicado sin contraste: la cifra viaja sin red, y detiene este procedimiento",
-  "depositos": 122,
-  "publicados": 61,
-  "contrastados": 84,
+  "depositos": 125,
+  "publicados": 62,
+  "contrastados": 87,
   "huerfanos": 38
 }

@@ -42,6 +42,7 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase43/positividad_retenidos.csv",
              "outputs/fase16/gbm_comparacion.csv",
              "outputs/fase16/curvas_decision.csv",
+             "outputs/fase45/basales_por_conjunto.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -124,6 +125,15 @@ casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
 pot   <- leer("outputs/fase32/potencia_no_usada.csv")
+bas   <- leer("outputs/fase45/basales_por_conjunto.csv")
+# El minimo de la regla de las cinco es una decision del deposito, no del
+# documento: se lee de su manifiesto en lugar de escribirse aqui.
+MF45 <- "outputs/fase45/manifiesto.json"
+if (!file.exists(MF45)) { cat("Fuente ausente:", MF45, "\n"); quit(status = 1) }
+min45 <- jsonlite::fromJSON(MF45)$minimo
+if (is.null(min45)) {
+  cat("El manifiesto de las basales no declara su minimo.\n"); quit(status = 1)
+}
 posm  <- leer("outputs/fase43/resumen_positividad.csv")
 dsel  <- leer("outputs/fase42/distancia_de_la_reservada.csv")
 xsel  <- leer("outputs/fase42/extremos_por_categoria.csv")
@@ -511,6 +521,16 @@ add(prosa(
 "",
 "The step labels are Spanish and read, in order: unique stays, adults, stays",
 "with a culture drawn, suspected infection and the final cohort.",
+"",
+"Baseline characteristics by partition set are deposited rather than printed",
+"here: age, sex, outcome distribution and, for the seventeen determinations",
+"the model uses, the median and the share missing, for the development set,",
+"the test set, the sealed unit and the units left out. The full table belongs",
+"to the manuscript, not to this document. No published count cell falls below"))
+add(cifra("%d cases, and the %d blocks sum to the analysed cohort.",
+          as.integer(min45), as.integer(nrow(bas))))
+add(prosa(
+"`outputs/fase45/basales_por_conjunto.csv` carries it.",
 ""))
 
 add(prosa(
