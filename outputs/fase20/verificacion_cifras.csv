@@ -9,6 +9,8 @@
 "Matriz, posiciones que cambian antes del arreglo",98.77,98.77,0.005,TRUE
 "Matriz, posiciones que cambian despues",0,0,0.005,TRUE
 "Matriz, comparaciones depositadas",5,5,0.5,TRUE
+"Matriz, publicada frente a la corregida",100,100,0.005,TRUE
+"Matriz, celdas en esa comparacion",0,0,0.5,TRUE
 "Contactos con la unidad reservada",5,5,0.5,TRUE
 "Clases de contacto",3,3,0.5,TRUE
 "Procedimientos que definen la etiqueta",1,1,0.5,TRUE

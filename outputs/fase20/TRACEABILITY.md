@@ -19,6 +19,8 @@ margin never exceeds the largest possible rounding error.
 | Matriz, posiciones que cambian antes del arreglo | 98.7700 | 98.7700 | 0.00500 | yes |
 | Matriz, posiciones que cambian despues | 0.0000 | 0.0000 | 0.00500 | yes |
 | Matriz, comparaciones depositadas | 5.0000 | 5.0000 | 0.50000 | yes |
+| Matriz, publicada frente a la corregida | 100.0000 | 100.0000 | 0.00500 | yes |
+| Matriz, celdas en esa comparacion | 0.0000 | 0.0000 | 0.50000 | yes |
 | Contactos con la unidad reservada | 5.0000 | 5.0000 | 0.50000 | yes |
 | Clases de contacto | 3.0000 | 3.0000 | 0.50000 | yes |
 | Procedimientos que definen la etiqueta | 1.0000 | 1.0000 | 0.50000 | yes |

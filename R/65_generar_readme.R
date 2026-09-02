@@ -1518,8 +1518,21 @@ add(cifra("the published matrix the figures are %d cells and %.2f percent. With"
 add(cifra("the ordering fixed, the same comparison gives %.2f percent.",
           val(ordm, "pct_posiciones",
               ordm$comparacion == "despues_a frente a despues_b")))
-
 add(prosa(
+"",
+"One more comparison belongs here, and it is the sharpest of the four. The",
+"fixed ordering does not merely reproduce itself: it produces a matrix in a",
+"different order from the published one, and not partly."))
+add(cifra("Against the published matrix the corrected code moves %.2f percent",
+          val(ordm, "pct_posiciones",
+              ordm$comparacion == "publicada frente a despues_a")))
+add(cifra("of the row positions, with %d cells differing. The published",
+          as.integer(val(ordm, "celdas_que_difieren",
+                         ordm$comparacion == "publicada frente a despues_a"))))
+add(prosa(
+"partition therefore rests on an ordering the current code no longer",
+"produces. That is the finding stated at its worst, which is how it should",
+"be read.",
 "",
 "This is a failure mode a fixed seed appears to cover and does not, which is",
 "why a careful analyst does not look for it. It is of the same family as the",

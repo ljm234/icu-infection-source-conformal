@@ -385,6 +385,14 @@ if (!is.null(ordm)) {
     0, tolerancia(2))
   reg[[length(reg)+1]] <- comprobar("Matriz, comparaciones depositadas",
     nrow(ordm), 5, 0.5)
+  # La comparacion mas dura de las cinco, que el documento callaba: el codigo
+  # corregido no reproduce el orden de la matriz publicada en ninguna fila.
+  reg[[length(reg)+1]] <- comprobar("Matriz, publicada frente a la corregida",
+    ordm$pct_posiciones[ordm$comparacion == "publicada frente a despues_a"],
+    100, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Matriz, celdas en esa comparacion",
+    ordm$celdas_que_difieren[ordm$comparacion == "publicada frente a despues_a"],
+    0, 0.5)
 }
 
 cont <- leer(FUENTES[["Contactos con el sellado"]])

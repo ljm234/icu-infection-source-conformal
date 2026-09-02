@@ -642,6 +642,14 @@ same 23,213 stays, while 98.77 percent of the row positions change. Against
 the published matrix the figures are 0 cells and 99.83 percent. With the
 ordering fixed, the same comparison gives 0.00 percent.
 
+One more comparison belongs here, and it is the sharpest of the four. The
+fixed ordering does not merely reproduce itself: it produces a matrix in a
+different order from the published one, and not partly. Against the published
+matrix the corrected code moves 100.00 percent of the row positions, with 0
+cells differing. The published partition therefore rests on an ordering the
+current code no longer produces. That is the finding stated at its worst,
+which is how it should be read.
+
 This is a failure mode a fixed seed appears to cover and does not, which is
 why a careful analyst does not look for it. It is of the same family as the
 tie-breaking above, with one difference that matters: the ties moved figures,
