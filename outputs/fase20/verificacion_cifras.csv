@@ -52,8 +52,12 @@
 "Positividad maxima",55.54,55.54,0.005,TRUE
 "Razon entre los extremos",10.03,10.03,0.005,TRUE
 "Celdas en que ambos instrumentos coinciden",20,20,0.5,TRUE
-"Celdas que conservan la contencion",24,24,0.5,TRUE
-"Celdas que contienen el nominal",8,8,0.5,TRUE
+"Celdas que conservan la contencion",28,28,0.5,TRUE
+"Celdas que contienen el nominal",12,12,0.5,TRUE
+"Celdas del conjunto de prueba",4,4,0.5,TRUE
+"Prueba, contienen el nominal (binomial)",4,4,0.5,TRUE
+"Prueba, contienen el nominal (beta)",4,4,0.5,TRUE
+"Celdas contrastadas en el deposito",28,28,0.5,TRUE
 "Distancia de la unidad reservada",0.402,0.402,5e-04,TRUE
 "Mayor distancia de las demas",0.22,0.22,5e-04,TRUE
 "Veces la siguiente",1.83,1.83,0.005,TRUE

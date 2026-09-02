@@ -374,10 +374,50 @@ cat("\nLos recuentos deducidos de la unidad reservada reproducen su",
     "cobertura\ny sus intervalos publicados.\n")
 
 # ---------------------------------------------------------------------------
+# Conjunto de prueba. El mismo procedimiento, por la misma razon.
+# ---------------------------------------------------------------------------
+# El documento afirma que reconocer la incertidumbre de la calibracion no
+# puede quitarle el nominal a un intervalo que ya lo contenia, y lo afirma en
+# la seccion del conjunto de prueba. Hasta aqui esa propiedad se comprobaba
+# sobre las celdas de la validacion por sedes y de la unidad reservada, que no
+# son esas: la frase se sostenia por analogia.
+#
+# El calculo es el mismo que para la unidad reservada y no exige reabrir nada:
+# el recuento se deduce de la cobertura publicada, el tamano de calibracion
+# por clase consta en la fase octava, y el umbral se reestima igual. Con eso
+# la propiedad se comprueba donde la frase la usa.
+pfilas <- list()
+for (i in seq_len(nrow(cob8))) {
+  nk <- cob8$n[i]
+  kk <- round(cob8$cobertura[i] * nk)
+  if (abs(round(kk / nk, 4) - cob8$cobertura[i]) > 1e-9)
+    detener("El recuento deducido no reproduce la cobertura de prueba de ",
+            cob8$clase[i], ".")
+  ic <- intervalo(kk, nk)
+  if (abs(round(ic[1], 4) - cob8$ic_inferior[i]) > 1e-9 ||
+      abs(round(ic[2], 4) - cob8$ic_superior[i]) > 1e-9)
+    detener("El intervalo recompuesto no coincide con el publicado en la ",
+            "prueba para ", cob8$clase[i], ".")
+  if (!cob8$clase[i] %in% names(ncal_sell))
+    detener("Los umbrales no cubren la categoria de prueba ", cob8$clase[i])
+  pfilas[[i]] <- data.frame(
+    seccion = "conjunto de prueba", sede = "conjunto de prueba",
+    clase = cob8$clase[i], n = nk, cubiertos = kk, cobertura = kk / nk,
+    ic_inferior = ic[1], ic_superior = ic[2],
+    n_calibracion = as.integer(ncal_sell[[cob8$clase[i]]]),
+    orden_umbral = as.integer(ceiling(
+      (ncal_sell[[cob8$clase[i]]] + 1) * (1 - ALFA))),
+    row.names = NULL)
+}
+prue_cl <- do.call(rbind, pfilas)
+cat("Los recuentos deducidos del conjunto de prueba reproducen su cobertura\n")
+cat("y sus intervalos publicados.\n")
+
+# ---------------------------------------------------------------------------
 # Un solo criterio
 # ---------------------------------------------------------------------------
 
-tab <- rbind(louo_cl, sell_cl)
+tab <- rbind(louo_cl, sell_cl, prue_cl)
 tab$nominal <- NOMINAL
 tab$confianza <- CONFIANZA
 

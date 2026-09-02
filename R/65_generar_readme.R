@@ -272,6 +272,24 @@ estrecha_max <- 100 * (1 - min(anch(bajo_iv)))
 
 # Lo que sostiene la frase sobre la contencion, y lo que sostiene la de la
 # concordancia. Antes ninguna de las dos tenia columna detras.
+# La propiedad se comprueba ahora donde la frase la usa: sobre las celdas del
+# conjunto de prueba, que fase26 calcula desde esta revision. Antes se
+# comprobaba sobre las de validacion y sellado, que no son esas.
+prue_iv <- iv[iv$seccion == "conjunto de prueba", ]
+if (nrow(prue_iv) != length(CLC)) {
+  cat("El deposito no trae una celda de prueba por categoria modelada.\n")
+  quit(status = 1)
+}
+if (!all(prue_iv$conserva_la_contencion)) {
+  cat("Reconocer la calibracion le quita el nominal a alguna celda de la\n")
+  cat("prueba. El documento afirma lo contrario.\n")
+  quit(status = 1)
+}
+n_prue_bin <- sum(prue_iv$binomial_contiene_el_nominal)
+n_prue_bet <- sum(prue_iv$beta_contiene_el_nominal)
+anch_prue <- (prue_iv$ic_beta_superior - prue_iv$ic_beta_inferior) /
+             (prue_iv$ic_superior - prue_iv$ic_inferior)
+
 n_cont_bin <- sum(iv$binomial_contiene_el_nominal)
 n_cont_bet <- sum(iv$binomial_contiene_el_nominal & iv$beta_contiene_el_nominal)
 n_conserva <- sum(iv$conserva_la_contencion)
@@ -777,16 +795,22 @@ add(prosa(
 "would widen them, as it does in the transportability section below, where",
 "the thresholds are re-estimated within each fold. Widening does not on its",
 "own preserve a containment, since a wider interval can also be shifted, and",
-"one cell of the sealed unit is shifted in exactly that way. What is checked",
-"is the property this conclusion needs:"))
-add(cifra("across the %d cells where both intervals are computed, the %d in",
-          as.integer(nrow(iv)), as.integer(n_cont_bin)))
+"one cell of the sealed unit is shifted in exactly that way. So the property",
+"is checked on these classes and not carried over from another section:"))
+add(cifra("the deposit carries the Beta-Binomial interval for each of the %d,",
+          as.integer(nrow(prue_iv))))
+add(cifra("computed from the same calibration sizes, and it is between %.2f and",
+          min(anch_prue)))
+add(cifra("%.2f times as wide. All %d contain the nominal level, as all",
+          max(anch_prue), as.integer(n_prue_bet)))
+add(cifra("%d of the intervals conditioned on the threshold do. The same",
+          as.integer(n_prue_bin)))
+add(cifra("equality holds across every cell the deposit carries: %d of the %d",
+          as.integer(n_cont_bet), as.integer(nrow(iv))))
 add(prosa(
-"which the interval conditioned on the threshold contains the nominal level"))
-add(cifra("are the same %d in which the interval that recognises the",
-          as.integer(n_cont_bet)))
+"contain the nominal level under one interval and under the other alike."))
 add(prosa(
-"calibration contains it.",
+"",
 "",
 "### Calibration",
 "",

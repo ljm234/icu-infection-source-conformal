@@ -264,11 +264,15 @@ estimated from a finite calibration set. Incorporating that uncertainty would
 widen them, as it does in the transportability section below, where the
 thresholds are re-estimated within each fold. Widening does not on its own
 preserve a containment, since a wider interval can also be shifted, and one
-cell of the sealed unit is shifted in exactly that way. What is checked is the
-property this conclusion needs: across the 24 cells where both intervals are
-computed, the 8 in which the interval conditioned on the threshold contains
-the nominal level are the same 8 in which the interval that recognises the
-calibration contains it.
+cell of the sealed unit is shifted in exactly that way. So the property is
+checked on these classes and not carried over from another section: the
+deposit carries the Beta-Binomial interval for each of the 4, computed from
+the same calibration sizes, and it is between 1.26 and 1.28 times as wide. All
+4 contain the nominal level, as all 4 of the intervals conditioned on the
+threshold do. The same equality holds across every cell the deposit carries:
+12 of the 28 contain the nominal level under one interval and under the other
+alike.
+
 
 ### Calibration
 

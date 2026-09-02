@@ -513,7 +513,18 @@ if (exists("iv26")) {
   reg[[length(reg)+1]] <- comprobar("Celdas que conservan la contencion",
     sum(iv26$conserva_la_contencion), nrow(iv26), 0.5)
   reg[[length(reg)+1]] <- comprobar("Celdas que contienen el nominal",
-    sum(iv26$binomial_contiene_el_nominal), 8, 0.5)
+    sum(iv26$binomial_contiene_el_nominal), 12, 0.5)
+  # La propiedad, donde la frase la usa: las cuatro celdas del conjunto de
+  # prueba, que antes no se calculaban y obligaban a razonar por analogia.
+  p26 <- iv26[iv26$seccion == "conjunto de prueba", ]
+  reg[[length(reg)+1]] <- comprobar("Celdas del conjunto de prueba",
+    nrow(p26), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Prueba, contienen el nominal (binomial)",
+    sum(p26$binomial_contiene_el_nominal), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Prueba, contienen el nominal (beta)",
+    sum(p26$beta_contiene_el_nominal), 4, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas contrastadas en el deposito",
+    nrow(iv26), 28, 0.5)
 }
 
 dsel <- leer(FUENTES[["Distancia de la reservada"]])
