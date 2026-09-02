@@ -77,6 +77,8 @@ margin never exceeds the largest possible rounding error.
 | Unidades del perfil | 6.0000 | 6.0000 | 0.50000 | yes |
 | Categorias en que es extremo | 5.0000 | 5.0000 | 0.50000 | yes |
 | Columnas del perfil de categorias | 5.0000 | 5.0000 | 0.50000 | yes |
+| Parametros de la especificacion final | 148.0000 | 148.0000 | 0.50000 | yes |
+| Casos de la minoritaria menor | 573.0000 | 573.0000 | 0.50000 | yes |
 | Ajuste efectivo de la comparacion | 2487.0000 | 2487.0000 | 0.50000 | yes |
 | Ajuste posible con la calibracion | 4010.0000 | 4010.0000 | 0.50000 | yes |
 | Estancias que quedaron sin usar | 1523.0000 | 1523.0000 | 0.50000 | yes |

@@ -164,6 +164,14 @@ N_ART <- sum(post$posterior_a_la_apertura & post$escribe_artefacto_del_modelo)
 N_PUB <- sum(post$posterior_a_la_apertura & post$produce_cifra_publicada)
 pot   <- leer("outputs/fase32/potencia_no_usada.csv")
 hue   <- leer("outputs/fase44/recuento.csv")
+refs  <- leer("outputs/fase13/referencias.csv")
+clases<- leer("outputs/fase2/clases.csv")
+flujo <- leer("outputs/fase2/flujo.csv")
+MINOR <- c("urinario", "respiratorio", "sangre")
+n_par <- max(refs$parametros)
+n_min <- min(clases$n[clases$clase %in% MINOR])
+cl_min <- clases$clase[clases$clase %in% MINOR][
+  which.min(clases$n[clases$clase %in% MINOR])]
 nhue  <- function(k) as.integer(hue$depositos[hue$situacion == k])
 
 # Las diferencias que separan la comparacion ampliada del modelo publicado. Se
@@ -259,6 +267,7 @@ exc  <- ruta(".gitignore")
 r00  <- ruta("R/00_rutas_reservadas.R")
 r90  <- ruta("R/90_posterioridad.R")
 r93  <- ruta("R/93_huerfanas.R")
+d13  <- ruta("outputs/fase13/referencias.csv")
 d32p <- ruta("outputs/fase32/potencia_no_usada.csv")
 p41  <- ruta("outputs/fase41/posterioridad.csv")
 
@@ -747,6 +756,48 @@ add(prosa(
 "y por comparacion puntual en otro. La regla que queda es que un criterio",
 "adoptado en cualquier parte rige en todas, y que introducir uno nuevo",
 "obliga a revisar los apartados anteriores."))
+cerrar()
+
+add(prosa("## Cuestiones abiertas para el manuscrito"))
+cerrar()
+
+add(prosa(
+"Lo que sigue no es un defecto del deposito. Es una pregunta que este",
+"registro no responde y que el manuscrito tendra que responder, anotada aqui",
+"para que no se descubra en la revision."))
+cerrar()
+
+add(prosa(
+"Numero de parametros frente a numero de casos. La especificacion final",
+"ajusta"))
+add(cifra("%d coeficientes no nulos, contados sobre los bloques de clase y sin",
+          as.integer(n_par)))
+add(cifra("los interceptos, segun `%s`. La categoria", d13))
+add(cifra("minoritaria menor de la cohorte, %s, aporta %d casos en las %s",
+          cl_min, as.integer(n_min),
+          format(flujo$n[flujo$paso == "p5_cohorte_final"],
+                 big.mark = ",")))
+add(prosa(
+"estancias analizadas, y menos en la particion de entrenamiento, que es donde",
+"el ajuste ocurre. Ninguna de las dos cifras esta mal, y las dos constan; lo",
+"que no consta es una justificacion del tamano muestral frente a esa",
+"complejidad, ni una discusion de lo que implica para la estabilidad de los",
+"coeficientes."))
+cerrar()
+
+add(prosa(
+"Importa para leer el resultado, y en la direccion que conviene declarar: con",
+"esa razon entre parametros y casos, los coeficientes de las categorias",
+"minoritarias se estiman con poca informacion, de modo que su magnitud",
+"individual no admite lectura clinica aunque el area agregada si la admita.",
+"La penalizacion contiene el problema y no lo elimina. El documento no",
+"interpreta coeficientes en ninguna parte, y esa abstencion deja de ser una",
+"omision para ser una consecuencia de lo anterior."))
+cerrar()
+
+add(prosa(
+"Tampoco hay una tabla de caracteristicas basales por conjunto de la",
+"particion. Es lo primero que una guia de reporte pide y no esta."))
 cerrar()
 
 add(prosa("## Depositos que sostienen algo y depositos que no"))

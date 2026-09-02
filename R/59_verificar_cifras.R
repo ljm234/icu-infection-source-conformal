@@ -558,6 +558,17 @@ if (!is.null(dsel) && !is.null(xsel)) {
     nrow(xsel), 5, 0.5)
 }
 
+# Las dos cifras de la cuestion abierta que el registro de decisiones anota.
+ref13 <- leer(FUENTES[["Comparacion con referencias simples"]])
+if (!is.null(ref13))
+  reg[[length(reg)+1]] <- comprobar("Parametros de la especificacion final",
+    max(ref13$parametros), 148, 0.5)
+cls2 <- leer(FUENTES[["Distribucion de categorias"]])
+if (!is.null(cls2))
+  reg[[length(reg)+1]] <- comprobar("Casos de la minoritaria menor",
+    min(cls2$n[cls2$clase %in% c("urinario","respiratorio","sangre")]),
+    573, 0.5)
+
 pot <- leer(FUENTES[["Potencia no usada"]])
 if (!is.null(pot)) {
   reg[[length(reg)+1]] <- comprobar("Ajuste efectivo de la comparacion",

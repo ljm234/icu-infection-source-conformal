@@ -336,6 +336,32 @@ comparacion puntual en otro. La regla que queda es que un criterio adoptado en
 cualquier parte rige en todas, y que introducir uno nuevo obliga a revisar los
 apartados anteriores.
 
+## Cuestiones abiertas para el manuscrito
+
+Lo que sigue no es un defecto del deposito. Es una pregunta que este registro
+no responde y que el manuscrito tendra que responder, anotada aqui para que no
+se descubra en la revision.
+
+Numero de parametros frente a numero de casos. La especificacion final ajusta
+148 coeficientes no nulos, contados sobre los bloques de clase y sin los
+interceptos, segun `outputs/fase13/referencias.csv`. La categoria minoritaria
+menor de la cohorte, sangre, aporta 573 casos en las 23,213 estancias
+analizadas, y menos en la particion de entrenamiento, que es donde el ajuste
+ocurre. Ninguna de las dos cifras esta mal, y las dos constan; lo que no consta
+es una justificacion del tamano muestral frente a esa complejidad, ni una
+discusion de lo que implica para la estabilidad de los coeficientes.
+
+Importa para leer el resultado, y en la direccion que conviene declarar: con
+esa razon entre parametros y casos, los coeficientes de las categorias
+minoritarias se estiman con poca informacion, de modo que su magnitud
+individual no admite lectura clinica aunque el area agregada si la admita. La
+penalizacion contiene el problema y no lo elimina. El documento no interpreta
+coeficientes en ninguna parte, y esa abstencion deja de ser una omision para
+ser una consecuencia de lo anterior.
+
+Tampoco hay una tabla de caracteristicas basales por conjunto de la particion.
+Es lo primero que una guia de reporte pide y no esta.
+
 ## Depositos que sostienen algo y depositos que no
 
 El deposito versiona 122 archivos de resultados y no todos hacen lo mismo.
