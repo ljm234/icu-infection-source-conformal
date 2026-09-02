@@ -19,6 +19,16 @@ options(scipen = 999)
 #
 # El deposito es agregado. Contiene recuentos y proporciones, ninguna fila y
 # ningun identificador.
+#
+# Depositaba ademas un segundo archivo, seleccion_del_sellado.csv, cuya
+# columna unidades contaba las unidades presentes en la matriz y no las de la
+# cohorte, bajo un nombre que hablaba de la seleccion del sellado. Nadie lo
+# publicaba ni lo contrastaba, y un recuento que dice una cosa bajo un nombre
+# que sugiere otra es peor que no tenerlo. Se retiro en lugar de renombrarlo.
+#
+# Que la unidad reservada se elija por nombre y no por posicion, que es lo
+# unico que aquel archivo queria decir, ya lo dice el documento y lo sostiene
+# la comparacion de ordenes que si se deposita aqui.
 
 OUT <- "outputs/fase39"
 ARCHIVO <- "R/19_matriz.R"
@@ -117,15 +127,6 @@ tab <- do.call(rbind, lapply(pares, function(p) {
 cat("\n=== COMPARACION ===\n")
 print(tab, row.names = FALSE)
 
-# Lo que la particion recibe. La unidad reservada se elige por nombre y no por
-# posicion, de modo que es la unica asignacion estable bajo el defecto.
-sell <- if ("unidad" %in% cols) {
-  u <- unique(unlist(lapply(m, function(x) unique(x$unidad))))
-  data.frame(unidades = length(u),
-             seleccion_del_sellado = "por nombre de unidad",
-             estable_bajo_el_defecto = TRUE, row.names = NULL)
-} else NULL
-
 if (any(tab$celdas_que_difieren > 0))
   detener("Alguna version difiere en contenido y no solo en orden. La ",
           "medicion describiria otra cosa.")
@@ -141,8 +142,6 @@ cat("No se deposita lectura alguna sobre sus consecuencias.\n")
 unlink(tmp, recursive = TRUE)
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 write.csv(tab, file.path(OUT, "orden_de_la_matriz.csv"), row.names = FALSE)
-if (!is.null(sell))
-  write.csv(sell, file.path(OUT, "seleccion_del_sellado.csv"), row.names = FALSE)
 
 writeLines(toJSON(list(
   fase = "39",

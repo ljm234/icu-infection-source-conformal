@@ -163,6 +163,8 @@ N_AJU <- sum(post$posterior_a_la_apertura & post$ajusta_un_modelo)
 N_ART <- sum(post$posterior_a_la_apertura & post$escribe_artefacto_del_modelo)
 N_PUB <- sum(post$posterior_a_la_apertura & post$produce_cifra_publicada)
 pot   <- leer("outputs/fase32/potencia_no_usada.csv")
+hue   <- leer("outputs/fase44/recuento.csv")
+nhue  <- function(k) as.integer(hue$depositos[hue$situacion == k])
 
 # Las diferencias que separan la comparacion ampliada del modelo publicado. Se
 # declaran como relacion y no como cifra escrita, porque el recuento ya estuvo
@@ -256,6 +258,7 @@ d15  <- ruta("outputs/fase15/sensibilidad_lactato.csv")
 exc  <- ruta(".gitignore")
 r00  <- ruta("R/00_rutas_reservadas.R")
 r90  <- ruta("R/90_posterioridad.R")
+r93  <- ruta("R/93_huerfanas.R")
 d32p <- ruta("outputs/fase32/potencia_no_usada.csv")
 p41  <- ruta("outputs/fase41/posterioridad.csv")
 
@@ -741,6 +744,36 @@ add(prosa(
 "y por comparacion puntual en otro. La regla que queda es que un criterio",
 "adoptado en cualquier parte rige en todas, y que introducir uno nuevo",
 "obliga a revisar los apartados anteriores."))
+cerrar()
+
+add(prosa("## Depositos que sostienen algo y depositos que no"))
+cerrar()
+
+add(cifra("El deposito versiona %d archivos de resultados y no todos hacen lo",
+          as.integer(sum(hue$depositos))))
+add(prosa(
+"mismo. Saber cual hace que es lo que evita que una cifra viaje sin red. La",
+"clasificacion se deriva y no se enumera: publicado es lo que lee un",
+"generador de prosa, y contrastado lo que figura en la relacion de fuentes",
+"de la verificacion de cifras, leida de su codigo y no copiada aparte."))
+cerrar()
+
+add(cifra("De los %d, %d sostienen una cifra publicada y estan contrastados.",
+          as.integer(sum(hue$depositos)), nhue("publicado y contrastado")))
+add(cifra("Otros %d son comprobaciones de cosas que el documento no publica, y",
+          nhue("contrasta lo que nadie publica")))
+add(cifra("%d no son ni lo uno ni lo otro: material intermedio que el trabajo",
+          nhue("ni publicado ni contrastado")))
+add(prosa(
+"dejo por el camino. Ninguno de esos dos grupos es un defecto; no saber cual",
+"era cual si lo era."))
+cerrar()
+
+add(cifra("El recuento que importa es el cuarto, y esta en %d: ningun archivo",
+          nhue("publicado sin contraste")))
+add(prosa(
+"sostiene una cifra del documento sin que una comprobacion lo alcance."))
+add(cifra("`%s` se detiene si dejara de estarlo.", r93))
 cerrar()
 
 add(prosa("## Como se comprueba este registro"))

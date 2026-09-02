@@ -27,7 +27,7 @@ si lo hiciera.
 Cuantos analisis son posteriores no se enumera. `R/90_posterioridad.R` lo
 deriva del historial, y con tres categorias, porque no comprometen lo mismo.
 
-Posteriores a la fijacion hay 68. De ellos, 51 son ademas posteriores al
+Posteriores a la fijacion hay 69. De ellos, 52 son ademas posteriores al
 2026-08-20, fecha en que la unidad reservada se abrio, que sale del alta de
 `outputs/fase11/cobertura_sellado.csv` y no de una constante escrita. Y 29 de
 esos leen ademas alguna tabla a nivel de paciente. El reparto completo,
@@ -45,7 +45,7 @@ nombran en la comprobacion, se derivan de donde hay un objeto ajustado bajo
 control de versiones, y el procedimiento se detiene si alguna vez alguno
 escribiera en ellas.
 
-Y de esos 51, 28 depositan algo de lo que el documento toma una cifra. Los
+Y de esos 52, 29 depositan algo de lo que el documento toma una cifra. Los
 otros 23 son comprobaciones: se ejecutan, se detienen si algo no cuadra, y no
 publican nada por su cuenta. Que un archivo sea publicado tampoco se enumera:
 lo es si lo lee un generador de prosa, y un generador de prosa es el que
@@ -332,6 +332,23 @@ apartado y no en otro, y a juzgar la cobertura por intervalo en un sitio y por
 comparacion puntual en otro. La regla que queda es que un criterio adoptado en
 cualquier parte rige en todas, y que introducir uno nuevo obliga a revisar los
 apartados anteriores.
+
+## Depositos que sostienen algo y depositos que no
+
+El deposito versiona 122 archivos de resultados y no todos hacen lo mismo.
+Saber cual hace que es lo que evita que una cifra viaje sin red. La
+clasificacion se deriva y no se enumera: publicado es lo que lee un generador
+de prosa, y contrastado lo que figura en la relacion de fuentes de la
+verificacion de cifras, leida de su codigo y no copiada aparte.
+
+De los 122, 61 sostienen una cifra publicada y estan contrastados. Otros 23 son
+comprobaciones de cosas que el documento no publica, y 38 no son ni lo uno ni
+lo otro: material intermedio que el trabajo dejo por el camino. Ninguno de esos
+dos grupos es un defecto; no saber cual era cual si lo era.
+
+El recuento que importa es el cuarto, y esta en 0: ningun archivo sostiene una
+cifra del documento sin que una comprobacion lo alcance. `R/93_huerfanas.R` se
+detiene si dejara de estarlo.
 
 ## Como se comprueba este registro
 

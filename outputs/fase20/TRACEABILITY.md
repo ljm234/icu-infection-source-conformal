@@ -9,7 +9,7 @@ margin never exceeds the largest possible rounding error.
 
 | Claim | Value | Expected | Tolerance | Agrees |
 |---|---|---|---|---|
-| Manifiestos que declaran la guardia | 22.0000 | 22.0000 | 0.50000 | yes |
+| Manifiestos que declaran la guardia | 23.0000 | 23.0000 | 0.50000 | yes |
 | Manifiestos anteriores a la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
 | Rutas reservadas que el lector establece | 14.0000 | 14.0000 | 0.50000 | yes |
 | Rutas reservadas que son un directorio | 1.0000 | 1.0000 | 0.50000 | yes |
@@ -25,20 +25,24 @@ margin never exceeds the largest possible rounding error.
 | Procedimientos que predicen sobre ella | 1.0000 | 1.0000 | 0.50000 | yes |
 | Procedimientos que reutilizan lo almacenado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Procedimientos que la describen sin predecir | 1.0000 | 1.0000 | 0.50000 | yes |
-| Procedimientos contrastados | 90.0000 | 90.0000 | 0.50000 | yes |
-| Posteriores a la fijacion | 68.0000 | 68.0000 | 0.50000 | yes |
-| Posteriores a la apertura | 51.0000 | 51.0000 | 0.50000 | yes |
+| Procedimientos contrastados | 91.0000 | 91.0000 | 0.50000 | yes |
+| Posteriores a la fijacion | 69.0000 | 69.0000 | 0.50000 | yes |
+| Posteriores a la apertura | 52.0000 | 52.0000 | 0.50000 | yes |
 | Ademas leen filas por paciente | 29.0000 | 29.0000 | 0.50000 | yes |
 | Ajustan tras la apertura | 6.0000 | 6.0000 | 0.50000 | yes |
 | Escriben artefacto del modelo despues | 0.0000 | 0.0000 | 0.50000 | yes |
 | Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
-| Producen una cifra publicada | 38.0000 | 38.0000 | 0.50000 | yes |
-| Posteriores que producen cifra publicada | 28.0000 | 28.0000 | 0.50000 | yes |
+| Producen una cifra publicada | 39.0000 | 39.0000 | 0.50000 | yes |
+| Posteriores que producen cifra publicada | 29.0000 | 29.0000 | 0.50000 | yes |
 | Celdas que resisten el analisis adoptado | 3.0000 | 3.0000 | 0.50000 | yes |
 | Analisis depositados y no adoptados | 9.0000 | 9.0000 | 0.50000 | yes |
 | Menor denominador de los empates | 4645.0000 | 4645.0000 | 0.50000 | yes |
 | Mayor denominador de los empates | 63888.0000 | 63888.0000 | 0.50000 | yes |
 | Denominador de la unidad reservada | 4586.0000 | 4586.0000 | 0.50000 | yes |
+| Categorias del perfil de la reservada | 5.0000 | 5.0000 | 0.50000 | yes |
+| En cuantas es extremo | 5.0000 | 5.0000 | 0.50000 | yes |
+| Sedes de la validacion | 5.0000 | 5.0000 | 0.50000 | yes |
+| Depositos publicados sin contraste | 0.0000 | 0.0000 | 0.50000 | yes |
 | Cultivos de la ventana | 65317.0000 | 65317.0000 | 0.50000 | yes |
 | Tipos de muestra retenidos | 7.0000 | 7.0000 | 0.50000 | yes |
 | Positividad minima | 5.5400 | 5.5400 | 0.00500 | yes |
@@ -62,10 +66,10 @@ margin never exceeds the largest possible rounding error.
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 26.0000 | 26.0000 | 0.50000 | yes |
-| Depositos con estado establecido, recuento | 26.0000 | 26.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 27.0000 | 27.0000 | 0.50000 | yes |
+| Depositos con estado establecido, recuento | 27.0000 | 27.0000 | 0.50000 | yes |
 | Depositos escritos sin la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
-| Depositos con la guardia declarada | 22.0000 | 22.0000 | 0.50000 | yes |
+| Depositos con la guardia declarada | 23.0000 | 23.0000 | 0.50000 | yes |
 | Depositos con la guardia derivada | 4.0000 | 4.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
@@ -413,6 +417,8 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase40/contactos_con_el_sellado.csv`
 - `outputs/fase41/posterioridad.csv`
 - `outputs/fase42/distancia_de_la_reservada.csv`
+- `outputs/fase42/resumen.csv`
+- `outputs/fase44/recuento.csv`
 - `outputs/fase43/resumen_positividad.csv`
 - `outputs/fase42/extremos_por_categoria.csv`
 - `outputs/fase41/fechas.csv`
