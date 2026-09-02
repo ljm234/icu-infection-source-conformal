@@ -1,5 +1,5 @@
 "afirmacion","valor","esperado","tolerancia","concuerda"
-"Manifiestos que declaran la guardia",21,21,0.5,TRUE
+"Manifiestos que declaran la guardia",22,22,0.5,TRUE
 "Manifiestos anteriores a la guardia",4,4,0.5,TRUE
 "Rutas reservadas que el lector establece",14,14,0.5,TRUE
 "Rutas reservadas que son un directorio",1,1,0.5,TRUE
@@ -15,17 +15,25 @@
 "Procedimientos que predicen sobre ella",1,1,0.5,TRUE
 "Procedimientos que reutilizan lo almacenado",3,3,0.5,TRUE
 "Procedimientos que la describen sin predecir",1,1,0.5,TRUE
-"Procedimientos contrastados",89,89,0.5,TRUE
-"Posteriores a la fijacion",67,67,0.5,TRUE
-"Posteriores a la apertura",50,50,0.5,TRUE
+"Procedimientos contrastados",90,90,0.5,TRUE
+"Posteriores a la fijacion",68,68,0.5,TRUE
+"Posteriores a la apertura",51,51,0.5,TRUE
 "Ademas leen filas por paciente",29,29,0.5,TRUE
 "Ajustan tras la apertura",6,6,0.5,TRUE
 "Escriben artefacto del modelo despues",0,0,0.5,TRUE
 "Procedimientos sin alta registrada",0,0,0.5,TRUE
-"Producen una cifra publicada",37,37,0.5,TRUE
-"Posteriores que producen cifra publicada",27,27,0.5,TRUE
+"Producen una cifra publicada",38,38,0.5,TRUE
+"Posteriores que producen cifra publicada",28,28,0.5,TRUE
 "Celdas que resisten el analisis adoptado",3,3,0.5,TRUE
 "Analisis depositados y no adoptados",9,9,0.5,TRUE
+"Cultivos de la ventana",65317,65317,0.5,TRUE
+"Tipos de muestra retenidos",7,7,0.5,TRUE
+"Positividad minima",5.54,5.54,0.005,TRUE
+"Positividad maxima",55.54,55.54,0.005,TRUE
+"Razon entre los extremos",10.03,10.03,0.005,TRUE
+"Celdas en que ambos instrumentos coinciden",20,20,0.5,TRUE
+"Celdas que conservan la contencion",24,24,0.5,TRUE
+"Celdas que contienen el nominal",8,8,0.5,TRUE
 "Distancia de la unidad reservada",0.402,0.402,5e-04,TRUE
 "Mayor distancia de las demas",0.22,0.22,5e-04,TRUE
 "Veces la siguiente",1.83,1.83,0.005,TRUE
@@ -41,10 +49,10 @@
 "Conjunto apartado, lo leen",0,0,0.5,TRUE
 "Depositos de consulta sin orden total",0,0,0.5,TRUE
 "Depositos de consulta contrastados",13,13,0.5,TRUE
-"Depositos con estado de guardia establecido",25,25,0.5,TRUE
-"Depositos con estado establecido, recuento",25,25,0.5,TRUE
+"Depositos con estado de guardia establecido",26,26,0.5,TRUE
+"Depositos con estado establecido, recuento",26,26,0.5,TRUE
 "Depositos escritos sin la guardia",4,4,0.5,TRUE
-"Depositos con la guardia declarada",21,21,0.5,TRUE
+"Depositos con la guardia declarada",22,22,0.5,TRUE
 "Depositos con la guardia derivada",4,4,0.5,TRUE
 "Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
 "Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE

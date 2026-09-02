@@ -1,0 +1,14 @@
+{
+  "fase": "43",
+  "ejecutado_en": "2026-09-01T18:52:47-0600",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "guarda_de_emparejamiento_parcial": true,
+  "proposito": "acotar la variacion de la positividad entre tipos de muestra con un denominador declarado, para que la afirmacion del documento descanse en un archivo",
+  "fuente": "outputs/tipos_muestra_ventana6h.csv",
+  "regla": "entran los tipos que por si solos reunen al menos el uno por ciento de los cultivos; sobre la tabla entera la proporcion va del cero al cien por cien entre tipos de un punado de cultivos, y no significa nada",
+  "denominador": "los cultivos de la ventana de seis horas, no la cohorte",
+  "cultivos": 65317,
+  "tipos_en_la_fuente": 58,
+  "tipos_retenidos": 7,
+  "razon_entre_extremos": 10.03
+}

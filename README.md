@@ -272,9 +272,14 @@ categories.
 Those intervals are conditional on the conformal threshold, which is itself
 estimated from a finite calibration set. Incorporating that uncertainty
 would widen them, as it does in the transportability section below, where
-the thresholds are re-estimated within each fold. It cannot change the
-conclusion here: an interval that already contains a point still contains
-it once widened.
+the thresholds are re-estimated within each fold. Widening does not on its
+own preserve a containment, since a wider interval can also be shifted, and
+one cell of the sealed unit is shifted in exactly that way. What is checked
+is the property this conclusion needs:
+across the 24 cells where both intervals are computed, the 8 in
+which the interval conditioned on the threshold contains the nominal level
+are the same 8 in which the interval that recognises the
+calibration contains it.
 
 ### Calibration
 
@@ -417,15 +422,15 @@ Under the test that treats the threshold as known, 4 cells would
 survive under Holm's correction at either level. The intervals above
 incorporate the calibration uncertainty; conditioning on the threshold
 instead narrows
-them by between 10 and 34 percent. All the cells of this
+them by between 9.69 and 34.33 percent. All the cells of this
 section and of the sealed-unit section below are in
 `outputs/fase26/intervalos_cobertura.csv`.
 
 The interval and the test are anchored slightly differently. The interval
 is inverted against the nominal level exactly; the test is taken against
 the mean coverage the procedure targets, which the ceiling in the conformal
-quantile places marginally above nominal. Both are reported, and here they
-agree on every cell.
+quantile places marginally above nominal. Both are reported, and the
+deposit records where they coincide: on all 20 cells of the family.
 
 ### The sealed unit
 
@@ -483,8 +488,15 @@ The specification names are Spanish: demografia is demographics, tres
 marcadores three markers, lineal sin unidad a linear model without the unit
 and modelo completo the full model.
 
-Gradient boosted trees on the same predictors gain 0.0002 over the
-penalized linear model. The ceiling belongs to the information available,
+Gradient boosted trees on the same predictors gain 0.0002 in mean
+area over the penalized linear model, averaged over the 3
+minority classes. They are not uniformly better, and the average hides
+the spread: they improve on
+1 of the 4 classes and lose on the other 3, the largest
+loss being -0.0096 and the single gain 0.0153. The per-class
+figures are in `outputs/fase16/gbm_comparacion.csv`.
+
+The ceiling belongs to the information available,
 not to the functional form.
 
 ### The model reads clinical judgement
@@ -684,9 +696,17 @@ no figure reported here is affected.
 
 ## Limitations
 
-Etiological classification depends on which tests were ordered. Culture
-positivity varies by an order of magnitude across specimen types, reflecting
-that confirmation depends on prior clinical suspicion.
+Etiological classification depends on which tests were ordered, and
+culture positivity varies widely across specimen types. The variation is
+stated over a declared denominator rather than over the source table,
+where types with a handful of cultures run from none positive to all of
+them:
+across the 7 types that each account for at least 1 percent of
+the 65,317 cultures in the window, and which together cover 93.62
+percent of them, positivity runs from 5.54 to 55.54 percent, a
+ratio of 10.03. The retained types are in
+`outputs/fase43/positividad_retenidos.csv`, and confirmation depends on
+prior clinical suspicion.
 
 Four quantities measured here carry the practice of the site rather than the
 state of the patient. Whether lactate was ordered outweighs its value. A

@@ -403,10 +403,33 @@ tab$ic_beta_superior <- ib[, 2]
 if (any(tab$ic_beta_inferior > tab$cobertura + 1e-6, na.rm = TRUE) ||
     any(tab$ic_beta_superior < tab$cobertura - 1e-6, na.rm = TRUE))
   detener("Algun intervalo no contiene su propia estimacion puntual.")
-if (any((tab$ic_beta_superior - tab$ic_beta_inferior) <
-        (tab$ic_superior - tab$ic_inferior) - 1e-9, na.rm = TRUE))
-  detener("El intervalo que reconoce la calibracion resulta mas estrecho ",
-          "que el condicionado al umbral.")
+# Anchura y contencion no son lo mismo, y el documento afirma la segunda: que
+# reconocer la calibracion no le quita a un intervalo el nominal si ya lo
+# contenia. Comprobar solo la anchura no sostiene esa frase, porque un
+# intervalo mas ancho pero desplazado si podria quitarselo.
+#
+# Tampoco lo sostiene el anidamiento, que ademas es falso aqui: en la celda
+# de una clase minoritaria de la unidad reservada el intervalo que reconoce
+# la calibracion queda por debajo del otro en su extremo superior, por menos
+# de una diezmilesima. Es mas ancho y esta desplazado.
+#
+# Lo que si se comprueba es exactamente lo que la frase necesita, ni mas ni
+# menos: alli donde el intervalo condicionado al umbral contiene el nominal,
+# el que reconoce la calibracion tambien lo contiene.
+tab$binomial_contiene_el_nominal <-
+  tab$ic_inferior <= NOMINAL & tab$ic_superior >= NOMINAL
+tab$beta_contiene_el_nominal <-
+  tab$ic_beta_inferior <= NOMINAL & tab$ic_beta_superior >= NOMINAL
+tab$conserva_la_contencion <-
+  !tab$binomial_contiene_el_nominal | tab$beta_contiene_el_nominal
+if (!all(tab$conserva_la_contencion, na.rm = TRUE)) {
+  m <- tab[!tab$conserva_la_contencion, ]
+  cat("\nCeldas que pierden la contencion al reconocer la calibracion:\n")
+  print(m[, c("seccion", "sede", "clase", "ic_inferior", "ic_superior",
+              "ic_beta_inferior", "ic_beta_superior")], row.names = FALSE)
+  detener("Reconocer la calibracion le quita el nominal a un intervalo que ",
+          "ya lo contenia. El documento afirma lo contrario.")
+}
 
 tab$beta_por_debajo <- tab$ic_beta_superior < NOMINAL
 tab$beta_por_encima <- tab$ic_beta_inferior > NOMINAL
@@ -430,6 +453,15 @@ if (any(tab$media_nula[en_f] < NOMINAL - 1e-12))
           "cuantil no se esta aplicando.")
 familia <- tab$seccion == "dejando una sede fuera"
 tab$en_familia <- familia
+
+# Los dos instrumentos no estan anclados igual: el intervalo se invierte
+# contra el nominal exactamente, y el contraste se toma contra la media que
+# el procedimiento persigue, que el techo del cuantil situa algo por encima.
+# Que coincidan celda a celda es una afirmacion del documento, y hasta aqui
+# no habia columna que la sostuviera.
+tab$contraste_por_debajo <- tab$p_beta < (1 - CONFIANZA) / 2
+tab$concuerdan_intervalo_y_contraste <-
+  tab$beta_por_debajo == tab$contraste_por_debajo
 m <- sum(familia)
 
 tab$p_bonferroni <- NA_real_
@@ -666,6 +698,15 @@ partes <- strsplit(sub("^resiste_", "", ADOPTADO), "_")[[1]]
 FAMILIA <- if ("beta" %in% partes) "beta-binomial" else "binomial"
 CORREC  <- partes[length(partes) - 1]
 NIVEL   <- as.numeric(partes[length(partes)]) / 1000
+
+cat("\n=== INTERVALO Y CONTRASTE ===\n")
+cat("Celdas de la familia:", sum(tab$en_familia), "\n")
+cat("En que ambos instrumentos coinciden:",
+    sum(tab$en_familia & tab$concuerdan_intervalo_y_contraste), "\n")
+cat("Celdas en que el condicionado al umbral contiene el nominal:",
+    sum(tab$binomial_contiene_el_nominal), "de", nrow(tab), "\n")
+cat("De ellas, las que lo conservan al reconocer la calibracion:",
+    sum(tab$binomial_contiene_el_nominal & tab$beta_contiene_el_nominal), "\n")
 
 cat("\n=== ANALISIS QUE GOBIERNA LA LECTURA PUBLICADA ===\n")
 cat("Adoptado:", ADOPTADO, "\n")

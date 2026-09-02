@@ -153,6 +153,7 @@ FUENTES <- list(
   "Contactos con el sellado"                 = "outputs/fase40/contactos_con_el_sellado.csv",
   "Posterioridad de los analisis"            = "outputs/fase41/posterioridad.csv",
   "Distancia de la reservada"                = "outputs/fase42/distancia_de_la_reservada.csv",
+  "Positividad por muestra"                  = "outputs/fase43/resumen_positividad.csv",
   "Extremos por categoria"                   = "outputs/fase42/extremos_por_categoria.csv",
   "Fechas de la posterioridad"               = "outputs/fase41/fechas.csv",
   "Conjunto apartado"                        = "outputs/fase40/conjunto_apartado.csv",
@@ -307,7 +308,7 @@ reg <- list()
 # habria escrito sin declararlo, que es la via por la que la guardia se
 # eludiria sin dejar rastro.
 reg[[length(reg)+1]] <- comprobar("Manifiestos que declaran la guardia",
-  N_MF_DECLARAN, 21, 0.5)
+  N_MF_DECLARAN, 22, 0.5)
 reg[[length(reg)+1]] <- comprobar("Manifiestos anteriores a la guardia",
   N_MF_SIN, 4, 0.5)
 reg[[length(reg)+1]] <- comprobar("Rutas reservadas que el lector establece",
@@ -363,11 +364,11 @@ pos <- leer(FUENTES[["Posterioridad de los analisis"]])
 if (!is.null(pos)) {
   TER <- "posterior a la apertura y lee filas por paciente"
   reg[[length(reg)+1]] <- comprobar("Procedimientos contrastados",
-    nrow(pos), 89, 0.5)
+    nrow(pos), 90, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores a la fijacion",
-    sum(pos$posterior_a_la_fijacion), 67, 0.5)
+    sum(pos$posterior_a_la_fijacion), 68, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores a la apertura",
-    sum(pos$posterior_a_la_apertura), 50, 0.5)
+    sum(pos$posterior_a_la_apertura), 51, 0.5)
   reg[[length(reg)+1]] <- comprobar("Ademas leen filas por paciente",
     sum(pos$categoria == TER), 29, 0.5)
   reg[[length(reg)+1]] <- comprobar("Ajustan tras la apertura",
@@ -381,15 +382,40 @@ if (!is.null(pos)) {
   reg[[length(reg)+1]] <- comprobar("Procedimientos sin alta registrada",
     sum(!pos$registrado), 0, 0.5)
   reg[[length(reg)+1]] <- comprobar("Producen una cifra publicada",
-    sum(pos$produce_cifra_publicada), 37, 0.5)
+    sum(pos$produce_cifra_publicada), 38, 0.5)
   reg[[length(reg)+1]] <- comprobar("Posteriores que producen cifra publicada",
-    sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 27, 0.5)
+    sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 28, 0.5)
 }
 
 reg[[length(reg)+1]] <- comprobar("Celdas que resisten el analisis adoptado",
   sum(iv26$en_familia & iv26[[ADOPT26]]), 3, 0.5)
 reg[[length(reg)+1]] <- comprobar("Analisis depositados y no adoptados",
   length(setdiff(grep("^resiste_", names(iv26), value = TRUE), ADOPT26)), 9, 0.5)
+
+posm <- leer(FUENTES[["Positividad por muestra"]])
+if (!is.null(posm)) {
+  reg[[length(reg)+1]] <- comprobar("Cultivos de la ventana",
+    posm$cultivos[1], 65317, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Tipos de muestra retenidos",
+    posm$tipos_retenidos[1], 7, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Positividad minima",
+    posm$positividad_minima_pct[1], 5.54, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Positividad maxima",
+    posm$positividad_maxima_pct[1], 55.54, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Razon entre los extremos",
+    posm$razon_entre_extremos[1], 10.03, tolerancia(2))
+}
+
+# Lo que sostiene las dos frases sobre intervalos que antes no tenian columna.
+if (exists("iv26")) {
+  reg[[length(reg)+1]] <- comprobar("Celdas en que ambos instrumentos coinciden",
+    sum(iv26$en_familia & iv26$concuerdan_intervalo_y_contraste),
+    sum(iv26$en_familia), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas que conservan la contencion",
+    sum(iv26$conserva_la_contencion), nrow(iv26), 0.5)
+  reg[[length(reg)+1]] <- comprobar("Celdas que contienen el nominal",
+    sum(iv26$binomial_contiene_el_nominal), 8, 0.5)
+}
 
 dsel <- leer(FUENTES[["Distancia de la reservada"]])
 xsel <- leer(FUENTES[["Extremos por categoria"]])
@@ -449,7 +475,7 @@ if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 25, 0.5)
+    nrow(gpd), 26, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
     sum(!gpd$guardia_activa), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",

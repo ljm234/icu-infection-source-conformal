@@ -49,6 +49,7 @@
 "89_contactos_con_el_sellado.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
 "90_posterioridad.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
 "91_perfil_de_la_sellada.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"92_positividad_por_muestra.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
 "24_diagnostico_logs.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
 "26_diagnostico_unidad.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
 "27_imputacion_final.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE

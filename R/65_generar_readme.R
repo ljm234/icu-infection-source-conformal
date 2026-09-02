@@ -39,6 +39,8 @@ EXENTAS <- c("MIMIC-IV version 3.1", "R 4.6.1", "seed is 20260818",
              "outputs/fase32/potencia_no_usada.csv",
              "outputs/fase42/distancia_de_la_reservada.csv",
              "outputs/fase42/extremos_por_categoria.csv",
+             "outputs/fase43/positividad_retenidos.csv",
+             "outputs/fase16/gbm_comparacion.csv",
              "~/mimic-data/physionet.org/files/mimiciv/3.1",
              "outputs/fase20/TRACEABILITY.md",
              "outputs/fase20/REPRODUCIBILITY.md",
@@ -121,6 +123,7 @@ casc  <- leer("outputs/fase32/cascada_casos_completos.csv")
 cgrp  <- leer("outputs/fase32/completos_por_grupo.csv")
 cmpl  <- leer("outputs/fase36/completitud_por_conjunto.csv")
 pot   <- leer("outputs/fase32/potencia_no_usada.csv")
+posm  <- leer("outputs/fase43/resumen_positividad.csv")
 dsel  <- leer("outputs/fase42/distancia_de_la_reservada.csv")
 xsel  <- leer("outputs/fase42/extremos_por_categoria.csv")
 rsel  <- leer("outputs/fase42/resumen.csv")
@@ -259,6 +262,18 @@ anch <- function(f) (iv$ic_superior[f] - iv$ic_inferior[f]) /
                     (iv$ic_beta_superior[f] - iv$ic_beta_inferior[f])
 estrecha_min <- 100 * (1 - max(anch(bajo_iv)))
 estrecha_max <- 100 * (1 - min(anch(bajo_iv)))
+
+# Lo que sostiene la frase sobre la contencion, y lo que sostiene la de la
+# concordancia. Antes ninguna de las dos tenia columna detras.
+n_cont_bin <- sum(iv$binomial_contiene_el_nominal)
+n_cont_bet <- sum(iv$binomial_contiene_el_nominal & iv$beta_contiene_el_nominal)
+n_conserva <- sum(iv$conserva_la_contencion)
+n_acuerdo  <- sum(iv$en_familia & iv$concuerdan_intervalo_y_contraste)
+if (n_conserva != nrow(iv)) {
+  cat("Reconocer la calibracion quita el nominal a algun intervalo que ya\n")
+  cat("lo contenia. El documento no puede afirmar lo contrario.\n")
+  quit(status = 1)
+}
 
 # Las sedes se nombran por su sigla. El nombre completo no cabe en la tabla y
 # truncarlo parte palabras por la mitad.
@@ -690,9 +705,18 @@ add(prosa(
 "Those intervals are conditional on the conformal threshold, which is itself",
 "estimated from a finite calibration set. Incorporating that uncertainty",
 "would widen them, as it does in the transportability section below, where",
-"the thresholds are re-estimated within each fold. It cannot change the",
-"conclusion here: an interval that already contains a point still contains",
-"it once widened.",
+"the thresholds are re-estimated within each fold. Widening does not on its",
+"own preserve a containment, since a wider interval can also be shifted, and",
+"one cell of the sealed unit is shifted in exactly that way. What is checked",
+"is the property this conclusion needs:"))
+add(cifra("across the %d cells where both intervals are computed, the %d in",
+          as.integer(nrow(iv)), as.integer(n_cont_bin)))
+add(prosa(
+"which the interval conditioned on the threshold contains the nominal level"))
+add(cifra("are the same %d in which the interval that recognises the",
+          as.integer(n_cont_bet)))
+add(prosa(
+"calibration contains it.",
 "",
 "### Calibration",
 "",
@@ -918,7 +942,7 @@ add(prosa(
 "survive under Holm's correction at either level. The intervals above",
 "incorporate the calibration uncertainty; conditioning on the threshold",
 "instead narrows"))
-add(cifra("them by between %.0f and %.0f percent. All the cells of this",
+add(cifra("them by between %.2f and %.2f percent. All the cells of this",
           estrecha_min, estrecha_max))
 add(prosa(
 "section and of the sealed-unit section below are in",
@@ -927,8 +951,10 @@ add(prosa(
 "The interval and the test are anchored slightly differently. The interval",
 "is inverted against the nominal level exactly; the test is taken against",
 "the mean coverage the procedure targets, which the ceiling in the conformal",
-"quantile places marginally above nominal. Both are reported, and here they",
-"agree on every cell.",
+"quantile places marginally above nominal. Both are reported, and the"))
+add(cifra("deposit records where they coincide: on all %d cells of the family.",
+          as.integer(n_acuerdo)))
+add(prosa(
 "",
 "### The sealed unit",
 "",
@@ -1011,12 +1037,23 @@ add(prosa(
 "marcadores three markers, lineal sin unidad a linear model without the unit",
 "and modelo completo the full model.",
 ""))
-add(cifra("Gradient boosted trees on the same predictors gain %.4f over the",
-          mean(gbm$auc_gbm[gbm$clase != "sin_crecimiento"]) -
-          mean(gbm$auc_lineal[gbm$clase != "sin_crecimiento"])))
-
+gmin <- gbm$clase != "sin_crecimiento"
+add(cifra("Gradient boosted trees on the same predictors gain %.4f in mean",
+          mean(gbm$auc_gbm[gmin]) - mean(gbm$auc_lineal[gmin])))
+add(cifra("area over the penalized linear model, averaged over the %d",
+          as.integer(sum(gmin))))
 add(prosa(
-"penalized linear model. The ceiling belongs to the information available,",
+"minority classes. They are not uniformly better, and the average hides",
+"the spread: they improve on"))
+add(cifra("%d of the %d classes and lose on the other %d, the largest",
+          as.integer(sum(gbm$diferencia > 0)), as.integer(nrow(gbm)),
+          as.integer(sum(gbm$diferencia <= 0))))
+add(cifra("loss being %.4f and the single gain %.4f. The per-class",
+          min(gbm$diferencia), max(gbm$diferencia)))
+add(prosa(
+"figures are in `outputs/fase16/gbm_comparacion.csv`.",
+"",
+"The ceiling belongs to the information available,",
 "not to the functional form.",
 "",
 "### The model reads clinical judgement",
@@ -1333,9 +1370,26 @@ add(prosa(
 "",
 "## Limitations",
 "",
-"Etiological classification depends on which tests were ordered. Culture",
-"positivity varies by an order of magnitude across specimen types, reflecting",
-"that confirmation depends on prior clinical suspicion.",
+"Etiological classification depends on which tests were ordered, and",
+"culture positivity varies widely across specimen types. The variation is",
+"stated over a declared denominator rather than over the source table,",
+"where types with a handful of cultures run from none positive to all of",
+"them:"))
+add(cifra("across the %d types that each account for at least %d percent of",
+          as.integer(posm$tipos_retenidos[1]),
+          as.integer(posm$peso_minimo_pct[1])))
+add(cifra("the %s cultures in the window, and which together cover %s",
+          format(as.integer(posm$cultivos[1]), big.mark = ","),
+          format(posm$cultivos_retenidos_pct[1], nsmall = 2)))
+add(cifra("percent of them, positivity runs from %s to %s percent, a",
+          format(posm$positividad_minima_pct[1], nsmall = 2),
+          format(posm$positividad_maxima_pct[1], nsmall = 2)))
+add(cifra("ratio of %s. The retained types are in",
+          format(posm$razon_entre_extremos[1], nsmall = 2)))
+add(prosa(
+"`outputs/fase43/positividad_retenidos.csv`, and confirmation depends on",
+"prior clinical suspicion."))
+add(prosa(
 "",
 "Four quantities measured here carry the practice of the site rather than the",
 "state of the patient. Whether lactate was ordered outweighs its value. A",
