@@ -68,6 +68,7 @@ margin never exceeds the largest possible rounding error.
 | Prueba, contienen el nominal (binomial) | 4.0000 | 4.0000 | 0.50000 | yes |
 | Prueba, contienen el nominal (beta) | 4.0000 | 4.0000 | 0.50000 | yes |
 | Celdas contrastadas en el deposito | 28.0000 | 28.0000 | 0.50000 | yes |
+| Celdas en que reconocer no estrecha | 28.0000 | 28.0000 | 0.50000 | yes |
 | Distancia de la unidad reservada | 0.4020 | 0.4020 | 0.00050 | yes |
 | Mayor distancia de las demas | 0.2200 | 0.2200 | 0.00050 | yes |
 | Veces la siguiente | 1.8300 | 1.8300 | 0.00500 | yes |

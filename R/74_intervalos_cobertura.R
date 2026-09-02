@@ -471,6 +471,24 @@ if (any(tab$ic_beta_inferior > tab$cobertura + 1e-6, na.rm = TRUE) ||
 # Lo que si se comprueba es exactamente lo que la frase necesita, ni mas ni
 # menos: alli donde el intervalo condicionado al umbral contiene el nominal,
 # el que reconoce la calibracion tambien lo contiene.
+# Anchura. El documento afirma que reconocer la calibracion ENSANCHA los
+# intervalos, y esa mitad tiene su propia comprobacion. Se retiro al introducir
+# la de contencion, como si una sustituyera a la otra, y no: la contencion dice
+# que no se pierde el nominal, la anchura dice que el intervalo no se estrecha.
+# Son dos afirmaciones y el documento hace las dos.
+tab$beta_no_mas_estrecho <-
+  (tab$ic_beta_superior - tab$ic_beta_inferior) >=
+  (tab$ic_superior - tab$ic_inferior) - 1e-9
+if (!all(tab$beta_no_mas_estrecho, na.rm = TRUE)) {
+  m <- tab[!tab$beta_no_mas_estrecho, ]
+  cat("\nCeldas en que el intervalo que reconoce la calibracion es mas",
+      "estrecho:\n")
+  print(m[, c("seccion", "sede", "clase", "ic_inferior", "ic_superior",
+              "ic_beta_inferior", "ic_beta_superior")], row.names = FALSE)
+  detener("El intervalo que reconoce la calibracion resulta mas estrecho que ",
+          "el condicionado al umbral. El documento afirma lo contrario.")
+}
+
 tab$binomial_contiene_el_nominal <-
   tab$ic_inferior <= NOMINAL & tab$ic_superior >= NOMINAL
 tab$beta_contiene_el_nominal <-
@@ -758,6 +776,8 @@ cat("\n=== INTERVALO Y CONTRASTE ===\n")
 cat("Celdas de la familia:", sum(tab$en_familia), "\n")
 cat("En que ambos instrumentos coinciden:",
     sum(tab$en_familia & tab$concuerdan_intervalo_y_contraste), "\n")
+cat("Celdas en que reconocer la calibracion no estrecha:",
+    sum(tab$beta_no_mas_estrecho), "de", nrow(tab), "\n")
 cat("Celdas en que el condicionado al umbral contiene el nominal:",
     sum(tab$binomial_contiene_el_nominal), "de", nrow(tab), "\n")
 cat("De ellas, las que lo conservan al reconocer la calibracion:",

@@ -525,6 +525,10 @@ if (exists("iv26")) {
     sum(p26$beta_contiene_el_nominal), 4, 0.5)
   reg[[length(reg)+1]] <- comprobar("Celdas contrastadas en el deposito",
     nrow(iv26), 28, 0.5)
+  # Las dos mitades de la afirmacion, cada una con su comprobacion: que
+  # reconocer la calibracion no estrecha, y que no quita el nominal.
+  reg[[length(reg)+1]] <- comprobar("Celdas en que reconocer no estrecha",
+    sum(iv26$beta_no_mas_estrecho), nrow(iv26), 0.5)
 }
 
 dsel <- leer(FUENTES[["Distancia de la reservada"]])
