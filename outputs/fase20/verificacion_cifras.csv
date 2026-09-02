@@ -69,11 +69,14 @@
 "Conjunto apartado, lo leen",0,0,0.5,TRUE
 "Depositos de consulta sin orden total",0,0,0.5,TRUE
 "Depositos de consulta contrastados",13,13,0.5,TRUE
-"Depositos con estado de guardia establecido",27,27,0.5,TRUE
-"Depositos con estado establecido, recuento",27,27,0.5,TRUE
-"Depositos escritos sin la guardia",4,4,0.5,TRUE
-"Depositos con la guardia declarada",23,23,0.5,TRUE
-"Depositos con la guardia derivada",4,4,0.5,TRUE
+"Depositos con estado de guardia establecido",42,42,0.5,TRUE
+"Fases con deposito versionado",42,42,0.5,TRUE
+"Fases escritas sin la guardia",19,19,0.5,TRUE
+"Fases con la guardia declarada",23,23,0.5,TRUE
+"Fases derivadas de la marca de ejecucion",4,4,0.5,TRUE
+"Fases sin manifiesto",15,15,0.5,TRUE
+"Fases sin manifiesto y sin estado",0,0,0.5,TRUE
+"Fases sin manifiesto rehechas despues",6,6,0.5,TRUE
 "Ganancia de lambda minimo en minoritarias",0.0394666666666666,0.0395,1e-04,TRUE
 "Cobertura conforme, minimo entre categorias",0.8679,0.8679,5e-05,TRUE
 "Cobertura conforme, maximo entre categorias",0.9044,0.9044,5e-05,TRUE

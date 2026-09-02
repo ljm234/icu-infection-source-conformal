@@ -61,10 +61,47 @@ cat("\n=== LA GUARDIA ===\n")
 cat("Introducida en", SHA_GUARDIA, "el", F_GUARDIA, "\n")
 cat("Commits que tocan la opcion en el perfil:", length(hist), "\n")
 
-mfs <- ejecutar("git ls-files 'outputs/*/manifiesto.json'")
-if (length(mfs) == 0) detener("No hay manifiestos versionados.")
+# Se enumeran las FASES con deposito versionado, no los manifiestos. Enumerar
+# manifiestos dejaba fuera a toda fase que no lo tuviera, que son quince de
+# cuarenta y dos, y entre ellas la validacion por sedes y la evaluacion de la
+# unidad reservada. Una guardia que no puede dispararse donde no hay
+# manifiesto no cubre lo que su proposito decia cubrir.
+versionados <- ejecutar("git ls-files 'outputs/*/*'")
+fases <- sort(unique(dirname(versionados)))
+if (length(fases) == 0) detener("No hay fases con deposito versionado.")
 
-filas <- do.call(rbind, lapply(mfs, function(m) {
+fecha_a_instante <- function(x)
+  as.numeric(as.POSIXct(paste(x, "23:59:59"), tz = "UTC"))
+
+filas <- do.call(rbind, lapply(fases, function(f) {
+  m <- file.path(f, "manifiesto.json")
+  # Primer y ultimo commit de cualquiera de sus archivos. El primero acota
+  # cuando el deposito entro; el ultimo, cuando cambio por ultima vez. Se
+  # consignan los dos porque decir solo el primero ocultaria que cinco fases
+  # se han reescrito despues de existir la guardia.
+  ca <- ejecutar(sprintf("git log --format=%%ad --date=short --reverse -- %s",
+                         shQuote(f)))
+  cu <- ejecutar(sprintf("git log -1 --format=%%ad --date=short -- %s",
+                         shQuote(f)))
+  if (length(ca) == 0) detener("El historial no registra la fase ", f)
+  primero <- ca[1]; ultimo <- cu[1]
+  if (!file.exists(m)) {
+    # Sin manifiesto no hay marca de ejecucion, de modo que se deriva del
+    # historial: un deposito cuyo primer commit es anterior a la guardia se
+    # escribio sin ella por construccion. Es conservador para las fases que
+    # despues se rehicieron, y esa es la direccion segura.
+    ant <- fecha_a_instante(primero) < T_GUARDIA
+    return(data.frame(
+      fase = basename(f), manifiesto = "", ejecutado_en = "",
+      primer_commit = primero, ultimo_commit = ultimo,
+      rehecha_tras_la_guardia = fecha_a_instante(ultimo) >= T_GUARDIA,
+      declara_la_guardia = NA,
+      anterior_a_la_guardia = ant,
+      guardia_activa = if (ant) FALSE else NA,
+      origen = if (ant) "derivado del historial, sin manifiesto"
+               else "indeterminado",
+      row.names = NULL))
+  }
   d <- fromJSON(m)
   if (is.null(d$ejecutado_en))
     detener("El manifiesto ", m, " no consigna marca de ejecucion, de modo ",
@@ -78,43 +115,51 @@ filas <- do.call(rbind, lapply(mfs, function(m) {
   decl <- d[[CAMPO]]
   anterior <- t < T_GUARDIA
   data.frame(
+    fase = basename(f),
     manifiesto = m,
-    fase = if (is.null(d$fase)) NA_character_ else as.character(d$fase),
     ejecutado_en = d$ejecutado_en,
+    primer_commit = primero, ultimo_commit = ultimo,
+    rehecha_tras_la_guardia = fecha_a_instante(ultimo) >= T_GUARDIA,
     declara_la_guardia = if (is.null(decl)) NA else isTRUE(decl),
     anterior_a_la_guardia = anterior,
     guardia_activa = if (!is.null(decl)) isTRUE(decl)
                      else if (anterior) FALSE else NA,
     origen = if (!is.null(decl)) "declarado en el manifiesto"
-             else if (anterior) "derivado del historial"
+             else if (anterior) "derivado de la marca de ejecucion"
              else "indeterminado",
     row.names = NULL)
 }))
-filas <- filas[order(filas$origen, filas$manifiesto), ]
+filas <- filas[order(filas$origen, filas$fase), ]
 
-cat("\n=== ESTADO POR DEPOSITO ===\n")
-print(filas[, c("fase", "ejecutado_en", "guardia_activa", "origen")],
-      row.names = FALSE)
+cat("\n=== ESTADO POR FASE ===\n")
+print(filas[, c("fase", "primer_commit", "ultimo_commit", "guardia_activa",
+                "origen")], row.names = FALSE)
 
-# Un manifiesto sin campo y posterior a la guardia no admite derivacion: seria
-# un deposito nuevo escrito sin declararlo, que es justo la via por la que la
-# guardia se eludiria sin dejar rastro.
+# Queda indeterminada una fase posterior a la guardia que no la declara: con
+# manifiesto, seria un deposito nuevo escrito sin declararlo; sin manifiesto,
+# una fase entera nacida despues de la guardia y sin nada que la atestigue.
+# Las dos son la via por la que la guardia se eludiria sin dejar rastro.
 ind <- filas$origen == "indeterminado"
 if (any(ind)) {
-  cat("\nManifiestos posteriores a la guardia que no la declaran:\n")
-  for (m in filas$manifiesto[ind]) cat("  ", m, "\n")
-  detener("Un deposito posterior a la guardia no declara su estado.")
+  cat("\nFases posteriores a la guardia cuyo estado no consta:\n")
+  for (f in filas$fase[ind]) cat("  ", f, "\n")
+  detener("Una fase posterior a la guardia no declara su estado.")
 }
 
 n_decl <- sum(filas$origen == "declarado en el manifiesto")
-n_der  <- sum(filas$origen == "derivado del historial")
+n_marca <- sum(filas$origen == "derivado de la marca de ejecucion")
+n_hist <- sum(filas$origen == "derivado del historial, sin manifiesto")
 n_sin  <- sum(!filas$guardia_activa)
+n_sinm <- sum(filas$manifiesto == "")
+n_rehe <- sum(filas$manifiesto == "" & filas$rehecha_tras_la_guardia)
 
 cat("\n=== RECUENTO ===\n")
-cat("Manifiestos versionados:", nrow(filas), "\n")
-cat("Con la guardia declarada:", n_decl, "\n")
-cat("Con la guardia derivada del historial:", n_der, "\n")
-cat("Escritos sin la guardia:", n_sin, "\n")
+cat("Fases con deposito versionado:", nrow(filas), "\n")
+cat("Con la guardia declarada en su manifiesto:", n_decl, "\n")
+cat("Derivadas de la marca de ejecucion:", n_marca, "\n")
+cat("Sin manifiesto, derivadas del historial:", n_hist, "\n")
+cat("Escritas sin la guardia:", n_sin, "\n")
+cat("Sin manifiesto y rehechas despues de la guardia:", n_rehe, "\n")
 cat("\nLo que esto no acredita: que los depositos anteriores esten libres de\n")
 cat("emparejamiento parcial. Acredita que se escribieron sin vigilancia.\n")
 
@@ -126,8 +171,11 @@ writeLines(toJSON(list(
   ejecutado_en = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
   r_version = R.version.string,
   guarda_de_emparejamiento_parcial = isTRUE(getOption("warnPartialMatchDollar")),
-  proposito = paste("declarar, para cada deposito versionado, si la guardia",
-                    "de nombres estaba activa cuando se escribio"),
+  proposito = paste("declarar, para cada fase con deposito versionado, si la",
+                    "guardia de nombres estaba activa cuando se escribio. Se",
+                    "enumeran fases y no manifiestos: quince de las cuarenta y",
+                    "dos no tienen manifiesto, y enumerar manifiestos las",
+                    "dejaba fuera del alcance que este campo declaraba"),
   guardia_introducida_en = SHA_GUARDIA,
   guardia_introducida_el = F_GUARDIA,
   comando = CMD,
@@ -139,9 +187,18 @@ writeLines(toJSON(list(
                              "emparejamiento parcial; acredita que se",
                              "escribieron sin vigilancia. Cerrar esa duda",
                              "exige reejecutarlos con la guardia y cotejar"),
-  manifiestos = nrow(filas),
+  sin_manifiesto = paste("la fase sin manifiesto no tiene marca de ejecucion,",
+                         "de modo que se deriva del primer commit de",
+                         "cualquiera de sus archivos: si es anterior a la",
+                         "guardia, el deposito se escribio sin ella por",
+                         "construccion. Es conservador para las que despues",
+                         "se rehicieron, y se consigna cuales son"),
+  fases = nrow(filas),
   declarados = n_decl,
-  derivados = n_der,
+  derivados_de_la_marca = n_marca,
+  derivados_del_historial = n_hist,
+  sin_manifiesto_recuento = n_sinm,
+  sin_manifiesto_rehechas = n_rehe,
   sin_guardia = n_sin), auto_unbox = TRUE, pretty = TRUE),
   file.path(OUT, "manifiesto.json"))
 

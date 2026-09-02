@@ -1,16 +1,20 @@
 {
   "fase": "37",
-  "ejecutado_en": "2026-09-01T19:20:30-0600",
+  "ejecutado_en": "2026-09-01T21:25:44-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
-  "proposito": "declarar, para cada deposito versionado, si la guardia de nombres estaba activa cuando se escribio",
+  "proposito": "declarar, para cada fase con deposito versionado, si la guardia de nombres estaba activa cuando se escribio. Se enumeran fases y no manifiestos: quince de las cuarenta y dos no tienen manifiesto, y enumerar manifiestos las dejaba fuera del alcance que este campo declaraba",
   "guardia_introducida_en": "d70559a2076c9646b651c80e5d8e6f9472355791",
   "guardia_introducida_el": "2026-08-31",
   "comando": "git log --format='%at %H %ad' --date=short -S'warnPartialMatchDollar' -- .Rprofile",
   "derivacion": "un manifiesto sin el campo cuya marca de ejecucion sea anterior al commit que introdujo la guardia se escribio sin ella por construccion; no es una suposicion sino un hecho del historial",
   "lo_que_no_acredita": "que los depositos anteriores esten libres de emparejamiento parcial; acredita que se escribieron sin vigilancia. Cerrar esa duda exige reejecutarlos con la guardia y cotejar",
-  "manifiestos": 27,
+  "sin_manifiesto": "la fase sin manifiesto no tiene marca de ejecucion, de modo que se deriva del primer commit de cualquiera de sus archivos: si es anterior a la guardia, el deposito se escribio sin ella por construccion. Es conservador para las que despues se rehicieron, y se consigna cuales son",
+  "fases": 42,
   "declarados": 23,
-  "derivados": 4,
-  "sin_guardia": 4
+  "derivados_de_la_marca": 4,
+  "derivados_del_historial": 15,
+  "sin_manifiesto_recuento": 15,
+  "sin_manifiesto_rehechas": 6,
+  "sin_guardia": 19
 }

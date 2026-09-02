@@ -79,11 +79,14 @@ margin never exceeds the largest possible rounding error.
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta contrastados | 13.0000 | 13.0000 | 0.50000 | yes |
-| Depositos con estado de guardia establecido | 27.0000 | 27.0000 | 0.50000 | yes |
-| Depositos con estado establecido, recuento | 27.0000 | 27.0000 | 0.50000 | yes |
-| Depositos escritos sin la guardia | 4.0000 | 4.0000 | 0.50000 | yes |
-| Depositos con la guardia declarada | 23.0000 | 23.0000 | 0.50000 | yes |
-| Depositos con la guardia derivada | 4.0000 | 4.0000 | 0.50000 | yes |
+| Depositos con estado de guardia establecido | 42.0000 | 42.0000 | 0.50000 | yes |
+| Fases con deposito versionado | 42.0000 | 42.0000 | 0.50000 | yes |
+| Fases escritas sin la guardia | 19.0000 | 19.0000 | 0.50000 | yes |
+| Fases con la guardia declarada | 23.0000 | 23.0000 | 0.50000 | yes |
+| Fases derivadas de la marca de ejecucion | 4.0000 | 4.0000 | 0.50000 | yes |
+| Fases sin manifiesto | 15.0000 | 15.0000 | 0.50000 | yes |
+| Fases sin manifiesto y sin estado | 0.0000 | 0.0000 | 0.50000 | yes |
+| Fases sin manifiesto rehechas despues | 6.0000 | 6.0000 | 0.50000 | yes |
 | Ganancia de lambda minimo en minoritarias | 0.0395 | 0.0395 | 0.00010 | yes |
 | Cobertura conforme, minimo entre categorias | 0.8679 | 0.8679 | 0.00005 | yes |
 | Cobertura conforme, maximo entre categorias | 0.9044 | 0.9044 | 0.00005 | yes |

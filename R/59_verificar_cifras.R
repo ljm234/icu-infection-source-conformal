@@ -573,14 +573,22 @@ gpd <- leer(FUENTES[["Guarda por deposito"]])
 if (!is.null(gpd)) {
   reg[[length(reg)+1]] <- comprobar("Depositos con estado de guardia establecido",
     sum(gpd$origen != "indeterminado"), nrow(gpd), 0.5)
-  reg[[length(reg)+1]] <- comprobar("Depositos con estado establecido, recuento",
-    nrow(gpd), 27, 0.5)
-  reg[[length(reg)+1]] <- comprobar("Depositos escritos sin la guardia",
-    sum(!gpd$guardia_activa), 4, 0.5)
-  reg[[length(reg)+1]] <- comprobar("Depositos con la guardia declarada",
+  reg[[length(reg)+1]] <- comprobar("Fases con deposito versionado",
+    nrow(gpd), 42, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Fases escritas sin la guardia",
+    sum(!gpd$guardia_activa), 19, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Fases con la guardia declarada",
     sum(gpd$origen == "declarado en el manifiesto"), N_MF_DECLARAN, 0.5)
-  reg[[length(reg)+1]] <- comprobar("Depositos con la guardia derivada",
-    sum(gpd$origen == "derivado del historial"), N_MF_SIN, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Fases derivadas de la marca de ejecucion",
+    sum(gpd$origen == "derivado de la marca de ejecucion"), N_MF_SIN, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Fases sin manifiesto",
+    sum(gpd$manifiesto == ""), 15, 0.5)
+  # Que ninguna fase sin manifiesto quede sin estado, que es el hueco por el
+  # que la guardia no podia dispararse.
+  reg[[length(reg)+1]] <- comprobar("Fases sin manifiesto y sin estado",
+    sum(gpd$manifiesto == "" & gpd$origen == "indeterminado"), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Fases sin manifiesto rehechas despues",
+    sum(gpd$manifiesto == "" & gpd$rehecha_tras_la_guardia), 6, 0.5)
 }
 t4 <- tolerancia(4); t4d <- tolerancia(4, 2)
 t2 <- tolerancia(2); t1 <- tolerancia(1)
