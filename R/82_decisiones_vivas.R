@@ -161,6 +161,8 @@ N_APE <- sum(post$posterior_a_la_apertura)
 N_FIL <- sum(post$categoria == "posterior a la apertura y lee filas por paciente")
 N_AJU <- sum(post$posterior_a_la_apertura & post$ajusta_un_modelo)
 N_ART <- sum(post$posterior_a_la_apertura & post$escribe_artefacto_del_modelo)
+N_PUB <- sum(post$posterior_a_la_apertura & post$produce_cifra_publicada)
+N_SOL <- N_APE - N_PUB
 if (N_ART > 0) {
   cat("Un analisis posterior a la apertura escribe un artefacto del modelo.\n")
   quit(status = 1)
@@ -333,6 +335,18 @@ add(prosa(
 "Esas fases tampoco se nombran en la comprobacion, se derivan de donde hay",
 "un objeto ajustado bajo control de versiones, y el procedimiento se detiene",
 "si alguna vez alguno escribiera en ellas."))
+cerrar()
+
+add(cifra("Y de esos %d, %d depositan algo de lo que el documento toma una",
+          as.integer(N_APE), as.integer(N_PUB)))
+add(cifra("cifra. Los otros %d son comprobaciones: se ejecutan, se detienen si",
+          as.integer(N_SOL)))
+add(prosa(
+"algo no cuadra, y no publican nada por su cuenta. Que un archivo sea",
+"publicado tampoco se enumera: lo es si lo lee un generador de prosa, y un",
+"generador de prosa es el que escribe un documento y lo compone con la",
+"guardia que rechaza cifras literales. Esa guardia es lo que separa un",
+"documento de un libro de asientos, y se lee del codigo y no de los nombres."))
 cerrar()
 
 add(prosa(
@@ -657,6 +671,20 @@ add(prosa(
 "la ruta que la sostiene, y esa asociacion se comprueba."))
 add(cifra("`%s` recorre la relacion y se detiene si alguna fuente", r64))
 add(cifra("falta. `%s` recoge cada cifra contra su archivo.", trz))
+cerrar()
+
+add(prosa(
+"Confundir nombrar una ruta con leerla. Una relacion que enumera archivos",
+"reservados para comprobar que no esten publicados los nombra sin abrirlos,",
+"y contar eso como lectura invierte el sentido de lo que hace. Ocurrio al",
+"contabilizar los contactos con la unidad reservada, se corrigio, y volvio a",
+"ocurrir en la misma sesion al derivar la posterioridad de los analisis: un",
+"barrido por mencion metio en la categoria mas grave a cuatro procedimientos",
+"que nombran el directorio de derivados justamente para comprobar que no",
+"esta versionado. La correccion reciente no evito que la clase reapareciera.",
+"La regla que queda es que una lectura se acredita por la llamada que la",
+"hace y por el argumento que recibe, nunca porque la ruta figure en el texto",
+"del procedimiento."))
 cerrar()
 
 add(prosa(

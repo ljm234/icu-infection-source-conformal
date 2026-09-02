@@ -32,6 +32,8 @@ margin never exceeds the largest possible rounding error.
 | Ajustan tras la apertura | 6.0000 | 6.0000 | 0.50000 | yes |
 | Escriben artefacto del modelo despues | 0.0000 | 0.0000 | 0.50000 | yes |
 | Procedimientos sin alta registrada | 0.0000 | 0.0000 | 0.50000 | yes |
+| Producen una cifra publicada | 36.0000 | 36.0000 | 0.50000 | yes |
+| Posteriores que producen cifra publicada | 26.0000 | 26.0000 | 0.50000 | yes |
 | Conjunto apartado, lo nombran | 2.0000 | 2.0000 | 0.50000 | yes |
 | Conjunto apartado, lo leen | 0.0000 | 0.0000 | 0.50000 | yes |
 | Depositos de consulta sin orden total | 0.0000 | 0.0000 | 0.50000 | yes |

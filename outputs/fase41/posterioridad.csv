@@ -1,89 +1,89 @@
-"procedimiento","alta","registrado","categoria","posterior_a_la_fijacion","posterior_a_la_apertura","lee_filas_por_paciente","escribe_artefacto_del_modelo","ajusta_un_modelo"
-"43_curvas_decision.R","2026-08-21",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"44_gbm.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"46_extraer_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"47_limpiar_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"48_concordancia_presion.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"49_ver_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"50_construir_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"51_circularidad_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"52_compuerta_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"53_verificar_ventilador.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"54_imputacion_ampliada.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"55_modelo_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"56_conformal_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"57_louo_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"58_diagnostico_imputacion.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"61_agregados_faltantes.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"63_extraccion_determinista.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"66_agregado_indicador_tubo.R","2026-08-25",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"69_medianas_por_unidad.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"70_lambda_validacion_interna.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"71_calibracion_sellado.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"72_regla_maximo.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"73_divergencia_etiquetado.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"74_intervalos_cobertura.R","2026-08-27",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"79_casos_completos_candidatas.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"80_comparacion_ampliada_labs.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE
-"83_calibracion_prueba.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"84_curva_calibracion.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"85_completitud_por_conjunto.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE
-"00_rutas_reservadas.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"45_catalogo_vitales.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"59_verificar_cifras.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"60_inventario_resultados.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"62_empates_temporales.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"64_auditoria_publicacion.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"65_generar_readme.R","2026-08-25",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"67_diagnostico_dependencias.R","2026-08-25",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"68_traduccion_yachay.R","2026-08-26",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"75_manifiestos_exactos.R","2026-08-27",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"76_cobertura_por_etapa.R","2026-08-27",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"77_cohorte_analizada.R","2026-08-30",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"78_determinaciones_candidatas.R","2026-08-30",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"81_procedencia_seleccion.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"82_decisiones_vivas.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"86_guarda_por_deposito.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"87_orden_total.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"88_orden_de_la_matriz.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"89_contactos_con_el_sellado.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"90_posterioridad.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE
-"24_diagnostico_logs.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"26_diagnostico_unidad.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"27_imputacion_final.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"28_examen_previo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,FALSE
-"29_umbral_splines.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,FALSE
-"30_modelo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE
-"31_diagnostico_modelo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"32_comparar_lambda.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE
-"33_conformal.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE
-"34_curva_alfa.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"35_louo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE
-"36_sellado.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"37_validar_imputacion.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"38_recalibracion.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"39_referencias.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE
-"40_sensibilidad.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE
-"41_peor_valor.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE
-"01_verificar_esquema.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"02_contar.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"03_hadm_nulos.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"04_con_uci.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"05_hora.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"06_verificar_hora.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"07_ventana.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"08_primera_uci.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"09_tipos_muestra.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"10_lista_completa.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"11_auditoria.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"12_ver_prescripciones.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"13_buscar_antibioticos.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"14_cohorte.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"15_ver_labs.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"16_cobertura_labs.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"17_patron_solicitud.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"18_repeticion.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"19_matriz.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE
-"20_plausibilidad.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE
-"21_perfil_unidades.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE
-"22_particion.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE
+"procedimiento","alta","registrado","categoria","posterior_a_la_fijacion","posterior_a_la_apertura","lee_filas_por_paciente","escribe_artefacto_del_modelo","ajusta_un_modelo","produce_cifra_publicada"
+"43_curvas_decision.R","2026-08-21",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"44_gbm.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"46_extraer_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"47_limpiar_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"48_concordancia_presion.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"49_ver_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"50_construir_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"51_circularidad_glasgow.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"52_compuerta_vitales.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"53_verificar_ventilador.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"54_imputacion_ampliada.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"55_modelo_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,TRUE
+"56_conformal_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,FALSE
+"57_louo_ampliado.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,TRUE
+"58_diagnostico_imputacion.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"61_agregados_faltantes.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"63_extraccion_determinista.R","2026-08-24",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"66_agregado_indicador_tubo.R","2026-08-25",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"69_medianas_por_unidad.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"70_lambda_validacion_interna.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,TRUE
+"71_calibracion_sellado.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"72_regla_maximo.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"73_divergencia_etiquetado.R","2026-08-26",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
+"74_intervalos_cobertura.R","2026-08-27",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,TRUE
+"79_casos_completos_candidatas.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"80_comparacion_ampliada_labs.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,TRUE,TRUE
+"83_calibracion_prueba.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"84_curva_calibracion.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"85_completitud_por_conjunto.R","2026-08-31",TRUE,"posterior a la apertura y lee filas por paciente",TRUE,TRUE,TRUE,FALSE,FALSE,TRUE
+"00_rutas_reservadas.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"45_catalogo_vitales.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"59_verificar_cifras.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"60_inventario_resultados.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"62_empates_temporales.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"64_auditoria_publicacion.R","2026-08-24",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"65_generar_readme.R","2026-08-25",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"67_diagnostico_dependencias.R","2026-08-25",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"68_traduccion_yachay.R","2026-08-26",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"75_manifiestos_exactos.R","2026-08-27",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"76_cobertura_por_etapa.R","2026-08-27",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"77_cohorte_analizada.R","2026-08-30",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"78_determinaciones_candidatas.R","2026-08-30",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"81_procedencia_seleccion.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"82_decisiones_vivas.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"86_guarda_por_deposito.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"87_orden_total.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,FALSE
+"88_orden_de_la_matriz.R","2026-08-31",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"89_contactos_con_el_sellado.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"90_posterioridad.R","2026-09-01",TRUE,"posterior a la apertura",TRUE,TRUE,FALSE,FALSE,FALSE,TRUE
+"24_diagnostico_logs.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
+"26_diagnostico_unidad.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
+"27_imputacion_final.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
+"28_examen_previo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,FALSE,FALSE
+"29_umbral_splines.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,FALSE,FALSE
+"30_modelo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE,FALSE
+"31_diagnostico_modelo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
+"32_comparar_lambda.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE,FALSE
+"33_conformal.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,TRUE,TRUE,TRUE
+"34_curva_alfa.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
+"35_louo.R","2026-08-19",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE,TRUE
+"36_sellado.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
+"37_validar_imputacion.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
+"38_recalibracion.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
+"39_referencias.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE,TRUE
+"40_sensibilidad.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,TRUE,TRUE
+"41_peor_valor.R","2026-08-20",TRUE,"posterior a la fijacion",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
+"01_verificar_esquema.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"02_contar.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"03_hadm_nulos.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"04_con_uci.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"05_hora.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"06_verificar_hora.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"07_ventana.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"08_primera_uci.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"09_tipos_muestra.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"10_lista_completa.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"11_auditoria.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"12_ver_prescripciones.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"13_buscar_antibioticos.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"14_cohorte.R","2026-08-17",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"15_ver_labs.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"16_cobertura_labs.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"17_patron_solicitud.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"18_repeticion.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"19_matriz.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"20_plausibilidad.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"21_perfil_unidades.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"22_particion.R","2026-08-18",TRUE,"anterior a la fijacion",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE

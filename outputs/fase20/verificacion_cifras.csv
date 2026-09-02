@@ -22,6 +22,8 @@
 "Ajustan tras la apertura",6,6,0.5,TRUE
 "Escriben artefacto del modelo despues",0,0,0.5,TRUE
 "Procedimientos sin alta registrada",0,0,0.5,TRUE
+"Producen una cifra publicada",36,36,0.5,TRUE
+"Posteriores que producen cifra publicada",26,26,0.5,TRUE
 "Conjunto apartado, lo nombran",2,2,0.5,TRUE
 "Conjunto apartado, lo leen",0,0,0.5,TRUE
 "Depositos de consulta sin orden total",0,0,0.5,TRUE

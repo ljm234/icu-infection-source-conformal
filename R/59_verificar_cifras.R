@@ -336,6 +336,10 @@ if (!is.null(pos)) {
   # su fecha aun no existe.
   reg[[length(reg)+1]] <- comprobar("Procedimientos sin alta registrada",
     sum(!pos$registrado), 0, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Producen una cifra publicada",
+    sum(pos$produce_cifra_publicada), 36, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Posteriores que producen cifra publicada",
+    sum(pos$posterior_a_la_apertura & pos$produce_cifra_publicada), 26, 0.5)
 }
 
 apar <- leer(FUENTES[["Conjunto apartado"]])

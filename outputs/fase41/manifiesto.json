@@ -1,6 +1,6 @@
 {
   "fase": "41",
-  "ejecutado_en": "2026-09-01T17:36:01-0600",
+  "ejecutado_en": "2026-09-01T18:00:44-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "derivar del historial que analisis son posteriores a la fijacion de la seleccion y cuales ademas a la apertura de la unidad reservada, en lugar de enumerarlos",
@@ -15,6 +15,9 @@
   "posteriores_a_la_fijacion": 66,
   "posteriores_a_la_apertura": 49,
   "ademas_leen_filas": 29,
+  "producen_cifra_publicada": 36,
+  "posteriores_que_producen": 26,
+  "lo_publicado": "un archivo es publicado si lo lee un generador de prosa, y un generador de prosa es el que escribe un documento y lo compone con la guardia que rechaza cifras literales; ninguno de los dos se enumera",
   "ajustan_tras_la_apertura": 6,
   "escriben_artefacto_tras_la_apertura": 0
 }

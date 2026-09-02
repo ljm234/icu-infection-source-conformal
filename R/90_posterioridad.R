@@ -102,6 +102,25 @@ source("R/00_rutas_reservadas.R")
 reservadas <- rutas_reservadas()$ruta
 
 fuentes <- sort(list.files("R", pattern = "[.]R$", full.names = TRUE))
+texto <- setNames(lapply(fuentes, function(f)
+  paste(readLines(f, warn = FALSE), collapse = "\n")), basename(fuentes))
+
+# Los archivos cuyas cifras el documento publica. No se enumeran: un generador
+# de prosa es el que escribe un documento y lo compone con la guardia que
+# rechaza cifras literales, y lo que publica es lo que lee. Preguntarselo a la
+# relacion de comprobacion en vez de a los generadores seria preguntarle a un
+# intermediario, y ademas ataria esta fase a otra que a su vez la comprueba.
+#
+# La guardia es lo que distingue un documento de prosa de un registro de
+# verificacion: el segundo tambien escribe un archivo de texto, pero es un
+# libro de asientos y no afirma nada por su cuenta. La distincion se lee del
+# codigo y no de los nombres.
+generadores <- names(texto)[sapply(texto, grepl,
+  pattern = 'writeLines\\([^,]+,\\s*"[^"]+[.]md"') &
+  sapply(texto, grepl, pattern = "cifra <- +function")]
+if (length(generadores) == 0)
+  detener("Ningun procedimiento compone un documento de prosa. Lo publicado ",
+          "no puede derivarse.")
 
 # Rutas que una llamada LEE o ESCRIBE. Nombrar una ruta no es leerla: la
 # auditoria las nombra para comprobar que no esten versionadas, y contar eso
@@ -133,8 +152,17 @@ bajo_reservada <- function(rutas) {
       grepl("/$", r) && any(startsWith(rutas, r))))
 }
 
+publicadas <- unique(unlist(lapply(texto[generadores], function(t)
+  c(rutas_de(t, "leer"), rutas_de(t, "read\\.csv")))))
+publicadas <- publicadas[!is.na(publicadas) & grepl("^outputs/", publicadas)]
+if (length(publicadas) == 0)
+  detener("Los generadores no leen deposito alguno. Lo publicado no puede ",
+          "derivarse.")
+cat("Generadores de prosa:", length(generadores),
+    " archivos que leen:", length(publicadas), "\n")
+
 filas <- do.call(rbind, lapply(fuentes, function(f) {
-  txt <- paste(readLines(f, warn = FALSE), collapse = "\n")
+  txt <- texto[[basename(f)]]
   lee <- c(rutas_de(txt, "read\\.csv"), rutas_de(txt, "readRDS"),
            rutas_de(txt, "dbConnect", pos = 2))
   esc <- c(rutas_de(txt, "write\\.csv", pos = 2),
@@ -155,6 +183,10 @@ filas <- do.call(rbind, lapply(fuentes, function(f) {
     lee_filas_por_paciente = bajo_reservada(lee),
     escribe_artefacto_del_modelo = any(dirname(esc) %in% FASES_MODELO),
     ajusta_un_modelo = grepl("(^|[^A-Za-z._])(cv[.])?glmnet\\(", txt),
+    # Sin esta columna, decir que sesenta y seis analisis son posteriores
+    # suena a sesenta y seis analisis nuevos. La mayoria son comprobaciones, y
+    # no depositan nada que el documento publique.
+    produce_cifra_publicada = any(esc %in% publicadas),
     row.names = NULL)
 }))
 
@@ -196,6 +228,12 @@ if (sum(post$ajusta_un_modelo) > 0)
   cat("Los que ajustan lo hacen sobre su propio modelo: leen la",
       "especificacion\ncongelada y depositan fuera de sus fases.\n")
 
+cat("\n=== CUANTOS PRODUCEN UNA CIFRA PUBLICADA ===\n")
+for (k in ORDEN)
+  cat(sprintf("  %-48s %3d de %3d\n", k,
+              sum(filas$categoria == k & filas$produce_cifra_publicada),
+              sum(filas$categoria == k)))
+
 cat("\n=== TERCERA CATEGORIA ===\n")
 ter <- filas[filas$categoria == ORDEN[1], ]
 if (nrow(ter) > 0) print(ter[, c("procedimiento", "alta", "ajusta_un_modelo")],
@@ -205,7 +243,7 @@ dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 write.csv(filas[, c("procedimiento", "alta", "registrado", "categoria",
                     "posterior_a_la_fijacion", "posterior_a_la_apertura",
                     "lee_filas_por_paciente", "escribe_artefacto_del_modelo",
-                    "ajusta_un_modelo")],
+                    "ajusta_un_modelo", "produce_cifra_publicada")],
           file.path(OUT, "posterioridad.csv"), row.names = FALSE)
 write.csv(data.frame(
   fijacion_de_la_seleccion = FIJADA,
@@ -242,6 +280,13 @@ writeLines(toJSON(list(
   posteriores_a_la_fijacion = sum(filas$posterior_a_la_fijacion),
   posteriores_a_la_apertura = sum(filas$posterior_a_la_apertura),
   ademas_leen_filas = sum(filas$categoria == ORDEN[1]),
+  producen_cifra_publicada = sum(filas$produce_cifra_publicada),
+  posteriores_que_producen = sum(filas$posterior_a_la_apertura &
+                                 filas$produce_cifra_publicada),
+  lo_publicado = paste("un archivo es publicado si lo lee un generador de",
+                       "prosa, y un generador de prosa es el que escribe un",
+                       "documento y lo compone con la guardia que rechaza",
+                       "cifras literales; ninguno de los dos se enumera"),
   ajustan_tras_la_apertura = sum(post$ajusta_un_modelo),
   escriben_artefacto_tras_la_apertura = 0),
   auto_unbox = TRUE, pretty = TRUE), file.path(OUT, "manifiesto.json"))

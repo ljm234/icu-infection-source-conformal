@@ -45,6 +45,14 @@ nombran en la comprobacion, se derivan de donde hay un objeto ajustado bajo
 control de versiones, y el procedimiento se detiene si alguna vez alguno
 escribiera en ellas.
 
+Y de esos 49, 26 depositan algo de lo que el documento toma una cifra. Los
+otros 23 son comprobaciones: se ejecutan, se detienen si algo no cuadra, y no
+publican nada por su cuenta. Que un archivo sea publicado tampoco se enumera:
+lo es si lo lee un generador de prosa, y un generador de prosa es el que
+escribe un documento y lo compone con la guardia que rechaza cifras literales.
+Esa guardia es lo que separa un documento de un libro de asientos, y se lee del
+codigo y no de los nombres.
+
 Los que siguen se describen uno a uno por lo que dicen de la seleccion, no
 porque sean los unicos posteriores a ella. De cada uno se comprueba contra el
 historial que su alta lo sea, en lugar de fiarlo a lo que su cabecera declare.
@@ -284,6 +292,18 @@ ruta que la sostiene, y esa asociacion se comprueba.
 `R/64_auditoria_publicacion.R` recorre la relacion y se detiene si alguna
 fuente falta. `outputs/fase20/TRACEABILITY.md` recoge cada cifra contra su
 archivo.
+
+Confundir nombrar una ruta con leerla. Una relacion que enumera archivos
+reservados para comprobar que no esten publicados los nombra sin abrirlos, y
+contar eso como lectura invierte el sentido de lo que hace. Ocurrio al
+contabilizar los contactos con la unidad reservada, se corrigio, y volvio a
+ocurrir en la misma sesion al derivar la posterioridad de los analisis: un
+barrido por mencion metio en la categoria mas grave a cuatro procedimientos que
+nombran el directorio de derivados justamente para comprobar que no esta
+versionado. La correccion reciente no evito que la clase reapareciera. La regla
+que queda es que una lectura se acredita por la llamada que la hace y por el
+argumento que recibe, nunca porque la ruta figure en el texto del
+procedimiento.
 
 Dos varas de medir. El mismo trabajo llego a corregir por multiplicidad en un
 apartado y no en otro, y a juzgar la cobertura por intervalo en un sitio y por
