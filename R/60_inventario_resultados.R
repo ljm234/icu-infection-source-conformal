@@ -33,6 +33,7 @@ for (dir in sort(unique(dirname(archivos)))) {
 # determinaciones bioquimicas, omitida de forma inadvertida al reescribirlo.
 VERIFICADAS <- c(
   "outputs/fase7/comparacion_lambda.csv",
+  "outputs/fase7/umbral_permutacion.csv",
   "outputs/fase8/cobertura.csv",
   "outputs/fase8/umbrales.csv",
   "outputs/fase8/riesgo_cobertura.csv",
@@ -59,7 +60,8 @@ VERIFICADAS <- c(
   "outputs/fase18/umbrales_ampliado.csv",
   "outputs/fase19/cobertura_louo_ampliado.csv",
   "outputs/fase19/cobertura_clase_louo_ampliado.csv",
-  "outputs/fase19/auc_louo_ampliado.csv")
+  "outputs/fase19/auc_louo_ampliado.csv",
+  "outputs/fase36/completitud_total.csv")
 
 datos <- archivos[grepl("\\.csv$", archivos)]
 huerfanos <- setdiff(datos, VERIFICADAS)

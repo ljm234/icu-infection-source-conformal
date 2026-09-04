@@ -33,6 +33,11 @@ cat("Percentiles de la ganancia nula:\n")
 print(round(quantile(nulo, c(0.5, 0.90, 0.95, 0.99), na.rm = TRUE), 2))
 umbral_nulo <- quantile(nulo, 0.95, na.rm = TRUE)
 
+# El umbral adoptado para admitir un spline. Vivia en un comentario de R/30,
+# que es donde lo encontraria quien lo buscase y donde nadie lo contrasta. Se
+# nombra aqui, junto a la nula que lo justifica, y se deposita abajo.
+UMBRAL_ADOPTADO <- 10
+
 cat("\n=== 2. ESTABILIDAD ENTRE IMPUTACIONES ===\n")
 # Una no linealidad real debe reproducirse en las veinte imputaciones. Si la
 # ganancia varia de forma amplia entre ellas, procede de valores rellenados
@@ -94,3 +99,25 @@ print(sel)
 dir.create("outputs/fase7", recursive = TRUE, showWarnings = FALSE)
 write.csv(est, "outputs/fase7/estabilidad_nolinealidad.csv", row.names = FALSE)
 write.csv(cv,  "outputs/fase7/ganancia_cv.csv", row.names = FALSE)
+
+# El umbral de la nula, depositado.
+#
+# Hasta aqui se calculaba, se usaba para contar en cuantas imputaciones una
+# ganancia lo supera, y se imprimia por consola. Lo que quedaba en disco era
+# ese recuento derivado y no el valor, de modo que el umbral que el documento
+# cita no tenia archivo detras: vivia en la salida de una ejecucion, que se
+# pierde, y en un comentario, que nadie contrasta. De las dos senales, la que
+# sobrevivia era la que no se comprueba.
+#
+# Se depositan los cuatro percentiles y no solo el que gobierna. Elegir el
+# percentil es parte del criterio, y un archivo que guarde unicamente el
+# elegido no permite ver que hubo eleccion.
+write.csv(data.frame(
+  replicas        = length(nulo),
+  p50             = round(as.numeric(quantile(nulo, 0.50, na.rm = TRUE)), 2),
+  p90             = round(as.numeric(quantile(nulo, 0.90, na.rm = TRUE)), 2),
+  p95             = round(as.numeric(quantile(nulo, 0.95, na.rm = TRUE)), 2),
+  p99             = round(as.numeric(quantile(nulo, 0.99, na.rm = TRUE)), 2),
+  umbral_adoptado = UMBRAL_ADOPTADO,
+  row.names = NULL),
+  "outputs/fase7/umbral_permutacion.csv", row.names = FALSE)

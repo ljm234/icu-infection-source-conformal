@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-09-02 by R/59_verificar_cifras.R
+Generated on 2026-09-03 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived
@@ -382,6 +382,13 @@ margin never exceeds the largest possible rounding error.
 | Resumenes distintos entre versiones | 1.0000 | 1.0000 | 0.50000 | yes |
 | Versiones cuyo resumen es el del acta | 3.0000 | 3.0000 | 0.50000 | yes |
 | Versiones que declaran los mismos identificadores | 3.0000 | 3.0000 | 0.50000 | yes |
+| Casos completos antes de los limites | 8467.0000 | 8467.0000 | 0.50000 | yes |
+| Casos completos despues de los limites | 8466.0000 | 8466.0000 | 0.50000 | yes |
+| Estancias que pierden un valor a los limites | 1.0000 | 1.0000 | 0.50000 | yes |
+| El total es la suma de los bloques | 8466.0000 | 8466.0000 | 0.50000 | yes |
+| Replicas de la nula de permutacion | 200.0000 | 200.0000 | 0.50000 | yes |
+| Percentil 95 de la ganancia nula | 6.5000 | 6.5000 | 0.00500 | yes |
+| Umbral adoptado para admitir spline | 10.0000 | 10.0000 | 0.00500 | yes |
 
 ## Source files
 
@@ -389,6 +396,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase2/clases.csv`
 - `outputs/fase6/validacion_enmascaramiento.csv`
 - `outputs/fase7/comparacion_lambda.csv`
+- `outputs/fase7/umbral_permutacion.csv`
 - `outputs/fase8/cobertura.csv`
 - `outputs/fase8/umbrales.csv`
 - `outputs/fase8/riesgo_cobertura.csv`
@@ -450,6 +458,7 @@ margin never exceeds the largest possible rounding error.
 - `outputs/fase32/completos_por_grupo.csv`
 - `outputs/fase32/conjunto_por_grupo_y_clase.csv`
 - `outputs/fase36/completitud_por_conjunto.csv`
+- `outputs/fase36/completitud_total.csv`
 - `outputs/fase36/completitud_por_grupo.csv`
 - `outputs/fase36/completitud_por_determinacion.csv`
 - `outputs/fase37/guarda_por_deposito.csv`

@@ -84,6 +84,7 @@ FUENTES <- list(
   "Distribucion de categorias"               = "outputs/fase2/clases.csv",
   "Imputacion frente a la mediana"           = "outputs/fase6/validacion_enmascaramiento.csv",
   "Comparacion de reglas de penalizacion"    = "outputs/fase7/comparacion_lambda.csv",
+  "Umbral de la nula de permutacion"         = "outputs/fase7/umbral_permutacion.csv",
   "Cobertura conforme en prueba"             = "outputs/fase8/cobertura.csv",
   "Umbrales de calibracion"                  = "outputs/fase8/umbrales.csv",
   "Curva de riesgo y cobertura"              = "outputs/fase8/riesgo_cobertura.csv",
@@ -145,6 +146,7 @@ FUENTES <- list(
   "Completos por conjunto de la particion"   = "outputs/fase32/completos_por_grupo.csv",
   "Conjunto ajustado por grupo y clase"      = "outputs/fase32/conjunto_por_grupo_y_clase.csv",
   "Completitud por conjunto"                 = "outputs/fase36/completitud_por_conjunto.csv",
+  "Completitud, total"                       = "outputs/fase36/completitud_total.csv",
   "Completitud por grupo"                    = "outputs/fase36/completitud_por_grupo.csv",
   "Completitud por determinacion"            = "outputs/fase36/completitud_por_determinacion.csv",
   "Guarda por deposito"                      = "outputs/fase37/guarda_por_deposito.csv",
@@ -1722,6 +1724,60 @@ if (!is.null(x)) {
       sum(v$resumen_del_bloque == x$resumen_del_bloque), nrow(v), 0.5)
     reg[[length(reg)+1]] <- comprobar("Versiones que declaran los mismos identificadores",
       sum(v$identificadores == x$identificadores), nrow(v), 0.5)
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Las dos cifras que el documento citaba sin deposito detras.
+#
+# Van juntas porque eran el mismo defecto: existian en la salida de una
+# ejecucion, o en la suma que hacia quien redactaba, y no en un archivo. Una
+# cifra asi concuerda consigo misma para siempre y con nada mas, que es
+# exactamente lo que este procedimiento existe para impedir. Depositarlas sin
+# comprobarlas solo habria movido el defecto de sitio.
+# ---------------------------------------------------------------------------
+
+# Casos completos antes y despues de los limites de plausibilidad. El recuento
+# anterior vive en el manifiesto de la cuarta fase y el posterior en el
+# deposito de la trigesimo sexta, de modo que la diferencia que el documento
+# publica cruza dos fases y ninguna de las dos la acreditaba. Se comprueban
+# las tres cantidades: cada recuento contra su fuente y la resta entre ellos.
+MF4 <- "outputs/fase4/manifiesto.json"
+x <- leer(FUENTES[["Completitud, total"]])
+if (file.exists(MF4) && !is.null(x)) {
+  n_antes <- jsonlite::fromJSON(MF4)[["n_completos"]]
+  reg[[length(reg)+1]] <- comprobar("Casos completos antes de los limites",
+    n_antes, 8467, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Casos completos despues de los limites",
+    x$completas, 8466, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Estancias que pierden un valor a los limites",
+    n_antes - x$completas, 1, 0.5)
+  # El total ha de ser el de los sumandos que estan a su lado. Un total
+  # depositado que no fuera su suma cambiaria un defecto por otro peor, porque
+  # ya no se veria.
+  y <- leer(FUENTES[["Completitud por conjunto"]])
+  if (!is.null(y))
+    reg[[length(reg)+1]] <- comprobar("El total es la suma de los bloques",
+      x$completas, sum(y$completas), 0.5)
+}
+
+# Umbral de la nula de permutacion. Depositar el valor no basta: lo que el
+# documento afirma es una relacion, que el umbral adoptado queda por encima
+# del ruido que la nula establece, y esa relacion es la que hay que contrastar.
+# Si dejara de cumplirse, la justificacion publicada del criterio caeria y las
+# cifras seguirian concordando una a una.
+x <- leer(FUENTES[["Umbral de la nula de permutacion"]])
+if (!is.null(x)) {
+  reg[[length(reg)+1]] <- comprobar("Replicas de la nula de permutacion",
+    x$replicas, 200, 0.5)
+  reg[[length(reg)+1]] <- comprobar("Percentil 95 de la ganancia nula",
+    x$p95, 6.5, tolerancia(2))
+  reg[[length(reg)+1]] <- comprobar("Umbral adoptado para admitir spline",
+    x$umbral_adoptado, 10, tolerancia(2))
+  if (!isTRUE(x$umbral_adoptado > x$p95)) {
+    cat("\nEl umbral adoptado no supera el ruido que la nula establece.\n")
+    cat("La justificacion publicada del criterio no se sostiene.\n")
+    quit(status = 1)
   }
 }
 

@@ -5,7 +5,7 @@ que archivo consta. Se consulta antes de escribir sobre cualquiera de estos
 puntos, para que lo que se publique se apoye en los archivos y no en el
 recuerdo de quien redacta.
 
-Generado el 2026-09-02 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
+Generado el 2026-09-03 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
 se comprueba al componer el documento: ha de existir y ha de estar bajo control
 de versiones. El procedimiento se detiene si alguna falta, de modo que este
 registro no puede sobrevivir a los archivos que lo sostienen.
@@ -336,6 +336,19 @@ comparacion puntual en otro. La regla que queda es que un criterio adoptado en
 cualquier parte rige en todas, y que introducir uno nuevo obliga a revisar los
 apartados anteriores.
 
+Dos relaciones de lo mismo, una escrita a mano y otra derivada del codigo. Es
+la misma clase que la de las rutas reservadas, y sigue abierta.
+`R/60_inventario_resultados.R` mantiene escrita a mano la relacion de depositos
+que la verificacion alcanza, mientras `R/93_huerfanas.R` deriva esa misma
+relacion del codigo de `R/59_verificar_cifras.R`. Hay entonces dos autoridades
+sobre la misma pregunta, y anadir un deposito obliga a acordarse de las dos. La
+que se escribe a mano se queda atras sin que nada lo advierta, porque no
+deposita ni sostiene cifra publicada alguna: su cuenta vive en la salida por
+pantalla y se pierde con ella, que es la senal que no sobrevive. El arreglo es
+el que `R/00_rutas_reservadas.R` aplico a las rutas reservadas: un solo lector,
+y las demas relaciones derivadas de el. Queda anotado y sin abrir. Abrirlo
+ahora no termina nada; no anotarlo lo pierde.
+
 ## Cuestiones abiertas para el manuscrito
 
 Lo que sigue no es un defecto del deposito. Es una pregunta que este registro
@@ -364,13 +377,13 @@ Es lo primero que una guia de reporte pide y no esta.
 
 ## Depositos que sostienen algo y depositos que no
 
-El deposito versiona 125 archivos de resultados y no todos hacen lo mismo.
+El deposito versiona 127 archivos de resultados y no todos hacen lo mismo.
 Saber cual hace que es lo que evita que una cifra viaje sin red. La
 clasificacion se deriva y no se enumera: publicado es lo que lee un generador
 de prosa, y contrastado lo que figura en la relacion de fuentes de la
 verificacion de cifras, leida de su codigo y no copiada aparte.
 
-De los 125, 62 sostienen una cifra publicada y estan contrastados. Otros 25 son
+De los 127, 62 sostienen una cifra publicada y estan contrastados. Otros 27 son
 comprobaciones de cosas que el documento no publica, y 38 no son ni lo uno ni
 lo otro: material intermedio que el trabajo dejo por el camino. Ninguno de esos
 dos grupos es un defecto; no saber cual era cual si lo era.
@@ -385,6 +398,18 @@ detiene si dejara de estarlo.
 escrita a mano, ante una ruta que no exista o no este versionada, ante una ruta
 escrita en la prosa que haya eludido esa comprobacion, y ante un analisis
 declarado posterior cuya alta en el historial no lo sea.
+
+Recomponer el resumen de la guardia antes de documentar.
+`R/59_verificar_cifras.R` contrasta la marca de ejecucion que cada manifiesto
+lleva contra la que el resumen registra, y se detiene si difieren. Reejecutar
+cualquier fase mueve su marca y deja el resumen describiendo una ejecucion que
+ya no existe, de modo que la puerta se para hasta que se recomponga. El resumen
+es `outputs/fase37/guarda_por_deposito.csv`, y lo compone
+`R/86_guarda_por_deposito.R`, que ha de correr despues de toda fase que escriba
+un manifiesto. Dos de las puertas depositan y escriben el suyo, de modo que el
+resumen se recompone despues de ellas y no antes, y la verificacion de cifras
+va la ultima. La regla no estaba escrita en ninguna parte: vivia en el texto
+del error que la dispara, que es donde se descubre y no donde se planifica.
 
 Los demas procedimientos que inspeccionan el repositorio en lugar de los datos
 no se enumeran aqui, porque una relacion escrita a mano se queda corta en

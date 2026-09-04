@@ -111,6 +111,27 @@ if (sum(por_bloque$estancias) != N_COHORTE)
 if (sum(por_bloque$valores_presentes) != sum(M))
   detener("El recuento de valores presentes no cuadra con la matriz.")
 
+# El total de casos completos, depositado y no sumado al redactar.
+#
+# Los sumandos ya estaban aqui y el total no, de modo que quien escribiera la
+# cifra tenia que sumar filas a mano. Esa es la clase de cifra contra la que
+# existe R/59. Y el texto la usa restandola del recuento anterior a los
+# limites de plausibilidad, que vive en el manifiesto de la cuarta fase: la
+# resta cruzaba dos fases y no la comprobaba nadie.
+#
+# Se exige ademas que los dos repartos coincidan. Son particiones distintas de
+# la misma cohorte, de modo que un total que dependiera de cual se sumase
+# indicaria que uno de los dos no la cubre entera.
+if (sum(por_bloque$completas) != sum(por_grupo$completas))
+  detener("Los dos repartos no dan el mismo total de casos completos.")
+total_completas <- sum(por_bloque$completas)
+por_total <- data.frame(
+  determinaciones = length(vars),
+  estancias       = N_COHORTE,
+  completas       = total_completas,
+  pct_completas   = round(100 * total_completas / N_COHORTE, 2),
+  row.names = NULL)
+
 cat("=== COMPLETITUD SOBRE LAS", length(vars), "DEL MODELO PUBLICADO ===\n")
 cat("Estancias:", nrow(part), "\n\n")
 cat("Por conjunto de la particion:\n")
@@ -121,6 +142,9 @@ cat("\nPor bloque:\n")
 print(por_bloque[, c("conjunto", "estancias", "completas", "pct_completas",
                      "determinaciones_medias", "pct_valores_presentes")],
       row.names = FALSE)
+
+cat("\nEstancias completas en las", length(vars), ":",
+    total_completas, "de", N_COHORTE, "\n")
 
 des <- por_bloque[por_bloque$conjunto == "desarrollo", ]
 sel <- por_bloque[por_bloque$conjunto == "unidad reservada", ]
@@ -142,6 +166,8 @@ write.csv(por_grupo, file.path(OUT, "completitud_por_grupo.csv"),
 write.csv(por_bloque, file.path(OUT, "completitud_por_conjunto.csv"),
           row.names = FALSE)
 write.csv(por_variable, file.path(OUT, "completitud_por_determinacion.csv"),
+          row.names = FALSE)
+write.csv(por_total, file.path(OUT, "completitud_total.csv"),
           row.names = FALSE)
 
 writeLines(toJSON(list(

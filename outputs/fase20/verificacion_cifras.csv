@@ -372,3 +372,10 @@
 "Resumenes distintos entre versiones",1,1,0.5,TRUE
 "Versiones cuyo resumen es el del acta",3,3,0.5,TRUE
 "Versiones que declaran los mismos identificadores",3,3,0.5,TRUE
+"Casos completos antes de los limites",8467,8467,0.5,TRUE
+"Casos completos despues de los limites",8466,8466,0.5,TRUE
+"Estancias que pierden un valor a los limites",1,1,0.5,TRUE
+"El total es la suma de los bloques",8466,8466,0.5,TRUE
+"Replicas de la nula de permutacion",200,200,0.5,TRUE
+"Percentil 95 de la ganancia nula",6.5,6.5,0.005,TRUE
+"Umbral adoptado para admitir spline",10,10,0.005,TRUE

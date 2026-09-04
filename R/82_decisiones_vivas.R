@@ -267,6 +267,9 @@ exc  <- ruta(".gitignore")
 r00  <- ruta("R/00_rutas_reservadas.R")
 r90  <- ruta("R/90_posterioridad.R")
 r93  <- ruta("R/93_huerfanas.R")
+r60  <- ruta("R/60_inventario_resultados.R")
+r86  <- ruta("R/86_guarda_por_deposito.R")
+d37  <- ruta("outputs/fase37/guarda_por_deposito.csv")
 d13  <- ruta("outputs/fase13/referencias.csv")
 d32p <- ruta("outputs/fase32/potencia_no_usada.csv")
 p41  <- ruta("outputs/fase41/posterioridad.csv")
@@ -758,6 +761,23 @@ add(prosa(
 "obliga a revisar los apartados anteriores."))
 cerrar()
 
+add(prosa(
+"Dos relaciones de lo mismo, una escrita a mano y otra derivada del codigo.",
+"Es la misma clase que la de las rutas reservadas, y sigue abierta."))
+add(cifra("`%s` mantiene escrita a mano la relacion de depositos que la", r60))
+add(cifra("verificacion alcanza, mientras `%s` deriva esa misma relacion", r93))
+add(cifra("del codigo de `%s`. Hay entonces dos autoridades sobre la misma", r59))
+add(prosa(
+"pregunta, y anadir un deposito obliga a acordarse de las dos. La que se",
+"escribe a mano se queda atras sin que nada lo advierta, porque no deposita",
+"ni sostiene cifra publicada alguna: su cuenta vive en la salida por",
+"pantalla y se pierde con ella, que es la senal que no sobrevive."))
+add(cifra("El arreglo es el que `%s` aplico a las rutas reservadas: un", r00))
+add(prosa(
+"solo lector, y las demas relaciones derivadas de el. Queda anotado y sin",
+"abrir. Abrirlo ahora no termina nada; no anotarlo lo pierde."))
+cerrar()
+
 add(prosa("## Cuestiones abiertas para el manuscrito"))
 cerrar()
 
@@ -838,6 +858,21 @@ add(prosa(
 "escrita a mano, ante una ruta que no exista o no este versionada, ante una",
 "ruta escrita en la prosa que haya eludido esa comprobacion, y ante un",
 "analisis declarado posterior cuya alta en el historial no lo sea."))
+cerrar()
+
+add(cifra("Recomponer el resumen de la guardia antes de documentar. `%s`", r59))
+add(prosa(
+"contrasta la marca de ejecucion que cada manifiesto lleva contra la que el",
+"resumen registra, y se detiene si difieren. Reejecutar cualquier fase mueve",
+"su marca y deja el resumen describiendo una ejecucion que ya no existe, de",
+"modo que la puerta se para hasta que se recomponga."))
+add(cifra("El resumen es `%s`, y lo compone `%s`, que ha de correr", d37, r86))
+add(prosa(
+"despues de toda fase que escriba un manifiesto. Dos de las puertas depositan",
+"y escriben el suyo, de modo que el resumen se recompone despues de ellas y",
+"no antes, y la verificacion de cifras va la ultima. La regla no estaba",
+"escrita en ninguna parte: vivia en el texto del error que la dispara, que es",
+"donde se descubre y no donde se planifica."))
 cerrar()
 
 add(prosa(

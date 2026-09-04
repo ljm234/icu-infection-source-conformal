@@ -1,6 +1,6 @@
 {
   "fase": "36",
-  "ejecutado_en": "2026-08-31T17:47:35-0600",
+  "ejecutado_en": "2026-09-03T23:06:35-0600",
   "r_version": "R version 4.6.1 (2026-06-24)",
   "guarda_de_emparejamiento_parcial": true,
   "proposito": "medir la completitud analitica de cada conjunto de la particion sobre las determinaciones del modelo publicado, que son las que gobiernan cuanta imputacion recibe cada uno",
