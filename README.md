@@ -6,7 +6,7 @@ conformal prediction sets and an abstention mechanism.
 
 Principal Investigator: Luis Jordan Montenegro-Calla
 
-Generated on 2026-09-02 by `R/65_generar_readme.R`. Every numeric figure below
+Generated on 2026-09-04 by `R/65_generar_readme.R`. Every numeric figure below
 is read from a versioned results file. The generator rejects prose lines
 containing a digit, format patterns carrying digits outside their substitution
 codes, and any line that fails to compose.
@@ -201,7 +201,7 @@ criterion.
 That unit is also the most dissimilar of the 6, which is worth stating rather
 than leaving for a reader to find. By the same statistic that informed the
 judgement, the mean standardised difference between a unit and the rest of the
-cohort averaged over the determinations, it stands at 0.402 against 0.220 for
+cohort averaged over the determinations, it stands at 0.402 against 0.22 for
 the next, 1.83 times the highest of the other 5 and outside their range. It
 also takes the extreme share in every one of the 5 columns of the class
 profile, holding 95.2 percent of `sin_crecimiento` where no other unit exceeds
@@ -297,7 +297,7 @@ alike.
     respiratorio       128     0.0382      0.0384
     sangre             106     0.0317      0.0314
 
-Mean predicted probability tracks observed frequency to within 0.0010 in every
+Mean predicted probability tracks observed frequency to within 0.001 in every
 class on the test set. That set comes from the same random partition as the
 training data, so agreement there is what a correctly fitted model should
 produce and is not evidence that it would hold elsewhere.
@@ -350,7 +350,7 @@ insufficient information looks like, and recalibration does not repair it.
 ### Confidence, resolution and error
 
 At the ninety percent level the system resolves 9.6 percent of cases with an
-error of 0.0280 among them. Loosening the level raises resolution to 69.1
+error of 0.028 among them. Loosening the level raises resolution to 69.1
 percent and error to 0.3753.
 
 Precision on minority-class conclusions peaks at 0.4000, from 5 such
@@ -475,7 +475,7 @@ direction. The over-coverage of the majority class is consistent with a
 prevalence shift: its mean predicted probability is 0.9054 against an observed
 frequency of 0.9802 over the 4,586 stays of that unit which fall in one of the
 modelled classes, which is fewer than the stays it contributes in total. On
-the test set the same model predicts that class to within 0.0010 of its
+the test set the same model predicts that class to within 0.001 of its
 observed frequency, so the gap is specific to this unit rather than a property
 of the model on the data it was fitted from.
 
@@ -485,9 +485,9 @@ imputation, and imputation pulls predictions toward the training mean, which
 the majority class dominates. That mechanism is not available here: over the
 17 determinations the model uses, 60.69 percent of the sealed unit's stays are
 complete against 30.34 percent of the development set, and 88.08 percent of
-its cells are observed against 66.00. The unit is measured more completely,
-not less, so the asymmetry runs opposite to what that explanation would need.
-This work does not separate the mechanisms further.
+its cells are observed against 66. The unit is measured more completely, not
+less, so the asymmetry runs opposite to what that explanation would need. This
+work does not separate the mechanisms further.
 
 ### The limit of local recalibration
 
@@ -586,7 +586,7 @@ one unit and 97.9 percent in another, a range of 21.4 points. Whether a
 temperature is taken is less patient-dependent than what it reads, so its
 missingness carries site information more clearly than its value does.
 
-Only temperature required a flexible functional form, with a gain of 283.00
+Only temperature required a flexible functional form, with a gain of 283
 against a permutation-derived noise threshold.
 
 The extended model gains 0.0146 over the original in mean AUC across minority
@@ -636,7 +636,7 @@ agree on stay_id, storetime and charttime while disagreeing on the converted
 value, so the first two keys alone leave the retained row undetermined. The
 query was run 3 times and all 3 results are identical.
 
-Material divergence from the earlier extraction reaches 0.110 percent of stays
+Material divergence from the earlier extraction reaches 0.11 percent of stays
 per variable, and no coverage figure moves by more than 0.1 points.
 
 ### A fixed seed does not fix a partition
@@ -650,15 +650,15 @@ The pre-fix code was recovered from the history and run twice. The content is
 identical: 0 of 580,325 cells differ between the two runs and both hold the
 same 23,213 stays, while 98.77 percent of the row positions change. Against
 the published matrix the figures are 0 cells and 99.83 percent. With the
-ordering fixed, the same comparison gives 0.00 percent.
+ordering fixed, the same comparison gives 0 percent.
 
 One more comparison belongs here, and it is the sharpest of the four. The
 fixed ordering does not merely reproduce itself: it produces a matrix in a
 different order from the published one, and not partly. Against the published
-matrix the corrected code moves 100.00 percent of the row positions, with 0
-cells differing. The published partition therefore rests on an ordering the
-current code no longer produces. That is the finding stated at its worst,
-which is how it should be read.
+matrix the corrected code moves 100 percent of the row positions, with 0 cells
+differing. The published partition therefore rests on an ordering the current
+code no longer produces. That is the finding stated at its worst, which is how
+it should be read.
 
 This is a failure mode a fixed seed appears to cover and does not, which is
 why a careful analyst does not look for it. It is of the same family as the

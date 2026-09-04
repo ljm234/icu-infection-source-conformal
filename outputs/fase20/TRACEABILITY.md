@@ -1,6 +1,6 @@
 # Traceability of reported figures
 
-Generated on 2026-09-03 by R/59_verificar_cifras.R
+Generated on 2026-09-04 by R/59_verificar_cifras.R
 
 Every figure quoted in the documentation is read from a versioned results
 file rather than transcribed by hand. Each check uses a tolerance derived

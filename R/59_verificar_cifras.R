@@ -592,7 +592,7 @@ if (!is.null(dsel) && !is.null(xsel)) {
   reg[[length(reg)+1]] <- comprobar("Distancia de la unidad reservada",
     dsel$distancia_de_la_reservada[1], 0.402, tolerancia(3))
   reg[[length(reg)+1]] <- comprobar("Mayor distancia de las demas",
-    dsel$mayor_de_las_demas[1], 0.220, tolerancia(3))
+    dsel$mayor_de_las_demas[1], 0.22, tolerancia(3))
   reg[[length(reg)+1]] <- comprobar("Veces la siguiente",
     dsel$veces_la_siguiente[1], 1.83, tolerancia(2))
   reg[[length(reg)+1]] <- comprobar("Unidades del perfil",

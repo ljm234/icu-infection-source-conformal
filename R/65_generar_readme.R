@@ -779,8 +779,8 @@ add(prosa(
 "stands at"))
 
 add(cifra("%s against %s for the next, %s times the highest of the other",
-          format(dsel$distancia_de_la_reservada[1], nsmall = 3),
-          format(dsel$mayor_de_las_demas[1], nsmall = 3),
+          format(dsel$distancia_de_la_reservada[1]),
+          format(dsel$mayor_de_las_demas[1]),
           format(dsel$veces_la_siguiente[1], nsmall = 2)))
 add(cifra("%d and outside their range. It also takes the extreme share in",
           as.integer(dsel$unidades[1] - 1)))
@@ -918,8 +918,8 @@ for (i in seq_len(nrow(calpr)))
             calpr$probabilidad_media[i]))
 
 add(prosa(""))
-add(cifra("Mean predicted probability tracks observed frequency to within %.4f",
-          max(abs(calpr$diferencia))))
+add(cifra("Mean predicted probability tracks observed frequency to within %s",
+          format(max(abs(calpr$diferencia)))))
 
 add(prosa(
 "in every class on the test set. That set comes from the same random",
@@ -1008,8 +1008,8 @@ add(prosa(
 
 add(cifra("At the ninety percent level the system resolves %.1f percent of",
           val(alfa, "pct_resuelve", d10)))
-add(cifra("cases with an error of %.4f among them. Loosening the level raises",
-          val(alfa, "error_entre_resueltos", d10)))
+add(cifra("cases with an error of %s among them. Loosening the level raises",
+          format(val(alfa, "error_entre_resueltos", d10))))
 add(cifra("resolution to %.1f percent and error to %.4f.",
           max(alfa$pct_resuelve), max(alfa$error_entre_resueltos)))
 
@@ -1209,8 +1209,8 @@ add(cifra("%s stays of that unit which fall in one of the modelled classes,",
 add(prosa(
 "which is fewer than the stays it contributes in total. On the test set the",
 "same model predicts that class to within"))
-add(cifra("%.4f of its observed frequency, so the gap is specific to this",
-          max(abs(calpr$diferencia))))
+add(cifra("%s of its observed frequency, so the gap is specific to this",
+          format(max(abs(calpr$diferencia)))))
 add(prosa(
 "unit rather than a property of the model on the data it was fitted from.",
 "",
@@ -1226,8 +1226,8 @@ add(cifra("sealed unit's stays are complete against %.2f percent of the",
 add(cifra("development set, and %.2f percent of its cells are observed against",
           val(cmpl, "pct_valores_presentes",
               cmpl$conjunto == "unidad reservada")))
-add(cifra("%.2f. The unit is measured more completely, not less, so the",
-          val(cmpl, "pct_valores_presentes", cmpl$conjunto == "desarrollo")))
+add(cifra("%s. The unit is measured more completely, not less, so the",
+          format(val(cmpl, "pct_valores_presentes", cmpl$conjunto == "desarrollo"))))
 add(prosa(
 "asymmetry runs opposite to what that explanation would need. This work does",
 "not separate the mechanisms further."))
@@ -1407,8 +1407,8 @@ add(prosa(
 "",
 "Only temperature required a flexible functional form, with a gain of"))
 
-add(cifra("%.2f against a permutation-derived noise threshold.",
-          val(spl, "ganancia", spl$variable == "temperatura")))
+add(cifra("%s against a permutation-derived noise threshold.",
+          format(val(spl, "ganancia", spl$variable == "temperatura"))))
 
 add(prosa(""))
 
@@ -1505,8 +1505,8 @@ add(cifra("The query was run %d times and all %d results are identical.",
 
 add(prosa(""))
 
-add(cifra("Material divergence from the earlier extraction reaches %.3f percent of",
-          max(divg$pct_material)))
+add(cifra("Material divergence from the earlier extraction reaches %s percent of",
+          format(max(divg$pct_material))))
 add(cifra("stays per variable, and no coverage figure moves by more than %.1f points.",
           max(abs(cobx$diferencia))))
 
@@ -1539,17 +1539,17 @@ add(cifra("the published matrix the figures are %d cells and %.2f percent. With"
                          ordm$comparacion == "publicada frente a antes_a")),
           val(ordm, "pct_posiciones",
               ordm$comparacion == "publicada frente a antes_a")))
-add(cifra("the ordering fixed, the same comparison gives %.2f percent.",
-          val(ordm, "pct_posiciones",
-              ordm$comparacion == "despues_a frente a despues_b")))
+add(cifra("the ordering fixed, the same comparison gives %s percent.",
+          format(val(ordm, "pct_posiciones",
+              ordm$comparacion == "despues_a frente a despues_b"))))
 add(prosa(
 "",
 "One more comparison belongs here, and it is the sharpest of the four. The",
 "fixed ordering does not merely reproduce itself: it produces a matrix in a",
 "different order from the published one, and not partly."))
-add(cifra("Against the published matrix the corrected code moves %.2f percent",
-          val(ordm, "pct_posiciones",
-              ordm$comparacion == "publicada frente a despues_a")))
+add(cifra("Against the published matrix the corrected code moves %s percent",
+          format(val(ordm, "pct_posiciones",
+              ordm$comparacion == "publicada frente a despues_a"))))
 add(cifra("of the row positions, with %d cells differing. The published",
           as.integer(val(ordm, "celdas_que_difieren",
                          ordm$comparacion == "publicada frente a despues_a"))))

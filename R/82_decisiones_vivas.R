@@ -778,6 +778,22 @@ add(prosa(
 "abrir. Abrirlo ahora no termina nada; no anotarlo lo pierde."))
 cerrar()
 
+add(prosa(
+"Decimales de una cifra publicada. En prosa, una cifra se imprime con los",
+"decimales que su archivo guarda y no con mas. Rellenar por la derecha",
+"afirma una precision que el deposito no tiene, y ningun contraste numerico",
+"lo detecta, porque la cifra rellena y la del archivo son el mismo numero:",
+"solo se ve en la cadena impresa. El relleno entraba por los codigos de",
+"formato de ancho fijo de los generadores, y donde la cifra va en prosa se",
+"compone ahora por su representacion y no por un numero de decimales",
+"elegido de antemano."))
+add(prosa(
+"En celda de tabla la columna si se alinea por decimales. Eso es convencion",
+"tipografica sobre la columna y no afirmacion sobre el dato, de modo que la",
+"regla anterior no la alcanza. La distincion es deliberada y se anota aqui",
+"para que la alineacion no se lea como el descuido que la regla corrige."))
+cerrar()
+
 add(prosa("## Cuestiones abiertas para el manuscrito"))
 cerrar()
 

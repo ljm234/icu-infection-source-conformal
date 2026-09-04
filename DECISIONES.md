@@ -5,7 +5,7 @@ que archivo consta. Se consulta antes de escribir sobre cualquiera de estos
 puntos, para que lo que se publique se apoye en los archivos y no en el
 recuerdo de quien redacta.
 
-Generado el 2026-09-03 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
+Generado el 2026-09-04 por `R/82_decisiones_vivas.R`. Cada ruta que aqui figura
 se comprueba al componer el documento: ha de existir y ha de estar bajo control
 de versiones. El procedimiento se detiene si alguna falta, de modo que este
 registro no puede sobrevivir a los archivos que lo sostienen.
@@ -348,6 +348,18 @@ pantalla y se pierde con ella, que es la senal que no sobrevive. El arreglo es
 el que `R/00_rutas_reservadas.R` aplico a las rutas reservadas: un solo lector,
 y las demas relaciones derivadas de el. Queda anotado y sin abrir. Abrirlo
 ahora no termina nada; no anotarlo lo pierde.
+
+Decimales de una cifra publicada. En prosa, una cifra se imprime con los
+decimales que su archivo guarda y no con mas. Rellenar por la derecha afirma
+una precision que el deposito no tiene, y ningun contraste numerico lo detecta,
+porque la cifra rellena y la del archivo son el mismo numero: solo se ve en la
+cadena impresa. El relleno entraba por los codigos de formato de ancho fijo de
+los generadores, y donde la cifra va en prosa se compone ahora por su
+representacion y no por un numero de decimales elegido de antemano. En celda de
+tabla la columna si se alinea por decimales. Eso es convencion tipografica
+sobre la columna y no afirmacion sobre el dato, de modo que la regla anterior
+no la alcanza. La distincion es deliberada y se anota aqui para que la
+alineacion no se lea como el descuido que la regla corrige.
 
 ## Cuestiones abiertas para el manuscrito
 
