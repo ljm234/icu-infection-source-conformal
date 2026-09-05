@@ -54,8 +54,14 @@ ORDEN <- c("entrenamiento", "calibracion", "prueba", "unidad reservada",
            "unidades descartadas")
 
 # Ninguna otra parte de este procedimiento puede reintroducir la palabra por
-# la puerta de atras: se comprueba sobre las etiquetas que se van a depositar.
-if (any(grepl("desarrollo", ORDEN, fixed = TRUE)))
+# la puerta de atras: se comprueba sobre las etiquetas y sobre la descripcion
+# del manifiesto, que es donde ya ocurrio una vez.
+TEXTO_BLOQUES <- paste("entrenamiento es donde el modelo se ajusta, calibracion",
+                       "donde se fijan los umbrales, prueba donde se evalua una",
+                       "sola vez, la unidad reservada donde se transporta; se",
+                       "incluye el bloque descartado para que los totales",
+                       "cuadren con el embudo")
+if (any(grepl("desarrollo", c(ORDEN, TEXTO_BLOQUES), fixed = TRUE)))
   stop("Este deposito no nombra desarrollo a ningun bloque.")
 
 detener <- function(...) {
@@ -215,10 +221,7 @@ writeLines(toJSON(list(
   proposito = paste("caracteristicas basales por conjunto de la particion,",
                     "que es el primer deposito que una guia de reporte exige",
                     "y que ningun documento de este trabajo tenia"),
-  bloques = paste("desarrollo es donde el modelo se ajusta y se calibra,",
-                  "prueba donde se evalua, la unidad reservada donde se",
-                  "transporta; se incluye el bloque descartado para que los",
-                  "totales cuadren con el embudo"),
+  bloques = TEXTO_BLOQUES,
   contenido = paste("solo agregados: recuentos, proporciones, medianas y",
                     "cuartiles; ninguna fila, ningun identificador"),
   regla_de_las_cinco = paste("ninguna celda de recuento publicada baja de",

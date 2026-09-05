@@ -17,8 +17,11 @@ options(scipen = 999)
 # Nada de lo que escribe toca el deposito: todo ocurre en un directorio
 # temporal que se borra al terminar. La matriz publicada no se regenera.
 #
-# El deposito es agregado. Contiene recuentos y proporciones, ninguna fila y
-# ningun identificador.
+# Los depositos de esta fase son agregados: recuentos de posiciones y nombres
+# de columna, ninguna fila a nivel de paciente y ningun identificador. La
+# matriz que se lee para comparar es a nivel de estancia e identificable, esta
+# en la seccion reservada del archivo de exclusiones y se lee para contar y
+# comparar ordenes: no se copia ni se deposita.
 #
 # Depositaba ademas un segundo archivo, seleccion_del_sellado.csv, cuya
 # columna unidades contaba las unidades presentes en la matriz y no las de la

@@ -531,7 +531,7 @@ add(prosa(
 "function of its own, the one the conformal thresholds come from. The full",
 "table belongs to the",
 "manuscript, not to this document. No published count cell falls below"))
-add(cifra("%d cases, and the %d blocks sum to the analysed cohort.",
+add(cifra("%d cases, and the %d blocks sum to the final cohort of the funnel, discarded units included.",
           as.integer(min45), as.integer(nrow(bas))))
 add(prosa(
 "`outputs/fase45/basales_por_conjunto.csv` carries it.",
@@ -733,7 +733,9 @@ add(prosa(
 "margin and no minority class loses more than that same margin. The",
 "criterion is written into `R/32_comparar_lambda.R`, which entered the",
 "repository in the same commit as its result, so no artefact establishes",
-"that it preceded the comparison. The minimum"))
+"that it preceded the comparison: the commit message asserts prior",
+"specification, but the criterion and its result entered the repository",
+"together and no artefact separates them. The minimum"))
 
 add(cifra("won, gaining %.4f against a margin of %.2f.",
           val(lamb, "mejora_original", TRUE),

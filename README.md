@@ -51,7 +51,7 @@ and not grouped: training, calibration, test, the sealed unit and the units
 left out. Calibration is kept apart because it is a set with a function of its
 own, the one the conformal thresholds come from. The full table belongs to the
 manuscript, not to this document. No published count cell falls below 5 cases,
-and the 5 blocks sum to the analysed cohort.
+and the 5 blocks sum to the final cohort of the funnel, discarded units included.
 `outputs/fase45/basales_por_conjunto.csv` carries it.
 
 Of the stays with suspected infection, those in units contributing at least
@@ -176,7 +176,9 @@ rule. The two were compared under a stated criterion: adopt the minimum if the
 mean area across minority classes improves by more than a declared margin and
 no minority class loses more than that same margin. The criterion is written
 into `R/32_comparar_lambda.R`, which entered the repository in the same commit
-as its result, so no artefact establishes that it preceded the comparison. The
+as its result, so no artefact establishes that it preceded the comparison: the
+commit message asserts prior specification, but the criterion and its result
+entered the repository together and no artefact separates them. The
 minimum won, gaining 0.0395 against a margin of 0.02.
 
 That comparison was made on the test set, which is the set that later reports
